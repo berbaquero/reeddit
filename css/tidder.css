@@ -364,6 +364,10 @@ font-weight: bold;}
         border-top: 6px solid transparent;
     }
 
+    #refreshIcon {
+        background-image: url('../img/refresh1.png');
+    }
+
     #title {
         color: #333;
         text-shadow: 0px 1px 1px white;
