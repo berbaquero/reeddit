@@ -26,7 +26,9 @@ $(document).ready(function() {
             });
             for(var i = 0; i < links.children.length - 1; i++) {
                 var link = links.children[i];
-                posts[link.data.id] = {"title": link.data.title};
+                posts[link.data.id] = {
+                    "title": link.data.title
+                };
             }
         });
     }
@@ -116,9 +118,7 @@ $(document).ready(function() {
     tappable("#refresh", {
         onTap: function(e, target) {
             loadLinks();
-        },
-        activeClass: 'button-active'
-
+        }
     });
 
     tappable(".toComments", {

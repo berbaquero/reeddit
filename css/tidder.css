@@ -209,7 +209,7 @@ footer p {
 
 }
 
-#refreshIcon {    
+#refreshIcon div {   
     background-image: url('../img/refresh.png');
     width: 14px; height: 18px;
     background-repeat: no-repeat;
@@ -217,7 +217,7 @@ footer p {
     margin: 0 auto;
 }
 
-.backArrow {
+#backArrow div {
     border-bottom: 7px solid transparent;
     border-right: 14px solid white;
     border-top: 7px solid transparent;
@@ -331,14 +331,32 @@ font-weight: bold;}
         background-image: none;
     }
 
-    .backArrow {
+    .button:hover {
+        border: 1px solid #888;
+        background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%);
+    }
+    
+    .button:active {
+        background-image: none;
+        background-color: #777;
+    }
+    
+    #backArrow:active div {
+        border-right: 12px solid #fff;
+    }
+
+    #backArrow div {
         border-bottom: 6px solid transparent;
         border-right: 12px solid #333;
         border-top: 6px solid transparent;
     }
 
-    #refreshIcon {
+    #refreshIcon div {
         background-image: url('../img/refresh1.png');
+    }
+
+    #refreshIcon:active div {
+        background-image: url('../img/refresh.png');
     }
 
     #title {
