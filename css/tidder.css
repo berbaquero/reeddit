@@ -115,34 +115,6 @@ header div {
     padding: 0 2.5px;
 }
 
-.shot {
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: center;
-    border-radius: 8px;
-    box-shadow: 0px 5px 5px rgba(139, 69, 19, 0.5);
-}
-
-.shotImage {
-    width: 100%;    
-    border: 3px white solid;
-    box-shadow: 0px 5px 5px rgba(139, 69, 19, 0.5);
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-}
-
-.shotTitle {
-    float: left;
-    width: 82%;
-}
-
-.shotLikes {
-    float: right;
-    width: 18%;
-    font-size: 12px;
-}
-
 .view {
     position: absolute;
     width: 100%;
@@ -376,6 +348,18 @@ font-weight: bold;}
 
     #mainView, #detailView {
         background-color: #fafafa;
+    }
+
+    .linkWrap:hover {
+        background-color: #f0f0f0;
+    }
+
+    .link:active {
+        background-color: #777;
+    }
+
+    .link:active div p {
+        color: white;
     }
 
     .linkWrap {
