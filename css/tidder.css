@@ -7,6 +7,7 @@ body {
     background-color: white;
     word-wrap: break-word;
     -webkit-text-size-adjust: none;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -24,7 +25,7 @@ header {
     position: fixed;
     z-index: 2;
     display: -webkit-box;
-    background-image: -webkit-linear-gradient(top, #5179C2 0%, #164980 100%);
+    background-image: -webkit-linear-gradient(top, #ff6600 0%, #e32918 100%);
     border-bottom: 1px solid;
     height: 44px;
 }
@@ -41,8 +42,8 @@ header div {
     color: white;
     text-align: center;
     font-size: 23px;    
-    font-family: 'Source Sans Pro', sans-serif;    
-    text-shadow: 0px -1px 1px #182946;
+    font-family: 'Ubuntu', sans-serif;
+    text-shadow: 0px -1px 1px #000;
     width: 100%;
     margin: 0;
     white-space: nowrap;
@@ -220,12 +221,12 @@ footer p {
 }
 
 .button {
-    border: 1px solid #164980;    
+    border: 1px solid #D31908;    
     border-radius: 4px;
     width: 30px;
     height: 30px;
     margin: 0 auto;
-    background-image: -webkit-linear-gradient(top, #5179C2 0%, #164980 100%);
+    background-image: -webkit-linear-gradient(top, #ff6600 0%, #e32918 100%);
 }
 
 .button-active {
