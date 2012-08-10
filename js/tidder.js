@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkThumb' style='background-image: url({{data.thumbnail}})'></div><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
 
-    var linkSummaryTemplate = "<article><div id='linkSummary'><p id='summaryTitle'>{{title}}</p><div id='selfText'></div></div></article>";
+    var linkSummaryTemplate = "<div id='linkSummary'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p><p id='summarySub'>{{sub}}</p><div id='summaryExtra'><p id='summaryTime'></p><p id='summaryCommentNum'></p></div></div>";
     
     var page = 1, perPage = 30, ancho = 320, activeView = 1, slider, urlEnd = ".json?jsonp=?",
     loadedLinks = {}, posts = {};
@@ -27,31 +27,25 @@ $(document).ready(function() {
             for(var i = 0; i < links.children.length - 1; i++) {
                 var link = links.children[i];
                 posts[link.data.id] = {
-                    "title": link.data.title
+                    "title": link.data.title,
+                    "text": link.data.selftext,
+                    "time": link.data.created_utc,
+                    "domain": link.data.domain,
+                    "sub": link.data.subreddit
                 };
             }
         });
     }
 
-    var loadComments = function(data, baseElement, summary, id) {
+    var loadComments = function(data, baseElement, id) {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
-        var com = $("<div/>");
-        if(summary) {
-            var summaryHTML = Mustache.to_html(linkSummaryTemplate, summary);
-            com.append(summaryHTML);
-            if(summary.selftext) {
-                var summaryConverter1 = new Markdown.Converter();
-                $("#selfText").html(summaryConverter1.makeHtml(summary.selftext));
-            }
-            baseElement.append(summary);
-        }
+        var com = $("<article/>");        
         for(var i = 0; i < data.length - 1; i++) {
-            var c = data[i];
-            
+            var c = data[i];            
             var html = converter.makeHtml(c.data.body);
             
-            var comment = $("<article/>").addClass("commentWrap")
+            var comment = $("<div/>").addClass("commentWrap")
             .append($("<div/>").addClass("commentData")
                 .append($("<div/>").addClass("commentAuthor")
                     .append($("<p/>").text(c.data.author)))
@@ -128,19 +122,30 @@ $(document).ready(function() {
             var id = comm.attr("data-id");
             ensenar("#navBack");
             var detail = $("#detailWrap");
-            detail.empty();
+            detail.empty();              
 
             var d = document.getElementById("detailWrap");
             d.scrollTop = 0;
 
             if (loadedLinks[id]) {
+                detail.append(posts[id].summary);
                 detail.append(loadedLinks[id]);
             } else {
+                var postInfo = posts[id];
+                var summaryWrap = $("<article/>");
+                summaryWrap.append(Mustache.to_html(linkSummaryTemplate, postInfo));            
+                if(postInfo.text) {
+                    var summaryConverter1 = new Markdown.Converter();
+                    summaryWrap.append($("<div/>").attr("id", "selfText").append(summaryConverter1.makeHtml(postInfo.text)));
+                }
+                posts[id].summary = summaryWrap;
+                detail.append(summaryWrap);
+                $("#summaryTime").text(timeSince(new Date().getTime(), postInfo.time));
                 var url = "http://www.reddit.com" + comm.attr("data-link") + urlEnd;
                 $.getJSON(url, function(result) {                    
                     var comments = result[1].data.children;
-                    var summary = result[0].data.children[0].data;
-                    loadComments(comments, detail, summary, id);
+                    $("#summaryCommentNum").text(comments.length + (comments.length > 1 ? " main comments" : " main comment"));
+                    loadComments(comments, detail, id);
                 });
             }
             slideFromRight();

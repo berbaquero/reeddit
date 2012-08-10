@@ -290,7 +290,7 @@ footer p {
 }
 
 .commentAuthor p {
-    color: #A40;
+    color: #E32918;
     font-weight: bold;
 }
 
@@ -301,24 +301,65 @@ footer p {
 
 .commentInfo p {
     color: #aaa;    
-font-weight: bold;}
+    font-weight: bold;
+}
 
 .commentBody p {
     margin: 10px 0;
 }
 
 #linkSummary {
-    background-color: #6d6d6d;    
-    padding: 10px;
-    
+    background-color: #6d6d6d;        
+    padding-top: 10px;
+    margin-bottom: 10px;
 }
 
 #linkSummary p {
     margin: 0;
-    font-size: 16px;
+    padding: 0 10px;
+}
+
+#summaryTitle {
+    font-size: 16px;    
+    color: #fafafa;
     font-weight: bold;
+}
+
+#summaryTime {
     color: white;
 }
+
+#summaryDomain {
+    color: #F60;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#summarySub {
+    color: #FAFAFA;
+}
+
+#summaryExtra {
+    display: -webkit-box;
+    background-color: #333;
+    padding: 5px 0;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+#summaryExtra p {
+    color: #fafafa;
+    -webkit-box-flex: 1;
+}
+
+#selfText {
+    padding: 5px;
+    border: 1px solid #999;
+    margin: 0 10px;
+    border-radius: 5px;
+}
+
+#selfText p { margin-top: 5px; }
 
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
@@ -368,9 +409,9 @@ font-weight: bold;}
         background-color: #fafafa;
     }
 
-    .linkWrap:hover {
+    /*.linkWrap:hover {
         background-color: #f0f0f0;
-    }
+    }*/
 
     .link:active {
         background-color: #777;
