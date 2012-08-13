@@ -19,19 +19,22 @@ a {
     color: #999;
 }
 
+a.link:visited div p.linkTitle {
+    color: #888;
+}
+
 header {
     top: 0;
     width: 100%;
     position: fixed;
     z-index: 2;
     display: -webkit-box;
-    background-image: -webkit-linear-gradient(top, #ff6600 0%, #e32918 100%);
+    background-image: -webkit-linear-gradient(top, #ff6600 0%, #E32918 100%);
     border-bottom: 1px solid;
     height: 44px;
 }
 
-header div {    
-    /*box-shadow: 0px 3px 10px rgba(50, 50, 50, 0.7);*/
+header div {
     -webkit-box-flex: 1;
     width: 70%;
     display: -webkit-box;
@@ -99,7 +102,7 @@ header div {
 
 .linkDomain {
     margin: 0;    
-    color: #a40;
+    color: #E34A28;
 }
 
 .linkSub {
@@ -290,7 +293,7 @@ footer p {
 }
 
 .commentAuthor p {
-    color: #E32918;
+    color: #E34A28;
     font-weight: bold;
 }
 

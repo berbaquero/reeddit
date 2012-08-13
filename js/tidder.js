@@ -24,7 +24,7 @@ $(document).ready(function() {
                     thumb.remove();
                 }
             });
-            for(var i = 0; i < links.children.length - 1; i++) {
+            for(var i = 0; i < links.children.length; i++) {
                 var link = links.children[i];
                 posts[link.data.id] = {
                     "title": link.data.title,
