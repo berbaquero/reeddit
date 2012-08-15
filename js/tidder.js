@@ -114,6 +114,10 @@ $(document).ready(function() {
             loadLinks();
         }
     });
+    
+    // tappable(".link", {
+    //     allowClick: true
+    // });
 
     tappable(".toComments", {
         onTap: function(e, target) {
