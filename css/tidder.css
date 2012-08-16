@@ -367,6 +367,15 @@ footer p {
 
 #selfText p { margin-top: 5px; }
 
+#headerIcon {
+    background-image: url('../img/alienHead1.png');
+    background-size: 35px;
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 30px;
+    margin: 0 auto;
+}
+
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header {        

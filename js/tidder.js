@@ -7,6 +7,10 @@ $(document).ready(function() {
     var page = 1, perPage = 30, ancho = 320, activeView = 1, slider, urlEnd = ".json?jsonp=?",
     loadedLinks = {}, posts = {};
 
+    var obtenerAncho = function() {
+        ancho = $(window).width();
+    }
+
     var loadLinks = function() {
         var main = $("#mainWrap");
         main.empty();
@@ -105,7 +109,7 @@ $(document).ready(function() {
         onTap: function(e, target) {
             slideFromLeft();
             $(target).addClass("invisible");
-            $("#title").text('Tidder');
+            $("#titleHead").empty().append(headerIcon);
         }
     });
 
@@ -153,6 +157,8 @@ $(document).ready(function() {
                 });
             }
             slideFromRight();
+
+            $("#titleHead").empty().append(title);
             $("#title").text(posts[id].title);
         },
         activeClass: 'toComments-active'
@@ -161,6 +167,7 @@ $(document).ready(function() {
     // Animaciones
 
     var slideFromLeft = function () {
+        obtenerAncho();
         var main = $("#mainView");
         var det = $("#detailView");
         main.css("left", -ancho);
@@ -183,13 +190,14 @@ $(document).ready(function() {
     }
 
     var slideFromRight = function () {
+        obtenerAncho();
         var main = $("#mainView");
         var det = $("#detailView");
         det.css("left", ancho);
         setTimeout(function() {
             main.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
-            det.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
-            setTimeout(function () { // Quita las propiedades de transition            
+            det.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');           
+            setTimeout(function () { // Quita las propiedades de transition
                 det.css("left", 0).removeClass("slideTransition").css("-webkit-transform", "");
                 main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
             }, 350);
@@ -254,6 +262,11 @@ $(document).ready(function() {
             }, 1);
         }
     };
+
+    var title = $("#title");
+    var headerIcon =  $("#headerIcon");
+
+    $("#title").remove();
 
     loadLinks();
 
