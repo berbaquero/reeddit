@@ -45,14 +45,14 @@ header div {
 #title {
     color: white;
     text-align: center;
-    font-size: 23px;    
-    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
     text-shadow: 0px -1px 1px #000;
     width: 100%;
     margin: 0;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-weight: bold;
 }
 
 #container {
@@ -81,12 +81,27 @@ header div {
 
 .linkThumb {
     -webkit-box-flex: 1;
-    width: 45px;
+    width: 70px;    
+}
+
+.linkThumb div {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70px;
-    margin-right: 10px;
+    background-color: #333;
     height: 70px;
+    width: 70px;
+    margin: 0 auto;
+    border-radius: 5px;
+    /*box-shadow: 0px 1px 3px #333;*/
+}
+
+.thumbLeft {
+    padding-right: 0 !important;
+}
+
+.marginless {
+    margin: 0 !important;
 }
 
 .linkTitle {
@@ -99,6 +114,7 @@ header div {
 .linkInfo {
     -webkit-box-flex: 1;
     width: 67%;
+    padding-right: 10px;
 }
 
 .linkDomain {
@@ -109,6 +125,14 @@ header div {
 .linkSub {
     margin: 0;    
     color: #777;
+}
+
+.link-active {
+    background-image: -webkit-linear-gradient(top, #4286F5, #194FDB);
+}
+
+.link-active div p {
+    color: white;
 }
 
 .shotWrap {
@@ -207,7 +231,7 @@ footer p {
 }
 
 .button-active {
-/*    background-color: */
+    /*    background-color: */
 }
 
 #refresh {
@@ -391,12 +415,12 @@ footer p {
         border: 1px solid #888;
         background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%);
     }
-    
+
     .button:active {
         background-image: none;
         background-color: #777;
     }
-    
+
     #backArrow:active div {
         border-right: 12px solid #fff;
     }
@@ -428,14 +452,6 @@ footer p {
         background-color: #f0f0f0;
     }*/
 
-    .link:active {
-        background-color: #777;
-    }
-
-    .link:active div p {
-        color: white;
-    }
-
     .linkWrap {
         border-bottom: 1px solid #ddd;
     }
@@ -461,7 +477,7 @@ footer p {
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    
+
     .toComments div {
         background-image: url('../img/comment_48.png');
     }

@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
-    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkThumb' style='background-image: url({{data.thumbnail}})'></div><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
+    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
+
+    var linksTemplateLeft = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
 
     var linkSummaryTemplate = "<div id='linkSummary'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p><p id='summarySub'>{{sub}}</p><div id='summaryExtra'><p id='summaryTime'></p><p id='summaryCommentNum'></p></div></div>";
     
@@ -20,12 +22,12 @@ $(document).ready(function() {
             var links = result.data;
             var html = Mustache.to_html(linksTemplate, links);
             main.append(html);
-            var thumbs = $('.linkThumb');
+            var thumbs = $('.linkThumb div');
             $.each(thumbs, function(i, t) {
                 var thumb = $(t);
                 var bg = thumb.attr('style');
-                if(bg === 'background-image: url()') {
-                    thumb.remove();
+                if(bg === 'background-image: url()' || bg === 'background-image: url(default)') {
+                    thumb.parent().remove();
                 }
             });
             for(var i = 0; i < links.children.length; i++) {
@@ -119,9 +121,20 @@ $(document).ready(function() {
         }
     });
     
-    // tappable(".link", {
-    //     allowClick: true
-    // });
+    tappable(".link", {
+        onTap: function(e, target) {
+            url = $(target).attr("href");
+            var a = document.createElement('a');
+            a.setAttribute("href", url);
+            a.setAttribute("target", "_blank");
+
+            var dispatch = document.createEvent("HTMLEvents")
+            dispatch.initEvent("click", true, true);
+            a.dispatchEvent(dispatch);
+        },
+        activeClassDelay: 100,
+        activeClass: 'link-active'
+    });
 
     tappable(".toComments", {
         onTap: function(e, target) {
@@ -130,7 +143,7 @@ $(document).ready(function() {
             var id = comm.attr("data-id");
             ensenar("#navBack");
             var detail = $("#detailWrap");
-            detail.empty();              
+            detail.empty();
 
             var d = document.getElementById("detailWrap");
             d.scrollTop = 0;
