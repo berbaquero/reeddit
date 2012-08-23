@@ -56,14 +56,63 @@ header div {
 }
 
 #container {
-    position: absolute;
-    overflow-y: auto; overflow-x: hidden;
+    position: absolute;    
     top: 0; bottom: 0;
     z-index: 1;
     width: 100%;    
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    overflow-y: auto; overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(0px,0px,0px);
+    -webkit-transition-duration: 350ms;
+}
+
+#mainTitle {
+    position: fixed;
+    left: 10px;
+    width: 140px;
+    font-size: 15px;
+    margin: 0;
+    top: 12px;
+    font-weight: bold;
+    color: whiteSmoke;
+    cursor: default;
+    -webkit-transition-duration: 350ms;
+}
+
+#menuContainer {    
+    overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    width: 140px;
+    z-index: 0;
+    height: 100%;
+    background-image: url('../img/darkdenim3.png');
+}
+
+#mainMenu {
+}
+
+.loading {
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #777;
+    margin-top: 40px;
+}
+
+#subs {
+    padding: 10px;
+    margin: 0;
+    cursor: default;
+}
+
+.sub {
+    color: whiteSmoke;
+    margin: 20px 0;
+    font-size: 14px;
 }
 
 .link {
@@ -81,7 +130,9 @@ header div {
 
 .linkThumb {
     -webkit-box-flex: 1;
-    width: 70px;    
+    width: 70px;
+    max-width: 70px;
+    min-width: 70px;
 }
 
 .linkThumb div {
@@ -89,11 +140,11 @@ header div {
     background-repeat: no-repeat;
     background-size: 70px;
     background-color: #333;
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
     margin: 0 auto;
     border-radius: 5px;
-    /*box-shadow: 0px 1px 3px #333;*/
+    box-shadow: inset 0px 1px 3px #333;
 }
 
 .thumbLeft {
@@ -279,7 +330,7 @@ footer p {
     width: 15%;
     display: -webkit-box;
     -webkit-box-align: center;
-    background-color: #F1F1F1;
+    /*background-color: #F1F1F1;*/
 }
 
 .toComments div {
@@ -339,14 +390,17 @@ footer p {
 }
 
 #linkSummary {
-    background-color: #6d6d6d;        
-    padding-top: 10px;
-    margin-bottom: 10px;
+    background-color: #6D6D6D;
+    padding: 10px 0 16px;
 }
 
 #linkSummary p {
     margin: 0;
     padding: 0 10px;
+}
+
+#linkSummary a {
+    text-decoration: none;
 }
 
 #summaryTitle {
@@ -357,36 +411,46 @@ footer p {
 
 #summaryTime {
     color: white;
+    text-align: center;
 }
 
 #summaryDomain {
     color: #F60;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 #summarySub {
     color: #FAFAFA;
+    text-align: left;
+}
+
+#summaryCommentNum {
+    text-align: right;
 }
 
 #summaryExtra {
     display: -webkit-box;
     background-color: #333;
-    padding: 5px 0;
-    margin-top: 5px;
     font-weight: bold;
+    padding: 0 10px;
 }
 
 #summaryExtra p {
-    color: #fafafa;
+    color: #FAFAFA;
     -webkit-box-flex: 1;
+    margin: 0;
+    padding: 5px 0;
+    width: 33%;
 }
 
 #selfText {
-    padding: 5px;
+    padding: 10px;
     border: 1px solid #999;
-    margin: 0 10px;
+    margin: 10px;
     border-radius: 5px;
+    background-color: #DDD;
+    box-shadow: inset 0px 0px 7px #777;
 }
 
 #selfText p { margin-top: 5px; }
@@ -439,6 +503,11 @@ footer p {
         background-image: url('../img/refresh.png');
     }
 
+    #mainTitle {        
+        color: #333;
+        text-shadow: 0px 1px 1px whiteSmoke;
+    }
+
     #title {
         color: #333;
         text-shadow: 0px 1px 1px white;
@@ -448,9 +517,9 @@ footer p {
         background-color: #fafafa;
     }
 
-    /*.linkWrap:hover {
-        background-color: #f0f0f0;
-    }*/
+    .sub {
+        margin: 14px 0;
+    }
 
     .linkWrap {
         border-bottom: 1px solid #ddd;

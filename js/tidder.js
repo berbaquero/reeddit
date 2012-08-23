@@ -1,26 +1,51 @@
 $(document).ready(function() {
 
-    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
+    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div></div></div></article>{{/children}}";
 
     var linksTemplateLeft = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
 
-    var linkSummaryTemplate = "<div id='linkSummary'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p><p id='summarySub'>{{sub}}</p><div id='summaryExtra'><p id='summaryTime'></p><p id='summaryCommentNum'></p></div></div>";
+    var linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>";
+
+    var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
     
-    var page = 1, perPage = 30, ancho = 320, activeView = 1, slider, urlEnd = ".json?jsonp=?",
-    loadedLinks = {}, posts = {};
+    var page = 1, ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, currentSub = 'frontPage';
 
     var obtenerAncho = function() {
         ancho = $(window).width();
     }
 
-    var loadLinks = function() {
+    var loadLinks = function(baseUrl, scroll) {
         var main = $("#mainWrap");
         main.empty();
         main.append("<p class='loading'>Cargando links...</p>");
-        $.getJSON("http://www.reddit.com/" + urlEnd, function(result) {
+        $.getJSON(baseUrl + urlLimitEnd, function(result) {
             $(".loading").remove();
             var links = result.data;
-            var html = Mustache.to_html(linksTemplate, links);
+            var numThumbs = 0;
+            for(var i = 0; i < links.children.length; i++) {
+                var link = links.children[i];
+                if(posts[link.data.id]) {
+                    posts[link.data.id].comments = link.data.num_comments;
+                    posts[link.data.id].time = link.data.created_utc;
+                } else {
+                    posts[link.data.id] = {
+                        "title": link.data.title,
+                        "text": link.data.selftext,
+                        "time": link.data.created_utc,
+                        "domain": link.data.domain,
+                        "sub": link.data.subreddit,
+                        "comments": link.data.num_comments,
+                        "url": link.data.url                    
+                    };
+                }
+
+                if(link.data.thumbnail){
+                    numThumbs++;
+                }
+            }
+            
+            var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
             main.append(html);
             var thumbs = $('.linkThumb div');
             $.each(thumbs, function(i, t) {
@@ -30,15 +55,8 @@ $(document).ready(function() {
                     thumb.parent().remove();
                 }
             });
-            for(var i = 0; i < links.children.length; i++) {
-                var link = links.children[i];
-                posts[link.data.id] = {
-                    "title": link.data.title,
-                    "text": link.data.selftext,
-                    "time": link.data.created_utc,
-                    "domain": link.data.domain,
-                    "sub": link.data.subreddit
-                };
+            if(scroll) {                
+                scrollTop();
             }
         });
     }
@@ -63,6 +81,13 @@ $(document).ready(function() {
         baseElement.append(com);
         loadedLinks[id] = com;
         $("#detailWrap a").attr("target", "_blank");
+    }
+
+    var loadSubsList = function() {
+        $.getJSON('./js/subs.json', function(subs) {
+            var html = Mustache.to_html(subredditsListTemplate, subs);
+            $("#mainMenu").append(html);
+        });
     }
 
     function timeSince(now, time) {
@@ -107,17 +132,60 @@ $(document).ready(function() {
         }
     });
 
+    var changeMainTitle = function(title) {
+        $("#mainTitle").text(title);
+    }
+
+    var backToMainView = function(newTitle) {
+        $("#navBack").addClass("invisible");
+        $("#mainTitle").removeClass('invisible');
+        $("#titleHead").empty().append(headerIcon);
+        if(newTitle) {
+            changeMainTitle(newTitle);
+        }
+    }
+
+    var loadSub = function(sub) {        
+        if(sub !== currentSub) {
+            var url;
+            if (sub === 'frontPage') {
+                url = urlInit;
+            } else {
+                url = urlInit + "r/" + sub + "/";
+            }
+            loadLinks(url, true);
+            changeMainTitle(sub);
+            currentSub = sub;
+        }
+        $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
+    }
+
+    tappable(".sub", {
+        onTap: function(e, target) {
+            var sub = $(target).first().text(); 
+            loadSub(sub);
+        }
+    });
+
+    tappable("#summarySub", {
+        onTap: function(e, target) {
+            slideFromLeft();
+            var subreddit = $(target).text();
+            loadLinks(urlInit + "r/" + subreddit + "/");
+            backToMainView(subreddit);
+        }
+    });
+
     tappable("#navBack", {
         onTap: function(e, target) {
             slideFromLeft();
-            $(target).addClass("invisible");
-            $("#titleHead").empty().append(headerIcon);
+            backToMainView();
         }
     });
 
     tappable("#refresh", {
         onTap: function(e, target) {
-            loadLinks();
+            loadLinks(urlInit);
         }
     });
     
@@ -163,9 +231,10 @@ $(document).ready(function() {
                 detail.append(summaryWrap);
                 $("#summaryTime").text(timeSince(new Date().getTime(), postInfo.time));
                 var url = "http://www.reddit.com" + comm.attr("data-link") + urlEnd;
-                $.getJSON(url, function(result) {                    
+                detail.append("<p class='loading'>Cargando comentarios...</p>");
+                $.getJSON(url, function(result) {
+                    $(".loading").remove();
                     var comments = result[1].data.children;
-                    $("#summaryCommentNum").text(comments.length + (comments.length > 1 ? " main comments" : " main comment"));
                     loadComments(comments, detail, id);
                 });
             }
@@ -173,8 +242,16 @@ $(document).ready(function() {
 
             $("#titleHead").empty().append(title);
             $("#title").text(posts[id].title);
+
+            $("#mainTitle").addClass('invisible');
         },
         activeClass: 'toComments-active'
+    });
+
+    tappable("#mainTitle", {
+        onTap: function(e, target) {
+            $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
+        }
     });
     
     // Animaciones
@@ -257,31 +334,32 @@ $(document).ready(function() {
     var d = document, body = d.body;
 
     var supportOrientation = typeof window.orientation != 'undefined',
-    getScrollTop = function() {
-        return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
-    },
-    scrollTop = function() {
-        if (!supportOrientation) {
-            return;
-        } else {
-            $(body).css({
-                "min-height": (screen.height - 64) + 'px', 
-                "position": "relative"
-            });
-            setTimeout(function() {
-                window.scrollTo(0, 0);
-                var top = getScrollTop();
-                window.scrollTo(0, top === 1 ? 0 : 1);
-            }, 1);
-        }
-    };
+        getScrollTop = function() {
+            return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
+        },
+        scrollTop = function() {
+            if (!supportOrientation) {
+                return;
+            } else {
+                $(body).css({
+                    "min-height": (screen.height - 64) + 'px', 
+                    "position": "relative"
+                });
+                setTimeout(function() {
+                    window.scrollTo(0, 0);
+                    var top = getScrollTop();
+                    window.scrollTo(0, top === 1 ? 0 : 1);
+                }, 1);
+            }
+        };
 
     var title = $("#title");
     var headerIcon =  $("#headerIcon");
 
     $("#title").remove();
 
-    loadLinks();
+    loadLinks(urlInit);
+    loadSubsList();
 
     scrollTop();
 
