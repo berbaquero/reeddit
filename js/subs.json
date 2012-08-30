@@ -10,37 +10,19 @@
 			"name" : "funny"
 		},
 		{
-			"name" : "politics"
-		},
-		{
 			"name" : "gaming"
-		},
-		{
-			"name" : "AskReddit"
 		},
 		{
 			"name" : "worldnews"
 		},
 		{
-			"name" : "videos"
-		},
-		{
 			"name" : "todayilearned"
-		},
-		{
-			"name" : "WTF"
 		},
 		{
 			"name" : "aww"
 		},
 		{
-			"name" : "atheism"
-		},
-		{
 			"name" : "technology"
-		},
-		{
-			"name" : "AdviceAnimals"
 		},
 		{
 			"name" : "science"
@@ -50,6 +32,24 @@
 		},
 		{
 			"name" : "movies"
+		},
+		{
+			"name" : "Apple"
+		},
+		{
+			"name" : "Android"
+		},
+		{
+			"name" : "geek"
+		},
+		{
+			"name" : "Batman"
+		},
+		{
+			"name" : "programming"
+		},
+		{
+			"name" : "WebDev"
 		}
 	]
 }

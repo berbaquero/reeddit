@@ -1,26 +1,35 @@
 $(document).ready(function() {
 
-    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div></div></div></article>{{/children}}";
+    var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}";
 
-    var linksTemplateLeft = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-link='{{data.permalink}}' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
+    var linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
 
     var linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>";
 
     var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
-    
-    var page = 1, ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, currentSub = 'frontPage';
+
+    var ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, currentSub = 'frontPage', mostrandoMenu = false,
+    // Pseudo-Enums
+    moverIzquierda = 1, moverDerecha = 2;
 
     var obtenerAncho = function() {
         ancho = $(window).width();
-    }
+    };
 
-    var loadLinks = function(baseUrl, scroll) {
+    var loadLinks = function(baseUrl, fromSub) {
         var main = $("#mainWrap");
-        main.empty();
-        main.append("<p class='loading'>Cargando links...</p>");
+        if (fromSub) {
+            var m = document.getElementById("mainWrap");
+            m.scrollTop = 0;
+            setTimeout(function () {
+                main.prepend("<p class='loading'>Cargando links...</p>");
+            }, 350);
+        } else {
+            main.empty();
+            main.append("<p class='loading'>Cargando links...</p>");
+        }
         $.getJSON(baseUrl + urlLimitEnd, function(result) {
-            $(".loading").remove();
             var links = result.data;
             var numThumbs = 0;
             for(var i = 0; i < links.children.length; i++) {
@@ -36,39 +45,43 @@ $(document).ready(function() {
                         "domain": link.data.domain,
                         "sub": link.data.subreddit,
                         "comments": link.data.num_comments,
-                        "url": link.data.url                    
+                        "url": link.data.url,
+                        "self": link.data.is_self,
+                        "link": link.data.permalink
                     };
                 }
 
-                if(link.data.thumbnail){
+                if(link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self'){
                     numThumbs++;
                 }
             }
-            
+ 
             var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
+            if(fromSub) {
+                main.empty();
+            }else{
+                $(".loading").remove();
+            }
             main.append(html);
             var thumbs = $('.linkThumb div');
             $.each(thumbs, function(i, t) {
                 var thumb = $(t);
                 var bg = thumb.attr('style');
-                if(bg === 'background-image: url()' || bg === 'background-image: url(default)') {
+                if(bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
                     thumb.parent().remove();
                 }
             });
-            if(scroll) {                
-                scrollTop();
-            }
         });
-    }
+    };
 
     var loadComments = function(data, baseElement, id) {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
-        var com = $("<article/>");        
+        var com = $("<article/>");
         for(var i = 0; i < data.length - 1; i++) {
-            var c = data[i];            
+            var c = data[i];
             var html = converter.makeHtml(c.data.body);
-            
+
             var comment = $("<div/>").addClass("commentWrap")
             .append($("<div/>").addClass("commentData")
                 .append($("<div/>").addClass("commentAuthor")
@@ -81,14 +94,53 @@ $(document).ready(function() {
         baseElement.append(com);
         loadedLinks[id] = com;
         $("#detailWrap a").attr("target", "_blank");
-    }
+    };
+
+    var procesarComentarios = function(comm) {
+        var id = comm.attr("data-id");
+        ensenar("#navBack");
+        var detail = $("#detailWrap");
+        detail.empty();
+
+        var d = document.getElementById("detailWrap");
+        d.scrollTop = 0;
+
+        if (loadedLinks[id]) {
+            detail.append(posts[id].summary);
+            detail.append(loadedLinks[id]);
+        } else {
+            var postInfo = posts[id];
+            var summaryWrap = $("<article/>");
+            summaryWrap.append(Mustache.to_html(linkSummaryTemplate, postInfo));
+            if(postInfo.text) {
+                var summaryConverter1 = new Markdown.Converter();
+                summaryWrap.append($("<div/>").attr("id", "selfText").append(summaryConverter1.makeHtml(postInfo.text)));
+            }
+            posts[id].summary = summaryWrap;
+            detail.append(summaryWrap);
+            $("#summaryTime").text(timeSince(new Date().getTime(), postInfo.time));
+            var url = "http://www.reddit.com" + posts[id].link + urlEnd;
+            detail.append("<p class='loading'>Cargando comentarios...</p>");
+            $.getJSON(url, function(result) {
+                $(".loading").remove();
+                var comments = result[1].data.children;
+                loadComments(comments, detail, id);
+            });
+        }
+
+        slideFromRight();
+
+        $("#titleHead").empty().append(title);
+        $("#title").text(posts[id].title);
+        $("#mainTitle").addClass('invisible');
+    };
 
     var loadSubsList = function() {
         $.getJSON('./js/subs.json', function(subs) {
             var html = Mustache.to_html(subredditsListTemplate, subs);
             $("#mainMenu").append(html);
         });
-    }
+    };
 
     function timeSince(now, time) {
 
@@ -133,8 +185,8 @@ $(document).ready(function() {
     });
 
     var changeMainTitle = function(title) {
-        $("#mainTitle").text(title);
-    }
+        $("#subTitle").text(title);
+    };
 
     var backToMainView = function(newTitle) {
         $("#navBack").addClass("invisible");
@@ -143,9 +195,9 @@ $(document).ready(function() {
         if(newTitle) {
             changeMainTitle(newTitle);
         }
-    }
+    };
 
-    var loadSub = function(sub) {        
+    var loadSub = function(sub) {
         if(sub !== currentSub) {
             var url;
             if (sub === 'frontPage') {
@@ -154,17 +206,37 @@ $(document).ready(function() {
                 url = urlInit + "r/" + sub + "/";
             }
             loadLinks(url, true);
-            changeMainTitle(sub);
             currentSub = sub;
         }
-        $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
-    }
+        changeMainTitle(sub);
+    };
+
+    var moverMenu = function(direccion) {
+        if(direccion === moverIzquierda) {
+            $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
+            setTimeout(function() {
+                mostrandoMenu = false;
+            });
+        }
+        if(direccion === moverDerecha) {
+            $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
+            setTimeout(function() {
+                mostrandoMenu = true;
+            });
+        }
+    };
+
+    // Taps
 
     tappable(".sub", {
         onTap: function(e, target) {
-            var sub = $(target).first().text(); 
+            var sub = $(target).first().text();
+            moverMenu(moverIzquierda);
             loadSub(sub);
-        }
+        },
+        allowClick: false,
+        activeClassDelay: 100,
+        activeClass: 'sub-active'
     });
 
     tappable("#summarySub", {
@@ -177,28 +249,38 @@ $(document).ready(function() {
     });
 
     tappable("#navBack", {
-        onTap: function(e, target) {
+        onTap: function(e) {
             slideFromLeft();
+            setTimeout(function() {
+                $('#detailWrap').empty();
+            }, 350);
             backToMainView();
         }
     });
 
     tappable("#refresh", {
-        onTap: function(e, target) {
+        onTap: function(e) {
             loadLinks(urlInit);
         }
     });
     
     tappable(".link", {
         onTap: function(e, target) {
-            url = $(target).attr("href");
-            var a = document.createElement('a');
-            a.setAttribute("href", url);
-            a.setAttribute("target", "_blank");
+            var comm = $(target);
+            var id = comm.attr("data-id");
+            var link = posts[id];
+            if (link.self) {
+                procesarComentarios(comm);
+            } else {
+                url = comm.attr("data-url");
+                var a = document.createElement('a');
+                a.setAttribute("href", url);
+                a.setAttribute("target", "_blank");
 
-            var dispatch = document.createEvent("HTMLEvents")
-            dispatch.initEvent("click", true, true);
-            a.dispatchEvent(dispatch);
+                var dispatch = document.createEvent("HTMLEvents");
+                dispatch.initEvent("click", true, true);
+                a.dispatchEvent(dispatch);
+            }
         },
         activeClassDelay: 100,
         activeClass: 'link-active'
@@ -206,54 +288,47 @@ $(document).ready(function() {
 
     tappable(".toComments", {
         onTap: function(e, target) {
-
-            var comm = $(target);
-            var id = comm.attr("data-id");
-            ensenar("#navBack");
-            var detail = $("#detailWrap");
-            detail.empty();
-
-            var d = document.getElementById("detailWrap");
-            d.scrollTop = 0;
-
-            if (loadedLinks[id]) {
-                detail.append(posts[id].summary);
-                detail.append(loadedLinks[id]);
-            } else {
-                var postInfo = posts[id];
-                var summaryWrap = $("<article/>");
-                summaryWrap.append(Mustache.to_html(linkSummaryTemplate, postInfo));            
-                if(postInfo.text) {
-                    var summaryConverter1 = new Markdown.Converter();
-                    summaryWrap.append($("<div/>").attr("id", "selfText").append(summaryConverter1.makeHtml(postInfo.text)));
-                }
-                posts[id].summary = summaryWrap;
-                detail.append(summaryWrap);
-                $("#summaryTime").text(timeSince(new Date().getTime(), postInfo.time));
-                var url = "http://www.reddit.com" + comm.attr("data-link") + urlEnd;
-                detail.append("<p class='loading'>Cargando comentarios...</p>");
-                $.getJSON(url, function(result) {
-                    $(".loading").remove();
-                    var comments = result[1].data.children;
-                    loadComments(comments, detail, id);
-                });
-            }
-            slideFromRight();
-
-            $("#titleHead").empty().append(title);
-            $("#title").text(posts[id].title);
-
-            $("#mainTitle").addClass('invisible');
+            procesarComentarios($(target));
         },
-        activeClass: 'toComments-active'
+        activeClass: 'toComments-active',
+        activeClassDelay: 100
     });
 
-    tappable("#mainTitle", {
-        onTap: function(e, target) {
-            $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
+    tappable("#subTitle", {
+        onTap: function(e) {
+            moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
+        },
+        activeClass: 'subTitle-active'
+    });
+
+    // Swipes
+
+    $("#detailView").swipeRight(function() {
+        slideFromLeft();
+        setTimeout(function() {
+            $('#detailWrap').empty();
+        }, 350);
+        backToMainView();
+    });
+
+    $("#mainView").swipeRight(function() {
+        if(activeView === 1) {
+            moverMenu(moverDerecha);
         }
     });
-    
+
+    $("#mainView").swipeLeft(function() {
+        if(mostrandoMenu) {
+            moverMenu(moverIzquierda);
+        }
+    });
+
+    $("#mainView").on("swipeLeft", ".link", function() {
+        if(!mostrandoMenu) {
+            procesarComentarios($(this));
+        }
+    });
+
     // Animaciones
 
     var slideFromLeft = function () {
@@ -274,10 +349,10 @@ $(document).ready(function() {
                     "left": ""
                 }).removeClass("slideTransition");
                 sacar("#detailView");
+                activeView = 1;
             }, 350);
         }, 50);
-        activeView = 1;
-    }
+    };
 
     var slideFromRight = function () {
         obtenerAncho();
@@ -286,14 +361,14 @@ $(document).ready(function() {
         det.css("left", ancho);
         setTimeout(function() {
             main.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
-            det.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');           
+            det.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
             setTimeout(function () { // Quita las propiedades de transition
-                det.css("left", 0).removeClass("slideTransition").css("-webkit-transform", "");
+                det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css("-webkit-transform", "");
                 main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
+                activeView = 2;
             }, 350);
         }, 100);
-        activeView = 2;
-    }
+    };
 
     var reveal = function(element) {
         var el = $(element);
@@ -301,57 +376,57 @@ $(document).ready(function() {
         setTimeout(function() {
             el.removeClass("invisible");
         });
-    }
+    };
 
     // Metodos de vistas
 
     var mostrar = function (element) {
         var el = $(element);
         el.removeClass("oculto");
-    }
+    };
 
     var sacar = function (element) {
         var el = $(element);
         el.addClass("fuera");
-    }
+    };
 
     var ingresar = function(element) {
         var el = $(element);
         el.removeClass("fuera");
         return el;
-    }
+    };
 
     var ocultar = function(element) {
         var el = $(element);
         el.addClass("oculto");
-    }
+    };
 
     var ensenar = function(element) {
         var el = $(element);
         el.removeClass("invisible");
-    }
+    };
 
     var d = document, body = d.body;
 
     var supportOrientation = typeof window.orientation != 'undefined',
-        getScrollTop = function() {
-            return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
-        },
-        scrollTop = function() {
-            if (!supportOrientation) {
-                return;
-            } else {
-                $(body).css({
-                    "min-height": (screen.height - 64) + 'px', 
-                    "position": "relative"
-                });
-                setTimeout(function() {
-                    window.scrollTo(0, 0);
-                    var top = getScrollTop();
-                    window.scrollTo(0, top === 1 ? 0 : 1);
-                }, 1);
-            }
-        };
+    getScrollTop = function() {
+        return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
+    },
+    scrollTop = function() {
+        if (!supportOrientation) {
+            return;
+        } else {
+            $(body).css({
+                "min-height": (screen.height - 64) + 'px',
+                "position": "relative"
+            });
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+                var top = getScrollTop();
+                window.scrollTo(0, top === 1 ? 0 : 1);
+            }, 1);
+        }
+    };
 
     var title = $("#title");
     var headerIcon =  $("#headerIcon");
@@ -364,6 +439,10 @@ $(document).ready(function() {
     scrollTop();
 
     $("#container").on('touchstart', function(){
+        window.scrollTo(0, 1);
+    });
+
+    $("#menuContainer").on('touchstart', function(){
         window.scrollTo(0, 1);
     });
 });
