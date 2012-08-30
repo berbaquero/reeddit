@@ -1,0 +1,55 @@
+{
+	"subs" : [
+		{
+			"name" : "frontPage"
+		},
+		{
+			"name" : "pics"
+		},
+		{
+			"name" : "funny"
+		},
+		{
+			"name" : "politics"
+		},
+		{
+			"name" : "gaming"
+		},
+		{
+			"name" : "AskReddit"
+		},
+		{
+			"name" : "worldnews"
+		},
+		{
+			"name" : "videos"
+		},
+		{
+			"name" : "todayilearned"
+		},
+		{
+			"name" : "WTF"
+		},
+		{
+			"name" : "aww"
+		},
+		{
+			"name" : "atheism"
+		},
+		{
+			"name" : "technology"
+		},
+		{
+			"name" : "AdviceAnimals"
+		},
+		{
+			"name" : "science"
+		},
+		{
+			"name" : "Music"
+		},
+		{
+			"name" : "movies"
+		}
+	]
+}
