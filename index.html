@@ -4,13 +4,14 @@
 
         <meta charset="utf-8">
 
-        <title>Alien News</title>
+        <title>Reeddit</title>
 
         <meta name="description" content="Cliente elástico y minimalista de Reddit.">
         <meta name="viewport" content="width=device-width, user-scalable=0">
         <meta name="author" content="Bernardo Baquero Stand">
 
-        <link rel="apple-touch-icon" sizes="114x114" href="img/homeIcon.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/alienIcon.png">
+        <link rel="icon" type="image/png" href="img/alienIcon.png">
 
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tidder.css">
@@ -20,7 +21,7 @@
     <body>
 
         <header>
-            <p id='mainTitle'>frontPage</p>
+            <div id='mainTitle'><p id='subTitle'>frontPage</p></div>
             <section id="navBack" class="corner invisible">
                 <div class="button" id="backArrow"><div></div></div>
             </section>
@@ -38,9 +39,10 @@
             <div class="view fuera" id="detailView"><div class="wrapper" id="detailWrap"></div></div>
         </div>
 
-        <div id="menuContainer"><div class='view'><div class='wrapper' id="mainMenu"></div><div></div>
-        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <div id="menuContainer"><div class='view'><div class='wrapper' id="mainMenu"></div></div></div>
+
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+        <script src="js/zepto.js"></script>
         <script src="js/mustache.js"></script>
         <script src="js/tappable.js"></script>
         <script src="js/Markdown.Converter.js"></script>
