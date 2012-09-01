@@ -56,6 +56,25 @@ header div {
     -ms-box-align: center;
 }
 
+.repliesButton {
+    color: #555;
+    background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #ccc 100%);
+    padding: 3px 10px;
+    border-radius: 8px;
+    border: 1.5px solid #CCC;
+    font-size: 11px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    width: 90px;
+    margin: 0 auto;
+}
+
+.repliesButton-active {
+    background-image: -webkit-linear-gradient(top, #ccc 0%, #777 100%);
+    color: white;
+}
+
 #title {
     color: white;
     text-align: center;
@@ -412,20 +431,12 @@ footer p {
     background-color: #ddd;
 }
 
-.toComments-active div {
-    /*background-image: url('../img/toCommentArrow.png');
-    width: 10px;
-    height: 13px;
-    background-repeat: no-repeat;
-    background-size: 10px;
-    background-position: 0px -13px;*/
-}
-
 /* Comentarios */
 
 .commentWrap {
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    border-left: 1px solid #CCC;
 }
 
 .commentData {
@@ -607,6 +618,10 @@ footer p {
     }
 
     .link {
+        cursor: pointer;
+    }
+
+    .repliesButton {    
         cursor: pointer;
     }
 

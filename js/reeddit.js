@@ -9,7 +9,7 @@ $(document).ready(function() {
     var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
 
     var ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, currentSub = 'frontPage', mostrandoMenu = false,
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2;
 
@@ -74,12 +74,14 @@ $(document).ready(function() {
         });
     };
 
-    var loadComments = function(data, baseElement, id) {
+    var loadComments = function(data, baseElement, idParent) {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
         var com = $("<article/>");
-        for(var i = 0; i < data.length - 1; i++) {
+        for(var i = 0; i < data.length; i++) {
             var c = data[i];
+            if(c.kind !== "t1") { continue; }
+
             var html = converter.makeHtml(c.data.body);
 
             var comment = $("<div/>").addClass("commentWrap")
@@ -89,10 +91,18 @@ $(document).ready(function() {
                 .append($("<div/>").addClass("commentInfo")
                     .append($("<p/>").text(timeSince(now, c.data.created_utc)))))
             .append($("<div/>").addClass("commentBody").html(html));
+
+            if(c.data.replies) {
+                comment.append($("<span/>").addClass("repliesButton").attr("comment-id", c.data.id).text("See replies"));
+                replies[c.data.id] = c.data.replies.data.children;
+            }
+
             com.append(comment);
         }
         baseElement.append(com);
-        loadedLinks[id] = com;
+        if (idParent) {
+            loadedLinks[idParent] = com;
+        }
         $("#detailWrap a").attr("target", "_blank");
     };
 
@@ -227,6 +237,17 @@ $(document).ready(function() {
     };
 
     // Taps
+
+    tappable(".repliesButton", {
+        onTap: function(e, target) {
+            var parent = $(target);
+            var commentID = parent.attr('comment-id');
+            var comments = replies[commentID];
+            loadComments(comments, parent.parent());
+            parent.remove();
+        },
+        activeClass: 'repliesButton-active'
+    });
 
     tappable(".sub", {
         onTap: function(e, target) {
