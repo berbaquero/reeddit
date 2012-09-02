@@ -92,9 +92,7 @@ header div {
     position: absolute;    
     top: 0; bottom: 0;
     z-index: 1;
-    width: 100%;    
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    width: 100%;
     overflow-y: auto; overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0px,0px,0px);
@@ -155,7 +153,7 @@ header div {
 }
 
 #subs {
-    padding: 10px;
+    padding: 10px 0;
     margin: 0;
     cursor: default;
 }
@@ -164,12 +162,13 @@ header div {
     color: whiteSmoke;
     margin: 10px 0;
     font-size: 14px;
-    padding: 5px 0;
+    padding: 5px 10px;
     text-transform: capitalize;
 }
 
 .sub-active {
-    background-image: -webkit-linear-gradient(top, #ff6600 0%, #e32918 100%);
+    text-shadow: 0 0 7px whiteSmoke;
+    border-left: 3px solid #4286F5;
 }
 
 .link {
@@ -664,5 +663,70 @@ footer p {
 
     .toComments div {
         background-image: url('../img/comment_48.png');
+    }
+}
+
+/* Tablet Portrait */
+
+@media only screen and (min-width: 490px) and (min-height: 500px) {
+    #container {
+        right: 0;
+        width: 72%;
+    }
+
+    #menuContainer {
+        width: 28%;
+    }
+}
+
+@media only screen and (min-width: 760px) and (min-height: 500px) {
+    #container {
+        right: 0;
+        width: 78%;
+    }
+
+    #menuContainer {
+        width: 22%;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (min-height: 500px) {
+    #container {
+        right: 0;
+        width: 84%;
+    }
+
+    #menuContainer {
+        width: 16%;
+    }
+
+    #mainView {
+        width: 40%;
+    }
+
+    #detailView {
+        width: 60%;
+        right: 0;
+        border-left: 1px solid;
+    }
+
+    .toComments {
+        display: none;
+    }
+
+    .link {
+        width: 100%;
+    }
+
+    .view {
+        top: 0;
+    }
+
+    .fuera {
+        left: auto;
+    }
+
+    header {
+        display: none;
     }
 }

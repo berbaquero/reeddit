@@ -9,12 +9,13 @@ $(document).ready(function() {
     var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
 
     var ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, esWideScreen = false;
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2;
 
     var obtenerAncho = function() {
         ancho = $(window).width();
+        esWideScreen = ancho >= 1000;
     };
 
     var loadLinks = function(baseUrl, fromSub) {
@@ -138,7 +139,9 @@ $(document).ready(function() {
             });
         }
 
-        slideFromRight();
+        if(!esWideScreen) {
+            slideFromRight();
+        }
 
         $("#titleHead").empty().append(title);
         $("#title").text(posts[id].title);
@@ -251,13 +254,18 @@ $(document).ready(function() {
 
     tappable(".sub", {
         onTap: function(e, target) {
-            var sub = $(target).first().text();
+            var sub = $(target);
             moverMenu(moverIzquierda);
-            loadSub(sub);
+            loadSub(sub.first().text());
+            $(".sub.sub-active").removeClass("sub-active");
+            sub.addClass('sub-active');
+            if(activeView === 2) {
+                slideFromLeft();
+            }
         },
         allowClick: false,
         activeClassDelay: 100,
-        activeClass: 'sub-active'
+        activeClass: 'link-active'
     });
 
     tappable("#summarySub", {
@@ -281,16 +289,20 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            loadLinks(urlInit);
+            // loadLinks(urlInit);
+            obtenerAncho();
+            window.alert($(window).width());
+            window.alert($(window).height());
         }
     });
     
     tappable(".link", {
         onTap: function(e, target) {
+            obtenerAncho();
             var comm = $(target);
             var id = comm.attr("data-id");
             var link = posts[id];
-            if (link.self) {
+            if (link.self || esWideScreen) {
                 procesarComentarios(comm);
             } else {
                 url = comm.attr("data-url");
@@ -302,7 +314,12 @@ $(document).ready(function() {
                 dispatch.initEvent("click", true, true);
                 a.dispatchEvent(dispatch);
             }
+            $(".link.link-active").removeClass("link-active");
+            if(esWideScreen) {
+                comm.addClass('link-active');
+            }
         },
+        allowClick: false,
         activeClassDelay: 100,
         activeClass: 'link-active'
     });
@@ -317,6 +334,8 @@ $(document).ready(function() {
 
     tappable("#subTitle", {
         onTap: function(e) {
+            obtenerAncho();
+            if(ancho >= 490) { return; }
             moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
         },
         activeClass: 'subTitle-active'
@@ -325,6 +344,8 @@ $(document).ready(function() {
     // Swipes
 
     $("#detailView").swipeRight(function() {
+        obtenerAncho();
+        if (esWideScreen) { return; }
         slideFromLeft();
         setTimeout(function() {
             $('#detailWrap').empty();
@@ -333,18 +354,24 @@ $(document).ready(function() {
     });
 
     $("#mainView").swipeRight(function() {
+        obtenerAncho();
+        if (esWideScreen || ancho >= 490) { return; }
         if(activeView === 1) {
             moverMenu(moverDerecha);
         }
     });
 
     $("#mainView").swipeLeft(function() {
+        obtenerAncho();
+        if (esWideScreen || ancho >= 490) { return; }
         if(mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     });
 
     $("#mainView").on("swipeLeft", ".link", function() {
+        obtenerAncho();
+        if (esWideScreen) { return; }
         if(!mostrandoMenu) {
             procesarComentarios($(this));
         }
@@ -434,20 +461,19 @@ $(document).ready(function() {
         return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
     },
     scrollTop = function() {
-        if (!supportOrientation) {
-            return;
-        } else {
-            $(body).css({
-                "min-height": (screen.height - 64) + 'px',
-                "position": "relative"
-            });
-            setTimeout(function() {
-                window.scrollTo(0, 0);
-                var top = getScrollTop();
-                window.scrollTo(0, top === 1 ? 0 : 1);
-            }, 1);
-        }
+        if (!supportOrientation || isiPad) return;
+        $(body).css({
+            "min-height": (screen.height - 64) + 'px',
+            "position": "relative"
+        });
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+            var top = getScrollTop();
+            window.scrollTo(0, top === 1 ? 0 : 1);
+        }, 1);
     };
+
+    var isiPad = navigator.userAgent.match(/iPad/i) !== null; // Trampa
 
     var title = $("#title");
     var headerIcon =  $("#headerIcon");
