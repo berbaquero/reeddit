@@ -293,10 +293,11 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            // loadLinks(urlInit);
-            obtenerAncho();
-            window.alert($(window).width());
-            window.alert($(window).height());
+            if(currentSub === 'frontPage') {
+                loadLinks(urlInit);
+            } else {
+                loadLinks(urlInit + "r/" + currentSub + "/");
+            }
         }
     });
     
