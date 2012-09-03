@@ -20,9 +20,9 @@ $(document).ready(function() {
 
     var loadLinks = function(baseUrl, fromSub) {
         var main = $("#mainWrap");
-        if (fromSub) {
+        if (fromSub) { // Si viene de se seleccionar un subreddit
             var m = document.getElementById("mainWrap");
-            m.scrollTop = 0;
+            m.scrollTop = 0; // Se sube al top del contenedor
             setTimeout(function () {
                 main.prepend("<p class='loading'>Cargando links...</p>");
             }, 350);
@@ -35,10 +35,11 @@ $(document).ready(function() {
             var numThumbs = 0;
             for(var i = 0; i < links.children.length; i++) {
                 var link = links.children[i];
-                if(posts[link.data.id]) {
+                if(posts[link.data.id]) { // Si ya se ha cargado este link localmente
+                    // Se actualizan los datos dinamicos
                     posts[link.data.id].comments = link.data.num_comments;
                     posts[link.data.id].time = link.data.created_utc;
-                } else {
+                } else { // Si no se han cargado los links localmente
                     posts[link.data.id] = {
                         "title": link.data.title,
                         "text": link.data.selftext,
@@ -51,16 +52,16 @@ $(document).ready(function() {
                         "link": link.data.permalink
                     };
                 }
-
-                if(link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self'){
+                // Se cuentan los thumbnails que se pueden mostrar
+                if (link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self'){
                     numThumbs++;
                 }
             }
  
             var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
-            if(fromSub) {
+            if (fromSub) {
                 main.empty();
-            }else{
+            } else {
                 $(".loading").remove();
             }
             main.append(html);
@@ -139,7 +140,9 @@ $(document).ready(function() {
             });
         }
 
-        if(!esWideScreen) {
+        if (esWideScreen) {
+            $("#detailView").removeClass("fuera");
+        } else {
             slideFromRight();
         }
 
@@ -260,6 +263,7 @@ $(document).ready(function() {
             $(".sub.sub-active").removeClass("sub-active");
             sub.addClass('sub-active');
             if(activeView === 2) {
+                backToMainView();
                 slideFromLeft();
             }
         },
