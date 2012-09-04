@@ -548,7 +548,7 @@ footer p {
 
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
-    header {        
+    header {
         background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
     }
 
@@ -668,7 +668,7 @@ footer p {
 
 /* Tablet Portrait */
 
-@media only screen and (min-width: 490px) and (min-height: 500px) {
+@media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {
     #container {
         right: 0;
         width: 72%;
@@ -679,7 +679,7 @@ footer p {
     }
 }
 
-@media only screen and (min-width: 760px) and (min-height: 500px) {
+@media only screen and (min-width: 760px) and (max-width: 999px) and (min-height: 500px) {
     #container {
         right: 0;
         width: 78%;
@@ -689,6 +689,8 @@ footer p {
         width: 22%;
     }
 }
+
+/* Tablet Landscape */
 
 @media only screen and (min-width: 1000px) and (min-height: 500px) {
     #container {

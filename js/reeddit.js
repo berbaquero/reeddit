@@ -1,21 +1,23 @@
 $(document).ready(function() {
-
+    // Templates
     var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}";
-
     var linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
-
     var linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>";
-
     var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
 
+    // Globales
     var ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, esWideScreen = false;
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
     // Pseudo-Enums
-    moverIzquierda = 1, moverDerecha = 2;
+    moverIzquierda = 1, moverDerecha = 2,
+    // Media query
+    wideScreenMQ = window.matchMedia("(min-width: 1000px)"), largeScreenMQ = window.matchMedia("(min-width: 490px)"),
+    esWideScreen = false, esLargeScreen = false;
 
     var obtenerAncho = function() {
         ancho = $(window).width();
-        esWideScreen = ancho >= 1000;
+        esWideScreen = wideScreenMQ.matches;
+        esLargeScreen = largeScreenMQ.matches;
     };
 
     var loadLinks = function(baseUrl, fromSub) {
@@ -82,7 +84,9 @@ $(document).ready(function() {
         var com = $("<article/>");
         for(var i = 0; i < data.length; i++) {
             var c = data[i];
-            if(c.kind !== "t1") { continue; }
+            if(c.kind !== "t1") {
+                continue;
+            }
 
             var html = converter.makeHtml(c.data.body);
 
@@ -320,7 +324,7 @@ $(document).ready(function() {
                 a.dispatchEvent(dispatch);
             }
             $(".link.link-active").removeClass("link-active");
-            if(esWideScreen) {
+            if (esWideScreen) {
                 comm.addClass('link-active');
             }
         },
@@ -331,6 +335,7 @@ $(document).ready(function() {
 
     tappable(".toComments", {
         onTap: function(e, target) {
+            obtenerAncho();
             procesarComentarios($(target));
         },
         activeClass: 'toComments-active',
@@ -340,7 +345,9 @@ $(document).ready(function() {
     tappable("#subTitle", {
         onTap: function(e) {
             obtenerAncho();
-            if(ancho >= 490) { return; }
+            if (esLargeScreen) {
+                return;
+            }
             moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
         },
         activeClass: 'subTitle-active'
@@ -350,7 +357,9 @@ $(document).ready(function() {
 
     $("#detailView").swipeRight(function() {
         obtenerAncho();
-        if (esWideScreen) { return; }
+        if (esWideScreen) {
+            return;
+        }
         slideFromLeft();
         setTimeout(function() {
             $('#detailWrap').empty();
@@ -360,7 +369,9 @@ $(document).ready(function() {
 
     $("#mainView").swipeRight(function() {
         obtenerAncho();
-        if (esWideScreen || ancho >= 490) { return; }
+        if (esWideScreen || esLargeScreen) {
+            return;
+        }
         if(activeView === 1) {
             moverMenu(moverDerecha);
         }
@@ -368,15 +379,19 @@ $(document).ready(function() {
 
     $("#mainView").swipeLeft(function() {
         obtenerAncho();
-        if (esWideScreen || ancho >= 490) { return; }
+        if (esWideScreen || esLargeScreen) {
+            return;
+        }
         if(mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     });
 
     $("#mainView").on("swipeLeft", ".link", function() {
-        obtenerAncho();
-        if (esWideScreen) { return; }
+        obtenerAncho();        
+        if (esWideScreen) {
+            return;
+        }        
         if(!mostrandoMenu) {
             procesarComentarios($(this));
         }
@@ -466,7 +481,7 @@ $(document).ready(function() {
         return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
     },
     scrollTop = function() {
-        if (!supportOrientation || isiPad) return;
+        if (!supportOrientation || isiPad || isAndroid) return;
         $(body).css({
             "min-height": (screen.height - 64) + 'px',
             "position": "relative"
@@ -479,6 +494,7 @@ $(document).ready(function() {
     };
 
     var isiPad = navigator.userAgent.match(/iPad/i) !== null; // Trampa
+    var isAndroid = navigator.userAgent.match(/Android/i) !== null;
 
     var title = $("#title");
     var headerIcon =  $("#headerIcon");
