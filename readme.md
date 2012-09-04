@@ -2,7 +2,7 @@ Reeddit es un cliente elástico, minimalista y sólo-lectura de Reddit, que perm
 
 ## Herramientas
 
-Para contruir Reeddit, utilicé varios scripts geniales:
+Para construir Reeddit, utilicé varios scripts geniales:
 
 *	[Zepto.js](http://zeptojs.com/) -- básicamente, jQuery para navegadores modernos. Más ligero, y con varias ventajas para sitios y app móviles.
 *	[Tappable](https://github.com/cheeaun/tappable) -- Tremendo manejador de eventos 'tap' para móviles.
