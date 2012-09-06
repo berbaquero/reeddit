@@ -732,3 +732,23 @@ footer p {
         display: none;
     }
 }
+
+@media only screen and (max-height: 280px) {
+    header { height: 32px; }
+    
+    .view { top: 32px; }
+    
+    #title { font-size: 16px; }
+    
+    #refreshIcon div {
+        width: 15px;
+        height: 20px;
+    }
+    
+    .button {
+        width: 25px;
+        height: 25px;
+    }
+    
+    #mainTitle { top: 6px; }
+}
