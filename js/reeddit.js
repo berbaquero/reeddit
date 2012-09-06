@@ -6,21 +6,19 @@ $(document).ready(function() {
     var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
 
     // Globales
-    var ancho = 320, activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
+    var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
     urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
-    // Media query
-    wideScreenMQ = window.matchMedia("(min-width: 1000px)"), largeScreenMQ = window.matchMedia("(min-width: 490px)"),
-    esWideScreen = false, esLargeScreen = false;
-
-    var obtenerAncho = function() {
+    esWideScreen = ancho >= 1000, esLargeScreen = ancho >= 490;
+    
+    window.onresizeend = function() {
         ancho = $(window).width();
-        esWideScreen = wideScreenMQ.matches;
-        esLargeScreen = largeScreenMQ.matches;
+        esWideScreen = ancho >= 1000;
+        esLargeScreen = ancho >= 490;
     };
 
-    var loadLinks = function(baseUrl, fromSub) {
+    function loadLinks(baseUrl, fromSub) {
         var main = $("#mainWrap");
         if (fromSub) { // Si viene de se seleccionar un subreddit
             var m = document.getElementById("mainWrap");
@@ -76,9 +74,9 @@ $(document).ready(function() {
                 }
             });
         });
-    };
+    }
 
-    var loadComments = function(data, baseElement, idParent) {
+    function loadComments(data, baseElement, idParent) {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
         var com = $("<article/>");
@@ -110,9 +108,9 @@ $(document).ready(function() {
             loadedLinks[idParent] = com;
         }
         $("#detailWrap a").attr("target", "_blank");
-    };
+    }
 
-    var procesarComentarios = function(comm) {
+    function procesarComentarios(comm) {
         var id = comm.attr("data-id");
         ensenar("#navBack");
         var detail = $("#detailWrap");
@@ -153,48 +151,13 @@ $(document).ready(function() {
         $("#titleHead").empty().append(title);
         $("#title").text(posts[id].title);
         $("#mainTitle").addClass('invisible');
-    };
+    }
 
-    var loadSubsList = function() {
+    function loadSubsList() {
         $.getJSON('./js/subs.json', function(subs) {
             var html = Mustache.to_html(subredditsListTemplate, subs);
             $("#mainMenu").append(html);
         });
-    };
-
-    function timeSince(now, time) {
-
-        now = (now / 1000);
-
-        var seconds = Math.floor(now - time);
-
-        var interval = (seconds / 31536000);
-
-        if (interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " years" : " year");
-        }
-        interval = (seconds / 2592000);
-        if (interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " months" : " month");
-        }
-        interval = (seconds / 86400);
-        if (interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " days" : " day");
-        }
-        interval = (seconds / 3600);
-        if (interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " hours" : " hour");
-        }
-        interval = (seconds / 60);
-        if (interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " minutes" : " minute");
-        }
-        return Math.floor(seconds) + " seconds";
     }
 
     window.applicationCache.addEventListener("updateready", function(e) {
@@ -204,20 +167,20 @@ $(document).ready(function() {
         }
     });
 
-    var changeMainTitle = function(title) {
+    function changeMainTitle(title) {
         $("#subTitle").text(title);
-    };
+    }
 
-    var backToMainView = function(newTitle) {
+    function backToMainView(newTitle) {
         $("#navBack").addClass("invisible");
         $("#mainTitle").removeClass('invisible');
         $("#titleHead").empty().append(headerIcon);
         if(newTitle) {
             changeMainTitle(newTitle);
         }
-    };
+    }
 
-    var loadSub = function(sub) {
+    function loadSub(sub) {
         if(sub !== currentSub) {
             var url;
             if (sub === 'frontPage') {
@@ -229,9 +192,9 @@ $(document).ready(function() {
             currentSub = sub;
         }
         changeMainTitle(sub);
-    };
+    }
 
-    var moverMenu = function(direccion) {
+    function moverMenu(direccion) {
         if(direccion === moverIzquierda) {
             $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
             setTimeout(function() {
@@ -244,7 +207,7 @@ $(document).ready(function() {
                 mostrandoMenu = true;
             });
         }
-    };
+    }
 
     // Taps
 
@@ -307,7 +270,6 @@ $(document).ready(function() {
     
     tappable(".link", {
         onTap: function(e, target) {
-            obtenerAncho();
             var comm = $(target);
             var id = comm.attr("data-id");
             var link = posts[id];
@@ -335,7 +297,7 @@ $(document).ready(function() {
 
     tappable(".toComments", {
         onTap: function(e, target) {
-            obtenerAncho();
+            
             procesarComentarios($(target));
         },
         activeClass: 'toComments-active',
@@ -344,7 +306,7 @@ $(document).ready(function() {
 
     tappable("#subTitle", {
         onTap: function(e) {
-            obtenerAncho();
+            
             if (esLargeScreen) {
                 return;
             }
@@ -356,7 +318,7 @@ $(document).ready(function() {
     // Swipes
 
     $("#detailView").swipeRight(function() {
-        obtenerAncho();
+        
         if (esWideScreen) {
             return;
         }
@@ -368,7 +330,7 @@ $(document).ready(function() {
     });
 
     $("#mainView").swipeRight(function() {
-        obtenerAncho();
+        
         if (esWideScreen || esLargeScreen) {
             return;
         }
@@ -378,7 +340,7 @@ $(document).ready(function() {
     });
 
     $("#mainView").swipeLeft(function() {
-        obtenerAncho();
+        
         if (esWideScreen || esLargeScreen) {
             return;
         }
@@ -388,7 +350,7 @@ $(document).ready(function() {
     });
 
     $("#mainView").on("swipeLeft", ".link", function() {
-        obtenerAncho();        
+                
         if (esWideScreen) {
             return;
         }        
@@ -399,8 +361,7 @@ $(document).ready(function() {
 
     // Animaciones
 
-    var slideFromLeft = function () {
-        obtenerAncho();
+    function slideFromLeft() {        
         var main = $("#mainView");
         var det = $("#detailView");
         main.css("left", -ancho);
@@ -420,10 +381,9 @@ $(document).ready(function() {
                 activeView = 1;
             }, 350);
         }, 50);
-    };
+    }
 
-    var slideFromRight = function () {
-        obtenerAncho();
+    function slideFromRight() {        
         var main = $("#mainView");
         var det = $("#detailView");
         det.css("left", ancho);
@@ -436,43 +396,43 @@ $(document).ready(function() {
                 activeView = 2;
             }, 350);
         }, 100);
-    };
+    }
 
-    var reveal = function(element) {
+    function reveal(element) {
         var el = $(element);
         el.removeClass("fuera").addClass("invisible");
         setTimeout(function() {
             el.removeClass("invisible");
         });
-    };
+    }
 
     // Metodos de vistas
 
-    var mostrar = function (element) {
+    function mostrar(element) {
         var el = $(element);
         el.removeClass("oculto");
-    };
+    }
 
-    var sacar = function (element) {
+    function sacar(element) {
         var el = $(element);
         el.addClass("fuera");
-    };
+    }
 
-    var ingresar = function(element) {
+    function ingresar(element) {
         var el = $(element);
         el.removeClass("fuera");
         return el;
-    };
+    }
 
-    var ocultar = function(element) {
+    function ocultar(element) {
         var el = $(element);
         el.addClass("oculto");
-    };
+    }
 
-    var ensenar = function(element) {
+    function ensenar(element) {
         var el = $(element);
         el.removeClass("invisible");
-    };
+    }
 
     var d = document, body = d.body;
 
@@ -513,4 +473,75 @@ $(document).ready(function() {
     $("#menuContainer").on('touchstart', function(){
         window.scrollTo(0, 1);
     });
+    
+    function timeSince(now, time) {
+
+        now = (now / 1000);
+
+        var seconds = Math.floor(now - time);
+
+        var interval = (seconds / 31536000);
+
+        if (interval > 1) {
+            interval = Math.floor(interval);
+            return interval + (interval > 1 ? " years" : " year");
+        }
+        interval = (seconds / 2592000);
+        if (interval > 1) {
+            interval = Math.floor(interval);
+            return interval + (interval > 1 ? " months" : " month");
+        }
+        interval = (seconds / 86400);
+        if (interval > 1) {
+            interval = Math.floor(interval);
+            return interval + (interval > 1 ? " days" : " day");
+        }
+        interval = (seconds / 3600);
+        if (interval > 1) {
+            interval = Math.floor(interval);
+            return interval + (interval > 1 ? " hours" : " hour");
+        }
+        interval = (seconds / 60);
+        if (interval > 1) {
+            interval = Math.floor(interval);
+            return interval + (interval > 1 ? " minutes" : " minute");
+        }
+        return Math.floor(seconds) + " seconds";
+    }
 });
+
+// On Resize End
+(function(window) {
+    var dispatchResizeEndEvent = function() {
+        if (typeof window.onresizeend === "function") {
+            window.onresizeend();
+        }
+    };
+
+    var getCurrentOrientation = function() {
+        return Math.abs(+window.orientation || 0) % 180;
+    };
+
+    var initialOrientation = getCurrentOrientation();
+    var currentOrientation;
+    var resizeTimeout;
+
+    var resizeDebounce = function() {
+        currentOrientation = getCurrentOrientation();
+
+        if (currentOrientation !== initialOrientation) {
+            dispatchResizeEndEvent();
+            initialOrientation = currentOrientation;
+        }
+        else {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(dispatchResizeEndEvent, 100);
+        }
+    };
+
+    if (window.addEventListener) {
+        window.addEventListener("resize", resizeDebounce, false);
+    } else if (window.attachEvent) {
+        window.attachEvent("onresize", resizeDebounce);
+    }
+})(window);
