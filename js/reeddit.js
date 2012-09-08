@@ -157,6 +157,7 @@ $(document).ready(function() {
         $.getJSON('./js/subs.json', function(subs) {
             var html = Mustache.to_html(subredditsListTemplate, subs);
             $("#mainMenu").append(html);
+            $(".sub").first().addClass("sub-active");
         });
     }
 
@@ -237,15 +238,6 @@ $(document).ready(function() {
         allowClick: false,
         activeClassDelay: 100,
         activeClass: 'link-active'
-    });
-
-    tappable("#summarySub", {
-        onTap: function(e, target) {
-            slideFromLeft();
-            var subreddit = $(target).text();
-            loadLinks(urlInit + "r/" + subreddit + "/");
-            backToMainView(subreddit);
-        }
     });
 
     tappable("#navBack", {
@@ -350,10 +342,9 @@ $(document).ready(function() {
     });
 
     $("#mainView").on("swipeLeft", ".link", function() {
-                
         if (esWideScreen) {
             return;
-        }        
+        }
         if(!mostrandoMenu) {
             procesarComentarios($(this));
         }
@@ -361,7 +352,7 @@ $(document).ready(function() {
 
     // Animaciones
 
-    function slideFromLeft() {        
+    function slideFromLeft() {
         var main = $("#mainView");
         var det = $("#detailView");
         main.css("left", -ancho);
@@ -383,7 +374,7 @@ $(document).ready(function() {
         }, 50);
     }
 
-    function slideFromRight() {        
+    function slideFromRight() {
         var main = $("#mainView");
         var det = $("#detailView");
         det.css("left", ancho);
@@ -512,6 +503,7 @@ $(document).ready(function() {
 
 // On Resize End
 (function(window) {
+    "use strict";
     var dispatchResizeEndEvent = function() {
         if (typeof window.onresizeend === "function") {
             window.onresizeend();
