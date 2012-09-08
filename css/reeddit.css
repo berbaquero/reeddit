@@ -167,7 +167,7 @@ header div {
 }
 
 .sub-active {
-    text-shadow: 0 0 7px whiteSmoke;
+    text-shadow: 0 0 10px #CCC;;
     border-left: 3px solid #4286F5;
 }
 
@@ -265,10 +265,6 @@ header div {
     width: 100%;
     top: 44px; bottom: 0;
     z-index: 1;
-}
-
-#scrollable { 
-    overflow: scroll;
 }
 
 #mainView, #detailView {
