@@ -10,12 +10,13 @@ $(document).ready(function() {
     urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
-    esWideScreen = ancho >= 1000, esLargeScreen = ancho >= 490;
+    esWideScreen = window.matchMedia("(min-width: 1000px)").matches,
+    esLargeScreen = window.matchMedia("(min-width: 490px)").matches;
     
     window.onresizeend = function() {
         ancho = $(window).width();
-        esWideScreen = ancho >= 1000;
-        esLargeScreen = ancho >= 490;
+        esWideScreen = window.matchMedia("(min-width: 1000px)").matches;
+        esLargeScreen = window.matchMedia("(min-width: 490px)").matches;
     };
 
     function loadLinks(baseUrl, fromSub) {
