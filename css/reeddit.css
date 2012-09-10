@@ -252,14 +252,6 @@ header div {
     color: white;
 }
 
-.shotWrap {
-    height: 108px;
-    width: 50%;
-    float: left;
-    margin: 0 0 8px 0;
-    padding: 0 2.5px;
-}
-
 .view {
     position: absolute;
     width: 100%;
