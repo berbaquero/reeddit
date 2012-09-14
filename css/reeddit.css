@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+}
+
 body {
     overflow: hidden;
     -webkit-user-select: none;
@@ -12,6 +16,7 @@ body {
     -webkit-text-size-adjust: none;
     -ms-text-size-adjust: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    position: relative;
 }
 
 * {
@@ -502,6 +507,7 @@ footer p {
     background-color: #333;
     font-weight: bold;
     padding: 0 10px;
+    box-shadow: 0px 0px 10px #333;
 }
 
 #summaryExtra p {
@@ -723,20 +729,20 @@ footer p {
 
 @media only screen and (max-height: 280px) {
     header { height: 32px; }
-    
+
     .view { top: 32px; }
-    
+
     #title { font-size: 16px; }
-    
+
     #refreshIcon div {
         width: 15px;
         height: 20px;
     }
-    
+
     .button {
         width: 25px;
         height: 25px;
     }
-    
+
     #mainTitle { top: 6px; }
 }
