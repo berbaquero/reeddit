@@ -1,23 +1,32 @@
 $(document).ready(function() {
     // Templates
-    var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}";
-    var linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}";
-    var linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>";
-    var subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>";
+    var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}",
+    linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}",
+    linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
+    subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
+    allSubredditsTemplate = "{{#children}}<div class='subr'><p class='subrTitle'>{{data.display_name}}</p><p class='subrDesc'>{{data.public_description}}</p></div>{{/children}}";
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
     urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
-    esWideScreen = window.matchMedia("(min-width: 1000px)").matches,
-    esLargeScreen = window.matchMedia("(min-width: 490px)").matches;
+    esWideScreen = chequearWideScreen(),
+    esLargeScreen = chequearLargeScreen();
     
     window.onresizeend = function() {
         ancho = $(window).width();
-        esWideScreen = window.matchMedia("(min-width: 1000px)").matches;
-        esLargeScreen = window.matchMedia("(min-width: 490px)").matches;
+        esWideScreen = chequearWideScreen();
+        esLargeScreen = chequearLargeScreen();
     };
+
+    function chequearWideScreen() {
+        return window.matchMedia("(min-width: 1000px)").matches;
+    }
+
+    function chequearLargeScreen() {
+        return window.matchMedia("(min-width: 490px)").matches;
+    }
 
     function loadLinks(baseUrl, fromSub) {
         var main = $("#mainWrap");
@@ -426,27 +435,32 @@ $(document).ready(function() {
         el.removeClass("invisible");
     }
 
-    var d = document, body = d.body;
-
+    var d = document, body = d.body, hideBarTriggerInit = false;
+    
     var supportOrientation = typeof window.orientation != 'undefined',
     getScrollTop = function() {
         return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
     },
     scrollTop = function() {
-        if (!supportOrientation || isiPad || isAndroid) return;
-        $(body).css({
-            "min-height": (screen.height - 64) + 'px',
-            "position": "relative"
-        });
-        setTimeout(function() {
-            window.scrollTo(0, 0);
+        if (!supportOrientation) return;
+        body.style.height = screen.height + 'px';
+        setTimeout(function(){
+            window.scrollTo(0, 1);
             var top = getScrollTop();
             window.scrollTo(0, top === 1 ? 0 : 1);
+            body.style.height = window.innerHeight + 'px';
         }, 1);
-    };
+        if (!hideBarTriggerInit) {
+            $("#container").on('touchstart', function(){
+                window.scrollTo(0, 1);
+            });
 
-    var isiPad = navigator.userAgent.match(/iPad/i) !== null; // Trampa
-    var isAndroid = navigator.userAgent.match(/Android/i) !== null;
+            $("#menuContainer").on('touchstart', function(){
+                window.scrollTo(0, 1);
+            });
+            hideBarTriggerInit = true;
+        }
+    };
 
     var title = $("#title");
     var headerIcon =  $("#headerIcon");
@@ -457,14 +471,6 @@ $(document).ready(function() {
     loadSubsList();
 
     scrollTop();
-
-    $("#container").on('touchstart', function(){
-        window.scrollTo(0, 1);
-    });
-
-    $("#menuContainer").on('touchstart', function(){
-        window.scrollTo(0, 1);
-    });
     
     function timeSince(now, time) {
 
