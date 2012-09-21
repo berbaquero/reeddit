@@ -98,7 +98,8 @@ header div {
     top: 0; bottom: 0;
     z-index: 1;
     width: 100%;
-    overflow-y: auto; overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0px,0px,0px);
     -moz-transform: translate3d(0px,0px,0px);
@@ -135,7 +136,7 @@ header div {
 }
 
 #menuContainer {    
-    overflow-y: auto; overflow-x: hidden;
+    overflow-y: scroll; overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     position: absolute;
     width: 140px;
@@ -146,6 +147,32 @@ header div {
 
 #mainMenu {
     box-shadow: inset -3px 0 10px black;
+    height: 92%;
+}
+
+#addNewSub {
+    position: fixed;
+    bottom: 0;
+    width: 140px;
+    background-color: #222;
+    z-index: 1;
+    height: 8%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-box-align: center;
+}
+
+#addNewSubr {
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    font-size: 25px;
+    color: #777;
+    margin: -5px 0;
+    cursor: pointer;
 }
 
 .loading {
@@ -220,6 +247,19 @@ header div {
 
 .marginless {
     margin: 0 !important;
+}
+
+.subreddit {
+    padding: 0 10px;
+    border-bottom: 1px solid #CCC;
+    border-top: 1px solid white;
+}
+
+.subredditTitle {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 5px 0;
+    color: #E34A28;
 }
 
 .linkTitle {
@@ -306,16 +346,6 @@ header div {
     left: -9999px;
 }
 
-footer {
-    width: 100%;
-    z-index: 3;
-    text-align: center;
-}
-
-footer p {
-    margin: 0;
-}
-
 .slideTransition {
     -webkit-transition-duration: 350ms;
     -moz-transition-duration: 350ms;
@@ -383,22 +413,6 @@ footer p {
     opacity: 0;
 }
 
-#sobre {
-    position: fixed;
-    background-color: #333;
-    top: 50px;
-    z-index: 10;
-    padding: 10px;
-    opacity: .9;
-}
-
-#sobre p {    
-    color: white;
-    opacity: 1;
-    font-weight: bold;
-    padding: 20px 10px;
-}
-
 .toComments {    
     width: 15%;
     display: -webkit-box;
@@ -429,6 +443,10 @@ footer p {
     padding: 10px;
     border-bottom: 1px solid #ccc;
     border-left: 1px solid #CCC;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 .commentData {
@@ -526,7 +544,11 @@ footer p {
     margin: 10px;
     border-radius: 5px;
     background-color: #DDD;
-    box-shadow: inset 0 0 7px #777;
+    box-shadow: inset 0 0 7px #777;    
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 #selfText p { margin-top: 5px; }
@@ -636,6 +658,8 @@ footer p {
     }
 
     /* Menu */
+    #mainMenu { height: 95%; }
+
     #mainMenu::-webkit-scrollbar {
         width: 7px;
     }
@@ -651,6 +675,8 @@ footer p {
         border-radius: 10px;
         background: #444;
     }
+
+    #addNewSub { height: 5%; }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -727,6 +753,8 @@ footer p {
     }
 }
 
+/* Landscape phone */
+
 @media only screen and (max-height: 280px) {
     header { height: 32px; }
 
@@ -745,4 +773,10 @@ footer p {
     }
 
     #mainTitle { top: 6px; }
+
+    #addNewSubr { margin: -10px 0; }
+}
+
+@media only screen and (min-height: 890px) {
+    #mainMenu { height: 96%; } #addNewSub { height: 4%; }
 }
