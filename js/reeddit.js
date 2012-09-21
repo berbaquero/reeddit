@@ -4,11 +4,11 @@ $(document).ready(function() {
     linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}",
     linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
     subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
-    allSubredditsTemplate = "{{#children}}<div class='subr'><p class='subrTitle'>{{data.display_name}}</p><p class='subrDesc'>{{data.public_description}}</p></div>{{/children}}";
+    allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}";
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false,
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
     esWideScreen = chequearWideScreen(),
@@ -220,6 +220,22 @@ $(document).ready(function() {
         }
     }
 
+    function loadSubredditList() {
+        if (!esLargeScreen) {
+            moverMenu(moverIzquierda);
+        }
+        var main = $("#mainWrap");
+        if (subreddits) {
+            main.empty().append(subreddits);
+        } else {
+            main.prepend("<p class='loading'>Cargando subreddits...</p>");
+            $.getJSON(urlInit + "reddits/" + urlEnd, function(list) {
+                subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
+                main.empty().append(subreddits);
+            });
+        }
+    }
+
     // Taps
 
     tappable(".repliesButton", {
@@ -315,6 +331,13 @@ $(document).ready(function() {
             moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
         },
         activeClass: 'subTitle-active'
+    });
+
+    tappable("#addNewSubr", {
+        onTap: function(e) {
+            loadSubredditList();
+            $(".sub.sub-active").removeClass("sub-active");
+        }
     });
 
     // Swipes
@@ -451,11 +474,11 @@ $(document).ready(function() {
             body.style.height = window.innerHeight + 'px';
         }, 1);
         if (!hideBarTriggerInit) {
-            $("#container").on('touchstart', function(){
+            $("#container").on('touchend', function(){
                 window.scrollTo(0, 1);
             });
 
-            $("#menuContainer").on('touchstart', function(){
+            $("#menuContainer").on('touchend', function(){
                 window.scrollTo(0, 1);
             });
             hideBarTriggerInit = true;
@@ -471,6 +494,10 @@ $(document).ready(function() {
     loadSubsList();
 
     scrollTop();
+
+    $("#addNewSub").on("touchmove", function(e) {
+        e.preventDefault();
+    }, false);
     
     function timeSince(now, time) {
 
