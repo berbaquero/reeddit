@@ -439,10 +439,15 @@ header div {
 
 /* Comentarios */
 
+#detailWrap > section > .commentWrap {
+    padding-right: 10px;
+    border-bottom: 1px solid #CCC;
+}
+
 .commentWrap {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    border-left: 1px solid #CCC;
+    padding: 10px 0 10px 10px;
+    border-bottom: 1px solid #DDD;
+    border-left: 1px solid #DDD;
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
