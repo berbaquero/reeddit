@@ -89,7 +89,7 @@ $(document).ready(function() {
     function loadComments(data, baseElement, idParent) {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
-        var com = $("<article/>");
+        var com = $("<section/>");
         for(var i = 0; i < data.length; i++) {
             var c = data[i];
             if(c.kind !== "t1") {
@@ -134,7 +134,7 @@ $(document).ready(function() {
             detail.append(loadedLinks[id]);
         } else {
             var postInfo = posts[id];
-            var summaryWrap = $("<article/>");
+            var summaryWrap = $("<section/>");
             summaryWrap.append(Mustache.to_html(linkSummaryTemplate, postInfo));
             if(postInfo.text) {
                 var summaryConverter1 = new Markdown.Converter();
@@ -225,6 +225,8 @@ $(document).ready(function() {
             moverMenu(moverIzquierda);
         }
         var main = $("#mainWrap");
+        var m = document.getElementById("mainWrap");
+        m.scrollTop = 0; // Se sube al top del contenedor
         if (subreddits) {
             main.empty().append(subreddits);
         } else {
