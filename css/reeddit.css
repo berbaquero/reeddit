@@ -699,7 +699,7 @@ header div {
         width: 72%;
     }
 
-    #menuContainer {
+    #menuContainer, #addNewSub {
         width: 28%;
     }
 }
@@ -710,7 +710,7 @@ header div {
         width: 78%;
     }
 
-    #menuContainer {
+    #menuContainer, #addNewSub {
         width: 22%;
     }
 }
@@ -723,7 +723,7 @@ header div {
         width: 84%;
     }
 
-    #menuContainer {
+    #menuContainer, #addNewSub {
         width: 16%;
     }
 
