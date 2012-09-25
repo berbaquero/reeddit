@@ -13,12 +13,6 @@ $(document).ready(function() {
     moverIzquierda = 1, moverDerecha = 2,
     esWideScreen = chequearWideScreen(),
     esLargeScreen = chequearLargeScreen();
-    
-    window.onresizeend = function() {
-        ancho = $(window).width();
-        esWideScreen = chequearWideScreen();
-        esLargeScreen = chequearLargeScreen();
-    };
 
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
@@ -469,23 +463,23 @@ $(document).ready(function() {
     scrollTop = function() {
         if (!supportOrientation) return;
         body.style.height = screen.height + 'px';
-        setTimeout(function(){
+        setTimeout(function() {
             window.scrollTo(0, 1);
             var top = getScrollTop();
             window.scrollTo(0, top === 1 ? 0 : 1);
             body.style.height = window.innerHeight + 'px';
         }, 1);
-        if (!hideBarTriggerInit) {
-            $("#container").on('touchend', function(){
-                window.scrollTo(0, 1);
-            });
-
-            $("#menuContainer").on('touchend', function(){
-                window.scrollTo(0, 1);
-            });
-            hideBarTriggerInit = true;
-        }
     };
+
+    window.addEventListener("resizeend", function() {
+        ancho = $(window).width();
+        esWideScreen = chequearWideScreen();
+        esLargeScreen = chequearLargeScreen();
+        scrollTop();
+        if(esLargeScreen && mostrandoMenu) {
+            moverMenu(moverIzquierda);
+        }
+    }, false);
 
     var title = $("#title");
     var headerIcon =  $("#headerIcon");
@@ -496,10 +490,20 @@ $(document).ready(function() {
     loadSubsList();
 
     scrollTop();
+    
+    var touch = "touchmove";
 
-    $("#addNewSub").on("touchmove", function(e) {
-        e.preventDefault();
-    }, false);
+    if(supportOrientation) {
+        $("#addNewSub").on(touch, function(e) {
+            e.preventDefault();
+        }, false);
+
+        $("header").on(touch, function(e) {
+            if(mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
+                e.preventDefault();
+            }
+        }, false);
+    }
     
     function timeSince(now, time) {
 
@@ -538,12 +542,17 @@ $(document).ready(function() {
 });
 
 // On Resize End
-(function(window) {
+(function(window, document) {
     "use strict";
+
+    if (!(window.addEventListener && document.createEvent && window.dispatchEvent)) {
+        return;
+    }
+
     var dispatchResizeEndEvent = function() {
-        if (typeof window.onresizeend === "function") {
-            window.onresizeend();
-        }
+        var event = document.createEvent("Event");
+        event.initEvent("resizeend", false, false);
+        window.dispatchEvent(event);
     };
 
     var getCurrentOrientation = function() {
@@ -552,24 +561,19 @@ $(document).ready(function() {
 
     var initialOrientation = getCurrentOrientation();
     var currentOrientation;
-    var resizeTimeout;
+    var resizeDebounceTimeout;
 
-    var resizeDebounce = function() {
+    window.addEventListener("resize", function() {
         currentOrientation = getCurrentOrientation();
 
-        if (currentOrientation !== initialOrientation) {
+        if ( currentOrientation !== initialOrientation ) {
             dispatchResizeEndEvent();
             initialOrientation = currentOrientation;
         }
         else {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(dispatchResizeEndEvent, 100);
+            clearTimeout(resizeDebounceTimeout);
+            resizeDebounceTimeout = setTimeout(dispatchResizeEndEvent, 100);
         }
-    };
+    }, false);
 
-    if (window.addEventListener) {
-        window.addEventListener("resize", resizeDebounce, false);
-    } else if (window.attachEvent) {
-        window.attachEvent("onresize", resizeDebounce);
-    }
-})(window);
+})(window, document);
