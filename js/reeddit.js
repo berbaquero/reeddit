@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits,
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
     esWideScreen = chequearWideScreen(),
@@ -22,61 +22,71 @@ $(document).ready(function() {
         return window.matchMedia("(min-width: 490px)").matches;
     }
 
-    function loadLinks(baseUrl, fromSub) {
+    function loadLinks(baseUrl, fromSub, links) {
         var main = $("#mainWrap");
         if (fromSub) { // Si viene de se seleccionar un subreddit
             var m = document.getElementById("mainWrap");
             m.scrollTop = 0; // Se sube al top del contenedor
-            setTimeout(function () {
-                main.prepend("<p class='loading'>Cargando links...</p>");
-            }, 350);
+            if (!links) {
+                setTimeout(function () {
+                    main.prepend("<p class='loading'>Cargando links...</p>");
+                }, 350);
+            }
         } else {
             main.empty();
             main.append("<p class='loading'>Cargando links...</p>");
         }
-        $.getJSON(baseUrl + urlLimitEnd, function(result) {
-            var links = result.data;
-            var numThumbs = 0;
-            for(var i = 0; i < links.children.length; i++) {
-                var link = links.children[i];
-                if(posts[link.data.id]) { // Si ya se ha cargado este link localmente
-                    // Se actualizan los datos dinamicos
-                    posts[link.data.id].comments = link.data.num_comments;
-                    posts[link.data.id].time = link.data.created_utc;
-                } else { // Si no se han cargado los links localmente
-                    posts[link.data.id] = {
-                        "title": link.data.title,
-                        "text": link.data.selftext,
-                        "time": link.data.created_utc,
-                        "domain": link.data.domain,
-                        "sub": link.data.subreddit,
-                        "comments": link.data.num_comments,
-                        "url": link.data.url,
-                        "self": link.data.is_self,
-                        "link": link.data.permalink
-                    };
-                }
-                // Se cuentan los thumbnails que se pueden mostrar
-                if (link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self'){
-                    numThumbs++;
-                }
-            }
- 
-            var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
-            if (fromSub) {
-                main.empty();
-            } else {
-                $(".loading").remove();
-            }
-            main.append(html);
-            var thumbs = $('.linkThumb div');
-            $.each(thumbs, function(i, t) {
-                var thumb = $(t);
-                var bg = thumb.attr('style');
-                if(bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
-                    thumb.parent().remove();
-                }
+        if (links) {
+            processAndRenderLinks(links, fromSub, main);
+        } else {
+            $.getJSON(baseUrl + urlLimitEnd, function(result) {
+                processAndRenderLinks(result, fromSub, main);
             });
+        }
+    }
+
+    function processAndRenderLinks(result, fromSub, main) {
+        var links = result.data;
+        var numThumbs = 0;
+        for (var i = 0; i < links.children.length; i++) {
+            var link = links.children[i];
+            if (posts[link.data.id]) { // Si ya se ha cargado este link localmente
+                // Se actualizan los datos dinamicos
+                posts[link.data.id].comments = link.data.num_comments;
+                posts[link.data.id].time = link.data.created_utc;
+            } else { // Si no se han cargado los links localmente
+                posts[link.data.id] = {
+                    "title": link.data.title,
+                    "text": link.data.selftext,
+                    "time": link.data.created_utc,
+                    "domain": link.data.domain,
+                    "sub": link.data.subreddit,
+                    "comments": link.data.num_comments,
+                    "url": link.data.url,
+                    "self": link.data.is_self,
+                    "link": link.data.permalink
+                };
+            }
+            // Se cuentan los thumbnails que se pueden mostrar
+            if (link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self'){
+                numThumbs++;
+            }
+        }
+
+        var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
+        if (fromSub) {
+            main.empty();
+        } else {
+            $(".loading").remove();
+        }
+        main.append(html);
+        var thumbs = $('.linkThumb div');
+        $.each(thumbs, function(i, t) {
+            var thumb = $(t);
+            var bg = thumb.attr('style');
+            if (bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
+                thumb.parent().remove();
+            }
         });
     }
 
@@ -84,9 +94,9 @@ $(document).ready(function() {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
         var com = $("<section/>");
-        for(var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
             var c = data[i];
-            if(c.kind !== "t1") {
+            if (c.kind !== "t1") {
                 continue;
             }
 
@@ -100,7 +110,7 @@ $(document).ready(function() {
                     .append($("<p/>").text(timeSince(now, c.data.created_utc)))))
             .append($("<div/>").addClass("commentBody").html(html));
 
-            if(c.data.replies) {
+            if (c.data.replies) {
                 comment.append($("<span/>").addClass("repliesButton").attr("comment-id", c.data.id).text("See replies"));
                 replies[c.data.id] = c.data.replies.data.children;
             }
@@ -130,7 +140,7 @@ $(document).ready(function() {
             var postInfo = posts[id];
             var summaryWrap = $("<section/>");
             summaryWrap.append(Mustache.to_html(linkSummaryTemplate, postInfo));
-            if(postInfo.text) {
+            if (postInfo.text) {
                 var summaryConverter1 = new Markdown.Converter();
                 summaryWrap.append($("<div/>").attr("id", "selfText").append(summaryConverter1.makeHtml(postInfo.text)));
             }
@@ -162,12 +172,20 @@ $(document).ready(function() {
             var html = Mustache.to_html(subredditsListTemplate, subs);
             $("#mainMenu").append(html);
             $(".sub").first().addClass("sub-active");
+            loadSavedSubs();
         });
+    }
+
+    function loadSavedSubs() {
+        var subs = obtenerSubsGuardados();
+        if(subs) {
+            insertSubsToList(subs);
+        }
     }
 
     window.applicationCache.addEventListener("updateready", function(e) {
         var update = window.confirm("Update descargado. Recargar para actualizar?");
-        if(update) {
+        if (update) {
             window.location.reload();
         }
     });
@@ -180,13 +198,13 @@ $(document).ready(function() {
         $("#navBack").addClass("invisible");
         $("#mainTitle").removeClass('invisible');
         $("#titleHead").empty().append(headerIcon);
-        if(newTitle) {
+        if (newTitle) {
             changeMainTitle(newTitle);
         }
     }
 
     function loadSub(sub) {
-        if(sub !== currentSub) {
+        if (sub !== currentSub) {
             var url;
             if (sub === 'frontPage') {
                 url = urlInit;
@@ -200,13 +218,13 @@ $(document).ready(function() {
     }
 
     function moverMenu(direccion) {
-        if(direccion === moverIzquierda) {
+        if (direccion === moverIzquierda) {
             $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
             setTimeout(function() {
                 mostrandoMenu = false;
             });
         }
-        if(direccion === moverDerecha) {
+        if (direccion === moverDerecha) {
             $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
             setTimeout(function() {
                 mostrandoMenu = true;
@@ -232,6 +250,32 @@ $(document).ready(function() {
         }
     }
 
+    function limpiarSubrSeleccionado() {
+        $(".sub.sub-active").removeClass("sub-active");
+    }
+
+    function insertSubsToList(subs) {
+        var subsList = $("#subs");
+        if(subs instanceof Array) {
+            for (var i = subs.length - 1; i >= 0; i--) {
+                var sub = subs[i];
+                subsList.append($("<li/>").append($("<p/>").addClass("sub").text(sub)));
+            }
+        } else {
+            subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass("sub-active").text(subs)));
+        }
+    }
+
+    function obtenerSubsGuardados() {
+        var subs = store.getItem("subs");
+        if(subs) {
+            subs = JSON.parse(subs);
+            return subs;
+        } else {
+            return null;
+        }
+    }
+
     // Taps
 
     tappable(".repliesButton", {
@@ -250,9 +294,9 @@ $(document).ready(function() {
             var sub = $(target);
             moverMenu(moverIzquierda);
             loadSub(sub.first().text());
-            $(".sub.sub-active").removeClass("sub-active");
+            limpiarSubrSeleccionado();
             sub.addClass('sub-active');
-            if(activeView === 2) {
+            if (activeView === 2) {
                 backToMainView();
                 slideFromLeft();
             }
@@ -274,7 +318,7 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(currentSub === 'frontPage') {
+            if (currentSub === 'frontPage') {
                 loadLinks(urlInit);
             } else {
                 loadLinks(urlInit + "r/" + currentSub + "/");
@@ -331,8 +375,36 @@ $(document).ready(function() {
 
     tappable("#addNewSubr", {
         onTap: function(e) {
-            loadSubredditList();
-            $(".sub.sub-active").removeClass("sub-active");
+            //loadSubredditList();
+            var ingresarNuevoSub = function () {
+                var newSubr = window.prompt("Nombre Nuevo Subreddit:");
+                if (newSubr) {
+                    $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
+                        loadLinks("", false, data);
+                        changeMainTitle(newSubr);
+                        limpiarSubrSeleccionado();
+                        currentSub = newSubr;
+                        insertSubsToList(newSubr);
+                        var subs = obtenerSubsGuardados();
+                        if (!subs) {
+                            subs = [];
+                        }
+                        var alreadyIn = false;
+                        for (var i = subs.length - 1; i >= 0; i--) {
+                            if (subs[i] === newSubr) {
+                                alreadyIn = true;
+                                break;
+                            }
+                        }
+                        if (!alreadyIn) {
+                            subs.push(newSubr);
+                            store.setItem("subs", JSON.stringify(subs));
+                        }
+                    });
+                }
+            };
+            moverMenu(moverIzquierda);
+            setTimeout(ingresarNuevoSub, 351);
         }
     });
 
@@ -355,7 +427,7 @@ $(document).ready(function() {
         if (esWideScreen || esLargeScreen) {
             return;
         }
-        if(activeView === 1) {
+        if (activeView === 1) {
             moverMenu(moverDerecha);
         }
     });
@@ -365,7 +437,7 @@ $(document).ready(function() {
         if (esWideScreen || esLargeScreen) {
             return;
         }
-        if(mostrandoMenu) {
+        if (mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     });
@@ -374,8 +446,23 @@ $(document).ready(function() {
         if (esWideScreen) {
             return;
         }
-        if(!mostrandoMenu) {
+        if (!mostrandoMenu) {
             procesarComentarios($(this));
+        }
+    });
+
+    $(".sub").swipeLeft(function() {
+        var sub = $(this);
+        var subText = sub.text();
+        $(this.parent()).remove();
+        var subs = obtenerSubsGuardados();
+        if(subs) {
+            for (var i = subs.length - 1; i >= 0; i--) {
+                if(subs[i] === subText) {
+                    console.log(subs[i]);
+                    subs.splice(i, i);
+                }
+            }
         }
     });
 
@@ -476,13 +563,12 @@ $(document).ready(function() {
         esWideScreen = chequearWideScreen();
         esLargeScreen = chequearLargeScreen();
         scrollTop();
-        if(esLargeScreen && mostrandoMenu) {
+        if (esLargeScreen && mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     }, false);
 
-    var title = $("#title");
-    var headerIcon =  $("#headerIcon");
+    var title = $("#title"), headerIcon = $("#headerIcon");
 
     $("#title").remove();
 
@@ -493,13 +579,13 @@ $(document).ready(function() {
     
     var touch = "touchmove";
 
-    if(supportOrientation) {
+    if (supportOrientation) {
         $("#addNewSub").on(touch, function(e) {
             e.preventDefault();
         }, false);
 
         $("header").on(touch, function(e) {
-            if(mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
+            if (mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
                 e.preventDefault();
             }
         }, false);
@@ -540,40 +626,3 @@ $(document).ready(function() {
         return Math.floor(seconds) + " seconds";
     }
 });
-
-// On Resize End
-(function(window, document) {
-    "use strict";
-
-    if (!(window.addEventListener && document.createEvent && window.dispatchEvent)) {
-        return;
-    }
-
-    var dispatchResizeEndEvent = function() {
-        var event = document.createEvent("Event");
-        event.initEvent("resizeend", false, false);
-        window.dispatchEvent(event);
-    };
-
-    var getCurrentOrientation = function() {
-        return Math.abs(+window.orientation || 0) % 180;
-    };
-
-    var initialOrientation = getCurrentOrientation();
-    var currentOrientation;
-    var resizeDebounceTimeout;
-
-    window.addEventListener("resize", function() {
-        currentOrientation = getCurrentOrientation();
-
-        if ( currentOrientation !== initialOrientation ) {
-            dispatchResizeEndEvent();
-            initialOrientation = currentOrientation;
-        }
-        else {
-            clearTimeout(resizeDebounceTimeout);
-            resizeDebounceTimeout = setTimeout(dispatchResizeEndEvent, 100);
-        }
-    }, false);
-
-})(window, document);
