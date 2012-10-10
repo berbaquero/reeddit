@@ -1,14 +1,14 @@
 $(document).ready(function() {
     // Templates
-    var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}",
-    linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}",
+    var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div id='moreLinks'>More</div>",
+    linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div id='moreLinks'>More</div>",
     linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
     subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
     allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}";
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage,
+    urlLimitEnd = ".json?limit=30&jsonp=?", urlPaging = '&after=', loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
     esWideScreen = chequearWideScreen(),
@@ -22,7 +22,7 @@ $(document).ready(function() {
         return window.matchMedia("(min-width: 490px)").matches;
     }
 
-    function loadLinks(baseUrl, fromSub, links) {
+    function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
         if (fromSub) { // Si viene de se seleccionar un subreddit
             var m = document.getElementById("mainWrap");
@@ -32,14 +32,21 @@ $(document).ready(function() {
                     main.prepend("<p class='loading'>Cargando links...</p>");
                 }, 350);
             }
-        } else {
-            main.empty();
+        } else { // Si se está cargando inicialmente
+            if (!paging) { // Si no hay paginación
+                main.empty(); // Se quitan los links actuales
+            } else { // Si hay paginación
+                $("#moreLinks").remove(); // Sólo se quita el botón de 'More' actual
+            }
             main.append("<p class='loading'>Cargando links...</p>");
         }
-        if (links) {
+        if (links) { // Si ya los links fueron pedidos y devueltos
             processAndRenderLinks(links, fromSub, main);
-        } else {
-            $.getJSON(baseUrl + urlLimitEnd, function(result) {
+        } else { // Si aún no se piden los links
+            if (!paging) { // Si no hay paginación
+                paging = ''; // Se pasa una cadena vacia, para no paginar
+            }
+            $.getJSON(baseUrl + urlLimitEnd + paging, function(result) {
                 processAndRenderLinks(result, fromSub, main);
             });
         }
@@ -47,6 +54,7 @@ $(document).ready(function() {
 
     function processAndRenderLinks(result, fromSub, main) {
         var links = result.data;
+        ultimoLink = links.after;
         var numThumbs = 0;
         for (var i = 0; i < links.children.length; i++) {
             var link = links.children[i];
@@ -68,7 +76,7 @@ $(document).ready(function() {
                 };
             }
             // Se cuentan los thumbnails que se pueden mostrar
-            if (link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self'){
+            if (link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self') {
                 numThumbs++;
             }
         }
@@ -79,7 +87,10 @@ $(document).ready(function() {
         } else {
             $(".loading").remove();
         }
-        main.append(html);
+
+        main.append(html); // Agrega nuevos links a la lista
+
+        // Elimina espacio de thumbnails para aquelos links que no tienen uno válido
         var thumbs = $('.linkThumb div');
         $.each(thumbs, function(i, t) {
             var thumb = $(t);
@@ -406,6 +417,19 @@ $(document).ready(function() {
             moverMenu(moverIzquierda);
             setTimeout(ingresarNuevoSub, 351);
         }
+    });
+
+    tappable("#moreLinks", {
+        onTap: function () {
+            var url;
+            if (currentSub === 'frontPage') {
+                url = urlInit;
+            } else {
+                url = urlInit + "r/" + currentSub + "/";
+            }
+            loadLinks(url, false, false, '&after=' + ultimoLink);
+        },
+        activeClass: 'moreLinks-active'
     });
 
     // Swipes
