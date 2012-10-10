@@ -266,6 +266,19 @@ a.link:visited div p.linkTitle { color: #888; }
 
 .link-active div p { color: white; }
 
+#moreLinks {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #194FDB;
+}
+
+.moreLinks-active { background-image: -webkit-linear-gradient(top, #4286F5, #194FDB); color: whiteSmoke !important; }
+
 /*---------------------------- Cabecera -----------------------------*/
 
 header {
