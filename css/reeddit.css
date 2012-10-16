@@ -268,13 +268,14 @@ a.link:visited div p.linkTitle { color: #888; }
 
 #moreLinks {
     width: 100%;
-    height: 60px;
+    height: 50px;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 15px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     color: #194FDB;
+    border-bottom: 1px solid #DDD;
 }
 
 .moreLinks-active { background-image: -webkit-linear-gradient(top, #4286F5, #194FDB); color: whiteSmoke !important; }
