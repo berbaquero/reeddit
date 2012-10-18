@@ -4,7 +4,9 @@ $(document).ready(function() {
     linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div id='moreLinks'>More</div>",
     linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
     subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
-    allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}";
+    allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}",
+    botonAgregarSubManualTemplate = "<div id='agregarSubManual'><span class='repliesButton' id='btnSubMan'>Insert Subreddit Manually</span></div>",
+    formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" autofocus /></form></div>';
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
@@ -251,14 +253,15 @@ $(document).ready(function() {
         var m = document.getElementById("mainWrap");
         m.scrollTop = 0; // Se sube al top del contenedor
         if (subreddits) {
-            main.empty().append(subreddits);
+            main.empty().append(botonAgregarSubManualTemplate).append(subreddits);
         } else {
             main.prepend("<p class='loading'>Cargando subreddits...</p>");
             $.getJSON(urlInit + "reddits/" + urlEnd, function(list) {
                 subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
-                main.empty().append(subreddits);
+                main.empty().append(botonAgregarSubManualTemplate).append(subreddits);
             });
         }
+        limpiarSubrSeleccionado();
     }
 
     function limpiarSubrSeleccionado() {
@@ -286,6 +289,57 @@ $(document).ready(function() {
             return null;
         }
     }
+
+    function mostrarIngresoSubManual() {
+        if (!esLargeScreen) {
+            moverMenu(moverIzquierda);
+        }
+        setTimeout(function() {
+            var mod = $('<div/>').attr('id', 'modal');
+            $('body').append(mod).append(formAgregarSubManualTemplate);
+            setTimeout(function () {
+                mod.css('opacity', 1);
+                // $('#txtNuevoSub').focus();
+            }, 1);
+        }, (esLargeScreen ? 1 : 351));
+    }
+
+    $('body').on('submit', '#formNuevoSub form', function(e) {
+        e.preventDefault();
+        // Quitar el input modal
+        var newSubr = $('#txtNuevoSub').val();
+        var mod = $('#modal');
+        mod.css('opacity', '');
+        setTimeout(function () {
+            mod.remove();
+            $('#formNuevoSub').remove();
+        }, 351);
+        if(!newSubr) { return; } // Si no se ingresó nada, no pasa nada.
+        // En caso de haber ingresado algo
+        // Cargar el contenido del nuevo subrredit, de forma asincrona
+        $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
+            loadLinks("", false, data);
+            changeMainTitle(newSubr);
+            limpiarSubrSeleccionado();
+            currentSub = newSubr;
+            insertSubsToList(newSubr);
+            var subs = obtenerSubsGuardados();
+            if (!subs) {
+                subs = [];
+            }
+            var alreadyIn = false;
+            for (var i = subs.length - 1; i >= 0; i--) {
+                if (subs[i] === newSubr) {
+                    alreadyIn = true;
+                    break;
+                }
+            }
+            if (!alreadyIn) {
+                subs.push(newSubr);
+                store.setItem("subs", JSON.stringify(subs));
+            }
+        });
+    });
 
     // Taps
 
@@ -386,36 +440,7 @@ $(document).ready(function() {
 
     tappable("#addNewSubr", {
         onTap: function(e) {
-            //loadSubredditList();
-            var ingresarNuevoSub = function () {
-                var newSubr = window.prompt("Nombre Nuevo Subreddit:");
-                if (newSubr) {
-                    $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
-                        loadLinks("", false, data);
-                        changeMainTitle(newSubr);
-                        limpiarSubrSeleccionado();
-                        currentSub = newSubr;
-                        insertSubsToList(newSubr);
-                        var subs = obtenerSubsGuardados();
-                        if (!subs) {
-                            subs = [];
-                        }
-                        var alreadyIn = false;
-                        for (var i = subs.length - 1; i >= 0; i--) {
-                            if (subs[i] === newSubr) {
-                                alreadyIn = true;
-                                break;
-                            }
-                        }
-                        if (!alreadyIn) {
-                            subs.push(newSubr);
-                            store.setItem("subs", JSON.stringify(subs));
-                        }
-                    });
-                }
-            };
-            moverMenu(moverIzquierda);
-            setTimeout(ingresarNuevoSub, 351);
+            loadSubredditList();
         }
     });
 
@@ -430,6 +455,12 @@ $(document).ready(function() {
             loadLinks(url, false, false, '&after=' + ultimoLink);
         },
         activeClass: 'moreLinks-active'
+    });
+
+    tappable("#btnSubMan", {
+        onTap: function() {
+            mostrarIngresoSubManual();
+        }
     });
 
     // Swipes
