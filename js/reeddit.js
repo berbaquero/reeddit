@@ -11,6 +11,7 @@ $(document).ready(function() {
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
     urlLimitEnd = ".json?limit=30&jsonp=?", urlPaging = '&after=', loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink,
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
     esWideScreen = chequearWideScreen(),
