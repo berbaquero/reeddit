@@ -34,18 +34,18 @@ $(document).ready(function() {
                     main.prepend("<p class='loading'>Cargando links...</p>");
                 }, 350);
             }
-        } else { // Si se est√° cargando inicialmente
-            if (!paging) { // Si no hay paginaci√≥n
+        } else { // Si se est· cargando inicialmente
+            if (!paging) { // Si no hay paginaciÛn
                 main.empty(); // Se quitan los links actuales
-            } else { // Si hay paginaci√≥n
-                $("#moreLinks").remove(); // S√≥lo se quita el bot√≥n de 'More' actual
+            } else { // Si hay paginaciÛn
+                $("#moreLinks").parent().remove(); // SÛlo se quita el botÛn de 'More' actual
             }
             main.append("<p class='loading'>Cargando links...</p>");
         }
         if (links) { // Si ya los links fueron pedidos y devueltos
             processAndRenderLinks(links, fromSub, main);
-        } else { // Si a√∫n no se piden los links
-            if (!paging) { // Si no hay paginaci√≥n
+        } else { // Si a˙n no se piden los links
+            if (!paging) { // Si no hay paginaciÛn
                 paging = ''; // Se pasa una cadena vacia, para no paginar
             }
             $.getJSON(baseUrl + urlLimitEnd + paging, function(result) {
@@ -92,7 +92,7 @@ $(document).ready(function() {
 
         main.append(html); // Agrega nuevos links a la lista
 
-        // Elimina espacio de thumbnails para aquelos links que no tienen uno v√°lido
+        // Elimina espacio de thumbnails para aquelos links que no tienen uno v·lido
         var thumbs = $('.linkThumb div');
         $.each(thumbs, function(i, t) {
             var thumb = $(t);
@@ -191,7 +191,7 @@ $(document).ready(function() {
 
     function loadSavedSubs() {
         var subs = obtenerSubsGuardados();
-        if(subs) {
+        if (subs) {
             insertSubsToList(subs);
         }
     }
@@ -270,7 +270,7 @@ $(document).ready(function() {
 
     function insertSubsToList(subs) {
         var subsList = $("#subs");
-        if(subs instanceof Array) {
+        if (subs instanceof Array) {
             for (var i = subs.length - 1; i >= 0; i--) {
                 var sub = subs[i];
                 subsList.append($("<li/>").append($("<p/>").addClass("sub").text(sub)));
@@ -282,7 +282,7 @@ $(document).ready(function() {
 
     function obtenerSubsGuardados() {
         var subs = store.getItem("subs");
-        if(subs) {
+        if (subs) {
             subs = JSON.parse(subs);
             return subs;
         } else {
@@ -299,7 +299,7 @@ $(document).ready(function() {
             $('body').append(mod).append(formAgregarSubManualTemplate);
             setTimeout(function () {
                 mod.css('opacity', 1);
-                // $('#txtNuevoSub').focus();
+            // $('#txtNuevoSub').focus();
             }, 1);
         }, (esLargeScreen ? 1 : 351));
     }
@@ -314,7 +314,7 @@ $(document).ready(function() {
             mod.remove();
             $('#formNuevoSub').remove();
         }, 351);
-        if(!newSubr) { return; } // Si no se ingres√≥ nada, no pasa nada.
+        if (!newSubr) { return; } // Si no se ingresÛ nada, no pasa nada.
         // En caso de haber ingresado algo
         // Cargar el contenido del nuevo subrredit, de forma asincrona
         $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
@@ -454,7 +454,7 @@ $(document).ready(function() {
             }
             loadLinks(url, false, false, '&after=' + ultimoLink);
         },
-        activeClass: 'moreLinks-active'
+        activeClass: 'listButton-active'
     });
 
     tappable("#btnSubMan", {
@@ -511,9 +511,9 @@ $(document).ready(function() {
         var subText = sub.text();
         $(this.parent()).remove();
         var subs = obtenerSubsGuardados();
-        if(subs) {
+        if (subs) {
             for (var i = subs.length - 1; i >= 0; i--) {
-                if(subs[i] === subText) {
+                if (subs[i] === subText) {
                     console.log(subs[i]);
                     subs.splice(i, i);
                 }
