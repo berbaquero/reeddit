@@ -5,12 +5,11 @@ $(document).ready(function() {
     linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
     subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
     allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}",
-    botonAgregarSubManualTemplate = "<div id='agregarSubManual'><span class='repliesButton' id='btnSubMan'>Insert Subreddit Manually</span></div>",
+    botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
     formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" autofocus /></form></div>';
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", urlPaging = '&after=', loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink,
     urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2,
