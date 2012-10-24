@@ -204,7 +204,7 @@ $(document).ready(function() {
         }
     });
 
-    function changeMainTitle(title) {
+    function setSubTitle(title) {
         $("#subTitle").text(title);
     }
 
@@ -213,7 +213,7 @@ $(document).ready(function() {
         $("#mainTitle").removeClass('invisible');
         $("#titleHead").empty().append(headerIcon);
         if (newTitle) {
-            changeMainTitle(newTitle);
+            setSubTitle(newTitle);
         }
     }
 
@@ -228,7 +228,7 @@ $(document).ready(function() {
             loadLinks(url, true);
             currentSub = sub;
         }
-        changeMainTitle(sub);
+        setSubTitle(sub);
     }
 
     function moverMenu(direccion) {
@@ -320,7 +320,7 @@ $(document).ready(function() {
         // Cargar el contenido del nuevo subrredit, de forma asincrona
         $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
             loadLinks("", false, data);
-            changeMainTitle(newSubr);
+            setSubTitle(newSubr);
             limpiarSubrSeleccionado();
             currentSub = newSubr;
             insertSubsToList(newSubr);
