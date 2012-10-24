@@ -3,7 +3,7 @@ $(document).ready(function() {
     var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
     linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
     linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
-    subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
+    savedSubredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
     allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}",
     botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
     formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" autofocus /></form></div>',
@@ -183,7 +183,7 @@ $(document).ready(function() {
 
     function loadSubsList() {
         $.getJSON('./js/subs.json', function(subs) {
-            var html = Mustache.to_html(subredditsListTemplate, subs);
+            var html = Mustache.to_html(savedSubredditsListTemplate, subs);
             $("#mainMenu").append(html);
             $(".sub").first().addClass("sub-active");
             loadSavedSubs();
