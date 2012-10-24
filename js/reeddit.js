@@ -254,15 +254,17 @@ $(document).ready(function() {
 
         var main = $("#mainWrap");
         if (subreddits) {
-            main.empty().append(botonAgregarSubManualTemplate).append(subreddits);
+            main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
         } else {
             main.prepend("<p class='loading'>Cargando subreddits...</p>");
             $.getJSON(urlInit + "reddits/" + urlEnd, function(list) {
+                ultimoSub = list.data.after;
                 subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
-                main.empty().append(botonAgregarSubManualTemplate).append(subreddits);
+                main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
             });
         }
         limpiarSubrSeleccionado();
+        setSubTitle("subreddits");
     }
 
     function limpiarSubrSeleccionado() {
