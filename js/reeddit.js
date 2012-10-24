@@ -467,6 +467,20 @@ $(document).ready(function() {
         activeClass: 'listButton-active'
     });
 
+    tappable('#moreSubs', {
+        onTap: function(e, target) {
+            $(target).parent().remove();
+            var main = $('#mainWrap');
+            main.append("<p class='loading'>Cargando subreddits...</p>");
+            $.getJSON(urlInit + 'reddits/' + urlEnd + '&after=' + ultimoSub, function(list) {
+                var nuevosSubs = Mustache.to_html(allSubredditsTemplate, list.data);
+                ultimoSub = list.data.after;
+                $('.loading', main).remove();
+                main.append(nuevosSubs).append(botonCargarMasSubsTemplate);
+                subreddits = subreddits + nuevosSubs;
+            });
+        },
+        activeClass: 'listButton-active'
     });
 
     // Swipes
