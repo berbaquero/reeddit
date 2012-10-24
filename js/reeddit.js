@@ -6,7 +6,8 @@ $(document).ready(function() {
     subredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
     allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}",
     botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
-    formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" autofocus /></form></div>';
+    formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" autofocus /></form></div>',
+    botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>";
 
     // Globales
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
