@@ -234,13 +234,13 @@ $(document).ready(function() {
     function moverMenu(direccion) {
         if (direccion === moverIzquierda) {
             $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
-            setTimeout(function() {
+            setTimeout(function () {
                 mostrandoMenu = false;
             });
         }
         if (direccion === moverDerecha) {
             $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
-            setTimeout(function() {
+            setTimeout(function () {
                 mostrandoMenu = true;
             });
         }
@@ -250,9 +250,9 @@ $(document).ready(function() {
         if (!esLargeScreen) {
             moverMenu(moverIzquierda);
         }
+        document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
+
         var main = $("#mainWrap");
-        var m = document.getElementById("mainWrap");
-        m.scrollTop = 0; // Se sube al top del contenedor
         if (subreddits) {
             main.empty().append(botonAgregarSubManualTemplate).append(subreddits);
         } else {
@@ -300,7 +300,7 @@ $(document).ready(function() {
             $('body').append(mod).append(formAgregarSubManualTemplate);
             setTimeout(function () {
                 mod.css('opacity', 1);
-            // $('#txtNuevoSub').focus();
+                document.getElementById('txtNuevoSub').focus();
             }, 1);
         }, (esLargeScreen ? 1 : 351));
     }
@@ -461,13 +461,15 @@ $(document).ready(function() {
     tappable("#btnSubMan", {
         onTap: function() {
             mostrarIngresoSubManual();
-        }
+        },
+        activeClass: 'listButton-active'
+    });
+
     });
 
     // Swipes
 
-    $("#detailView").swipeRight(function() {
-        
+    $("#detailView").swipeRight(function() {        
         if (esWideScreen) {
             return;
         }
@@ -478,8 +480,7 @@ $(document).ready(function() {
         backToMainView();
     });
 
-    $("#mainView").swipeRight(function() {
-        
+    $("#mainView").swipeRight(function() {        
         if (esWideScreen || esLargeScreen) {
             return;
         }
@@ -488,8 +489,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#mainView").swipeLeft(function() {
-        
+    $("#mainView").swipeLeft(function() {        
         if (esWideScreen || esLargeScreen) {
             return;
         }
