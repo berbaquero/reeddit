@@ -10,8 +10,8 @@ $(document).ready(function() {
     botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>";
 
     // Globales
-    var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub,
+    var ancho = $(window).width(), vistaActual = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub, esModal = false,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2, vistaPrincipal = 1, vistaComentarios = 2,
     esWideScreen = chequearWideScreen(),
@@ -117,12 +117,13 @@ $(document).ready(function() {
             var html = converter.makeHtml(c.data.body);
 
             var comment = $("<div/>").addClass("commentWrap")
+            .append($('<div/>')
             .append($("<div/>").addClass("commentData")
                 .append($("<div/>").addClass("commentAuthor")
                     .append($("<p/>").text(c.data.author)))
                 .append($("<div/>").addClass("commentInfo")
                     .append($("<p/>").text(timeSince(now, c.data.created_utc)))))
-            .append($("<div/>").addClass("commentBody").html(html));
+            .append($("<div/>").addClass("commentBody").html(html)));
 
             if (c.data.replies) {
                 comment.append($("<span/>").addClass("repliesButton").attr("comment-id", c.data.id).text("See replies"));
@@ -256,7 +257,7 @@ $(document).ready(function() {
         if (subreddits) {
             main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
         } else {
-            main.prepend("<p class='loading'>Cargando subreddits...</p>");
+            main.prepend("<p class='loading'>Cargando subreddits...</p>").prepend(botonAgregarSubManualTemplate);
             $.getJSON(urlInit + "reddits/" + urlEnd, function(list) {
                 ultimoSub = list.data.after;
                 subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
@@ -302,21 +303,25 @@ $(document).ready(function() {
             $('body').append(mod).append(formAgregarSubManualTemplate);
             setTimeout(function () {
                 mod.css('opacity', 1);
-                document.getElementById('txtNuevoSub').focus();
+                esModal = true;
             }, 1);
         }, (esLargeScreen ? 1 : 351));
     }
 
-    $('body').on('submit', '#formNuevoSub form', function(e) {
-        e.preventDefault();
-        // Quitar el input modal
-        var newSubr = $('#txtNuevoSub').val();
+    function quitarModal() {
         var mod = $('#modal');
         mod.css('opacity', '');
         setTimeout(function () {
             mod.remove();
             $('#formNuevoSub').remove();
+            esModal = false;
         }, 351);
+    }
+
+    $('body').on('submit', '#formNuevoSub form', function(e) {
+        e.preventDefault();
+        var newSubr = $('#txtNuevoSub').val();
+        quitarModal();
         if (!newSubr) { return; } // Si no se ingresó nada, no pasa nada.
         // En caso de haber ingresado algo
         // Cargar el contenido del nuevo subrredit, de forma asincrona
