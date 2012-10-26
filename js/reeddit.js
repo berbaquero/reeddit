@@ -13,7 +13,7 @@ $(document).ready(function() {
     var ancho = $(window).width(), activeView = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
     urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub,
     // Pseudo-Enums
-    moverIzquierda = 1, moverDerecha = 2,
+    moverIzquierda = 1, moverDerecha = 2, vistaPrincipal = 1, vistaComentarios = 2,
     esWideScreen = chequearWideScreen(),
     esLargeScreen = chequearLargeScreen();
 
@@ -364,7 +364,7 @@ $(document).ready(function() {
             loadSub(sub.first().text());
             limpiarSubrSeleccionado();
             sub.addClass('sub-active');
-            if (activeView === 2) {
+            if (vistaActual === vistaComentarios) {
                 backToMainView();
                 slideFromLeft();
             }
@@ -500,7 +500,7 @@ $(document).ready(function() {
         if (esWideScreen || esLargeScreen) {
             return;
         }
-        if (activeView === 1) {
+        if (vistaActual === vistaPrincipal) {
             moverMenu(moverDerecha);
         }
     });
@@ -557,7 +557,7 @@ $(document).ready(function() {
                     "left": ""
                 }).removeClass("slideTransition");
                 sacar("#detailView");
-                activeView = 1;
+                vistaActual = vistaPrincipal;
             }, 350);
         }, 50);
     }
@@ -572,7 +572,7 @@ $(document).ready(function() {
             setTimeout(function () { // Quita las propiedades de transition
                 det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css("-webkit-transform", "");
                 main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
-                activeView = 2;
+                vistaActual = vistaComentarios;
             }, 350);
         }, 100);
     }
