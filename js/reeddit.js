@@ -394,6 +394,8 @@ $(document).ready(function() {
         onTap: function(e) {
             if (currentSub === 'frontPage') {
                 loadLinks(urlInit);
+            } else if (currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
+                return;
             } else {
                 loadLinks(urlInit + "r/" + currentSub + "/");
             }
