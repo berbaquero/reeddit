@@ -494,6 +494,36 @@ header div {
 
 #btnSubMan { width: 70%; font-size: 14px; }
 
+#subsToRemove {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.subToRemove {
+    display: -webkit-box;
+    padding: 10px 10px;
+    border-bottom: 1px solid #DDD;
+    border-top: 1px solid white;
+}
+
+.subToRemove > p {
+    margin: 0;
+    width: 93%;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.subToRemove > span {
+    background-image: url('../img/delete.png');    
+    width: 7%;
+    height: 16px;
+    display: block;
+    background-size: 16px;
+    background-repeat: no-repeat;
+}
+
 /*--- Constantes ---*/
 
 .invisible { opacity: 0; }
@@ -557,7 +587,7 @@ header div {
 
     .linkWrap { border-bottom: 1px solid #ddd; }
 
-    .link, .listButton > span, .repliesButton  { cursor: pointer; }
+    .link, .listButton > span, .repliesButton, .subToRemove > span  { cursor: pointer; }
 
     /* Estilo las barras de scrolling (Desktop) */
     ::-webkit-scrollbar { width: 7px; }
