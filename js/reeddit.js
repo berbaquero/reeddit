@@ -488,6 +488,31 @@ $(document).ready(function() {
         activeClass: 'listButton-active'
     });
 
+    tappable(".subToRemove > span", {
+        onTap: function(e, target) {
+            var subParent = $(target).parent();
+            var subreddit = $("p", subParent).text();
+            var subsFromList = $('.sub');
+            // Remover selección del menú de subreddits
+            for (var i = subsFromList.length - 1; i >= 0; i--) {
+                var subText = subsFromList[i].innerHTML;
+                if (subText === subreddit) {
+                    $(subsFromList[i]).parent().remove();
+                    break;
+                }
+            }
+            // Remover selección del arreglo de subreddits que se guarda en el localStorage
+            for (i = savedSubs.length - 1; i >= 0; i--) {
+                if(savedSubs[i] === subreddit) {
+                    savedSubs.splice(i, 1);
+                    break;
+                }
+            }
+            store.setItem("subs", JSON.stringify(savedSubs));
+            subParent.remove();
+        }
+    });
+
     // Swipes
 
     $("#detailView").swipeRight(function() {
