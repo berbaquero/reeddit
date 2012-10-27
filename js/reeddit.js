@@ -657,7 +657,7 @@ $(document).ready(function() {
     var touch = "touchmove";
 
     if (supportOrientation) {
-        $("#addNewSub").on(touch, function(e) {
+        $("#editSubs").on(touch, function(e) {
             e.preventDefault();
         }, false);
 
