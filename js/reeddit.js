@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     // Globales
     var ancho = $(window).width(), vistaActual = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub, esModal = false,
+    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub, esModal = false, savedSubs,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2, vistaPrincipal = 1, vistaComentarios = 2,
     isWideScreen = chequearWideScreen(),
@@ -266,7 +266,25 @@ $(document).ready(function() {
             });
         }
         limpiarSubrSeleccionado();
-        setSubTitle("subreddits");
+        setSubTitle("+ Subreddits");
+        currentSub = "all_reddits";
+    }
+
+    function loadSubredditListToRemove() {
+        if (!isLargeScreen) {
+            moverMenu(moverIzquierda);
+        }
+        setTimeout(function() {
+            document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
+            savedSubs = getSavedSubs();
+            var html = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
+            document.getElementById("mainWrap").innerHTML = html;
+            limpiarSubrSeleccionado();
+        }, isLargeScreen ? 1 : 351);
+        currentSub = 'remove_subreddits';
+        setSubTitle('- Subreddits');
+        // TODO
+        // * Cambiar subtituto -- Validar altura para overflow -- otro icono para el botón
     }
 
     function limpiarSubrSeleccionado() {
@@ -451,7 +469,13 @@ $(document).ready(function() {
 
     tappable("#addNewSubr", {
         onTap: function(e) {
-            loadSubredditList();
+            loadSubredditListToAdd();
+        }
+    });
+
+    tappable("#removeSubr", {
+        onTap: function(e) {
+            loadSubredditListToRemove();
         }
     });
 
