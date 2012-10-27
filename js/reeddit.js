@@ -283,8 +283,6 @@ $(document).ready(function() {
         }, isLargeScreen ? 1 : 351);
         currentSub = 'remove_subreddits';
         setSubTitle('- Subreddits');
-        // TODO
-        // * Cambiar subtituto -- Validar altura para overflow -- otro icono para el botón
     }
 
     function limpiarSubrSeleccionado() {
@@ -520,7 +518,7 @@ $(document).ready(function() {
             var subParent = $(target).parent();
             var subreddit = $("p", subParent).text();
             var subsFromList = $('.sub');
-            // Remover selección del menú de subreddits
+
             for (var i = subsFromList.length - 1; i >= 0; i--) {
                 var subText = subsFromList[i].innerHTML;
                 if (subText === subreddit) {
@@ -528,7 +526,7 @@ $(document).ready(function() {
                     break;
                 }
             }
-            // Remover selección del arreglo de subreddits que se guarda en el localStorage
+
             for (i = savedSubs.length - 1; i >= 0; i--) {
                 if(savedSubs[i] === subreddit) {
                     savedSubs.splice(i, 1);
