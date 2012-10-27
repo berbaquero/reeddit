@@ -14,8 +14,8 @@ $(document).ready(function() {
     urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub, esModal = false,
     // Pseudo-Enums
     moverIzquierda = 1, moverDerecha = 2, vistaPrincipal = 1, vistaComentarios = 2,
-    esWideScreen = chequearWideScreen(),
-    esLargeScreen = chequearLargeScreen();
+    isWideScreen = chequearWideScreen(),
+    isLargeScreen = chequearLargeScreen();
 
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
@@ -171,7 +171,7 @@ $(document).ready(function() {
             });
         }
 
-        if (esWideScreen) {
+        if (isWideScreen) {
             $("#detailView").removeClass("fuera");
         } else {
             slideFromRight();
@@ -192,7 +192,7 @@ $(document).ready(function() {
     }
 
     function loadSavedSubs() {
-        var subs = obtenerSubsGuardados();
+        var subs = getSavedSubs();
         if (subs) {
             insertSubsToList(subs);
         }
@@ -284,7 +284,7 @@ $(document).ready(function() {
         }
     }
 
-    function obtenerSubsGuardados() {
+    function getSavedSubs() {
         var subs = store.getItem("subs");
         if (subs) {
             subs = JSON.parse(subs);
@@ -295,7 +295,7 @@ $(document).ready(function() {
     }
 
     function mostrarIngresoSubManual() {
-        if (!esLargeScreen) {
+        if (!isLargeScreen) {
             moverMenu(moverIzquierda);
         }
         setTimeout(function() {
@@ -305,7 +305,7 @@ $(document).ready(function() {
                 mod.css('opacity', 1);
                 esModal = true;
             }, 1);
-        }, (esLargeScreen ? 1 : 351));
+        }, (isLargeScreen ? 1 : 351));
     }
 
     function quitarModal() {
@@ -331,7 +331,7 @@ $(document).ready(function() {
             limpiarSubrSeleccionado();
             currentSub = newSubr;
             insertSubsToList(newSubr);
-            var subs = obtenerSubsGuardados();
+            var subs = getSavedSubs();
             if (!subs) {
                 subs = [];
             }
@@ -404,7 +404,7 @@ $(document).ready(function() {
             var comm = $(target);
             var id = comm.attr("data-id");
             var link = posts[id];
-            if (link.self || esWideScreen) {
+            if (link.self || isWideScreen) {
                 procesarComentarios(comm);
             } else {
                 url = comm.attr("data-url");
@@ -417,7 +417,7 @@ $(document).ready(function() {
                 a.dispatchEvent(dispatch);
             }
             $(".link.link-active").removeClass("link-active");
-            if (esWideScreen) {
+            if (isWideScreen) {
                 comm.addClass('link-active');
             }
         },
@@ -438,7 +438,7 @@ $(document).ready(function() {
     tappable("#subTitle", {
         onTap: function(e) {
             
-            if (esLargeScreen) {
+            if (isLargeScreen) {
                 return;
             }
             moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
@@ -490,8 +490,8 @@ $(document).ready(function() {
 
     // Swipes
 
-    $("#detailView").swipeRight(function() {        
-        if (esWideScreen) {
+    $("#detailView").swipeRight(function() {
+        if (isWideScreen) {
             return;
         }
         slideFromLeft();
@@ -501,8 +501,8 @@ $(document).ready(function() {
         backToMainView();
     });
 
-    $("#mainView").swipeRight(function() {        
-        if (esWideScreen || esLargeScreen) {
+    $("#mainView").swipeRight(function() {
+        if (isWideScreen || isLargeScreen) {
             return;
         }
         if (vistaActual === vistaPrincipal) {
@@ -510,8 +510,8 @@ $(document).ready(function() {
         }
     });
 
-    $("#mainView").swipeLeft(function() {        
-        if (esWideScreen || esLargeScreen) {
+    $("#mainView").swipeLeft(function() {
+        if (isWideScreen || isLargeScreen) {
             return;
         }
         if (mostrandoMenu) {
@@ -520,7 +520,7 @@ $(document).ready(function() {
     });
 
     $("#mainView").on("swipeLeft", ".link", function() {
-        if (esWideScreen) {
+        if (isWideScreen) {
             return;
         }
         if (!mostrandoMenu) {
@@ -532,7 +532,7 @@ $(document).ready(function() {
         var sub = $(this);
         var subText = sub.text();
         $(this.parent()).remove();
-        var subs = obtenerSubsGuardados();
+        var subs = getSavedSubs();
         if (subs) {
             for (var i = subs.length - 1; i >= 0; i--) {
                 if (subs[i] === subText) {
@@ -637,10 +637,10 @@ $(document).ready(function() {
 
     window.addEventListener("resizeend", function() {
         ancho = $(window).width();
-        esWideScreen = chequearWideScreen();
-        esLargeScreen = chequearLargeScreen();
+        isWideScreen = chequearWideScreen();
+        isLargeScreen = chequearLargeScreen();
         scrollTop();
-        if (esLargeScreen && mostrandoMenu) {
+        if (isLargeScreen && mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     }, false);
