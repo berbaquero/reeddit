@@ -248,8 +248,8 @@ $(document).ready(function() {
         }
     }
 
-    function loadSubredditList() {
-        if (!esLargeScreen) {
+    function loadSubredditListToAdd() {
+        if (!isLargeScreen) {
             moverMenu(moverIzquierda);
         }
         document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
