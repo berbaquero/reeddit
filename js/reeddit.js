@@ -1,21 +1,34 @@
 $(document).ready(function() {
     // Templates
     var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
-    linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
-    linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
-    allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
-    botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
-    formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
-    botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
-    savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><span></span></div>{{/.}}</ul>";
+        linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
+        linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
+        allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
+        botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
+        formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
+        botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
+        savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><span></span></div>{{/.}}</ul>";
 
     // Globales
-    var ancho = $(window).width(), vistaActual = 1, urlInit = "http://www.reddit.com/", urlEnd = ".json?jsonp=?",
-    urlLimitEnd = ".json?limit=30&jsonp=?", loadedLinks = {}, posts = {}, replies = {}, currentSub = 'frontPage', mostrandoMenu = false, subreddits, store = window.localStorage, ultimoLink, ultimoSub, esModal = false, savedSubs,
-    // Pseudo-Enums
-    moverIzquierda = 1, moverDerecha = 2, vistaPrincipal = 1, vistaComentarios = 2,
-    isWideScreen = chequearWideScreen(),
-    isLargeScreen = chequearLargeScreen();
+    var ancho = $(window).width(),
+        vistaActual = 1,
+        urlInit = "http://www.reddit.com/",
+        urlEnd = ".json?jsonp=?",
+        urlLimitEnd = ".json?limit=30&jsonp=?",
+        loadedLinks = {},
+        posts = {},
+        replies = {},
+        currentSub = 'frontPage',
+        mostrandoMenu = false,
+        subreddits, store = window.localStorage,
+        ultimoLink, ultimoSub, esModal = false,
+        savedSubs, isWideScreen = chequearWideScreen(),
+        isLargeScreen = chequearLargeScreen(),
+        // Pseudo-Enums
+        moverIzquierda = 1,
+        moverDerecha = 2,
+        vistaPrincipal = 1,
+        vistaComentarios = 2;
 
     var defaultSubs = ["frontPage", "pics", "funny", "games", "worldNews", "todayILearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactionGifs"];
 
@@ -29,26 +42,26 @@ $(document).ready(function() {
 
     function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
-        if (fromSub) { // Si viene de se seleccionar un subreddit
+        if(fromSub) { // Si viene de se seleccionar un subreddit
             var m = document.getElementById("mainWrap");
             m.scrollTop = 0; // Se sube al top del contenedor
-            if (!links) {
-                setTimeout(function () {
+            if(!links) {
+                setTimeout(function() {
                     main.prepend("<p class='loading'>Cargando links...</p>");
                 }, 350);
             }
         } else { // Si se está cargando inicialmente
-            if (!paging) { // Si no hay paginación
+            if(!paging) { // Si no hay paginación
                 main.empty(); // Se quitan los links actuales
             } else { // Si hay paginación
                 $("#moreLinks").parent().remove(); // Sólo se quita el botón de 'More' actual
             }
             main.append("<p class='loading'>Cargando links...</p>");
         }
-        if (links) { // Si ya los links fueron pedidos y devueltos
+        if(links) { // Si ya los links fueron pedidos y devueltos
             processAndRenderLinks(links, fromSub, main);
         } else { // Si aún no se piden los links
-            if (!paging) { // Si no hay paginación
+            if(!paging) { // Si no hay paginación
                 paging = ''; // Se pasa una cadena vacia, para no paginar
             }
             $.getJSON(baseUrl + urlLimitEnd + paging, function(result) {
@@ -61,9 +74,9 @@ $(document).ready(function() {
         var links = result.data;
         ultimoLink = links.after;
         var numThumbs = 0;
-        for (var i = 0; i < links.children.length; i++) {
+        for(var i = 0; i < links.children.length; i++) {
             var link = links.children[i];
-            if (posts[link.data.id]) { // Si ya se ha cargado este link localmente
+            if(posts[link.data.id]) { // Si ya se ha cargado este link localmente
                 // Se actualizan los datos dinamicos
                 posts[link.data.id].comments = link.data.num_comments;
                 posts[link.data.id].time = link.data.created_utc;
@@ -81,26 +94,25 @@ $(document).ready(function() {
                 };
             }
             // Se cuentan los thumbnails que se pueden mostrar
-            if (link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self') {
+            if(link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self') {
                 numThumbs++;
             }
         }
 
         var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
-        if (fromSub) {
+        if(fromSub) {
             main.empty();
         } else {
             $(".loading").remove();
         }
 
         main.append(html); // Agrega nuevos links a la lista
-
         // Elimina espacio de thumbnails para aquelos links que no tienen uno válido
         var thumbs = $('.linkThumb div');
         $.each(thumbs, function(i, t) {
             var thumb = $(t);
             var bg = thumb.attr('style');
-            if (bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
+            if(bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
                 thumb.parent().remove();
             }
         });
@@ -110,24 +122,17 @@ $(document).ready(function() {
         var now = new Date().getTime();
         var converter = new Markdown.Converter();
         var com = $("<section/>");
-        for (var i = 0; i < data.length; i++) {
+        for(var i = 0; i < data.length; i++) {
             var c = data[i];
-            if (c.kind !== "t1") {
+            if(c.kind !== "t1") {
                 continue;
             }
 
             var html = converter.makeHtml(c.data.body);
 
-            var comment = $("<div/>").addClass("commentWrap")
-            .append($('<div/>')
-            .append($("<div/>").addClass("commentData")
-                .append($("<div/>").addClass("commentAuthor")
-                    .append($("<p/>").text(c.data.author)))
-                .append($("<div/>").addClass("commentInfo")
-                    .append($("<p/>").text(timeSince(now, c.data.created_utc)))))
-            .append($("<div/>").addClass("commentBody").html(html)));
+            var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass("commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
 
-            if (c.data.replies) {
+            if(c.data.replies) {
                 comment.append($("<span/>").addClass("repliesButton").attr("comment-id", c.data.id).text("See replies"));
                 replies[c.data.id] = c.data.replies.data.children;
             }
@@ -135,7 +140,7 @@ $(document).ready(function() {
             com.append(comment);
         }
         baseElement.append(com);
-        if (idParent) {
+        if(idParent) {
             loadedLinks[idParent] = com;
         }
         $("#detailWrap a").attr("target", "_blank");
@@ -150,14 +155,14 @@ $(document).ready(function() {
         var d = document.getElementById("detailWrap");
         d.scrollTop = 0;
 
-        if (loadedLinks[id]) {
+        if(loadedLinks[id]) {
             detail.append(posts[id].summary);
             detail.append(loadedLinks[id]);
         } else {
             var postInfo = posts[id];
             var summaryWrap = $("<section/>");
             summaryWrap.append(Mustache.to_html(linkSummaryTemplate, postInfo));
-            if (postInfo.text) {
+            if(postInfo.text) {
                 var summaryConverter1 = new Markdown.Converter();
                 summaryWrap.append($("<div/>").attr("id", "selfText").append(summaryConverter1.makeHtml(postInfo.text)));
             }
@@ -173,7 +178,7 @@ $(document).ready(function() {
             });
         }
 
-        if (isWideScreen) {
+        if(isWideScreen) {
             $("#detailView").removeClass("fuera");
         } else {
             slideFromRight();
@@ -185,9 +190,10 @@ $(document).ready(function() {
     }
 
     // Sólo se debería ejecutar una sola vez, al cargar la app
+
     function loadSubsList() {
         savedSubs = getSavedSubs();
-        if (savedSubs) {
+        if(savedSubs) {
             insertSubsToList(savedSubs);
         } else {
             savedSubs = defaultSubs;
@@ -198,7 +204,7 @@ $(document).ready(function() {
 
     window.applicationCache.addEventListener("updateready", function(e) {
         var update = window.confirm("Update descargado. Recargar para actualizar?");
-        if (update) {
+        if(update) {
             window.location.reload();
         }
     });
@@ -211,15 +217,15 @@ $(document).ready(function() {
         $("#navBack").addClass("invisible");
         $("#mainTitle").removeClass('invisible');
         $("#titleHead").empty().append(headerIcon);
-        if (newTitle) {
+        if(newTitle) {
             setSubTitle(newTitle);
         }
     }
 
     function loadSub(sub) {
-        if (sub !== currentSub) {
+        if(sub !== currentSub) {
             var url;
-            if (sub === 'frontPage') {
+            if(sub === 'frontPage') {
                 url = urlInit;
             } else {
                 url = urlInit + "r/" + sub + "/";
@@ -231,28 +237,27 @@ $(document).ready(function() {
     }
 
     function moverMenu(direccion) {
-        if (direccion === moverIzquierda) {
+        if(direccion === moverIzquierda) {
             $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
-            setTimeout(function () {
+            setTimeout(function() {
                 mostrandoMenu = false;
             });
         }
-        if (direccion === moverDerecha) {
+        if(direccion === moverDerecha) {
             $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
-            setTimeout(function () {
+            setTimeout(function() {
                 mostrandoMenu = true;
             });
         }
     }
 
     function loadSubredditListToAdd() {
-        if (!isLargeScreen) {
+        if(!isLargeScreen) {
             moverMenu(moverIzquierda);
         }
         document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
-
         var main = $("#mainWrap");
-        if (subreddits) {
+        if(subreddits) {
             main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
         } else {
             main.prepend("<p class='loading'>Cargando subreddits...</p>").prepend(botonAgregarSubManualTemplate);
@@ -268,7 +273,7 @@ $(document).ready(function() {
     }
 
     function loadSubredditListToRemove() {
-        if (!isLargeScreen) {
+        if(!isLargeScreen) {
             moverMenu(moverIzquierda);
         }
         setTimeout(function() {
@@ -287,12 +292,12 @@ $(document).ready(function() {
 
     function insertSubsToList(subs, active) {
         var subsList = $("#subs");
-        if (subs instanceof Array) {
+        if(subs instanceof Array) {
             var subListTemplate = "{{#.}}<li><p class='sub'>{{.}}</p></li>{{/.}}";
             var html = Mustache.to_html(subListTemplate, subs);
             subsList.append(html);
         } else {
-            if (!listContainsSub(subs)) {
+            if(!listContainsSub(subs)) {
                 subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
                 saveSub(subs);
             }
@@ -301,7 +306,7 @@ $(document).ready(function() {
 
     function getSavedSubs() {
         var subs = store.getItem("subs");
-        if (subs) {
+        if(subs) {
             subs = JSON.parse(subs);
             return subs;
         } else {
@@ -310,13 +315,13 @@ $(document).ready(function() {
     }
 
     function mostrarIngresoSubManual() {
-        if (!isLargeScreen) {
+        if(!isLargeScreen) {
             moverMenu(moverIzquierda);
         }
         setTimeout(function() {
             var mod = $('<div/>').attr('id', 'modal');
             $('body').append(mod).append(formAgregarSubManualTemplate);
-            setTimeout(function () {
+            setTimeout(function() {
                 mod.css('opacity', 1);
                 esModal = true;
             }, 1);
@@ -326,7 +331,7 @@ $(document).ready(function() {
     function quitarModal() {
         var mod = $('#modal');
         mod.css('opacity', '');
-        setTimeout(function () {
+        setTimeout(function() {
             mod.remove();
             $('#formNuevoSub').remove();
             esModal = false;
@@ -334,14 +339,14 @@ $(document).ready(function() {
     }
 
     function saveSub(newSub) {
-        if (!listContainsSub(newSub)) {
+        if(!listContainsSub(newSub)) {
             savedSubs.push(newSub);
             store.setItem("subs", JSON.stringify(savedSubs));
         }
     }
 
     function listContainsSub(sub) {
-        if (savedSubs) {
+        if(savedSubs) {
             var i = savedSubs.indexOf(sub);
             return i > -1;
         }
@@ -352,7 +357,9 @@ $(document).ready(function() {
         e.preventDefault();
         var newSubr = $('#txtNuevoSub').val();
         quitarModal();
-        if (!newSubr) { return; } // Si no se ingresó nada, no pasa nada.
+        if(!newSubr) { // Si no se ingresó nada, no pasa nada.
+            return;
+        }
         // En caso de haber ingresado algo
         // Cargar el contenido del nuevo subrredit, de forma asincrona
         $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
@@ -365,7 +372,6 @@ $(document).ready(function() {
     });
 
     // Taps
-
     tappable(".repliesButton", {
         onTap: function(e, target) {
             var parent = $(target);
@@ -384,7 +390,7 @@ $(document).ready(function() {
             loadSub(sub.first().text());
             limpiarSubrSeleccionado();
             sub.addClass('sub-active');
-            if (vistaActual === vistaComentarios) {
+            if(vistaActual === vistaComentarios) {
                 backToMainView();
                 slideFromLeft();
             }
@@ -406,22 +412,22 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if (currentSub === 'frontPage') {
+            if(currentSub === 'frontPage') {
                 loadLinks(urlInit);
-            } else if (currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
+            } else if(currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
                 return;
             } else {
                 loadLinks(urlInit + "r/" + currentSub + "/");
             }
         }
     });
-    
+
     tappable(".link", {
         onTap: function(e, target) {
             var comm = $(target);
             var id = comm.attr("data-id");
             var link = posts[id];
-            if (link.self || isWideScreen) {
+            if(link.self || isWideScreen) {
                 procesarComentarios(comm);
             } else {
                 url = comm.attr("data-url");
@@ -434,7 +440,7 @@ $(document).ready(function() {
                 a.dispatchEvent(dispatch);
             }
             $(".link.link-active").removeClass("link-active");
-            if (isWideScreen) {
+            if(isWideScreen) {
                 comm.addClass('link-active');
             }
         },
@@ -445,7 +451,7 @@ $(document).ready(function() {
 
     tappable(".toComments", {
         onTap: function(e, target) {
-            
+
             procesarComentarios($(target));
         },
         activeClass: 'button-active',
@@ -454,8 +460,8 @@ $(document).ready(function() {
 
     tappable("#subTitle", {
         onTap: function(e) {
-            
-            if (isLargeScreen) {
+
+            if(isLargeScreen) {
                 return;
             }
             moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
@@ -476,9 +482,9 @@ $(document).ready(function() {
     });
 
     tappable("#moreLinks", {
-        onTap: function () {
+        onTap: function() {
             var url;
-            if (currentSub === 'frontPage') {
+            if(currentSub === 'frontPage') {
                 url = urlInit;
             } else {
                 url = urlInit + "r/" + currentSub + "/";
@@ -526,16 +532,16 @@ $(document).ready(function() {
             var subreddit = $("p", subParent).text();
             var subsFromList = $('.sub');
 
-            for (var i = subsFromList.length - 1; i >= 0; i--) {
+            for(var i = subsFromList.length - 1; i >= 0; i--) {
                 var subText = subsFromList[i].innerHTML;
-                if (subText === subreddit) {
+                if(subText === subreddit) {
                     $(subsFromList[i]).parent().remove();
                     break;
                 }
             }
 
-            for (i = savedSubs.length - 1; i >= 0; i--) {
-                if (savedSubs[i] === subreddit) {
+            for(i = savedSubs.length - 1; i >= 0; i--) {
+                if(savedSubs[i] === subreddit) {
                     savedSubs.splice(i, 1);
                     break;
                 }
@@ -546,9 +552,8 @@ $(document).ready(function() {
     });
 
     // Swipes
-
     $("#detailView").swipeRight(function() {
-        if (isWideScreen) {
+        if(isWideScreen) {
             return;
         }
         slideFromLeft();
@@ -559,28 +564,28 @@ $(document).ready(function() {
     });
 
     $("#mainView").swipeRight(function() {
-        if (isWideScreen || isLargeScreen) {
+        if(isWideScreen || isLargeScreen) {
             return;
         }
-        if (vistaActual === vistaPrincipal) {
+        if(vistaActual === vistaPrincipal) {
             moverMenu(moverDerecha);
         }
     });
 
     $("#mainView").swipeLeft(function() {
-        if (isWideScreen || isLargeScreen) {
+        if(isWideScreen || isLargeScreen) {
             return;
         }
-        if (mostrandoMenu) {
+        if(mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     });
 
     $("#mainView").on("swipeLeft", ".link", function() {
-        if (isWideScreen) {
+        if(isWideScreen) {
             return;
         }
-        if (!mostrandoMenu) {
+        if(!mostrandoMenu) {
             procesarComentarios($(this));
         }
     });
@@ -616,7 +621,7 @@ $(document).ready(function() {
         setTimeout(function() {
             main.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
             det.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
-            setTimeout(function () { // Quita las propiedades de transition
+            setTimeout(function() { // Quita las propiedades de transition
                 det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css("-webkit-transform", "");
                 main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
                 vistaActual = vistaComentarios;
@@ -660,34 +665,37 @@ $(document).ready(function() {
         el.removeClass("invisible");
     }
 
-    var d = document, body = d.body, hideBarTriggerInit = false;
-    
+    var d = document,
+        body = d.body,
+        hideBarTriggerInit = false;
+
     var supportOrientation = typeof window.orientation != 'undefined',
-    getScrollTop = function() {
-        return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
-    },
-    scrollTop = function() {
-        if (!supportOrientation) return;
-        body.style.height = screen.height + 'px';
-        setTimeout(function() {
-            window.scrollTo(0, 1);
-            var top = getScrollTop();
-            window.scrollTo(0, top === 1 ? 0 : 1);
-            body.style.height = window.innerHeight + 'px';
-        }, 1);
-    };
+        getScrollTop = function() {
+            return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
+        },
+        scrollTop = function() {
+            if(!supportOrientation) return;
+            body.style.height = screen.height + 'px';
+            setTimeout(function() {
+                window.scrollTo(0, 1);
+                var top = getScrollTop();
+                window.scrollTo(0, top === 1 ? 0 : 1);
+                body.style.height = window.innerHeight + 'px';
+            }, 1);
+        };
 
     window.addEventListener("resizeend", function() {
         ancho = $(window).width();
         isWideScreen = chequearWideScreen();
         isLargeScreen = chequearLargeScreen();
         scrollTop();
-        if (isLargeScreen && mostrandoMenu) {
+        if(isLargeScreen && mostrandoMenu) {
             moverMenu(moverIzquierda);
         }
     }, false);
 
-    var title = $("#title"), headerIcon = $("#headerIcon");
+    var title = $("#title"),
+        headerIcon = $("#headerIcon");
 
     $("#title").remove();
 
@@ -695,21 +703,21 @@ $(document).ready(function() {
     loadSubsList();
 
     scrollTop();
-    
+
     var touch = "touchmove";
 
-    if (supportOrientation) {
+    if(supportOrientation) {
         $("#editSubs").on(touch, function(e) {
             e.preventDefault();
         }, false);
 
         $("header").on(touch, function(e) {
-            if (mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
+            if(mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
                 e.preventDefault();
             }
         }, false);
     }
-    
+
     function timeSince(now, time) {
 
         now = (now / 1000);
@@ -718,27 +726,27 @@ $(document).ready(function() {
 
         var interval = (seconds / 31536000);
 
-        if (interval > 1) {
+        if(interval > 1) {
             interval = Math.floor(interval);
             return interval + (interval > 1 ? " years" : " year");
         }
         interval = (seconds / 2592000);
-        if (interval > 1) {
+        if(interval > 1) {
             interval = Math.floor(interval);
             return interval + (interval > 1 ? " months" : " month");
         }
         interval = (seconds / 86400);
-        if (interval > 1) {
+        if(interval > 1) {
             interval = Math.floor(interval);
             return interval + (interval > 1 ? " days" : " day");
         }
         interval = (seconds / 3600);
-        if (interval > 1) {
+        if(interval > 1) {
             interval = Math.floor(interval);
             return interval + (interval > 1 ? " hours" : " hour");
         }
         interval = (seconds / 60);
-        if (interval > 1) {
+        if(interval > 1) {
             interval = Math.floor(interval);
             return interval + (interval > 1 ? " minutes" : " minute");
         }
