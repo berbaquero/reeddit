@@ -465,18 +465,18 @@ header div {
 /*--- Subreddits ---*/
 
 .subreddit {
-    padding: 10px;
+    padding-left: 10px;
     border-bottom: 1px solid #CCC;
     border-top: 1px solid white;
     display: -webkit-box;
 }
 
 .subreddit > div:first-child {
-    width: 90%;
-    padding-right: 5px;
+    width: 85%;
+    padding: 10px 5px 10px 0;
 }
 
-.btnAddSub { width: 10%; display: -webkit-box; -webkit-box-align: center; }
+.btnAddSub { width: 15%; display: -webkit-box; -webkit-box-align: center; }
 
 .btnAddSub > div {
     background-image: url('../img/add.gif');
