@@ -408,7 +408,7 @@ header div {
     margin: 0 auto;
 }
 
-.toComments-active { background-color: #ddd; }
+.button-active { background-color: #ddd; }
 
 .repliesButton {
     color: #555;
@@ -464,7 +464,31 @@ header div {
 
 /*--- Subreddits ---*/
 
-.subreddit { padding: 0 10px; border-bottom: 1px solid #CCC; border-top: 1px solid white; }
+.subreddit {
+    padding: 10px;
+    border-bottom: 1px solid #CCC;
+    border-top: 1px solid white;
+    display: -webkit-box;
+}
+
+.subreddit > div:first-child {
+    width: 90%;
+    padding-right: 5px;
+}
+
+.btnAddSub { width: 10%; display: -webkit-box; -webkit-box-align: center; }
+
+.btnAddSub > div {
+    background-image: url('../img/add.gif');
+    background-repeat: no-repeat;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin: 0 auto;
+}
+
+.subredditDesc { margin: 5px 0; }
+
 
 .subredditTitle {
     font-weight: bold;
@@ -587,7 +611,7 @@ header div {
 
     .linkWrap { border-bottom: 1px solid #ddd; }
 
-    .link, .listButton > span, .repliesButton, .subToRemove > span  { cursor: pointer; }
+    .link, .listButton > span, .repliesButton, .subToRemove > span, .btnAddSub { cursor: pointer; }
 
     /* Estilo las barras de scrolling (Desktop) */
     ::-webkit-scrollbar { width: 7px; }
