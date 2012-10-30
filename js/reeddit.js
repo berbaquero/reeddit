@@ -3,10 +3,9 @@ $(document).ready(function() {
     var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
     linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
     linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
-    savedSubredditsListTemplate = "<ul id='subs'>{{#subs}}<li><p class='sub'>{{name}}</p></li>{{/subs}}</ul>",
-    allSubredditsTemplate = "{{#children}}<div class='subreddit'><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div>{{/children}}",
+    allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
     botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
-    formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" autofocus /></form></div>',
+    formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
     botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
     savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><span></span></div>{{/.}}</ul>";
 
@@ -185,19 +184,15 @@ $(document).ready(function() {
         $("#mainTitle").addClass('invisible');
     }
 
+    // Sólo se debería ejecutar una sola vez, al cargar la app
     function loadSubsList() {
-        $.getJSON('./js/subs.json', function(subs) {
-            var html = Mustache.to_html(savedSubredditsListTemplate, subs);
-            $("#mainMenu").append(html);
-            $(".sub").first().addClass("sub-active");
-            loadSavedSubs();
-        });
-    }
-
-    function loadSavedSubs() {
-        var subs = getSavedSubs();
-        if (subs) {
-            insertSubsToList(subs);
+        savedSubs = getSavedSubs();
+        if (savedSubs) {
+            insertSubsToList(savedSubs);
+        } else {
+            savedSubs = defaultSubs;
+            insertSubsToList(savedSubs);
+            store.setItem('subs', JSON.stringify(savedSubs));
         }
     }
 
@@ -278,7 +273,6 @@ $(document).ready(function() {
         }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
-            savedSubs = getSavedSubs();
             var html = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
             document.getElementById("mainWrap").innerHTML = html;
             limpiarSubrSeleccionado();
@@ -291,15 +285,17 @@ $(document).ready(function() {
         $(".sub.sub-active").removeClass("sub-active");
     }
 
-    function insertSubsToList(subs) {
+    function insertSubsToList(subs, active) {
         var subsList = $("#subs");
         if (subs instanceof Array) {
-            for (var i = subs.length - 1; i >= 0; i--) {
-                var sub = subs[i];
-                subsList.append($("<li/>").append($("<p/>").addClass("sub").text(sub)));
-            }
+            var subListTemplate = "{{#.}}<li><p class='sub'>{{.}}</p></li>{{/.}}";
+            var html = Mustache.to_html(subListTemplate, subs);
+            subsList.append(html);
         } else {
-            subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass("sub-active").text(subs)));
+            if (!listContainsSub(subs)) {
+                subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
+                saveSub(subs);
+            }
         }
     }
 
@@ -337,6 +333,21 @@ $(document).ready(function() {
         }, 351);
     }
 
+    function saveSub(newSub) {
+        if (!listContainsSub(newSub)) {
+            savedSubs.push(newSub);
+            store.setItem("subs", JSON.stringify(savedSubs));
+        }
+    }
+
+    function listContainsSub(sub) {
+        if (savedSubs) {
+            var i = savedSubs.indexOf(sub);
+            return i > -1;
+        }
+        return false;
+    }
+
     $('body').on('submit', '#formNuevoSub form', function(e) {
         e.preventDefault();
         var newSubr = $('#txtNuevoSub').val();
@@ -349,22 +360,7 @@ $(document).ready(function() {
             setSubTitle(newSubr);
             limpiarSubrSeleccionado();
             currentSub = newSubr;
-            insertSubsToList(newSubr);
-            var subs = getSavedSubs();
-            if (!subs) {
-                subs = [];
-            }
-            var alreadyIn = false;
-            for (var i = subs.length - 1; i >= 0; i--) {
-                if (subs[i] === newSubr) {
-                    alreadyIn = true;
-                    break;
-                }
-            }
-            if (!alreadyIn) {
-                subs.push(newSubr);
-                store.setItem("subs", JSON.stringify(subs));
-            }
+            insertSubsToList(newSubr, true);
         });
     });
 
@@ -452,7 +448,7 @@ $(document).ready(function() {
             
             procesarComentarios($(target));
         },
-        activeClass: 'toComments-active',
+        activeClass: 'button-active',
         activeClassDelay: 100
     });
 
@@ -515,6 +511,15 @@ $(document).ready(function() {
         activeClass: 'listButton-active'
     });
 
+    tappable('.btnAddSub', {
+        onTap: function(e, target) {
+            var parent = $(target).parent();
+            var newSub = $('.subredditTitle', parent).text();
+            insertSubsToList(newSub);
+        },
+        activeClass: 'button-active'
+    });
+
     tappable(".subToRemove > span", {
         onTap: function(e, target) {
             var subParent = $(target).parent();
@@ -530,7 +535,7 @@ $(document).ready(function() {
             }
 
             for (i = savedSubs.length - 1; i >= 0; i--) {
-                if(savedSubs[i] === subreddit) {
+                if (savedSubs[i] === subreddit) {
                     savedSubs.splice(i, 1);
                     break;
                 }
@@ -577,21 +582,6 @@ $(document).ready(function() {
         }
         if (!mostrandoMenu) {
             procesarComentarios($(this));
-        }
-    });
-
-    $(".sub").swipeLeft(function() {
-        var sub = $(this);
-        var subText = sub.text();
-        $(this.parent()).remove();
-        var subs = getSavedSubs();
-        if (subs) {
-            for (var i = subs.length - 1; i >= 0; i--) {
-                if (subs[i] === subText) {
-                    console.log(subs[i]);
-                    subs.splice(i, i);
-                }
-            }
         }
     });
 
