@@ -18,6 +18,8 @@ $(document).ready(function() {
     isWideScreen = chequearWideScreen(),
     isLargeScreen = chequearLargeScreen();
 
+    var defaultSubs = ["frontPage", "pics", "funny", "games", "worldNews", "todayILearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactionGifs"];
+
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
     }
