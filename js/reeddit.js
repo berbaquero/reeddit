@@ -717,39 +717,4 @@ $(document).ready(function() {
             }
         }, false);
     }
-
-    function timeSince(now, time) {
-
-        now = (now / 1000);
-
-        var seconds = Math.floor(now - time);
-
-        var interval = (seconds / 31536000);
-
-        if(interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " years" : " year");
-        }
-        interval = (seconds / 2592000);
-        if(interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " months" : " month");
-        }
-        interval = (seconds / 86400);
-        if(interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " days" : " day");
-        }
-        interval = (seconds / 3600);
-        if(interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " hours" : " hour");
-        }
-        interval = (seconds / 60);
-        if(interval > 1) {
-            interval = Math.floor(interval);
-            return interval + (interval > 1 ? " minutes" : " minute");
-        }
-        return Math.floor(seconds) + " seconds";
-    }
 });
