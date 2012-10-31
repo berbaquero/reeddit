@@ -20,7 +20,7 @@ $(document).ready(function() {
         replies = {},
         currentSub = 'frontPage',
         mostrandoMenu = false,
-        subreddits, store = window.localStorage,
+        subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         savedSubs, isWideScreen = chequearWideScreen(),
         isLargeScreen = chequearLargeScreen(),
@@ -198,7 +198,7 @@ $(document).ready(function() {
         } else {
             savedSubs = defaultSubs;
             insertSubsToList(savedSubs);
-            store.setItem('subs', JSON.stringify(savedSubs));
+            store.setItem("subreeddits", JSON.stringify(savedSubs));
         }
     }
 
@@ -305,7 +305,7 @@ $(document).ready(function() {
     }
 
     function getSavedSubs() {
-        var subs = store.getItem("subs");
+        var subs = store.getItem("subreeddits");
         if(subs) {
             subs = JSON.parse(subs);
             return subs;
@@ -341,7 +341,7 @@ $(document).ready(function() {
     function saveSub(newSub) {
         if(!listContainsSub(newSub)) {
             savedSubs.push(newSub);
-            store.setItem("subs", JSON.stringify(savedSubs));
+            store.setItem("subreeddits", JSON.stringify(savedSubs));
         }
     }
 
@@ -546,7 +546,7 @@ $(document).ready(function() {
                     break;
                 }
             }
-            store.setItem("subs", JSON.stringify(savedSubs));
+            store.setItem("subreeddits", JSON.stringify(savedSubs));
             subParent.remove();
         }
     });
