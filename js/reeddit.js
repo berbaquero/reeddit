@@ -48,7 +48,7 @@ $(document).ready(function() {
             if(!links) {
                 setTimeout(function() {
                     main.prepend("<p class='loading'>Loading links...</p>");
-                }, 350);
+                }, 351);
             }
         } else { // Si se está cargando inicialmente
             if(!paging) { // Si no hay paginación
@@ -405,7 +405,7 @@ $(document).ready(function() {
             slideFromLeft();
             setTimeout(function() {
                 $('#detailWrap').empty();
-            }, 350);
+            }, 351);
             backToMainView();
         }
     });
@@ -559,7 +559,7 @@ $(document).ready(function() {
         slideFromLeft();
         setTimeout(function() {
             $('#detailWrap').empty();
-        }, 350);
+        }, 351);
         backToMainView();
     });
 
@@ -610,7 +610,7 @@ $(document).ready(function() {
                 }).removeClass("slideTransition");
                 sacar("#detailView");
                 vistaActual = vistaPrincipal;
-            }, 350);
+            }, 351);
         }, 50);
     }
 
@@ -625,7 +625,7 @@ $(document).ready(function() {
                 det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css("-webkit-transform", "");
                 main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
                 vistaActual = vistaComentarios;
-            }, 350);
+            }, 351);
         }, 100);
     }
 
