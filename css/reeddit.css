@@ -579,6 +579,19 @@ header div {
     z-index: 9999;
 }
 
+#closeForm {
+    position: absolute;
+    top: -30px;
+    z-index: 10001;
+    right: 0;
+    color: whiteSmoke;
+    background-image: url('../img/delete.png');
+    width: 60px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    font-weight: bold;
+}
+
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header { background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%); }

@@ -5,7 +5,7 @@ $(document).ready(function() {
         linkSummaryTemplate = "<div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{sub}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{comments}} comments</p></div>",
         allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
         botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
-        formAgregarSubManualTemplate = '<div id="formNuevoSub"><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
+        formAgregarSubManualTemplate = '<div id="formNuevoSub"><div id="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
         botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
         savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><span></span></div>{{/.}}</ul>";
 
@@ -339,21 +339,23 @@ $(document).ready(function() {
             moverMenu(moverIzquierda);
         }
         setTimeout(function() {
-            var mod = $('<div/>').attr('id', 'modal');
-            $('body').append(mod).append(formAgregarSubManualTemplate);
+            var modal = $('<div/>').attr('id', 'modal');
+            $('body').append(modal).append(formAgregarSubManualTemplate);
             setTimeout(function() {
-                mod.css('opacity', 1);
+                modal.css('opacity', 1);
                 esModal = true;
+                document.getElementById('txtNuevoSub').focus();
             }, 1);
         }, (isLargeScreen ? 1 : 351));
     }
 
     function quitarModal() {
-        var mod = $('#modal');
-        mod.css('opacity', '');
+        var modal = $('#modal');
+        modal.css('opacity', '');
         setTimeout(function() {
-            mod.remove();
+            modal.remove();
             $('#formNuevoSub').remove();
+            $('#closeForm').remove();
             esModal = false;
         }, 351);
     }
@@ -568,6 +570,12 @@ $(document).ready(function() {
             }
             store.setItem("subreeddits", JSON.stringify(savedSubs));
             subParent.remove();
+        }
+    });
+
+    tappable("#closeForm", {
+        onTap: function() {
+            quitarModal();
         }
     });
 
