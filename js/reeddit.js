@@ -47,7 +47,7 @@ $(document).ready(function() {
             m.scrollTop = 0; // Se sube al top del contenedor
             if(!links) {
                 setTimeout(function() {
-                    main.prepend("<p class='loading'>Cargando links...</p>");
+                    main.prepend("<p class='loading'>Loading links...</p>");
                 }, 350);
             }
         } else { // Si se está cargando inicialmente
@@ -56,7 +56,7 @@ $(document).ready(function() {
             } else { // Si hay paginación
                 $("#moreLinks").parent().remove(); // Sólo se quita el botón de 'More' actual
             }
-            main.append("<p class='loading'>Cargando links...</p>");
+            main.append("<p class='loading'>Loading links...</p>");
         }
         if(links) { // Si ya los links fueron pedidos y devueltos
             processAndRenderLinks(links, fromSub, main);
@@ -170,7 +170,7 @@ $(document).ready(function() {
             detail.append(summaryWrap);
             $("#summaryTime").text(timeSince(new Date().getTime(), postInfo.time));
             var url = "http://www.reddit.com" + posts[id].link + urlEnd;
-            detail.append("<p class='loading'>Cargando comentarios...</p>");
+            detail.append("<p class='loading'>Loading comments...</p>");
             $.getJSON(url, function(result) {
                 $(".loading").remove();
                 var comments = result[1].data.children;
@@ -260,7 +260,7 @@ $(document).ready(function() {
         if(subreddits) {
             main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
         } else {
-            main.prepend("<p class='loading'>Cargando subreddits...</p>").prepend(botonAgregarSubManualTemplate);
+            main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(botonAgregarSubManualTemplate);
             $.getJSON(urlInit + "reddits/" + urlEnd, function(list) {
                 ultimoSub = list.data.after;
                 subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
@@ -505,7 +505,7 @@ $(document).ready(function() {
         onTap: function(e, target) {
             $(target).parent().remove();
             var main = $('#mainWrap');
-            main.append("<p class='loading'>Cargando subreddits...</p>");
+            main.append("<p class='loading'>Loading subreddits...</p>");
             $.getJSON(urlInit + 'reddits/' + urlEnd + '&after=' + ultimoSub, function(list) {
                 var nuevosSubs = Mustache.to_html(allSubredditsTemplate, list.data);
                 ultimoSub = list.data.after;
