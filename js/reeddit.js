@@ -279,7 +279,9 @@ $(document).ready(function() {
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
             var html = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
-            document.getElementById("mainWrap").innerHTML = html;
+            setTimeout(function() { // Retraso a proposito / fix para iOS
+                document.getElementById("mainWrap").innerHTML = html;
+            }, 10);
             limpiarSubrSeleccionado();
         }, isLargeScreen ? 1 : 351);
         currentSub = 'remove_subreddits';
