@@ -585,10 +585,6 @@ header div {
 
     .button { border: none; background-image: none; }
 
-    .button:hover { border: 1px solid #888; background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); }
-
-    .button:active { background-image: none; background-color: #777; }
-
     #backArrow:active div { border-right: 12px solid #fff; }
 
     #backArrow div { border-bottom: 6px solid transparent; border-right: 12px solid #333; border-top: 6px solid transparent; }
@@ -598,8 +594,6 @@ header div {
     #refreshIcon:active div { background-image: url('../img/refresh.png'); }
 
     #subTitle { color: #333; text-shadow: 0 1px 1px whiteSmoke; }
-
-    #subTitle:hover { background-color: #999; border-radius: 5px; }
 
     .subTitle-active { text-shadow: 0 -1px 1px whiteSmoke !important; }
 
@@ -611,31 +605,7 @@ header div {
 
     .linkWrap { border-bottom: 1px solid #ddd; }
 
-    .link, .listButton > span, .repliesButton, .subToRemove > span, .btnAddSub { cursor: pointer; }
-
-    /* Estilo las barras de scrolling (Desktop) */
-    ::-webkit-scrollbar { width: 7px; }
-
-    /* Track Principal*/
-    ::-webkit-scrollbar-track { border-radius: 10px; background-color: whiteSmoke; }
-
-    /* Handle Principal*/
-    ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
-
-    /* Menu */
-    #mainMenu { height: 95%; }
-
-    #mainMenu::-webkit-scrollbar { width: 7px; }
-
-    /* Track Menu*/
-    #mainMenu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
-
-    /* Handle Menu*/
-    #mainMenu::-webkit-scrollbar-thumb { border-radius: 10px; background: #444; }
-
     #editSubs { height: 5%; }
-
-    #addNewSubr, #removeSubr { cursor: pointer; }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
