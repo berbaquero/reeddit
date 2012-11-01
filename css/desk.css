@@ -1,0 +1,36 @@
+.btnEditSubr {
+    -webkit-transition-duration: 350ms;
+    transition-duration: 350ms;
+}
+
+.btnEditSubr:hover {
+    color: #4286F5;
+}
+
+.link, .listButton > span, .repliesButton, #addNewSubr, #removeSubr, .subToRemove > span, .btnAddSub { cursor: pointer; }
+
+/* Estilo las barras de scrolling (Desktop) */
+::-webkit-scrollbar { width: 7px; }
+
+/* Track Principal*/
+::-webkit-scrollbar-track { border-radius: 10px; background-color: whiteSmoke; }
+
+/* Handle Principal*/
+::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
+
+/* Menu */
+#mainMenu { height: 95%; }
+
+#mainMenu::-webkit-scrollbar { width: 7px; }
+
+/* Track Menu*/
+#mainMenu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
+
+/* Handle Menu*/
+#mainMenu::-webkit-scrollbar-thumb { border-radius: 10px; background: #444; }
+
+.button:hover { border: 1px solid #888; background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); }
+
+.button:active { background-image: none; background-color: #777; }
+
+#subTitle:hover { background-color: #999; border-radius: 5px; }
