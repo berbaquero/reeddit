@@ -601,6 +601,8 @@ header div {
 
     #mainView, #detailView { background-color: #fafafa; }
 
+    #mainMenu { height: 95%; }
+
     .sub { margin: 7px 0; }
 
     .linkWrap { border-bottom: 1px solid #ddd; }

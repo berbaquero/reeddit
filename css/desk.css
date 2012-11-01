@@ -18,9 +18,6 @@
 /* Handle Principal*/
 ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
 
-/* Menu */
-#mainMenu { height: 95%; }
-
 #mainMenu::-webkit-scrollbar { width: 7px; }
 
 /* Track Menu*/
