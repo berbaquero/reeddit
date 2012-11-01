@@ -3,22 +3,19 @@
     transition-duration: 350ms;
 }
 
-.btnEditSubr:hover {
-    color: #4286F5;
-}
+.btnEditSubr:hover { color: #4286F5; }
 
-.link, .listButton > span, .repliesButton, #addNewSubr, #removeSubr, .subToRemove > span, .btnAddSub { cursor: pointer; }
+.link, .listButton > span, .repliesButton, #addNewSubr, #removeSubr,
+.subToRemove > span, .btnAddSub, #closeForm { cursor: pointer; }
 
 /* Estilo las barras de scrolling (Desktop) */
-::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
 
 /* Track Principal*/
 ::-webkit-scrollbar-track { border-radius: 10px; background-color: whiteSmoke; }
 
 /* Handle Principal*/
 ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
-
-#mainMenu::-webkit-scrollbar { width: 7px; }
 
 /* Track Menu*/
 #mainMenu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
