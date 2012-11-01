@@ -709,7 +709,6 @@ $(document).ready(function() {
 
     // Aplicar si viene de iOS / Android
     if (/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
-        
         $("#editSubs").on(touch, function(e) {
             e.preventDefault();
         }, false);
@@ -719,5 +718,10 @@ $(document).ready(function() {
                 e.preventDefault();
             }
         }, false);
+    } else { // Aplicar si es otra plataforma / "desktop Web"
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/desk.css';
+        document.head.appendChild(link);
     }
 });
