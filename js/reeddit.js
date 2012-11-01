@@ -32,6 +32,24 @@ $(document).ready(function() {
 
     var defaultSubs = ["frontPage", "pics", "funny", "games", "worldNews", "todayILearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactionGifs"];
 
+    // Aplicar si viene de iOS / Android
+    if (/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
+        $("#editSubs").on(touch, function(e) {
+            e.preventDefault();
+        }, false);
+
+        $("header").on(touch, function(e) {
+            if(mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
+                e.preventDefault();
+            }
+        }, false);
+    } else { // Aplicar si es otra plataforma / "desktop Web"
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/desk.css';
+        document.head.appendChild(link);
+    }
+
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
     }
@@ -706,22 +724,4 @@ $(document).ready(function() {
     loadSubsList();
 
     scrollTop();
-
-    // Aplicar si viene de iOS / Android
-    if (/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
-        $("#editSubs").on(touch, function(e) {
-            e.preventDefault();
-        }, false);
-
-        $("header").on(touch, function(e) {
-            if(mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
-                e.preventDefault();
-            }
-        }, false);
-    } else { // Aplicar si es otra plataforma / "desktop Web"
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'css/desk.css';
-        document.head.appendChild(link);
-    }
 });
