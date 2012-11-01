@@ -261,7 +261,7 @@ $(document).ready(function() {
             main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
         } else {
             main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(botonAgregarSubManualTemplate);
-            $.getJSON(urlInit + "reddits/" + urlEnd, function(list) {
+            $.getJSON(urlInit + "reddits/.json?limit=50&jsonp=?", function(list) {
                 ultimoSub = list.data.after;
                 subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
                 main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
