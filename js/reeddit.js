@@ -695,7 +695,8 @@ $(document).ready(function() {
     }, false);
 
     var title = $("#title"),
-        headerIcon = $("#headerIcon");
+        headerIcon = $("#headerIcon"),
+        touch = "touchmove";
 
     $("#title").remove();
 
@@ -704,9 +705,9 @@ $(document).ready(function() {
 
     scrollTop();
 
-    var touch = "touchmove";
-
-    if(supportOrientation) {
+    // Aplicar si viene de iOS / Android
+    if (/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
+        
         $("#editSubs").on(touch, function(e) {
             e.preventDefault();
         }, false);
