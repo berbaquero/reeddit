@@ -19,6 +19,7 @@ $(document).ready(function() {
         posts = {},
         replies = {},
         currentSub = 'frontPage',
+        touch = "touchmove",
         mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
@@ -723,8 +724,7 @@ $(document).ready(function() {
     }, false);
 
     var title = $("#title"),
-        headerIcon = $("#headerIcon"),
-        touch = "touchmove";
+        headerIcon = $("#headerIcon");
 
     $("#title").remove();
 
