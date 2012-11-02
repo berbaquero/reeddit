@@ -43,6 +43,15 @@
             <div class='wrapper' id="mainMenu"><ul id='subs'></ul></div>
         </div></div>
 
+        <script>
+            if (!/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'css/desk.css';
+                document.head.appendChild(link);
+            }
+        </script>
+
         <script src="js/zepto.js"></script>
         <script src="js/libs.js"></script>
         <script src="js/reeddit.js"></script>
