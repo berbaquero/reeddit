@@ -53,18 +53,18 @@ $(document).ready(function() {
                     main.prepend("<p class='loading'>Loading links...</p>");
                 }, 351);
             }
-        } else { // Si se está cargando inicialmente
-            if(!paging) { // Si no hay paginación
+        } else { // Si se esta cargando inicialmente
+            if(!paging) { // Si no hay paginacion
                 main.empty(); // Se quitan los links actuales
-            } else { // Si hay paginación
-                $("#moreLinks").parent().remove(); // Sólo se quita el botón de 'More' actual
+            } else { // Si hay paginacion
+                $("#moreLinks").parent().remove(); // Solo se quita el boton de 'More' actual
             }
             main.append("<p class='loading'>Loading links...</p>");
         }
         if(links) { // Si ya los links fueron pedidos y devueltos
             processAndRenderLinks(links, fromSub, main);
-        } else { // Si aún no se piden los links
-            if(!paging) { // Si no hay paginación
+        } else { // Si aun no se piden los links
+            if(!paging) { // Si no hay paginacion
                 paging = ''; // Se pasa una cadena vacia, para no paginar
             }
             $.getJSON(baseUrl + urlLimitEnd + paging, function(result) {
@@ -110,7 +110,7 @@ $(document).ready(function() {
         }
 
         main.append(html); // Agrega nuevos links a la lista
-        // Elimina espacio de thumbnails para aquelos links que no tienen uno válido
+        // Elimina espacio de thumbnails para aquelos links que no tienen uno valido
         var thumbs = $('.linkThumb div');
         $.each(thumbs, function(i, t) {
             var thumb = $(t);
@@ -192,7 +192,7 @@ $(document).ready(function() {
         $("#mainTitle").addClass('invisible');
     }
 
-    // Sólo se debería ejecutar una sola vez, al cargar la app
+    // Solo se deberia ejecutar una sola vez, al cargar la app
 
     function loadSubsList() {
         savedSubs = getSavedSubs();
@@ -364,7 +364,7 @@ $(document).ready(function() {
         e.preventDefault();
         var newSubr = $('#txtNuevoSub').val();
         quitarModal();
-        if(!newSubr) { // Si no se ingresó nada, no pasa nada.
+        if(!newSubr) { // Si no se ingreso nada, no pasa nada.
             return;
         }
         // En caso de haber ingresado algo
