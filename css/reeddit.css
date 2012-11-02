@@ -592,6 +592,16 @@ header div {
     font-weight: bold;
 }
 
+#noLink {
+    margin: 50% auto;
+    width: 135px;
+}
+
+#noLink p {
+    font-size: 16px;
+    text-shadow: 0 1px 0px white;
+}
+
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header { background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%); }
