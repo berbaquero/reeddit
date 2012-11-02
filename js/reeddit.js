@@ -7,7 +7,8 @@ $(document).ready(function() {
         botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
         formAgregarSubManualTemplate = '<div id="formNuevoSub"><div id="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
         botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
-        savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><span></span></div>{{/.}}</ul>";
+        savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><span></span></div>{{/.}}</ul>",
+        noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>";
 
     // Globales
     var ancho = $(window).width(),
@@ -32,6 +33,7 @@ $(document).ready(function() {
 
     var defaultSubs = ["frontPage", "pics", "funny", "games", "worldNews", "todayILearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactionGifs"];
 
+    $('#detailWrap').html(noLinkTemplate);
 
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
