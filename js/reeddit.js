@@ -19,7 +19,7 @@ $(document).ready(function() {
         loadedLinks = {},
         posts = {},
         replies = {},
-        currentSub = 'frontPage',
+        currentSub,
         mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
@@ -212,6 +212,11 @@ $(document).ready(function() {
         }
     });
 
+    function setCurrentSub(sub) {
+        currentSub = sub;
+        store.setItem('currentSub', sub);
+    }
+
     function setSubTitle(title) {
         $("#subTitle").text(title);
     }
@@ -234,7 +239,7 @@ $(document).ready(function() {
                 url = urlInit + "r/" + sub + "/";
             }
             loadLinks(url, true);
-            currentSub = sub;
+            setCurrentSub(sub);
         }
         setSubTitle(sub);
     }
@@ -373,7 +378,7 @@ $(document).ready(function() {
             loadLinks("", false, data);
             setSubTitle(newSubr);
             limpiarSubrSeleccionado();
-            currentSub = newSubr;
+            setCurrentSub(newSubr);
             insertSubsToList(newSubr, true);
         });
     });
