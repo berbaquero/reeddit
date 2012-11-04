@@ -8,7 +8,7 @@
 .sub:hover { text-shadow: 0 0 10px #CCC; }
 
 .link, .listButton > span, .repliesButton, #addNewSubr, #removeSubr,
-.subToRemove > span, .btnAddSub, #closeForm { cursor: pointer; }
+.subToRemove > div, .btnAddSub, #closeForm { cursor: pointer; }
 
 /* Estilo las barras de scrolling (Desktop) */
 ::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
