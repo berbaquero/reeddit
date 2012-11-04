@@ -228,7 +228,7 @@ $(document).ready(function() {
     function loadSub(sub) {
         if(sub !== currentSub) {
             var url;
-            if(sub === 'frontPage') {
+            if(sub.toUpperCase() === 'frontPage'.toUpperCase()) {
                 url = urlInit;
             } else {
                 url = urlInit + "r/" + sub + "/";
@@ -419,7 +419,7 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(currentSub === 'frontPage') {
+            if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
                 loadLinks(urlInit);
             } else if(currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
                 return;
@@ -491,7 +491,7 @@ $(document).ready(function() {
     tappable("#moreLinks", {
         onTap: function() {
             var url;
-            if(currentSub === 'frontPage') {
+            if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
                 url = urlInit;
             } else {
                 url = urlInit + "r/" + currentSub + "/";
