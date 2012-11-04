@@ -544,7 +544,7 @@ $(document).ready(function() {
         activeClass: 'button-active'
     });
 
-    tappable(".subToRemove > span", {
+    tappable(".subToRemove > div", {
         onTap: function(e, target) {
             var subParent = $(target).parent();
             var subreddit = $("p", subParent).text();
@@ -566,7 +566,8 @@ $(document).ready(function() {
             }
             store.setItem("subreeddits", JSON.stringify(savedSubs));
             subParent.remove();
-        }
+        },
+        activeClass: 'button-active'
     });
 
     tappable("#closeForm", {
