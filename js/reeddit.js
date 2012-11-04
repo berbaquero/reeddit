@@ -348,11 +348,11 @@ $(document).ready(function() {
     function quitarModal() {
         var modal = $('#modal');
         modal.css('opacity', '');
+        $('#closeForm').remove();
+        $('#formNuevoSub').remove();
+        esModal = false;
         setTimeout(function() {
             modal.remove();
-            $('#formNuevoSub').remove();
-            $('#closeForm').remove();
-            esModal = false;
         }, 351);
     }
 
