@@ -1,9 +1,11 @@
-.btnEditSubr {
+.btnEditSubr, .sub {
     -webkit-transition-duration: 350ms;
     transition-duration: 350ms;
 }
 
 .btnEditSubr:hover { color: #4286F5; }
+
+.sub:hover { text-shadow: 0 0 10px #CCC; }
 
 .link, .listButton > span, .repliesButton, #addNewSubr, #removeSubr,
 .subToRemove > span, .btnAddSub, #closeForm { cursor: pointer; }
