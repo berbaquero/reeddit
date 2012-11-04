@@ -19,8 +19,7 @@ $(document).ready(function() {
         loadedLinks = {},
         posts = {},
         replies = {},
-        currentSub,
-        mostrandoMenu = false,
+        currentSub, mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         savedSubs, isWideScreen = chequearWideScreen(),
@@ -739,7 +738,7 @@ $(document).ready(function() {
     scrollTop();
 
     // Aplicar si viene de iOS / Android
-    if (/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
+    if(/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
         document.getElementById("editSubs").addEventListener(touch, function(e) {
             e.preventDefault();
         }, false);
