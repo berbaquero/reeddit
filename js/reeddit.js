@@ -31,7 +31,7 @@ $(document).ready(function() {
         vistaPrincipal = 1,
         vistaComentarios = 2;
 
-    var defaultSubs = ["frontPage", "pics", "funny", "games", "worldNews", "todayILearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactionGifs"];
+    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactiongifs"];
 
     $('#detailWrap').html(noLinkTemplate);
 
