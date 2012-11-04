@@ -328,18 +328,21 @@ $(document).ready(function() {
     }
 
     function mostrarIngresoSubManual() {
+        var retrasar = false;
         if(!isLargeScreen) {
+            if(mostrandoMenu) retrasar = true;
             moverMenu(moverIzquierda);
         }
         setTimeout(function() {
+            if(esModal) return;
             var modal = $('<div/>').attr('id', 'modal');
             $('body').append(modal).append(formAgregarSubManualTemplate);
+            esModal = true;
             setTimeout(function() {
                 modal.css('opacity', 1);
-                esModal = true;
                 document.getElementById('txtNuevoSub').focus();
             }, 1);
-        }, (isLargeScreen ? 1 : 351));
+        }, (retrasar ? 351 : 1));
     }
 
     function quitarModal() {
