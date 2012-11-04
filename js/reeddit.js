@@ -192,9 +192,7 @@ $(document).ready(function() {
         $("#mainTitle").addClass('invisible');
     }
 
-    // Solo se deberia ejecutar una sola vez, al cargar la app
-
-    function loadSubsList() {
+    function loadSubsList() { // Solo se deberia ejecutar una sola vez, al cargar la app
         savedSubs = getSavedSubs();
         if(savedSubs) {
             insertSubsToList(savedSubs);
@@ -202,6 +200,12 @@ $(document).ready(function() {
             savedSubs = defaultSubs;
             insertSubsToList(savedSubs);
             store.setItem("subreeddits", JSON.stringify(savedSubs));
+        }
+        // Marcar como activo al subreddit actual - la 1ra vez sera 'frontPage'
+        var i = savedSubs.indexOf(currentSub);
+        if(i > -1) {
+            var activeSub = document.getElementsByClassName('sub')[i];
+            $(activeSub).addClass('sub-active');
         }
     }
 
@@ -712,13 +716,24 @@ $(document).ready(function() {
         }
     }, false);
 
+    // Inicio de la app
     var title = $("#title"),
         headerIcon = $("#headerIcon"),
         touch = "touchmove";
 
     $("#title").remove();
 
-    loadLinks(urlInit);
+    currentSub = store.getItem('currentSub');
+
+    if(currentSub) {
+        loadLinks(currentSub.toUpperCase() === 'frontPage'.toUpperCase() ? urlInit : urlInit + "r/" + currentSub + "/");
+    } else {
+        setCurrentSub('frontPage');
+        loadLinks(urlInit);
+    }
+
+    setSubTitle(currentSub);
+
     loadSubsList();
 
     scrollTop();
