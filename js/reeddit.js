@@ -32,8 +32,6 @@ $(document).ready(function() {
 
     var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactiongifs"];
 
-    $('#detailWrap').html(noLinkTemplate);
-
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
     }
@@ -725,6 +723,7 @@ $(document).ready(function() {
         touch = "touchmove";
 
     $("#title").remove();
+    $('#detailWrap').html(noLinkTemplate);
 
     currentSub = store.getItem('currentSub');
 
