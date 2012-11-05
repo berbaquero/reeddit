@@ -1,6 +1,6 @@
 .btnEditSubr, .sub {
-    -webkit-transition-duration: 350ms;
-    transition-duration: 350ms;
+    -webkit-transition-duration: 200ms;
+    transition-duration: 200ms;
 }
 
 .btnEditSubr:hover { color: #4286F5; }
