@@ -636,6 +636,8 @@ header div {
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
 
     .toComments div { background-image: url('../img/comment_48.png'); }
+
+    .btnAddSub > div { background-image: url('../img/add@2.png'); }
 }
 
 /* Tablet Portrait */
