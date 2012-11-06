@@ -46,7 +46,8 @@
         </div></div>
 
         <script>
-            if (!/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
+            var isDesktop = !/iPhone|iPod|iPad|Android/.test(navigator.userAgent);
+            if (isDesktop) {
                 var link = document.createElement('link');
                 link.rel = 'stylesheet';
                 link.href = 'css/desk.css';

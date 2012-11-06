@@ -1,7 +1,4 @@
-.btnEditSubr, .sub {
-    -webkit-transition-duration: 200ms;
-    transition-duration: 200ms;
-}
+.btnEditSubr, .sub { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
 
 .btnEditSubr:hover { color: #4286F5; }
 
@@ -30,3 +27,18 @@
 .button:active { background-image: none; background-color: #777; }
 
 #subTitle:hover { background-color: #999; border-radius: 5px; }
+
+#mainWrap article {
+    opacity: 0;
+    position: relative;
+    -webkit-animation: slideRight 100ms ease both;
+    -webkit-animation-play-state: paused;
+    animation: slideRight 100ms ease both;
+    animation-play-state: paused;
+}
+
+#mainWrap.play article { -webkit-animation-play-state: running; animation-play-state: running; }
+
+@-webkit-keyframes slideRight { 0% { opacity: 0; left: 30px; } 100% { opacity: 1; left: 0; } }
+
+@keyframes slideRight { 0% { opacity: 0; left: 30px; } 100% { opacity: 1; left: 0; } }
