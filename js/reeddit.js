@@ -83,7 +83,7 @@ $(document).ready(function() {
             } else { // Si no se han cargado los links localmente
                 posts[link.data.id] = {
                     "title": link.data.title,
-                    "text": link.data.selftext,
+                    "selftext": link.data.selftext,
                     "created_utc": link.data.created_utc,
                     "domain": link.data.domain,
                     "subreddit": link.data.subreddit,
@@ -197,12 +197,13 @@ $(document).ready(function() {
         var summaryHTML = Mustache.to_html(linkSummaryTemplate, data);
         if(data.selftext) { // Si tiene Self-Text
             var selfText;
-            if(posts[postID].selftext) {
+            if(posts[postID].selftextParsed) {
                 selfText = posts[postID].selftext;
             } else {
                 var summaryConverter1 = new Markdown.Converter();
                 selfText = summaryConverter1.makeHtml(data.selftext);
                 posts[postID].selftext = selfText;
+                posts[postID].selftextParsed = 1; // truey
             }
             summaryHTML += "<div id='selfText'>" + selfText + "</div>";
         }
