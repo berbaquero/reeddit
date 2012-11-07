@@ -21,7 +21,7 @@ $(document).ready(function() {
         replies = {},
         currentSub, mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
-        ultimoLink, ultimoSub, esModal = false,
+        ultimoLink, ultimoSub, esModal = false, loadingComments = false,
         hiloActual, savedSubs, isWideScreen = chequearWideScreen(),
         isLargeScreen = chequearLargeScreen(),
         // Pseudo-Enums
@@ -175,6 +175,7 @@ $(document).ready(function() {
                 $(".loading").remove();
                 var comments = result[1].data.children;
                 loadComments(comments, detail, id);
+                if(refresh) loadingComments = false;
             });
         }
 
@@ -464,8 +465,9 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(vistaActual == vistaComentarios) {
+            if(vistaActual == vistaComentarios && !loadingComments) {
                 if(!hiloActual) return;
+                loadingComments = true;
                 procesarComentarios(hiloActual, true);
             }
             if(vistaActual == vistaPrincipal) {
