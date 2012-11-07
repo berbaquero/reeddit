@@ -116,14 +116,6 @@ $(document).ready(function() {
                 thumb.parent().remove();
             }
         });
-        if(isDesktop) {
-            $("#mainWrap article").each(function(i) {
-                $(this).attr("style", "-webkit-animation-delay:" + i * 100 + "ms; animation-delay:" + i * 100 + "ms;");
-                if(i == $("#mainWrap article").size() - 1) {
-                    $("#mainWrap").addClass("play");
-                }
-            });
-        }
     }
 
     function loadComments(data, baseElement, idParent) {
