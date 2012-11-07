@@ -22,7 +22,7 @@ $(document).ready(function() {
         currentSub, mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
-        savedSubs, isWideScreen = chequearWideScreen(),
+        hiloActual, savedSubs, isWideScreen = chequearWideScreen(),
         isLargeScreen = chequearLargeScreen(),
         // Pseudo-Enums
         moverIzquierda = 1,
@@ -146,8 +146,15 @@ $(document).ready(function() {
         $("#detailWrap a").attr("target", "_blank");
     }
 
-    function procesarComentarios(comm) {
-        var id = comm.attr("data-id");
+    function procesarComentarios(comm, refresh) {
+        var id;
+        if(refresh) {
+            id = comm;
+        } else {
+            id = comm.attr("data-id");
+        }
+        hiloActual = id;
+
         ensenar("#navBack");
         var detail = $("#detailWrap");
         detail.empty();
@@ -155,7 +162,7 @@ $(document).ready(function() {
         var d = document.getElementById("detailWrap");
         d.scrollTop = 0;
 
-        if(loadedLinks[id]) {
+        if(loadedLinks[id] && !refresh) {
             detail.append(posts[id].summary);
             detail.append(loadedLinks[id]);
         } else {
@@ -178,10 +185,12 @@ $(document).ready(function() {
             });
         }
 
-        if(isWideScreen) {
-            $("#detailView").removeClass("fuera");
-        } else {
-            slideFromRight();
+        if(!refresh) {
+            if(isWideScreen) {
+                $("#detailView").removeClass("fuera");
+            } else {
+                slideFromRight();
+            }
         }
 
         $("#titleHead").empty().append(title);
@@ -428,12 +437,18 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                loadLinks(urlInit);
-            } else if(currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
-                return;
-            } else {
-                loadLinks(urlInit + "r/" + currentSub + "/");
+            if(vistaActual == vistaComentarios) {
+                if(!hiloActual) return;
+                procesarComentarios(hiloActual, true);
+            }
+            if(vistaActual == vistaPrincipal) {
+                if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
+                    loadLinks(urlInit);
+                } else if(currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
+                    return;
+                } else {
+                    loadLinks(urlInit + "r/" + currentSub + "/");
+                }
             }
         }
     });
