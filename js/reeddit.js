@@ -21,7 +21,8 @@ $(document).ready(function() {
         replies = {},
         currentSub, mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
-        ultimoLink, ultimoSub, esModal = false, loadingComments = false,
+        ultimoLink, ultimoSub, esModal = false,
+        loadingComments = false,
         hiloActual, savedSubs, isWideScreen = chequearWideScreen(),
         isLargeScreen = chequearLargeScreen(),
         // Pseudo-Enums
@@ -147,6 +148,8 @@ $(document).ready(function() {
     }
 
     function procesarComentarios(comm, refresh) {
+        if(loadingComments) return;
+        loadingComments = true;
         var id;
         if(refresh) {
             id = comm;
@@ -166,6 +169,7 @@ $(document).ready(function() {
             detail.append(posts[id].summary);
             detail.append(loadedLinks[id]);
             updateSummaryInfo(posts[id], id);
+            loadingComments = false;
         } else {
             setPostSummaryInfo(posts[id], id);
             var url = "http://www.reddit.com" + posts[id].link + urlEnd;
@@ -175,7 +179,7 @@ $(document).ready(function() {
                 $(".loading").remove();
                 var comments = result[1].data.children;
                 loadComments(comments, detail, id);
-                if(refresh) loadingComments = false;
+                loadingComments = false;
             });
         }
 
@@ -468,7 +472,6 @@ $(document).ready(function() {
         onTap: function(e) {
             if(vistaActual == vistaComentarios && !loadingComments) {
                 if(!hiloActual) return;
-                loadingComments = true;
                 procesarComentarios(hiloActual, true);
             }
             if(vistaActual == vistaPrincipal) {
