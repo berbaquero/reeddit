@@ -31,7 +31,7 @@ $(document).ready(function() {
         vistaPrincipal = 1,
         vistaComentarios = 2;
 
-    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "technology", "science", "Music", "movies", "Apple", "Android", "geek", "reactiongifs"];
+    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "technology", "science", "atheism", "Music", "movies", "Apple", "Android", "geek", "reactiongifs"];
 
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
@@ -235,8 +235,8 @@ $(document).ready(function() {
         savedSubs = getSavedSubs();
         if(savedSubs) {
             insertSubsToList(savedSubs);
-        } else {
-            savedSubs = defaultSubs;
+        } else { // Si no se ha cargado al 'store'
+            savedSubs = defaultSubs; // Se guardan los subreddits por defecto
             insertSubsToList(savedSubs);
             store.setItem("subreeddits", JSON.stringify(savedSubs));
         }
@@ -260,6 +260,16 @@ $(document).ready(function() {
         store.setItem('currentSub', sub);
     }
 
+    function getAllSubsString() {
+        var allSubs = '';
+        for(var i = 0; i < savedSubs.length; i++) {
+            var sub = savedSubs[i];
+            if(sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
+            allSubs += sub + '+';
+        }
+        return allSubs.substring(0, allSubs.length - 1);
+    }
+
     function setSubTitle(title) {
         $("#subTitle").text(title);
     }
@@ -277,7 +287,7 @@ $(document).ready(function() {
         if(sub !== currentSub) {
             var url;
             if(sub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                url = urlInit;
+                url = urlInit + "r/" + getAllSubsString() + "/";
             } else {
                 url = urlInit + "r/" + sub + "/";
             }
@@ -470,13 +480,13 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(vistaActual == vistaComentarios && !loadingComments) {
+            if(vistaActual == vistaComentarios) {
                 if(!hiloActual) return;
                 procesarComentarios(hiloActual, true);
             }
             if(vistaActual == vistaPrincipal) {
                 if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                    loadLinks(urlInit);
+                    loadLinks(urlInit + "r/" + getAllSubsString() + "/");
                 } else if(currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
                     return;
                 } else {
@@ -515,7 +525,6 @@ $(document).ready(function() {
 
     tappable(".toComments", {
         onTap: function(e, target) {
-
             procesarComentarios($(target));
         },
         activeClass: 'button-active',
@@ -549,7 +558,7 @@ $(document).ready(function() {
         onTap: function() {
             var url;
             if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                url = urlInit;
+                url = urlInit + "r/" + getAllSubsString() + "/";
             } else {
                 url = urlInit + "r/" + currentSub + "/";
             }
@@ -775,16 +784,16 @@ $(document).ready(function() {
 
     currentSub = store.getItem('currentSub');
 
-    if(currentSub) {
-        loadLinks(currentSub.toUpperCase() === 'frontPage'.toUpperCase() ? urlInit : urlInit + "r/" + currentSub + "/");
+    loadSubsList();
+
+    if(currentSub && currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
+        loadLinks(urlInit + "r/" + currentSub + "/");
     } else {
         setCurrentSub('frontPage');
-        loadLinks(urlInit);
+        loadLinks(urlInit + "r/" + getAllSubsString() + "/");
     }
 
     setSubTitle(currentSub);
-
-    loadSubsList();
 
     scrollTop();
 
