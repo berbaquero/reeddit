@@ -746,8 +746,7 @@ $(document).ready(function() {
     }
 
     var d = document,
-        body = d.body,
-        hideBarTriggerInit = false;
+        body = d.body;
 
     var supportOrientation = typeof window.orientation != 'undefined',
         getScrollTop = function() {
@@ -786,7 +785,7 @@ $(document).ready(function() {
 
     loadSubsList();
 
-    if(currentSub && currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
+    if(currentSub && currentSub.toUpperCase() !== 'frontPage'.toUpperCase()) {
         loadLinks(urlInit + "r/" + currentSub + "/");
     } else {
         setCurrentSub('frontPage');
