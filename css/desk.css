@@ -1,11 +1,11 @@
-.btnEditSubr, .sub { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
+.btnEditSubr, .sub, .channel > p { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
 
 .btnEditSubr:hover { color: #4286F5; }
 
-.sub:hover { text-shadow: 0 0 10px #CCC; }
+.sub:hover, .channel:hover > p { text-shadow: 0 0 10px #CCC; }
 
-.link, .listButton > span, .repliesButton, #addNewSubr, #removeSubr,
-.subToRemove > div, .btnAddSub, #closeForm { cursor: pointer; }
+.link, .listButton > span, #btnsAddSubs > div, .repliesButton, #addNewSubr, #removeSubr,
+.subToRemove > div, .btnAddSub, .closeForm { cursor: pointer; }
 
 /* Estilo las barras de scrolling (Desktop) */
 ::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }

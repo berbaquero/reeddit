@@ -181,7 +181,7 @@ a.link:visited div p.linkTitle { color: #888; }
     margin: -5px 0;
 }
 
-#subs { padding: 10px 0; margin: 0; cursor: default; }
+#subs, #channels { padding: 10px 0 0 0; margin: 0; cursor: default; }
 
 .sub {
     color: whiteSmoke;
@@ -193,6 +193,30 @@ a.link:visited div p.linkTitle { color: #888; }
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+#channels { padding-top: 0; }
+
+.channel {
+    margin: 0;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.channel > p { color: whiteSmoke; margin: 0; }
+
+.channel > div { padding-left: 10px; }
+
+.channel > div p {
+    font-size: 12px;
+    color: #BBB;
+    margin: 5px 0;
+    text-transform: capitalize;
+    text-overflow: ellipsis; overflow: hidden; white-space: nowrap; 
+}
+
+.channel-active { border-left: 3px solid #4286F5; }
+
+.channel-active > p { text-shadow: 0 0 10px #CCC; }
 
 .sub-active { text-shadow: 0 0 10px #CCC; border-left: 3px solid #4286F5; }
 
@@ -281,10 +305,24 @@ a.link:visited div p.linkTitle { color: #888; }
     border: 1.5px solid #CCC;
     font-size: 14px;
     font-weight: bold;
-    display: block;
     text-align: center;
+    display: block;
     width: 70%;
     margin: 0 auto;
+}
+
+#btnsAddSubs { padding: 10px; display: -webkit-box; }
+
+#btnsAddSubs > div {
+    color: #555;
+    background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    padding: 3px 10px;
+    border-radius: 8px;
+    border: 1.5px solid #CCC;
+    font-size: 14px;
+    font-weight: bold;
+    width: 50%;
+    text-align: center;
 }
 
 /*---------------------------- Cabecera -----------------------------*/
@@ -495,26 +533,44 @@ header div {
     color: #E34A28;
 }
 
-#formNuevoSub {
+.newForm {
     width: 300px;
-    height: 50px;
     background-color: #CCC;
+    box-shadow: 0 0 15px black;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -100px;
-    margin-left: -150px;
     z-index: 10000;
     border-radius: 7px;
     padding: 5px;
-    box-shadow: 0 0 15px black;
+    left: 50%;
+    margin-left: -150px;
+}
+
+#formNewChannel {
+    min-height: 160px;
+    top: 55px;
+}
+
+#formNewChannel input {
+    width: 100%;
+    padding-top: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+#btnAddNewChannel {
+
+}
+
+#formNuevoSub {
+    height: 50px;
+    top: 50%;
+    margin-top: -100px;
 }
 
 #formNuevoSub input { width: 100%; height: 40px; font-size: 20px; }
 
 #agregarSubManual { padding: 10px; }
-
-#btnSubMan { width: 70%; font-size: 14px; }
 
 #subsToRemove {
     margin: 0;
@@ -578,7 +634,7 @@ header div {
     z-index: 9999;
 }
 
-#closeForm {
+.closeForm {
     position: absolute;
     top: -30px;
     z-index: 10001;

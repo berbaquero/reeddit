@@ -1,16 +1,20 @@
 $(document).ready(function() {
+
     // Templates
     var linksTemplate = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></div><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
         linksTemplateLeft = "{{#children}}<article class='linkWrap'><div class='link' data-url='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></div><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
         linkSummaryTemplate = "<section><div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a></div><div id='summaryExtra'><p id='summarySub'>{{subreddit}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{num_comments}} comments</p></div></section>",
         allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
-        botonAgregarSubManualTemplate = "<div class='listButton'><span id='btnSubMan'>Insert Subreddit Manually</span></div>",
-        formAgregarSubManualTemplate = '<div id="formNuevoSub"><div id="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
+        botonAgregarSubManualTemplate = "<div id='btnsAddSubs'><div id='btnSubMan'>Insert Manually</div><div id='btnAddChannel'>Add Channel</div></div>",
+        formAgregarSubManualTemplate = '<div class="newForm" id="formNuevoSub"><div class="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
+        formAddNewChannelTemplate = '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><button id="btnAddNewChannel">Add Channel</button></div>',
         botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
         savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
+        channelTemplate = '<li><div class="channel" data-url="{{url}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
+        channelsTemplate = '{{#.}}' + channelTemplate + '{{/.}}',
         noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>";
 
-    // Globales
+    // Pseudo-Globales
     var ancho = $(window).width(),
         vistaActual = 1,
         urlInit = "http://www.reddit.com/",
@@ -19,6 +23,7 @@ $(document).ready(function() {
         loadedLinks = {},
         posts = {},
         replies = {},
+        channels = [],
         currentSub, mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
@@ -31,7 +36,13 @@ $(document).ready(function() {
         vistaPrincipal = 1,
         vistaComentarios = 2;
 
-    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "technology", "science", "atheism", "Music", "movies", "Apple", "Android", "geek", "reactiongifs"];
+    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "science", "atheism", "Music", "movies", "geek", "reactiongifs"];
+
+    var defaultChannel = [{
+        name: 'Tech',
+        subs: ["technology", "Apple", "Android"],
+        url: 'r/technology+Apple+Android'
+    }];
 
     function chequearWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
@@ -316,18 +327,20 @@ $(document).ready(function() {
         if(!isLargeScreen) {
             moverMenu(moverIzquierda);
         }
-        document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
-        var main = $("#mainWrap");
-        if(subreddits) {
-            main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
-        } else {
-            main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(botonAgregarSubManualTemplate);
-            $.getJSON(urlInit + "reddits/.json?limit=50&jsonp=?", function(list) {
-                ultimoSub = list.data.after;
-                subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
+        setTimeout(function() {
+            document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
+            var main = $("#mainWrap");
+            if(subreddits) {
                 main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
-            });
-        }
+            } else {
+                main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(botonAgregarSubManualTemplate);
+                $.getJSON(urlInit + "reddits/.json?limit=50&jsonp=?", function(list) {
+                    ultimoSub = list.data.after;
+                    subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
+                    main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
+                });
+            }
+        }, isLargeScreen ? 1 : 351);
         limpiarSubrSeleccionado();
         setSubTitle("+ Subreddits");
         currentSub = "all_reddits";
@@ -351,6 +364,7 @@ $(document).ready(function() {
 
     function limpiarSubrSeleccionado() {
         $(".sub.sub-active").removeClass("sub-active");
+        $(".channel.channel-active").removeClass("channel-active");
     }
 
     function insertSubsToList(subs, active) {
@@ -395,11 +409,30 @@ $(document).ready(function() {
         }, (retrasar ? 351 : 1));
     }
 
+    function showNewChannelForm() {
+        var retrasar = false;
+        if(!isLargeScreen) {
+            if(mostrandoMenu) retrasar = true;
+            moverMenu(moverIzquierda);
+        }
+        setTimeout(function() {
+            if(esModal) return;
+            var modal = $('<div/>').attr('id', 'modal');
+            $('body').append(modal).append(formAddNewChannelTemplate);
+            esModal = true;
+            setTimeout(function() {
+                modal.css('opacity', 1);
+                document.getElementById('txtChannel').focus();
+            }, 1);
+        }, (retrasar ? 351 : 1));
+    }
+
     function quitarModal() {
         var modal = $('#modal');
         modal.css('opacity', '');
-        $('#closeForm').remove();
+        $('.closeForm').remove();
         $('#formNuevoSub').remove();
+        $('#formNewChannel').remove();
         esModal = false;
         setTimeout(function() {
             modal.remove();
@@ -425,9 +458,7 @@ $(document).ready(function() {
         e.preventDefault();
         var newSubr = $('#txtNuevoSub').val();
         quitarModal();
-        if(!newSubr) { // Si no se ingreso nada, no pasa nada.
-            return;
-        }
+        if(!newSubr) return; // Si no se ingreso nada, no pasa nada.
         // En caso de haber ingresado algo
         // Cargar el contenido del nuevo subrredit, de forma asincrona
         $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
@@ -439,7 +470,81 @@ $(document).ready(function() {
         });
     });
 
+    function insertChannel(channel) {
+        channels.push(channel);
+        var html = Mustache.to_html(channelTemplate, channel);
+        $('#channels').append(html);
+        store.setItem('channels', JSON.stringify(channels));
+    }
+
+    function loadSavedChannels() { // Solo se debe ejecutar una vez al principio, cargando la app
+        channels = store.getItem('channels');
+        if(channels) {
+            channels = JSON.parse(channels);
+        } else { // Cargar canal(es?) por defecto
+            channels = defaultChannel;
+        }
+        var html = Mustache.to_html(channelsTemplate, channels);
+        $('#channels').html(html);
+    }
+
+    function loadChannel(channelURL) {
+        loadLinks(urlInit + channelURL, true);
+    }
+
+    function getChannelURLfromSubs(subs) {
+        var url = 'r/';
+        for(var i = 0; i < subs.length; i++) {
+            var sub = subs[i];
+            url += sub + '+';
+        }
+        url = url.substring(0, url.length - 1);
+        return url;
+    }
+
     // Taps
+    tappable("#btnAddNewChannel", {
+        onTap: function() {
+            var channelName = $('#txtChannel').val();
+            if(!channelName) {
+                quitarModal();
+                return;
+            }
+
+            var subreddits = [];
+            var subs = $('#subsForChannel input');
+            for(var i = 0; i < subs.length; i++) {
+                var sub = $(subs[i]).val();
+                if(!sub) continue;
+                subreddits.push(sub);
+            }
+            quitarModal();
+            var channel = {};
+            channel.name = channelName;
+            channel.subs = subreddits;
+            channel.url = getChannelURLfromSubs(subreddits);
+            insertChannel(channel);
+        }
+    });
+
+    tappable('.channel', {
+        onTap: function(e, target) {
+            var channel = $(target);
+            var url = channel.attr('data-url');
+            moverMenu(moverIzquierda);
+            limpiarSubrSeleccionado();
+            channel.addClass('channel-active');
+            if(vistaActual === vistaComentarios) {
+                backToMainView();
+                slideFromLeft();
+            }
+            loadChannel(url);
+            setSubTitle(channel.children().first().text());
+        },
+        activeClassDelay: 100,
+        activeClass: 'link-active'
+    });
+
     tappable(".repliesButton", {
         onTap: function(e, target) {
             var parent = $(target);
@@ -574,6 +679,13 @@ $(document).ready(function() {
         activeClass: 'listButton-active'
     });
 
+    tappable("#btnAddChannel", {
+        onTap: function() {
+            showNewChannelForm();
+        },
+        activeClass: 'listButton-active'
+    });
+
     tappable('#moreSubs', {
         onTap: function(e, target) {
             $(target).parent().remove();
@@ -625,7 +737,7 @@ $(document).ready(function() {
         activeClass: 'button-active'
     });
 
-    tappable("#closeForm", {
+    tappable(".closeForm", {
         onTap: function() {
             quitarModal();
         }
@@ -784,6 +896,7 @@ $(document).ready(function() {
     currentSub = store.getItem('currentSub');
 
     loadSubsList();
+    loadSavedChannels();
 
     if(currentSub && currentSub.toUpperCase() !== 'frontPage'.toUpperCase()) {
         loadLinks(urlInit + "r/" + currentSub + "/");
