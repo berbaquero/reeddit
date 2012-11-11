@@ -579,16 +579,17 @@ $(document).ready(function() {
     tappable('.channel', {
         onTap: function(e, target) {
             var channel = $(target);
+            var channelName = channel.children().first().text();
             var url = channel.attr('data-url');
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
             limpiarSubrSeleccionado();
             channel.addClass('channel-active');
-            if(vistaActual === vistaComentarios) {
+            if(vistaActual === vista.comentarios) {
                 backToMainView();
                 slideFromLeft();
             }
-            loadChannel(url);
-            setSubTitle(channel.children().first().text());
+            loadChannel(getChannelByName(channelName));
+
         },
         activeClassDelay: 100,
         activeClass: 'link-active'
