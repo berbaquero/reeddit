@@ -24,17 +24,25 @@ $(document).ready(function() {
         posts = {},
         replies = {},
         channels = [],
-        currentSub, mostrandoMenu = false,
+        mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         loadingComments = false,
         hiloActual, savedSubs, isWideScreen = chequearWideScreen(),
         isLargeScreen = chequearLargeScreen(),
         // Pseudo-Enums
-        moverIzquierda = 1,
-        moverDerecha = 2,
-        vistaPrincipal = 1,
-        vistaComentarios = 2;
+        mover = {
+            izquierda: 1,
+            derecha: 2
+        },
+        vista = {
+            principal: 1,
+            comentarios: 2
+        },
+        selection = {
+            sub: 1,
+            channel: 2
+        };
 
     var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "science", "atheism", "Music", "movies", "geek", "reactiongifs"];
 
@@ -242,6 +250,17 @@ $(document).ready(function() {
         $("#summaryTime").text(timeSince(new Date().getTime(), time));
     }
 
+    function doByCurrentSelection(caseSub, caseChannel) {
+        switch(current.type) {
+        case selection.sub:
+            caseSub();
+            break;
+        case selection.channel:
+            caseChannel();
+            break;
+        }
+    }
+
     function loadSubsList() { // Solo se deberia ejecutar una sola vez, al cargar la app
         savedSubs = getSavedSubs();
         if(savedSubs) {
@@ -250,12 +269,6 @@ $(document).ready(function() {
             savedSubs = defaultSubs; // Se guardan los subreddits por defecto
             insertSubsToList(savedSubs);
             store.setItem("subreeddits", JSON.stringify(savedSubs));
-        }
-        // Marcar como activo al subreddit actual - la 1ra vez sera 'frontPage'
-        var i = savedSubs.indexOf(currentSub);
-        if(i > -1) {
-            var activeSub = document.getElementsByClassName('sub')[i];
-            $(activeSub).addClass('sub-active');
         }
     }
 
@@ -267,8 +280,15 @@ $(document).ready(function() {
     });
 
     function setCurrentSub(sub) {
-        currentSub = sub;
-        store.setItem('currentSub', sub);
+        current.name = sub;
+        current.type = selection.sub;
+        store.setItem('currentSelection', JSON.stringify(current));
+    }
+
+    function setCurrentChannel(channel) {
+        current.name = channel.name;
+        current.type = selection.channel;
+        store.setItem('currentSelection', JSON.stringify(current));
     }
 
     function getAllSubsString() {
@@ -295,7 +315,7 @@ $(document).ready(function() {
     }
 
     function loadSub(sub) {
-        if(sub !== currentSub) {
+        if(sub !== current.name) {
             var url;
             if(sub.toUpperCase() === 'frontPage'.toUpperCase()) {
                 url = urlInit + "r/" + getAllSubsString() + "/";
@@ -309,13 +329,13 @@ $(document).ready(function() {
     }
 
     function moverMenu(direccion) {
-        if(direccion === moverIzquierda) {
+        if(direccion === mover.izquierda) {
             $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
             setTimeout(function() {
                 mostrandoMenu = false;
             });
         }
-        if(direccion === moverDerecha) {
+        if(direccion === mover.derecha) {
             $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
             setTimeout(function() {
                 mostrandoMenu = true;
@@ -325,7 +345,7 @@ $(document).ready(function() {
 
     function loadSubredditListToAdd() {
         if(!isLargeScreen) {
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
         }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
@@ -343,12 +363,13 @@ $(document).ready(function() {
         }, isLargeScreen ? 1 : 351);
         limpiarSubrSeleccionado();
         setSubTitle("+ Subreddits");
-        currentSub = "all_reddits";
+        current.name = "all_reddits";
+        current.type = selection.sub;
     }
 
     function loadSubredditListToRemove() {
         if(!isLargeScreen) {
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
         }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
@@ -358,7 +379,8 @@ $(document).ready(function() {
             }, 10);
             limpiarSubrSeleccionado();
         }, isLargeScreen ? 1 : 351);
-        currentSub = 'remove_subreddits';
+        current.name = 'remove_subreddits';
+        current.type = selection.sub;
         setSubTitle('- Subreddits');
     }
 
@@ -391,11 +413,24 @@ $(document).ready(function() {
         }
     }
 
+    function loadCurrentSelection() {
+        current = store.getItem('currentSelection');
+        if(current) {
+            current = JSON.parse(current);
+        } else {
+            current = {
+                name: 'frontPage',
+                type: selection.sub
+            };
+        }
+        return current;
+    }
+
     function mostrarIngresoSubManual() {
         var retrasar = false;
         if(!isLargeScreen) {
             if(mostrandoMenu) retrasar = true;
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
         }
         setTimeout(function() {
             if(esModal) return;
@@ -413,7 +448,7 @@ $(document).ready(function() {
         var retrasar = false;
         if(!isLargeScreen) {
             if(mostrandoMenu) retrasar = true;
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
         }
         setTimeout(function() {
             if(esModal) return;
@@ -488,8 +523,21 @@ $(document).ready(function() {
         $('#channels').html(html);
     }
 
-    function loadChannel(channelURL) {
-        loadLinks(urlInit + channelURL, true);
+    function getChannelByName(name) {
+        var foundChannel;
+        for(var i = 0; i < channels.length; i++) {
+            if(channels[i].name === name) {
+                foundChannel = channels[i];
+                break;
+            }
+        }
+        return foundChannel;
+    }
+
+    function loadChannel(channel) {
+        loadLinks(urlInit + channel.url, true);
+        setSubTitle(channel.name);
+        setCurrentChannel(channel);
     }
 
     function getChannelURLfromSubs(subs) {
@@ -559,11 +607,11 @@ $(document).ready(function() {
     tappable(".sub", {
         onTap: function(e, target) {
             var sub = $(target);
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
             loadSub(sub.first().text());
             limpiarSubrSeleccionado();
             sub.addClass('sub-active');
-            if(vistaActual === vistaComentarios) {
+            if(vistaActual === vista.comentarios) {
                 backToMainView();
                 slideFromLeft();
             }
@@ -585,18 +633,22 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(vistaActual == vistaComentarios) {
+            if(vistaActual == vista.comentarios) {
                 if(!hiloActual) return;
                 procesarComentarios(hiloActual, true);
             }
-            if(vistaActual == vistaPrincipal) {
-                if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                    loadLinks(urlInit + "r/" + getAllSubsString() + "/");
-                } else if(currentSub === 'all_reddits' || currentSub === 'remove_subreddits') {
-                    return;
-                } else {
-                    loadLinks(urlInit + "r/" + currentSub + "/");
-                }
+            if(vistaActual == vista.principal) {
+                doByCurrentSelection(function() { // Si es Subreddit
+                    if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+                        loadLinks(urlInit + "r/" + getAllSubsString() + "/");
+                    } else if(current.name === 'all_reddits' || current.name === 'remove_subreddits') {
+                        return;
+                    } else {
+                        loadLinks(urlInit + "r/" + current.name + "/");
+                    }
+                }, function() { // Si es channel
+                    loadChannel(getChannelByName(current.name));
+                });
             }
         }
     });
@@ -642,7 +694,7 @@ $(document).ready(function() {
             if(isLargeScreen) {
                 return;
             }
-            moverMenu(mostrandoMenu ? moverIzquierda : moverDerecha);
+            moverMenu(mostrandoMenu ? mover.izquierda : mover.derecha);
         },
         activeClass: 'subTitle-active'
     });
@@ -661,13 +713,19 @@ $(document).ready(function() {
 
     tappable("#moreLinks", {
         onTap: function() {
-            var url;
-            if(currentSub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                url = urlInit + "r/" + getAllSubsString() + "/";
-            } else {
-                url = urlInit + "r/" + currentSub + "/";
-            }
-            loadLinks(url, false, false, '&after=' + ultimoLink);
+            doByCurrentSelection(function() {
+                var url;
+                if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+                    url = urlInit + "r/" + getAllSubsString() + "/";
+                } else {
+                    url = urlInit + "r/" + current.name + "/";
+                }
+                loadLinks(url, false, false, '&after=' + ultimoLink);
+            }, function() {
+                var channel = getChannelByName(current.name);
+                loadLinks(urlInit + channel.url, false, false, '&after=' + ultimoLink);
+            });
+
         },
         activeClass: 'listButton-active'
     });
@@ -759,8 +817,8 @@ $(document).ready(function() {
         if(isWideScreen || isLargeScreen) {
             return;
         }
-        if(vistaActual === vistaPrincipal) {
-            moverMenu(moverDerecha);
+        if(vistaActual === vista.principal) {
+            moverMenu(mover.derecha);
         }
     });
 
@@ -769,7 +827,7 @@ $(document).ready(function() {
             return;
         }
         if(mostrandoMenu) {
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
         }
     });
 
@@ -801,7 +859,7 @@ $(document).ready(function() {
                     "left": ""
                 }).removeClass("slideTransition");
                 sacar("#detailView");
-                vistaActual = vistaPrincipal;
+                vistaActual = vista.principal;
             }, 351);
         }, 50);
     }
@@ -816,7 +874,7 @@ $(document).ready(function() {
             setTimeout(function() { // Quita las propiedades de transition
                 det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css("-webkit-transform", "");
                 main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
-                vistaActual = vistaComentarios;
+                vistaActual = vista.comentarios;
             }, 351);
         }, 100);
     }
@@ -881,7 +939,7 @@ $(document).ready(function() {
         isLargeScreen = chequearLargeScreen();
         scrollTop();
         if(isLargeScreen && mostrandoMenu) {
-            moverMenu(moverIzquierda);
+            moverMenu(mover.izquierda);
         }
     }, false);
 
@@ -893,19 +951,38 @@ $(document).ready(function() {
     $("#title").remove();
     $('#detailWrap').html(noLinkTemplate);
 
-    currentSub = store.getItem('currentSub');
+    current = loadCurrentSelection();
 
     loadSubsList();
     loadSavedChannels();
 
-    if(currentSub && currentSub.toUpperCase() !== 'frontPage'.toUpperCase()) {
-        loadLinks(urlInit + "r/" + currentSub + "/");
-    } else {
-        setCurrentSub('frontPage');
-        loadLinks(urlInit + "r/" + getAllSubsString() + "/");
-    }
-
-    setSubTitle(currentSub);
+    // Cargar links y marcar como activo al subreddit actual - la 1ra vez sera el 'frontPage'
+    doByCurrentSelection(function() { // En caso de ser un subreddit
+        var i = savedSubs.indexOf(current.name);
+        if(i > -1) {
+            var activeSub = document.getElementsByClassName('sub')[i];
+            $(activeSub).addClass('sub-active');
+        }
+        // Cargar links
+        if(current.name.toUpperCase() !== 'frontPage'.toUpperCase()) {
+            loadLinks(urlInit + "r/" + current.name + "/");
+        } else {
+            setCurrentSub('frontPage');
+            loadLinks(urlInit + "r/" + getAllSubsString() + "/");
+        }
+        setSubTitle(current.name);
+    }, function() { // En caso de ser un channel
+        var channel;
+        for(var i = 0; i < channels.length; i++) {
+            channel = channels[i];
+            if(channel.name === current.name) {
+                var active = document.getElementsByClassName('channel')[i];
+                $(active).addClass('channel-active');
+                break;
+            }
+        }
+        loadChannel(channel);
+    });
 
     scrollTop();
 
