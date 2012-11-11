@@ -5,7 +5,7 @@
 .sub:hover, .channel:hover > p { text-shadow: 0 0 10px #CCC; }
 
 .link, .listButton > span, #btnsAddSubs > div, .repliesButton, #addNewSubr, #removeSubr,
-.subToRemove > div, .btnAddSub, .closeForm { cursor: pointer; }
+.subToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel { cursor: pointer; }
 
 /* Estilo las barras de scrolling (Desktop) */
 ::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
@@ -27,3 +27,5 @@
 .button:active { background-image: none; background-color: #777; }
 
 #subTitle:hover { background-color: #999; border-radius: 5px; }
+
+.channel > div p { font-size: 11px; letter-spacing: 1px; }
