@@ -1,23 +1,34 @@
 # Reeddit
 
-Cliente elástico, minimalista y sólo-lectura de [Reddit](http://reddit.com/), que permite la creación de canales personalizados basados en uno o más subreddits.
+Minimalist, elastic and read-only [Reddit](http://reddit.com/) web client, that allows to create custom 'Channels' with up to 3 subreddits each.
 
-## Herramientas
+* #### Minimalist
+By going for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.
 
-Para construir Reeddit, utilicé varios scripts geniales:
+* #### Elastic
+Reeddit has 3 different elastic layouts - you can use it on any window size. So it's comfortable to use on a smartphone, tablet or desktop.
 
-*	[Zepto.js](http://zeptojs.com/) -- básicamente, jQuery para navegadores modernos. Más ligero, y con varias ventajas para sitios y apps móviles.
-*	[Tappable](https://github.com/cheeaun/tappable) -- Tremendo manejador de eventos 'tap' para móviles.
-*	[pagedown](http://code.google.com/p/pagedown/) -- Para convertir texto en Markdown a HTML.
-*	[Mustache.js](https://github.com/janl/mustache.js/) -- Templates del lado del cliente. Indispensable.
-*	[reziseend.js](https://github.com/porada/resizeend) -- Mejor manejo de eventos de resize.
+* #### Read-only
+Being a personal side-project of mine, Reeddit can be used for browsing subreddits and viewing links/post and its comments, but not for voting or commenting... for now ;) -- However, the subreddits and channels you add are saved locally, so you don't lose any of that data.
 
-### Compatibilidad
+* #### Channels
+You can group up to 3 subreddits into a Channel, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
 
-Por ahora, debería funcionar bien en un browser decente basado en Webkit (Chrome y Safari, desktop y mobile).
+## Tools
 
-Mi intención original fue crear una webapp optimizada para iOS 5 - que desde esa versión tiene manejo de scrolling nativo para contenido con overflow, a través de `-webkit-overflow-scrolling: touch`.
+To build Reeddit, I used this awesome resources:
 
-Sin embargo, hasta donde he podido probar, también se puede usar en Android 4+.
+*	[Zepto.js](http://zeptojs.com/) -- basically, jQuery for modern browsers. Lighter, and with various useful tools for mobile sites and apps.
+*	[Tappable](https://github.com/cheeaun/tappable) -- Great 'tap' events handler.
+*	[pagedown](http://code.google.com/p/pagedown/) -- Client-side Markdown-to-HTML conversion.
+*	[Mustache.js](https://github.com/janl/mustache.js/) -- Lightweigth client-side templating.
+*	[reziseend.js](https://github.com/porada/resizeend) -- Better 'resize' handler.
+* 	[Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
 
-En el escritorio, es genial usarla como [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710) en Google Chrome, o como una App en Mac, gracias a [Fluid](http://fluidapp.com/). :D
+### Compatibility
+
+For now, Reeddit works properly on recent versions of Webkit-based browsers (Chrome and Safari, desktop and mobile) - it's been tested on iOS 5+ (iPhone and iPad) and Android 4+.
+
+My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
+
+On the Desktop, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710) on Google Chrome, or as a Mac app, with [Fluid](http://fluidapp.com/). :D
