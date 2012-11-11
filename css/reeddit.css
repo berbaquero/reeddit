@@ -207,7 +207,7 @@ a.link:visited div p.linkTitle { color: #888; }
 .channel > div { padding-left: 10px; }
 
 .channel > div p {
-    font-size: 12px;
+    font-size: 13px;
     color: #BBB;
     margin: 5px 0;
     text-transform: capitalize;
@@ -301,7 +301,7 @@ a.link:visited div p.linkTitle { color: #888; }
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     padding: 3px 10px;
-    border-radius: 8px;
+    border-radius: 5px;
     border: 1.5px solid #CCC;
     font-size: 14px;
     font-weight: bold;
@@ -317,7 +317,7 @@ a.link:visited div p.linkTitle { color: #888; }
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     padding: 3px 10px;
-    border-radius: 8px;
+    border-radius: 5px;
     border: 1.5px solid #CCC;
     font-size: 14px;
     font-weight: bold;
@@ -535,7 +535,7 @@ header div {
 
 .newForm {
     width: 300px;
-    background-color: #CCC;
+    background-color: #ddd;
     box-shadow: 0 0 15px black;
     position: absolute;
     z-index: 10000;
@@ -559,7 +559,13 @@ header div {
 }
 
 #btnAddNewChannel {
-
+    border: 1px #aaa solid;
+    margin: 10px 10px 5px 10px;
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
 }
 
 #formNuevoSub {
