@@ -572,7 +572,8 @@ $(document).ready(function() {
             channel.subs = subreddits;
             channel.url = getChannelURLfromSubs(subreddits);
             insertChannel(channel);
-        }
+        },
+        activeClass: 'listButton-active'
     });
 
     tappable('.channel', {
