@@ -879,6 +879,8 @@ $(document).ready(function() {
         }, 100);
     }
 
+    // Metodos de vistas
+
     function reveal(element) {
         var el = $(element);
         el.removeClass("fuera").addClass("invisible");
@@ -886,8 +888,6 @@ $(document).ready(function() {
             el.removeClass("invisible");
         });
     }
-
-    // Metodos de vistas
 
     function mostrar(element) {
         var el = $(element);
@@ -953,6 +953,7 @@ $(document).ready(function() {
 
     current = loadCurrentSelection();
 
+    // Cargar lista de subreddits y canales
     loadSubsList();
     loadSavedChannels();
 
