@@ -10,7 +10,7 @@ $(document).ready(function() {
         formAddNewChannelTemplate = '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btnAddNewChannel">Add Channel</div></div>',
         botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
         savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
-        channelTemplate = '<li><div class="channel" data-url="{{url}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
+        channelTemplate = '<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
         channelsTemplate = '{{#.}}' + channelTemplate + '{{/.}}',
         noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>";
 
