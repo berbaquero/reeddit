@@ -23,6 +23,7 @@ $(document).ready(function() {
         loadedLinks = {},
         posts = {},
         replies = {},
+        current = {},
         channels = [],
         mostrandoMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
@@ -181,8 +182,7 @@ $(document).ready(function() {
         var detail = $("#detailWrap");
         detail.empty();
 
-        var d = document.getElementById("detailWrap");
-        d.scrollTop = 0;
+        document.getElementById("detailWrap").scrollTop = 0;
 
         if(loadedLinks[id] && !refresh) {
             detail.append(posts[id].summary);
