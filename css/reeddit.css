@@ -233,12 +233,12 @@ a.link:visited div p.linkTitle { color: #888; }
 /*--------------------- Principal -------------------------*/
 
 .link {
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
+    display: -webkit-box; display: -moz-box; display: box;
     text-decoration: none;
     width: 85%;
     padding: 10px 5px 10px 10px;
+    cursor: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .linkWrap {
@@ -295,19 +295,19 @@ a.link:visited div p.linkTitle { color: #888; }
 
 .link-active div p { color: white; }
 
-.listButton { padding: 10px; }
+.listButton { padding: 20px; }
 
 .listButton > span {
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
-    padding: 3px 10px;
+    padding: 5px 10px;
     border-radius: 5px;
     border: 1.5px solid #CCC;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     display: block;
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
 }
 
