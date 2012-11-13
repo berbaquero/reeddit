@@ -41,17 +41,19 @@
             <div class="view fuera" id="detailView"><div class="wrapper" id="detailWrap"></div></div>
         </div>
 
-        <div id="menuContainer"><div class='view'><div id='editSubs'><p class='btnEditSubr' id='addNewSubr'>+</p><p class='btnEditSubr' id='removeSubr'>-</p></div>
-            <div class='wrapper' id="mainMenu"><ul id='subs'></ul><ul id='channels'></ul></div>
-        </div></div>
+        <div id="menuContainer">
+            <div class='view'><div id='editSubs'><p class='btnEditSubr' id='addNewSubr'>+</p><p class='btnEditSubr' id='removeSubr'>-</p></div>
+                <div class='wrapper' id="mainMenu"><ul id='subs'></ul><ul id='channels'></ul></div>
+            </div>
+        </div>
 
         <script>
             var isDesktop = !/iPhone|iPod|iPad|Android/.test(navigator.userAgent);
             if (isDesktop) {
-                var link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = 'css/desk.css';
-                document.head.appendChild(link);
+                var deskLink = document.createElement('link');
+                deskLink.rel = 'stylesheet';
+                deskLink.href = 'css/desk.css';
+                document.head.appendChild(deskLink);
             }
         </script>
 
