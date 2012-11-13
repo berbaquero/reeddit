@@ -85,7 +85,7 @@ a.link:visited div p.linkTitle { color: #888; }
 }
 
 #detailWrap > section > .commentWrap > div:first-child {
-    background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0) 0%, rgba(220, 220, 220, 0.5));
+    background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
     padding: 10px 10px 0 10px;
     margin: -10px -10px 0;
 }
@@ -113,6 +113,8 @@ a.link:visited div p.linkTitle { color: #888; }
 #summaryTime { color: white; text-align: center; }
 
 #summaryDomain { color: #F60; font-weight: bold; font-size: 13px; }
+
+#summaryAuthor { color: #BBB; font-weight: bold; }
 
 #summarySub { color: #FAFAFA; text-align: left; }
 
