@@ -65,6 +65,7 @@ $(document).ready(function() {
 
     function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
+        editando = false;
         if(fromSub) { // Si viene de se seleccionar un subreddit
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             if(!links) {
@@ -365,8 +366,7 @@ $(document).ready(function() {
         }, isLargeScreen ? 1 : 351);
         limpiarSubrSeleccionado();
         setSubTitle("+ Subreddits");
-        current.name = "all_reddits";
-        current.type = selection.sub;
+        editando = true;
     }
 
     function loadSubredditListToRemove() {
@@ -386,9 +386,8 @@ $(document).ready(function() {
             }, 10);
             limpiarSubrSeleccionado();
         }, isLargeScreen ? 1 : 351);
-        current.name = 'remove_subreddits';
-        current.type = selection.sub;
         setSubTitle('- Subreddits');
+        editando = true;
     }
 
     function limpiarSubrSeleccionado() {
@@ -650,11 +649,11 @@ $(document).ready(function() {
             }
             if(vistaActual == vista.principal) {
                 doByCurrentSelection(function() { // Si es Subreddit
-                    if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
-                        loadLinks(urlInit + "r/" + getAllSubsString() + "/");
-                    } else if(current.name === 'all_reddits' || current.name === 'remove_subreddits') {
+                    if(editando) {
                         return;
-                    } else {
+                    } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+                        loadLinks(urlInit + "r/" + getAllSubsString() + "/");
+                    } else  {
                         loadLinks(urlInit + "r/" + current.name + "/");
                     }
                 }, function() { // Si es channel
