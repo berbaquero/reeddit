@@ -273,7 +273,7 @@ $(document).ready(function() {
     }
 
     window.applicationCache.addEventListener("updateready", function(e) {
-        var update = window.confirm("Update descargado. Recargar para actualizar?");
+        var update = window.confirm("Update downloaded. Reload?");
         if(update) {
             window.location.reload();
         }
