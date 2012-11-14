@@ -580,13 +580,25 @@ header div {
 
 #agregarSubManual { padding: 10px; }
 
-#subsToRemove {
+#removeWrap { height: 100%; }
+
+#removeTitle {
+	padding: 10px;
+    font-weight: bold;
+    font-size: 19px;
     margin: 0;
-    padding: 0;
-    height: 100%;
+    text-align: center;
+    color: #777;
+    background-color: rgba(220, 220, 220, 0.4);
+    text-shadow: 0 1px 1px whiteSmoke;
 }
 
-.subToRemove {
+.removeList {
+    margin: 0;
+    padding: 0;
+}
+
+.itemToRemove {
     display: -webkit-box;    
     border-bottom: 1px solid #DDD;
     border-top: 1px solid white;
@@ -594,7 +606,7 @@ header div {
     height: 60px;
 }
 
-.subToRemove > p {    
+.itemToRemove > p {    
     width: 85%;
     text-transform: capitalize;
     font-size: 16px;
@@ -602,7 +614,7 @@ header div {
     padding-left: 10px;
 }
 
-.subToRemove > div {
+.itemToRemove > div {
     background-image: url('../img/delete.png');
     width: 15%;
     height: 100%;
@@ -658,12 +670,12 @@ header div {
 
 #noLink {
     margin: 50% auto;
-    width: 135px;
+    width: 140px;
 }
 
 #noLink p {
     font-size: 16px;
-    text-shadow: 0 1px 0px white;
+    text-shadow: 0 1px 1px white;
 }
 
 @media only screen and (min-width: 350px) and (min-height: 500px) {

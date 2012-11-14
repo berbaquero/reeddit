@@ -9,7 +9,8 @@ $(document).ready(function() {
         formAgregarSubManualTemplate = '<div class="newForm" id="formNuevoSub"><div class="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
         formAddNewChannelTemplate = '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btnAddNewChannel">Add Channel</div></div>',
         botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
-        savedSubredditsListToRemoveTemplate = "<ul id='subsToRemove'>{{#.}}<div class='subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
+        savedSubredditsListToRemoveTemplate = "<ul class='removeList'>{{#.}}<div class='itemToRemove subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
+        savedChannelsListToRemoveTemplate = "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove'><p>{{name}}</p><div></div></div>{{/.}}</ul>",
         channelTemplate = '<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
         channelsTemplate = '{{#.}}' + channelTemplate + '{{/.}}',
         noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>";
@@ -373,7 +374,12 @@ $(document).ready(function() {
         }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
-            var html = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
+            var htmlSubs = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
+            var htmlChannels = '';
+            if(channels && channels.length > 0) {
+                htmlChannels = Mustache.to_html(savedChannelsListToRemoveTemplate, channels);
+            }
+            var html = '<div id="removeWrap">' + htmlSubs + htmlChannels + "</div>";
             setTimeout(function() { // Retraso a proposito / fix para iOS
                 document.getElementById("mainWrap").innerHTML = html;
             }, 10);
@@ -504,6 +510,8 @@ $(document).ready(function() {
             insertSubsToList(newSubr, true);
         });
     });
+
+    // Channel Functions
 
     function insertChannel(channel) {
         channels.push(channel);
@@ -785,14 +793,53 @@ $(document).ready(function() {
                 }
             }
 
-            for(i = savedSubs.length - 1; i >= 0; i--) {
-                if(savedSubs[i] === subreddit) {
-                    savedSubs.splice(i, 1);
+            var idx = savedSubs.indexOf(subreddit);
+            savedSubs.splice(idx, 1);
+
+            store.setItem("subreeddits", JSON.stringify(savedSubs));
+            subParent.remove();
+
+            // Verificar si era la seleccion actual
+            if(current.type === selection.sub) {
+                if(current.name === subreddit) {
+                    setCurrentSub('frontPage');
+                }
+            }
+        },
+        activeClass: 'button-active'
+    });
+
+    tappable(".channelToRemove > div", {
+        onTap: function(e, target) {
+            var channelParent = $(target).parent();
+            var channel = $("p", channelParent).text();
+            var channelsFromList = $('.channel');
+
+            for(var i = channelsFromList.length - 1; i >= 0; i--) {
+                var channelText = $('p', channelsFromList[i]).first().text();
+                if(channelText === channel) {
+                    $(channelsFromList[i]).parent().remove();
                     break;
                 }
             }
-            store.setItem("subreeddits", JSON.stringify(savedSubs));
-            subParent.remove();
+
+            for(var j = 0; j < channels.length; j++) {
+                if(channels[j].name === channel) {
+                    channels.splice(j, 1);
+                    break;
+                }
+            }
+
+            store.setItem('channels', JSON.stringify(channels));
+            channelParent.remove();
+
+            // Verificar si era la seleccion actual
+            if(current.type === selection.channel) {
+                if(current.name === channel) {
+                    setCurrentSub('frontPage');
+                }
+            }
+
         },
         activeClass: 'button-active'
     });

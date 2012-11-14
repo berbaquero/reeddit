@@ -5,7 +5,7 @@
 .sub:hover, .channel:hover > p { text-shadow: 0 0 10px #CCC; }
 
 .link, .listButton > span, #btnsAddSubs > div, .repliesButton, #addNewSubr, #removeSubr,
-.subToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel { cursor: pointer; }
+.itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel { cursor: pointer; }
 
 /* Estilo las barras de scrolling (Desktop) */
 ::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
