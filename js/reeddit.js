@@ -64,8 +64,7 @@ $(document).ready(function() {
     function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
         if(fromSub) { // Si viene de se seleccionar un subreddit
-            var m = document.getElementById("mainWrap");
-            m.scrollTop = 0; // Se sube al top del contenedor
+            document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             if(!links) {
                 setTimeout(function() {
                     main.prepend("<p class='loading'>Loading links...</p>");
@@ -349,7 +348,7 @@ $(document).ready(function() {
             moverMenu(mover.izquierda);
         }
         setTimeout(function() {
-            document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
+            document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             var main = $("#mainWrap");
             if(subreddits) {
                 main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
@@ -373,7 +372,7 @@ $(document).ready(function() {
             moverMenu(mover.izquierda);
         }
         setTimeout(function() {
-            document.getElementById("mainWrap").scrollTop = 0; // Se sube al top del contenedor
+            document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             var html = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
             setTimeout(function() { // Retraso a proposito / fix para iOS
                 document.getElementById("mainWrap").innerHTML = html;
