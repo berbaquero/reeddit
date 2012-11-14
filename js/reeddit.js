@@ -18,6 +18,7 @@ $(document).ready(function() {
     // Pseudo-Globales
     var ancho = $(window).width(),
         vistaActual = 1,
+        editando = false,
         urlInit = "http://www.reddit.com/",
         urlEnd = ".json?jsonp=?",
         urlLimitEnd = ".json?limit=30&jsonp=?",
