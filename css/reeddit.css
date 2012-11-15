@@ -86,6 +86,8 @@ a.link:visited div p.linkTitle { color: #888; }
 
 #detailWrap > section > .commentWrap > div:first-child {
     background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
+    background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
+    background-image: linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
     padding: 10px 10px 0 10px;
     margin: -10px -10px 0;
 }
@@ -293,7 +295,11 @@ a.link:visited div p.linkTitle { color: #888; }
 
 .linkSub { margin: 0; color: #777; }
 
-.link-active { background-image: -webkit-linear-gradient(top, #4286F5, #194FDB); }
+.link-active {
+    background-image: -webkit-linear-gradient(top, #4286F5, #194FDB);
+    background-image: -moz-linear-gradient(top, #4286F5, #194FDB);
+    background-image: linear-gradient(top, #4286F5, #194FDB);
+}
 
 .link-active div p { color: white; }
 
@@ -302,6 +308,8 @@ a.link:visited div p.linkTitle { color: #888; }
 .listButton > span {
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     padding: 5px 10px;
     border-radius: 5px;
     border: 1.5px solid #CCC;
@@ -313,11 +321,19 @@ a.link:visited div p.linkTitle { color: #888; }
     margin: 0 auto;
 }
 
-#btnsAddSubs { padding: 10px; display: -webkit-box; }
+#btnsAddSubs {
+    padding: 10px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+}
 
 #btnsAddSubs > div {
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     padding: 3px 10px;
     border-radius: 5px;
     border: 1.5px solid #CCC;
@@ -346,6 +362,7 @@ header div {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -ms-box-flex: 1;
+    box-flex: 1;
     width: 70%;
     display: -webkit-box;
     display: -moz-box;
@@ -353,6 +370,7 @@ header div {
     -webkit-box-align: center;
     -moz-box-align: center;
     -ms-box-align: center;
+    box-align: center;
 }
 
 #title {
@@ -391,6 +409,7 @@ header div {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -ms-box-flex: 1;
+    box-flex: 1;
     width: 15%;
     display: -webkit-box;
     display: -moz-box;
@@ -398,6 +417,7 @@ header div {
     -webkit-box-align: center;
     -moz-box-align: center;
     -ms-box-align: center;
+    box-align: center;
 }
 
 .button {
@@ -406,6 +426,8 @@ header div {
     height: 30px;
     margin: 0 auto;
     background-image: -webkit-linear-gradient(top, #ff6600 0%, #e32918 100%);
+    background-image: -moz-linear-gradient(top, #ff6600 0%, #e32918 100%);
+    background-image: linear-gradient(top, #ff6600 0%, #e32918 100%);
 }
 
 #refresh {}
@@ -435,6 +457,7 @@ header div {
     -webkit-box-align: center;
     -moz-box-align: center;
     -ms-box-align: center;
+    box-align: center;
 }
 
 .toComments div {
@@ -451,6 +474,8 @@ header div {
 .repliesButton {
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #ccc 100%);
+    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #ccc 100%);
+    background-image: linear-gradient(top, whiteSmoke 0%, #ccc 100%);
     padding: 3px 10px;
     border-radius: 8px;
     border: 1.5px solid #CCC;
@@ -464,6 +489,8 @@ header div {
 
 .repliesButton-active, .listButton-active {
     background-image: -webkit-linear-gradient(top, #ccc 0%, #777 100%) !important;
+    background-image: -moz-linear-gradient(top, #ccc 0%, #777 100%) !important;
+    background-image: linear-gradient(top, #ccc 0%, #777 100%) !important;
     color: white !important;
 }
 
@@ -507,6 +534,9 @@ header div {
     border-bottom: 1px solid #CCC;
     border-top: 1px solid white;
     display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
 }
 
 .subreddit > div:first-child {
@@ -514,7 +544,16 @@ header div {
     padding: 10px 5px 10px 0;
 }
 
-.btnAddSub { width: 15%; display: -webkit-box; -webkit-box-align: center; }
+.btnAddSub { width: 15%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-box-align: center;
+    box-align: center;
+}
 
 .btnAddSub > div {
     background-image: url('../img/add.png');
@@ -568,6 +607,8 @@ header div {
     font-weight: bold;
     border-radius: 5px;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
+    background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
 }
 
 #formNuevoSub {
@@ -599,10 +640,16 @@ header div {
 }
 
 .itemToRemove {
-    display: -webkit-box;    
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
     border-bottom: 1px solid #DDD;
     border-top: 1px solid white;
     -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-box-align: center;
+    box-align: center;
     height: 60px;
 }
 
@@ -680,7 +727,11 @@ header div {
 
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
-    header { background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%); }
+    header {
+        background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
+        background-image: -moz-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
+        background-image: linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
+    }
 
     .button { border: none; background-image: none; }
 
