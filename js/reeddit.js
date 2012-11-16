@@ -45,6 +45,10 @@ $(document).ready(function() {
         selection = {
             sub: 1,
             channel: 2
+        },
+        transforms = {
+            translateTo0: 'translate3d(0px, 0px, 0px)',
+            translateTo140: 'translate3d(140px, 0px, 0px)'
         };
 
     var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "science", "atheism", "Music", "movies", "geek", "reactiongifs"];
@@ -333,13 +337,19 @@ $(document).ready(function() {
 
     function moverMenu(direccion) {
         if(direccion === mover.izquierda) {
-            $("#container").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
+            $("#container").css({
+                '-webkit-transform': transforms.translateTo0,
+                'transform': transforms.translateTo0
+            });
             setTimeout(function() {
                 mostrandoMenu = false;
             });
         }
         if(direccion === mover.derecha) {
-            $("#container").css('-webkit-transform', 'translate3d(140px, 0px, 0px)');
+            $("#container").css({
+                '-webkit-transform': transforms.translateTo140,
+                'transform': transforms.translateTo140
+            });
             setTimeout(function() {
                 mostrandoMenu = true;
             });
@@ -653,7 +663,7 @@ $(document).ready(function() {
                         return;
                     } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
                         loadLinks(urlInit + "r/" + getAllSubsString() + "/");
-                    } else  {
+                    } else {
                         loadLinks(urlInit + "r/" + current.name + "/");
                     }
                 }, function() { // Si es channel
@@ -896,17 +906,21 @@ $(document).ready(function() {
         var det = $("#detailView");
         main.css("left", -ancho);
         setTimeout(function() {
-            main.addClass("slideTransition").css('-webkit-transform', 'translate3d(' + ancho + 'px, 0px, 0px)');
-            det.addClass("slideTransition").css('-webkit-transform', 'translate3d(' + ancho + 'px, 0px, 0px)');
+            var translate = 'translate3d(' + ancho + 'px, 0px, 0px)';
+            var cssTransform = {
+                '-webkit-transform': translate,
+                'transform': translate
+            };
+            main.addClass("slideTransition").css(cssTransform);
+            det.addClass("slideTransition").css(cssTransform);
             setTimeout(function() {
-                main.removeClass("slideTransition").css({
-                    "-webkit-transform": "",
-                    "left": ""
-                }).removeClass("fuera");
-                det.css({
-                    "-webkit-transform": "",
-                    "left": ""
-                }).removeClass("slideTransition");
+                var cssTransformBack = {
+                    '-webkit-transform': '',
+                    'transform': '',
+                    'left': ''
+                };
+                main.removeClass("slideTransition").css(cssTransformBack).removeClass("fuera");
+                det.css(cssTransformBack).removeClass("slideTransition");
                 sacar("#detailView");
                 vistaActual = vista.principal;
             }, 351);
@@ -918,11 +932,20 @@ $(document).ready(function() {
         var det = $("#detailView");
         det.css("left", ancho);
         setTimeout(function() {
-            main.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
-            det.addClass("slideTransition").css('-webkit-transform', 'translate3d(-' + ancho + 'px, 0px, 0px)');
+            var translate = 'translate3d(-' + ancho + 'px, 0px, 0px)';
+            var cssTransform = {
+                '-webkit-transform': translate,
+                'transform': translate
+            };
+            main.addClass("slideTransition").css(cssTransform);
+            det.addClass("slideTransition").css(cssTransform);
             setTimeout(function() { // Quita las propiedades de transition
-                det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css("-webkit-transform", "");
-                main.removeClass("slideTransition").addClass("fuera").css("-webkit-transform", "");
+                var cssTransformBack = {
+                    '-webkit-transform': '',
+                    'transform': ''
+                };
+                det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css(cssTransformBack);
+                main.removeClass("slideTransition").addClass("fuera").css(cssTransformBack);
                 vistaActual = vista.comentarios;
             }, 351);
         }, 100);
