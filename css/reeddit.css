@@ -92,9 +92,9 @@ a.link:visited div p.linkTitle { color: #888; }
     margin: -10px -10px 0;
 }
 
-.commentData { display: -webkit-box; display: -moz-box; display: box; }
+.commentData { display: -webkit-box; display: -moz-box; display: box; width: 100%; }
 
-.commentAuthor { width: 50%; }
+.commentData > div { -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1; width: 50%; }
 
 .commentAuthor p { color: #E34A28; font-weight: bold; }
 
@@ -130,6 +130,7 @@ a.link:visited div p.linkTitle { color: #888; }
     font-weight: bold;
     padding: 0 10px;
     box-shadow: 0px 0px 10px #333;
+    width: 100%;
 }
 
 #summaryExtra p {
@@ -243,6 +244,9 @@ a.link:visited div p.linkTitle { color: #888; }
     padding: 10px 5px 10px 10px;
     cursor: none;
     -webkit-tap-highlight-color: transparent;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
 }
 
 .linkWrap {
@@ -251,6 +255,7 @@ a.link:visited div p.linkTitle { color: #888; }
     display: -webkit-box;
     display: -moz-box;
     display: box;
+    width: 100%;
 }
 
 .linkThumb {
@@ -458,6 +463,9 @@ header div {
     -moz-box-align: center;
     -ms-box-align: center;
     box-align: center;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
 }
 
 .toComments div {
@@ -624,7 +632,7 @@ header div {
 #removeWrap { height: 100%; }
 
 #removeTitle {
-	padding: 10px;
+    padding: 10px;
     font-weight: bold;
     font-size: 19px;
     margin: 0;
