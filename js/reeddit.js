@@ -322,7 +322,7 @@ $(document).ready(function() {
     }
 
     function loadSub(sub) {
-        if(sub !== current.name) {
+        if(sub !== current.name || editando) {
             var url;
             if(sub.toUpperCase() === 'frontPage'.toUpperCase()) {
                 url = urlInit + "r/" + getAllSubsString() + "/";
