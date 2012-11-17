@@ -332,6 +332,7 @@ a.link:visited div p.linkTitle { color: #888; }
     display: -moz-box;
     display: -ms-box;
     display: box;
+    width: 100%;
 }
 
 #btnsAddSubs > div {
@@ -346,6 +347,9 @@ a.link:visited div p.linkTitle { color: #888; }
     font-weight: bold;
     width: 50%;
     text-align: center;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
 }
 
 /*---------------------------- Cabecera -----------------------------*/
@@ -545,14 +549,19 @@ header div {
     display: -moz-box;
     display: -ms-box;
     display: box;
+    width: 100%;
 }
 
 .subreddit > div:first-child {
     width: 85%;
     padding: 10px 5px 10px 0;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
 }
 
-.btnAddSub { width: 15%;
+.btnAddSub {
+    width: 15%;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-box;
@@ -561,6 +570,9 @@ header div {
     -moz-box-align: center;
     -ms-box-align: center;
     box-align: center;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
 }
 
 .btnAddSub > div {
@@ -833,4 +845,13 @@ header div {
     #mainMenu { height: 96%; }
 
     #editSubs { height: 4%; }
+}
+
+@-moz-document url-prefix() { /* Solo para Firefox - hacks para layout, a falta de flexbox */
+    
+    #removeSubr, .itemToRemove > div { float: right; }
+    
+    #addNewSubr, .itemToRemove > p { float: left; }
+
+    .itemToRemove { display: block; width: 100%; }
 }
