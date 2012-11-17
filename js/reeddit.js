@@ -246,7 +246,7 @@ $(document).ready(function() {
     }
 
     function updateSummaryInfo(data, postID) {
-        $("#summaryCommentNum").text(data.num_comments + (data.num_comments == 1 ? ' comment' : ' comments'));
+        $("#summaryCommentNum").text(data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments'));
         // Time ago
         updatePostTime(data.created_utc);
         posts[postID].num_comments = data.num_comments;
@@ -653,11 +653,11 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(vistaActual == vista.comentarios) {
+            if(vistaActual === vista.comentarios) {
                 if(!hiloActual) return;
                 procesarComentarios(hiloActual, true);
             }
-            if(vistaActual == vista.principal) {
+            if(vistaActual === vista.principal) {
                 doByCurrentSelection(function() { // Si es Subreddit
                     if(editando) {
                         return;
@@ -990,7 +990,7 @@ $(document).ready(function() {
     var d = document,
         body = d.body;
 
-    var supportOrientation = typeof window.orientation != 'undefined',
+    var supportOrientation = typeof window.orientation !== 'undefined',
         getScrollTop = function() {
             return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
         },
