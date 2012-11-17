@@ -953,33 +953,9 @@ $(document).ready(function() {
 
     // Metodos de vistas
 
-    function reveal(element) {
-        var el = $(element);
-        el.removeClass("fuera").addClass("invisible");
-        setTimeout(function() {
-            el.removeClass("invisible");
-        });
-    }
-
-    function mostrar(element) {
-        var el = $(element);
-        el.removeClass("oculto");
-    }
-
     function sacar(element) {
         var el = $(element);
         el.addClass("fuera");
-    }
-
-    function ingresar(element) {
-        var el = $(element);
-        el.removeClass("fuera");
-        return el;
-    }
-
-    function ocultar(element) {
-        var el = $(element);
-        el.addClass("oculto");
     }
 
     function ensenar(element) {
