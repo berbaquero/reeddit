@@ -51,12 +51,12 @@ $(document).ready(function() {
             translateTo140: 'translate3d(140px, 0px, 0px)'
         };
 
-    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "games", "worldNews", "todayilearned", "science", "atheism", "Music", "movies", "geek", "reactiongifs"];
+    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "geek", "videos", "reactiongifs", "AdviceAnimals", "aww"];
 
     var defaultChannel = [{
-        name: 'Tech',
-        subs: ["technology", "Apple", "Android"],
-        url: 'r/technology+Apple+Android'
+        name: 'Media',
+        subs: ["movies", "music", "games"],
+        url: 'r/movies+music+games'
     }];
 
     function chequearWideScreen() {
