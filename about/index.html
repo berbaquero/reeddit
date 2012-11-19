@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Reeddit - Minimalist, elastic and read-only web app client for Reddit</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="normalize.css" type="text/css" />
+		<style>
+			* {
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			}
+			
+			body {
+				background-color: whiteSmoke;
+				color: #131313;
+			}
+			
+			a { color: #08C; text-decoration: none; }
+			
+			a:hover { text-decoration: underline; }
+			
+			#upBar { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background-color: orange; }
+			
+			#mainWrapper {
+				margin: 0 auto;
+				padding: 40px 0 0 60px;
+			}
+			
+			#description {
+				float: left; width: 50%;
+			}
+			
+			#description > ul {
+				list-style-type: none;
+				padding: 0 0 0 10px;
+			}
+			
+			#appDescription {
+				font-size: 20px;
+				font-weight: bold;
+				color: #555;
+			}
+			
+			.button {
+				padding: 10px;
+				background-color: #777;
+				border-radius: 5px;
+				color: whiteSmoke;
+				letter-spacing: 1;
+				font-weight: bold;
+				-webkit-transition-duration: 100ms;
+				transition-duration: 100ms;
+				display: block;
+				text-align: center;
+				width: 50%;
+				margin: 0 auto;
+			}
+			
+			.button:hover {
+				background-color: #333;				
+				text-decoration: none;
+			}
+			
+			.button:active {
+				-webkit-transform: translateY(3px);
+				transform: translateY(3px);
+			}
+			
+			#title {
+				background-size: 60px;
+				font-size: 50px;
+				letter-spacing: 1;
+				background-image: url('alienIcon.png');
+				width: 60px;
+				height: 60px;
+				padding-left: 70px;
+				background-repeat: no-repeat;
+			}
+			
+			#screens {
+				float: right; width: 50%;
+			}
+			
+			.imagen {
+				max-width: 100%;
+				height: auto;
+			}
+			
+			#more {
+				clear: both;
+				padding-top: 20px;
+			}
+			
+			#iPad {
+				padding: 20px 0;
+			}
+			
+			#iPad > img {
+				box-shadow: 0px 3px 30px #444;
+				border-radius: 5px;
+			}
+			
+			footer {
+				padding: 30px 30px 40px 60px;
+			}
+			
+			footer p {
+				color: #777;
+			}
+			
+			@media (max-width: 630px) {
+				
+				#description, #screens {
+					float: none; width: 100%;
+				}
+				
+				#mainWrapper, footer {
+					padding: 10px;
+				}
+			}
+			
+		</style>
+		<style media="">
+			
+		</style>
+	</head>
+	<body>
+		<div id="upBar"></div>
+		<div id="mainWrapper">
+			<div id="description">
+				<h2 id="title">Reeddit</h2>
+				<p id='appDescription'>A minimalist, elastic and read-only <a href="http://reddit.com/">Reddit</a> web-app client, that lets you create custom &#8216;Channels&#8217; with up to 3 subreddits each.</p>
+				
+				<a class='button' href='http://berbaquero.github.com/reeddit/' target="_blank">Launch Reeddit</a>
+				
+				<ul>
+					<li><h4 id="minimalist">Minimalist</h4>
+					
+					<p>While aiming for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.</p></li>
+					<li><h4 id="elastic">Elastic</h4>
+					
+					<p>Reeddit has 3 different elastic layouts - you can use it on any window size. So it&#8217;s comfortable to use on a smartphone, tablet or desktop.</p></li>
+					<li><h4 id="read-only">Read-only</h4>
+					
+					<p>Reeddit can be used for browsing subreddits and viewing links and posts and its comments, but not for voting or commenting&#8230; for now.</p>
+					<p>However, the subreddits and channels you add are saved locally, so you don&#8217;t lose your customized data.</p></li>
+					<li><h4 id="channels">Channels</h4>
+					
+					<p>You can group up to 3 subreddits into a Channel, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.</p></li>
+				</ul>
+			</div>
+			<div id="screens">
+				<img class='imagen' src='screens/screenDesk.png'>
+			</div>
+			<div id="more">
+				<div id='iPad'><img class="imagen" src="screens/screeniPad1.png" alt="Reeddit on iPad" /></div>
+			</div>
+		</div>
+		<footer>
+			<a class='button' href='http://berbaquero.github.com/reeddit/' target="_blank">Launch Reeddit</a>
+			<p>For comments, suggestions and to keep up-to-date on Reeddit's development, <a href="https://twitter.com/berbaquero" target="_blank">follow @BerBaquero on Twitter</a>.</p>
+			<p>The source code, tools used and compatibility info is on <a href="https://github.com/berbaquero/reeddit" target="_blank">GitHub</a>.</p>
+		</footer>
+		<script>
+			var d = document,
+				b =	d.body,
+				screens = ['screenDesk1.png', 'screenDesk2.png', 'screenDesk.png'],
+				i = 0;
+			setInterval(function() {
+				var img = d.querySelector('#screens > img');
+				img.setAttribute('src', 'screens/' + screens[i]);
+				if(i === screens.length - 1) { i = 0; } else { i++; }
+			}, 7000);
+			setTimeout(function() {
+				window.scrollTo(0, 1);
+			}, 100);
+		</script>
+	</body>
+</html>
