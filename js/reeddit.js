@@ -600,7 +600,7 @@ $(document).ready(function() {
             var channel = $(target);
             var channelName = channel.children().first().text();
             moverMenu(mover.izquierda);
-            if(channelName === current.name) return;
+            if(channelName === current.name && !editando) return;
             limpiarSubrSeleccionado();
             channel.addClass('channel-active');
             if(vistaActual === vista.comentarios) {

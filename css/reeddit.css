@@ -439,8 +439,6 @@ header div {
     background-image: linear-gradient(top, #ff6600 0%, #e32918 100%);
 }
 
-#refresh {}
-
 #refreshIcon div {   
     background-image: url('../img/refresh.png');
     width: 14px; height: 18px;
