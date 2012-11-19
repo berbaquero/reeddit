@@ -70,6 +70,7 @@ $(document).ready(function() {
     function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
         editando = false;
+        loadingComments = false;
         if(fromSub) { // Si viene de se seleccionar un subreddit
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             if(!links) {
@@ -1035,8 +1036,7 @@ $(document).ready(function() {
 
     scrollTop();
 
-    // Aplicar si viene de iOS / Android
-    if(/iPhone|iPod|iPad|Android/.test(navigator.userAgent)) {
+    if(!isDesktop) {
         document.getElementById("editSubs").addEventListener(touch, function(e) {
             e.preventDefault();
         }, false);
