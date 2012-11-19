@@ -96,6 +96,11 @@
 				box-shadow: 0px 3px 30px #444;
 				border-radius: 5px;
 			}
+
+			img[src="screens/screeniPhone.png"], img[src="screens/screeniPhone1.png"] {
+				margin: 60px 0 60px 60px;
+				box-shadow: 0 3px 40px #444;
+			}
 			
 			footer { padding: 30px 30px 40px 60px; }
 			
@@ -108,6 +113,11 @@
 				#mainWrapper, footer { padding: 10px; }
 				
 				#description > ul { padding: 0; }
+
+				img[src="screens/screeniPhone.png"], img[src="screens/screeniPhone1.png"] {
+					margin: 0;
+					box-shadow: none;
+				}
 			}
 			
 		</style>
@@ -155,7 +165,8 @@
 		<script>
 			var d = document,
 				b =	d.body,
-				screens = ['screenDesk1.png', 'screenDesk2.png', 'screenDesk.png'],
+				screens = ['screenDesk1.png', 'screenDesk3.png', 'screeniPhone.png', 'screenDesk2.png', 'screenDesk4.png', 
+				 'screeniPhone1.png', 'screenDesk.png'],
 				i = 0;
 			setInterval(function() {
 				var img = d.querySelector('#screens > img');
