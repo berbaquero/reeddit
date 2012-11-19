@@ -1,9 +1,9 @@
 # Reeddit
 
-A minimalist, elastic and read-only [Reddit](http://reddit.com/) web client, that allows you to create custom 'Channels' with up to 3 subreddits each.
+A minimalist, elastic and read-only [Reddit](http://reddit.com/) web app client, that lets you create custom 'Channels' with up to 3 subreddits each.
 
 * #### Minimalist
-By going for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.
+While aiming for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.
 
 * #### Elastic
 Reeddit has 3 different elastic layouts - you can use it on any window size. So it's comfortable to use on a smartphone, tablet or desktop.
@@ -13,6 +13,8 @@ Being a personal side-project of mine, Reeddit can be used for browsing subreddi
 
 * #### Channels
 You can group up to 3 subreddits into a Channel, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
+
+For screenshots and additional info, visit the [Reeddit's presentation page](https://berbaquero.github.com/reeddit/about).
 
 ## Tools
 
@@ -28,6 +30,8 @@ To build Reeddit, I used this awesome resources:
 ### Compatibility
 
 For now, Reeddit works properly on recent versions of Webkit-based browsers (Chrome and Safari, desktop and mobile) - it's been tested on iOS 5+ (iPhone and iPad) and Android 4+.
+
+I used the flexbox module for layout, and Firefox's implementation is kinda wonky. Besides that, it works good on FF.
 
 My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
 
