@@ -1,4 +1,4 @@
-.btnEditSubr, .sub, .channel > p { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
+.btnEditSubr, .sub, .channel > p, #summaryTitle { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
 
 .btnEditSubr:hover { color: #4286F5; }
 
@@ -6,6 +6,8 @@
 
 .link, .listButton > span, #btnsAddSubs > div, .repliesButton, #addNewSubr, #removeSubr,
 .itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel { cursor: pointer; }
+
+#linkSummary a:hover #summaryTitle { text-shadow: 0 1px 7px whiteSmoke; }
 
 /* Estilo las barras de scrolling (Desktop) */
 ::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
