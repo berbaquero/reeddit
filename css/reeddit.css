@@ -743,6 +743,32 @@ header div {
     text-shadow: 0 1px 1px white;
 }
 
+.option {
+    color: whiteSmoke;
+    padding: 10px 15px;
+    letter-spacing: 3px;
+    font-size: 14px;
+}
+
+.aboutReeddit { top: 45px; }
+.aboutReeddit ul { list-style: none; padding: 0; }
+.aboutReeddit li { font-size: 18px; text-align: center; }
+.aboutReeddit a:hover { color: inherit; }
+.aboutReeddit li:first-child a { border-top: 0; }
+.aboutReeddit li:last-child a { border-bottom: 0; }
+
+.aboutReeddit a {
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-shadow: 0 1px 1px white;
+    padding: 12px;
+    display: block;
+    border-top: 1px solid white;
+    border-bottom: 1px solid #999;
+    color: #777;
+}
+
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header {

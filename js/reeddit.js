@@ -13,7 +13,8 @@ $(document).ready(function() {
         savedChannelsListToRemoveTemplate = "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove'><p>{{name}}</p><div></div></div>{{/.}}</ul>",
         channelTemplate = '<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
         channelsTemplate = '{{#.}}' + channelTemplate + '{{/.}}',
-        noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>";
+        noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>",
+        aboutTemplate = "<div class='newForm aboutReeddit'><div class='closeForm'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='../'>GitHub Project</a></li></ul></div>";
 
     // Pseudo-Globales
     var ancho = $(window).width(),
@@ -858,6 +859,26 @@ $(document).ready(function() {
         onTap: function() {
             quitarModal();
         }
+    });
+
+    tappable("#about", {
+        onTap: function() {
+            var retraso = 1;
+            if(!isLargeScreen) {
+                moverMenu(mover.izquierda);
+                retraso = 351;
+            }
+            setTimeout(function(){
+                if(esModal) return;
+                var modal = $('<div/>').attr('id', 'modal');
+                $('body').append(modal).append(aboutTemplate);
+                esModal = true;
+                setTimeout(function() {
+                    modal.css('opacity', 1);
+                }, 1);
+            }, retraso);
+        },
+        activeClass: 'link-active'
     });
 
     // Swipes

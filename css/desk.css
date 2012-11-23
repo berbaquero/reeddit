@@ -1,11 +1,11 @@
-.btnEditSubr, .sub, .channel > p, #summaryTitle { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
+.btnEditSubr, .sub, .channel > p, #summaryTitle, .option { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
 
 .btnEditSubr:hover { color: #4286F5; }
 
-.sub:hover, .channel:hover > p { text-shadow: 0 0 10px #CCC; }
+.sub:hover, .channel:hover > p, .option:hover { text-shadow: 0 0 10px #CCC; }
 
 .link, .listButton > span, #btnsAddSubs > div, .repliesButton, #addNewSubr, #removeSubr,
-.itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel { cursor: pointer; }
+.itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel, .option { cursor: pointer; }
 
 #linkSummary a:hover #summaryTitle { text-shadow: 0 1px 7px whiteSmoke; }
 
