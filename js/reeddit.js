@@ -483,8 +483,7 @@ $(document).ready(function() {
         var modal = $('#modal');
         modal.css('opacity', '');
         $('.closeForm').remove();
-        $('#formNuevoSub').remove();
-        $('#formNewChannel').remove();
+        $('.newForm').remove();
         esModal = false;
         setTimeout(function() {
             modal.remove();
