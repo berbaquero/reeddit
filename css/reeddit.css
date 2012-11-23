@@ -750,14 +750,15 @@ header div {
     font-size: 14px;
 }
 
-.aboutReeddit { top: 45px; }
+.aboutReeddit { top: 80px; }
 .aboutReeddit ul { list-style: none; padding: 0; }
 .aboutReeddit li { font-size: 18px; text-align: center; }
-.aboutReeddit a:hover { color: inherit; }
+.aboutReeddit li a:hover { color: inherit; }
 .aboutReeddit li:first-child a { border-top: 0; }
 .aboutReeddit li:last-child a { border-bottom: 0; }
+.aboutReeddit p a { text-decoration: none; color: #777; }
 
-.aboutReeddit a {
+.aboutReeddit li a {
     text-decoration: none;
     letter-spacing: 1px;
     font-weight: bold;
@@ -767,6 +768,13 @@ header div {
     border-top: 1px solid white;
     border-bottom: 1px solid #999;
     color: #777;
+}
+
+.aboutReeddit p {
+    color: #777;
+    text-shadow: 0 1px 1px white;
+    font-size: 12px;
+    text-align: center;
 }
 
 @media only screen and (min-width: 350px) and (min-height: 500px) {
