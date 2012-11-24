@@ -158,6 +158,12 @@ a.link:visited div p.linkTitle { color: #888; }
 
 #selfText p { margin-top: 5px; }
 
+.imagePreview {
+    padding: 10px;
+    width: 100%;
+    height: auto;
+}
+
 /*--------------------- Menú -----------------------------*/
 
 #mainMenu { box-shadow: inset -3px 0 10px black; height: 92%; }
