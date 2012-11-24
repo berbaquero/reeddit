@@ -129,6 +129,7 @@ $(document).ready(function() {
             }
         }
 
+        // If more than half of the links contains thumnails, show them on the left.
         var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
         if(fromSub) {
             main.empty();
@@ -281,17 +282,18 @@ $(document).ready(function() {
         }
     }
 
-    function loadSubsList() { // Solo se deberia ejecutar una sola vez, al cargar la app
+    function loadSubsList() { // Only should execute when first loading the app
         savedSubs = getSavedSubs();
         if(savedSubs) {
             insertSubsToList(savedSubs);
-        } else { // Si no se ha cargado al 'store'
-            savedSubs = defaultSubs; // Se guardan los subreddits por defecto
+        } else { // If it hasn't been loaded to the 'local store'
+            savedSubs = defaultSubs; // save default subreddits
             insertSubsToList(savedSubs);
             store.setItem("subreeddits", JSON.stringify(savedSubs));
         }
     }
 
+    // Show user option to reload app after update
     window.applicationCache.addEventListener("updateready", function(e) {
         var update = window.confirm("Update downloaded. Reload?");
         if(update) {
@@ -374,7 +376,7 @@ $(document).ready(function() {
             moverMenu(mover.izquierda);
         }
         setTimeout(function() {
-            document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
+            document.getElementById("mainWrap").scrollTop = 0; // Go to the container top
             var main = $("#mainWrap");
             if(subreddits) {
                 main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
@@ -404,7 +406,7 @@ $(document).ready(function() {
                 htmlChannels = Mustache.to_html(savedChannelsListToRemoveTemplate, channels);
             }
             var html = '<div id="removeWrap">' + htmlSubs + htmlChannels + "</div>";
-            setTimeout(function() { // Retraso a proposito / fix para iOS
+            setTimeout(function() { // Intentional delay / fix for iOS
                 document.getElementById("mainWrap").innerHTML = html;
             }, 10);
             limpiarSubrSeleccionado();
@@ -542,11 +544,11 @@ $(document).ready(function() {
         store.setItem('channels', JSON.stringify(channels));
     }
 
-    function loadSavedChannels() { // Solo se debe ejecutar una vez al principio, cargando la app
+    function loadSavedChannels() { // Should only execute when first loading the app
         channels = store.getItem('channels');
         if(channels) {
             channels = JSON.parse(channels);
-        } else { // Cargar canal(es?) por defecto
+        } else { // Load default channel(s?)
             channels = defaultChannel;
         }
         var html = Mustache.to_html(channelsTemplate, channels);
@@ -879,7 +881,7 @@ $(document).ready(function() {
                 moverMenu(mover.izquierda);
                 retraso = 351;
             }
-            setTimeout(function(){
+            setTimeout(function() {
                 if(esModal) return;
                 var modal = $('<div/>').attr('id', 'modal');
                 $('body').append(modal).append(aboutTemplate);
