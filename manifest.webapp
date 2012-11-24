@@ -1,0 +1,13 @@
+{
+  "name": "Reeddit",
+  "description": "Minimal, elastic and read-only client for Reddit.",
+  "launch_path": "/",
+  "icons": {
+    "128": "/img/alienIcon.png"
+  },
+  "developer": {
+    "name": "Bernardo Baquero Stand",
+    "url": "http://berbaquero.github.com"
+  },
+  "default_locale": "en"
+}
