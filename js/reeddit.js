@@ -227,6 +227,9 @@ $(document).ready(function() {
     function setPostSummaryInfo(data, postID) {
         // Contenido principal
         var summaryHTML = Mustache.to_html(linkSummaryTemplate, data);
+        if(checkImgurLink(posts[postID].url)) { // If it's imgur link
+            summaryHTML += "<img class='imagePreview' src='" + posts[postID].url + "' />";
+        }
         if(data.selftext) { // Si tiene Self-Text
             var selfText;
             if(posts[postID].selftextParsed) {
@@ -253,6 +256,14 @@ $(document).ready(function() {
         updatePostTime(data.created_utc);
         posts[postID].num_comments = data.num_comments;
         posts[postID].created_utc = data.created_utc;
+    }
+
+    function checkImgurLink(url) {
+        if(/i.imgur.com/.test(url)) {
+            return url;
+        } else {
+            return null;
+        }
     }
 
     function updatePostTime(time) {
