@@ -162,6 +162,8 @@ a.link:visited div p.linkTitle { color: #888; }
     padding: 10px;
     width: 100%;
     height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 /*--------------------- Menú -----------------------------*/
@@ -831,12 +833,16 @@ header div {
     #container { right: 0; width: 72%; }
 
     #menuContainer, #editSubs { width: 28%; }
+
+    .imagePreview { width: 80%; }
 }
 
 @media only screen and (min-width: 760px) and (max-width: 999px) and (min-height: 500px) {
     #container { right: 0; width: 78%; }
 
     #menuContainer, #editSubs { width: 22%; }
+
+    .imagePreview { width: 60%; }
 }
 
 /* Tablet Landscape */
@@ -859,6 +865,13 @@ header div {
     .fuera { left: auto; }
 
     header { display: none; }
+
+    .imagePreview { width: 70%; }
+}
+
+/* Wide-ass stuff */
+@media only screen and (min-width: 1500px) {
+    .imagePreview { width: 50%; }
 }
 
 /* Landscape phone */
