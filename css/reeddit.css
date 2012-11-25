@@ -917,11 +917,18 @@ header > div {
 
     .linkWrap, #backArrow, #refreshIcon, .itemToRemove { display: block; }
 
-    .toComments { margin-top: 30px; }
+    .toComments { padding-top: 30px; }
 
     header { padding-top: 5px; }
 
-    #backArrow div { margin: 8px auto; }
-    #refreshIcon div { margin: 5px auto; }
+    #refreshIcon > div { position: relative; top: 5px; }
+
+    #backArrow > div { position: relative; left: -2px;  top: 8px; }
+
+    .subreddit { display: table; }
+
+    .subreddit > div:first-child { display: table-cell; }
+
+    .btnAddSub { display: table-cell; vertical-align: middle; }
 
 }
