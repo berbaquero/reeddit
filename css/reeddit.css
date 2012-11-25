@@ -905,4 +905,8 @@ header div {
     #addNewSubr, .itemToRemove > p { float: left; }
 
     .itemToRemove { display: block; width: 100%; }
+
+    .linkWrap { display: block; }
+
+    .toComments { float: right; margin-top: 30px; }
 }
