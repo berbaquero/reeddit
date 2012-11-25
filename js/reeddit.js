@@ -387,6 +387,10 @@ $(document).ready(function() {
         if(!isLargeScreen) {
             moverMenu(mover.izquierda);
         }
+        if(vistaActual === vista.comentarios) {
+            backToMainView();
+            slideFromLeft();
+        }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Go to the container top
             var main = $("#mainWrap");
@@ -409,6 +413,10 @@ $(document).ready(function() {
     function loadSubredditListToRemove() {
         if(!isLargeScreen) {
             moverMenu(mover.izquierda);
+        }
+        if(vistaActual === vista.comentarios) {
+            backToMainView();
+            slideFromLeft();
         }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
