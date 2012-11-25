@@ -16,7 +16,7 @@ $(document).ready(function() {
         noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>",
         aboutTemplate = "<div class='newForm aboutReeddit'><div class='closeForm'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='https://twitter.com/berbaquero' target='_blank'>@BerBaquero</a></p></div>";
 
-    // Pseudo-Globales
+    // Pseudo-Globals
     var ancho = $(window).width(),
         vistaActual = 1,
         editando = false,
@@ -178,14 +178,14 @@ $(document).ready(function() {
     }
 
     function procesarComentarios(comm, refresh) {
-        if(loadingComments) return;
-        loadingComments = true;
         var id;
         if(refresh) {
             id = comm;
         } else {
             id = comm.attr("data-id");
         }
+        if(loadingComments && hiloActual && hiloActual === id) return;
+        loadingComments = true;
         hiloActual = id;
 
         ensenar("#navBack");
@@ -204,6 +204,7 @@ $(document).ready(function() {
             var url = "http://www.reddit.com" + posts[id].link + urlEnd;
             detail.append("<p class='loading'>Loading comments...</p>");
             $.getJSON(url, function(result) {
+                if(hiloActual !== id) return; // In case of trying to load a different thread before this one loaded.
                 updateSummaryInfo(result[0].data.children[0].data, id);
                 $(".loading").remove();
                 var comments = result[1].data.children;
