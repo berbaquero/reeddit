@@ -375,7 +375,7 @@ header {
     background-image: url('../img/darkdenim3.png');
 }
 
-header div {
+header > div {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -ms-box-flex: 1;
@@ -453,6 +453,15 @@ header div {
     background-repeat: no-repeat;
     background-size: 14px;
     margin: 0 auto;
+}
+
+#backArrow, #refreshIcon {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
 }
 
 #backArrow div {
@@ -898,15 +907,21 @@ header div {
     #editSubs { height: 4%; }
 }
 
-@-moz-document url-prefix() { /* Solo para Firefox - hacks para layout, a falta de flexbox */
+@-moz-document url-prefix() { /* Firefox only - layout hacks, for lack of solid flexbox */
     
-    #removeSubr, .itemToRemove > div { float: right; }
+    #removeSubr, .itemToRemove > div, .toComments { float: right; }
     
-    #addNewSubr, .itemToRemove > p { float: left; }
+    #addNewSubr, .itemToRemove > p, .corner, header > div { float: left; }
 
-    .itemToRemove { display: block; width: 100%; }
+    .itemToRemove { width: 100%; }
 
-    .linkWrap { display: block; }
+    .linkWrap, #backArrow, #refreshIcon, .itemToRemove { display: block; }
 
-    .toComments { float: right; margin-top: 30px; }
+    .toComments { margin-top: 30px; }
+
+    header { padding-top: 5px; }
+
+    #backArrow div { margin: 8px auto; }
+    #refreshIcon div { margin: 5px auto; }
+
 }
