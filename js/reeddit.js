@@ -229,11 +229,11 @@ $(document).ready(function() {
     function setPostSummaryInfo(data, postID) {
         // Contenido principal
         var summaryHTML = Mustache.to_html(linkSummaryTemplate, data);
-        var imgurURL = checkImgurLink(posts[postID].url);
-        if(imgurURL) { // If it's an imgur link
-            summaryHTML += "<img class='imagePreview' src='" + imgurURL + "' />";
+        var imageLink = checkImageLink(posts[postID].url);
+        if(imageLink) { // If it's an image link
+            summaryHTML += "<img class='imagePreview' src='" + imageLink + "' />";
         }
-        if(data.selftext) { // Si tiene Self-Text
+        if(data.selftext) { // If it has self-text
             var selfText;
             if(posts[postID].selftextParsed) {
                 selfText = posts[postID].selftext;
@@ -261,19 +261,13 @@ $(document).ready(function() {
         posts[postID].created_utc = data.created_utc;
     }
 
-    function checkImgurLink(url) {
-        if(/imgur.com/.test(url)) {
-            if(/i.imgur.com/.test(url)) {
-                return url;
-            } else {
-                var matching = url.match(/imgur\.com\/([^?#\/.]*)(?:[?#].*)?$/);
-                if(matching) {
-                    var imageURL = 'http://imgur.com/' + matching[1] + '.jpg';
-                    return imageURL;
-                } else {
-                    return null;
-                }
-            }
+    function checkImageLink(url) {
+        var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|imgur\.com\/([^?#\/.]*)(?:[?#].*)?$/);
+        if(!matching) return;
+        if(matching[1]) {
+            return url;
+        } else if(matching[2]) {
+            return 'http://imgur.com/' + matching[2] + '.jpg';
         } else {
             return null;
         }
@@ -419,7 +413,7 @@ $(document).ready(function() {
             slideFromLeft();
         }
         setTimeout(function() {
-            document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
+            document.getElementById("mainWrap").scrollTop = 0; // Up to container top
             var htmlSubs = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
             var htmlChannels = '';
             if(channels && channels.length > 0) {
