@@ -98,6 +98,8 @@ a.link:visited div p.linkTitle { color: #888; }
 
 .commentAuthor p { color: #E34A28; font-weight: bold; }
 
+.commentPoster p { color: #f60; font-weight: bold; font-style: italic; }
+
 .commentInfo { text-align: right; width: 50%; }
 
 .commentInfo p { color: #aaa; font-weight: bold; }

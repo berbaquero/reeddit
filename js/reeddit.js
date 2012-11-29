@@ -161,7 +161,9 @@ $(document).ready(function() {
 
             var html = converter.makeHtml(c.data.body);
 
-            var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass("commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
+            var isPoster = posts[hiloActual].author === c.data.author;
+
+            var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass(isPoster ? "commentPoster" : "commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
 
             if(c.data.replies) {
                 comment.append($("<span/>").addClass("repliesButton").attr("comment-id", c.data.id).text("See replies"));
