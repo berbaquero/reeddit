@@ -129,7 +129,7 @@ $(document).ready(function() {
             }
         }
 
-        // If more than half of the links contains thumnails, show them on the left.
+        // If more than half of the links contains thumbnails, show them on the left.
         var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
         if(fromSub) {
             main.empty();
@@ -137,8 +137,8 @@ $(document).ready(function() {
             $(".loading").remove();
         }
 
-        main.append(html); // Agrega nuevos links a la lista
-        // Elimina espacio de thumbnails para aquelos links que no tienen uno valido
+        main.append(html); // Add new links to the list
+        // Remove thumbnail space for those links with invalid ones.
         var thumbs = $('.linkThumb div');
         $.each(thumbs, function(i, t) {
             var thumb = $(t);
@@ -155,9 +155,8 @@ $(document).ready(function() {
         var com = $("<section/>");
         for(var i = 0; i < data.length; i++) {
             var c = data[i];
-            if(c.kind !== "t1") {
-                continue;
-            }
+
+            if(c.kind !== "t1") continue;
 
             var html = converter.makeHtml(c.data.body);
 
@@ -172,10 +171,11 @@ $(document).ready(function() {
 
             com.append(comment);
         }
+
         baseElement.append(com);
-        if(idParent) {
-            loadedLinks[idParent] = com;
-        }
+
+        if(idParent) loadedLinks[idParent] = com;
+
         $("#detailWrap a").attr("target", "_blank");
     }
 
