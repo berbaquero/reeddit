@@ -177,53 +177,60 @@ $(document).ready(function() {
         $("#detailWrap a").attr("target", "_blank");
     }
 
-    function procesarComentarios(comm, refresh) {
-        var id;
-        if(refresh) {
-            id = comm;
-        } else {
-            id = comm.attr("data-id");
+    function procesarComentarios(id, refresh) {
+        var delay = 0;
+        if(mostrandoMenu) {
+            moverMenu(mover.izquierda);
+            delay = 351;
         }
-        if(loadingComments && hiloActual && hiloActual === id) return;
-        loadingComments = true;
-        hiloActual = id;
+        setTimeout(function() {
+            if(loadingComments && hiloActual && hiloActual === id) return;
+            loadingComments = true;
+            hiloActual = id;
 
-        ensenar("#navBack");
-        var detail = $("#detailWrap");
-        detail.empty();
+            ensenar("#navBack");
+            var detail = $("#detailWrap");
+            detail.empty();
 
-        document.getElementById("detailWrap").scrollTop = 0;
+            document.getElementById("detailWrap").scrollTop = 0;
 
-        if(loadedLinks[id] && !refresh) {
-            detail.append(posts[id].summary);
-            detail.append(loadedLinks[id]);
-            updateSummaryInfo(posts[id], id);
-            loadingComments = false;
-        } else {
-            setPostSummaryInfo(posts[id], id);
-            var url = "http://www.reddit.com" + posts[id].link + urlEnd;
-            detail.append("<p class='loading'>Loading comments...</p>");
-            $.getJSON(url, function(result) {
-                if(hiloActual !== id) return; // In case of trying to load a different thread before this one loaded.
-                updateSummaryInfo(result[0].data.children[0].data, id);
-                $(".loading").remove();
-                var comments = result[1].data.children;
-                loadComments(comments, detail, id);
+            if(loadedLinks[id] && !refresh) {
+                detail.append(posts[id].summary);
+                detail.append(loadedLinks[id]);
+                updateSummaryInfo(posts[id], id);
                 loadingComments = false;
-            });
-        }
-
-        if(!refresh) {
-            if(isWideScreen) {
-                $("#detailView").removeClass("fuera");
             } else {
-                slideFromRight();
+                setPostSummaryInfo(posts[id], id);
+                var url = "http://www.reddit.com" + posts[id].link + urlEnd;
+                detail.append("<p class='loading'>Loading comments...</p>");
+                $.getJSON(url, function(result) {
+                    if(hiloActual !== id) return; // In case of trying to load a different thread before this one loaded.
+                    updateSummaryInfo(result[0].data.children[0].data, id);
+                    $(".loading").remove();
+                    var comments = result[1].data.children;
+                    loadComments(comments, detail, id);
+                    loadingComments = false;
+                });
             }
-        }
 
-        $("#titleHead").empty().append(title);
-        $("#title").text(posts[id].title);
-        $("#mainTitle").addClass('invisible');
+            if(!refresh) {
+                if(isWideScreen) {
+                    $("#detailView").removeClass("fuera");
+                } else {
+                    slideFromRight();
+                }
+            }
+
+            if(isWideScreen) {
+                // Refresh active link indicator
+                $(".link.link-active").removeClass("link-active");
+                $('.link[data-id="' + id + '"]').addClass('link-active');
+            }
+
+            $("#titleHead").empty().append(title);
+            $("#title").text(posts[id].title);
+            $("#mainTitle").addClass('invisible');
+        }, delay);
     }
 
     function setPostSummaryInfo(data, postID) {
@@ -596,6 +603,10 @@ $(document).ready(function() {
         return url;
     }
 
+    function goToComments(id) {
+        location.hash = '#comments:' + id;
+    }
+
     // Taps
     tappable("#btnAddNewChannel", {
         onTap: function() {
@@ -671,11 +682,12 @@ $(document).ready(function() {
 
     tappable("#navBack", {
         onTap: function(e) {
-            slideFromLeft();
-            setTimeout(function() {
-                $('#detailWrap').empty();
-            }, 351);
-            backToMainView();
+            // slideFromLeft();
+            // setTimeout(function() {
+            //     $('#detailWrap').empty();
+            // }, 351);
+            // backToMainView();
+            history.back();
         }
     });
 
@@ -707,7 +719,7 @@ $(document).ready(function() {
             var id = comm.attr("data-id");
             var link = posts[id];
             if(link.self || isWideScreen) {
-                procesarComentarios(comm);
+                goToComments(id);
             } else {
                 var url = comm.attr("href");
                 var a = document.createElement('a');
@@ -718,10 +730,6 @@ $(document).ready(function() {
                 dispatch.initEvent("click", true, true);
                 a.dispatchEvent(dispatch);
             }
-            $(".link.link-active").removeClass("link-active");
-            if(isWideScreen) {
-                comm.addClass('link-active');
-            }
         },
         allowClick: false,
         activeClassDelay: 100,
@@ -730,7 +738,8 @@ $(document).ready(function() {
 
     tappable(".toComments", {
         onTap: function(e, target) {
-            procesarComentarios($(target));
+            var id = $(target).attr('data-id');
+            goToComments(id);
         },
         activeClass: 'button-active',
         activeClassDelay: 100
@@ -913,11 +922,12 @@ $(document).ready(function() {
         if(isWideScreen) {
             return;
         }
-        slideFromLeft();
+        // slideFromLeft();
         setTimeout(function() {
             $('#detailWrap').empty();
         }, 351);
-        backToMainView();
+        // backToMainView();
+        history.back();
     });
 
     $("#mainView").swipeRight(function() {
@@ -943,7 +953,8 @@ $(document).ready(function() {
             return;
         }
         if(!mostrandoMenu) {
-            procesarComentarios($(this));
+            var id = $(this).attr('data-id');
+            goToComments(id);
         }
     });
 
@@ -1039,13 +1050,34 @@ $(document).ready(function() {
         }
     }, false);
 
+    if(location.hash) location.hash = ''; // Clear hash at first app loading
+    // Pseudo-hash-router
+    window.addEventListener('hashchange', function() {
+        if(location.hash === '') {
+            if(vistaActual === vista.comentarios) {
+                backToMainView();
+                slideFromLeft();
+            }
+            if(isWideScreen) {
+                $('.link.link-active').removeClass('link-active');
+                $('#detailWrap').html(noLinkTemplate);
+            }
+        }
+        var match = location.hash.match(/(#comments:)(......)/);
+        if(match && match[2]) {
+            var id = match[2];
+            procesarComentarios(id);
+        }
+    }, false);
+
     // Inicio de la app
     var title = $("#title"),
         headerIcon = $("#headerIcon"),
         touch = "touchmove";
 
     $("#title").remove();
-    $('#detailWrap').html(noLinkTemplate);
+
+    if(isWideScreen) $('#detailWrap').html(noLinkTemplate);
 
     current = loadCurrentSelection();
 
