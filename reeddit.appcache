@@ -1,29 +1,26 @@
 CACHE MANIFEST
 
-#version 1.0 22-11-2012
+#version 1.0 29-11-2012
 
 CACHE:
 
 #style sheets
-http://berbaquero.github.com/reeddit/css/style.css
+css/style.css
+css/desk.css
+css/reeddit.css
 
 #style sheet images
-http://berbaquero.github.com/reeddit/img/add.png
-http://berbaquero.github.com/reeddit/img/alienHead.png
-http://berbaquero.github.com/reeddit/img/bgnoise.png
-http://berbaquero.github.com/reeddit/img/cancel.png
-http://berbaquero.github.com/reeddit/img/comment_24.png
-http://berbaquero.github.com/reeddit/img/darkdenim3.png
-http://berbaquero.github.com/reeddit/img/delete.png
-http://berbaquero.github.com/reeddit/img/refresh.png
+img/add.png
+img/alienHead.png
+img/bgnoise.png
+img/cancel.png
+img/comment_24.png
+img/darkdenim3.png
+img/delete.png
+img/refresh.png
 
 #javascript files
 http://www.google-analytics.com/ga.js
-http://berbaquero.github.com/reeddit/js/zepto.js
-http://berbaquero.github.com/reeddit/js/libs.js
-
-NETWORK:
-*
-http://berbaquero.github.com/reeddit/css/desk.css
-http://berbaquero.github.com/reeddit/css/reeddit.css
-http://berbaquero.github.com/reeddit/js/reeddit.js
+js/zepto.js
+js/libs.js
+js/reeddit.js
