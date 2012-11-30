@@ -236,7 +236,7 @@ $(document).ready(function() {
     }
 
     function setPostSummaryInfo(data, postID) {
-        // Contenido principal
+        // Main content
         var summaryHTML = Mustache.to_html(linkSummaryTemplate, data);
         var imageLink = checkImageLink(posts[postID].url);
         if(imageLink) { // If it's an image link
@@ -272,10 +272,10 @@ $(document).ready(function() {
 
     function checkImageLink(url) {
         var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|imgur\.com\/([^?#\/.]*)(?:[?#].*)?$/);
-        if(!matching) return;
-        if(matching[1]) {
+        if(!matching) return '';
+        if(matching[1]) { // normal image link
             return url;
-        } else if(matching[2]) {
+        } else if(matching[2]) { // imgur link
             return 'http://imgur.com/' + matching[2] + '.jpg';
         } else {
             return null;
@@ -676,12 +676,10 @@ $(document).ready(function() {
 
     tappable("#navBack", {
         onTap: function(e) {
-            // slideFromLeft();
-            // setTimeout(function() {
-            //     $('#detailWrap').empty();
-            // }, 351);
-            // backToMainView();
-            history.back();
+            setTimeout(function() {
+                $('#detailWrap').empty();
+            }, 351);
+            history.back(); // Should go to "/"
         }
     });
 
@@ -692,7 +690,7 @@ $(document).ready(function() {
                 procesarComentarios(hiloActual, true);
             }
             if(vistaActual === vista.principal) {
-                doByCurrentSelection(function() { // Si es Subreddit
+                doByCurrentSelection(function() { // if it's subreddit
                     if(editando) {
                         return;
                     } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
@@ -700,7 +698,7 @@ $(document).ready(function() {
                     } else {
                         loadLinks(urlInit + "r/" + current.name + "/");
                     }
-                }, function() { // Si es channel
+                }, function() { // if it's channel
                     loadChannel(getChannelByName(current.name));
                 });
             }
@@ -916,12 +914,10 @@ $(document).ready(function() {
         if(isWideScreen) {
             return;
         }
-        // slideFromLeft();
         setTimeout(function() {
             $('#detailWrap').empty();
         }, 351);
-        // backToMainView();
-        history.back();
+        history.back(); // Should go to "/"
     });
 
     $("#mainView").swipeRight(function() {
@@ -1027,6 +1023,8 @@ $(document).ready(function() {
         if(window.applicationCache.status === window.applicationCache.UPDATEREADY) window.applicationCache.swapCache();
         if(window.confirm("Reeddit updated. Reload?")) window.location.reload();
     });
+
+    // Do stuff after finishing resizing the windows
     window.addEventListener("resizeend", function() {
         ancho = $(window).width();
         isWideScreen = checkWideScreen();
