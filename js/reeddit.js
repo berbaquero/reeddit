@@ -308,14 +308,6 @@ $(document).ready(function() {
         }
     }
 
-    // Show user option to reload app after update
-    window.applicationCache.addEventListener("updateready", function(e) {
-        var update = window.confirm("Update downloaded. Reload?");
-        if(update) {
-            window.location.reload();
-        }
-    });
-
     function setCurrentSub(sub) {
         current.name = sub;
         current.type = selection.sub;
@@ -1042,6 +1034,11 @@ $(document).ready(function() {
             }, 1);
         };
 
+    // Show option to reload app after update
+    if(window.applicationCache) window.applicationCache.addEventListener("updateready", function(e) {
+        if(window.applicationCache.status === window.applicationCache.UPDATEREADY) window.applicationCache.swapCache();
+        if(window.confirm("Reeddit updated. Reload?")) window.location.reload();
+    });
     window.addEventListener("resizeend", function() {
         ancho = $(window).width();
         isWideScreen = checkWideScreen();
