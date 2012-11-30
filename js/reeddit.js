@@ -32,8 +32,8 @@ $(document).ready(function() {
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         loadingComments = false,
-        hiloActual, savedSubs, isWideScreen = chequearWideScreen(),
-        isLargeScreen = chequearLargeScreen(),
+        hiloActual, savedSubs, isWideScreen = checkWideScreen(),
+        isLargeScreen = checkLargeScreen(),
         // Pseudo-Enums
         mover = {
             izquierda: 1,
@@ -60,11 +60,11 @@ $(document).ready(function() {
         url: 'r/movies+music+games'
     }];
 
-    function chequearWideScreen() {
+    function checkWideScreen() {
         return window.matchMedia("(min-width: 1000px)").matches;
     }
 
-    function chequearLargeScreen() {
+    function checkLargeScreen() {
         return window.matchMedia("(min-width: 490px)").matches;
     }
 
@@ -1044,8 +1044,8 @@ $(document).ready(function() {
 
     window.addEventListener("resizeend", function() {
         ancho = $(window).width();
-        isWideScreen = chequearWideScreen();
-        isLargeScreen = chequearLargeScreen();
+        isWideScreen = checkWideScreen();
+        isLargeScreen = checkLargeScreen();
         scrollTop();
         if(isLargeScreen && mostrandoMenu) {
             moverMenu(mover.izquierda);
