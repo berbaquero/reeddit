@@ -190,7 +190,7 @@ $(document).ready(function() {
             loadingComments = true;
             hiloActual = id;
 
-            ensenar("#navBack");
+            $("#navBack").removeClass("invisible"); // Show
             var detail = $("#detailWrap");
             detail.empty();
 
@@ -974,7 +974,7 @@ $(document).ready(function() {
                 };
                 main.removeClass("slideTransition").css(cssTransformBack).removeClass("fuera");
                 det.css(cssTransformBack).removeClass("slideTransition");
-                sacar("#detailView");
+                $("#detailView").addClass("fuera"); // Hide
                 vistaActual = vista.principal;
             }, 351);
         }, 50);
@@ -1002,18 +1002,6 @@ $(document).ready(function() {
                 vistaActual = vista.comentarios;
             }, 351);
         }, 100);
-    }
-
-    // Metodos de vistas
-
-    function sacar(element) {
-        var el = $(element);
-        el.addClass("fuera");
-    }
-
-    function ensenar(element) {
-        var el = $(element);
-        el.removeClass("invisible");
     }
 
     var d = document,
