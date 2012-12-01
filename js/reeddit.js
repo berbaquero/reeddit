@@ -1047,11 +1047,12 @@ $(document).ready(function() {
                 $('.link.link-active').removeClass('link-active');
                 $('#detailWrap').html(noLinkTemplate);
             }
-        }
-        var match = location.hash.match(/(#comments:)(......)/);
-        if(match && match[2]) {
-            var id = match[2];
-            procesarComentarios(id);
+        } else {
+            var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
+            if(match && match[2]) {
+                var id = match[2];
+                procesarComentarios(id);
+            }
         }
     }, false);
 
