@@ -93,8 +93,15 @@ $(document).ready(function() {
             if(!paging) { // Si no hay paginacion
                 paging = ''; // Se pasa una cadena vacia, para no paginar
             }
-            $.getJSON(baseUrl + urlLimitEnd + paging, function(result) {
-                processAndRenderLinks(result, fromSub, main);
+            $.ajax({
+                dataType: 'jsonp',
+                url: baseUrl + urlLimitEnd + paging,
+                success: function(result) {
+                    processAndRenderLinks(result, fromSub, main);
+                },
+                error: function() {
+                    $('.loading').text('Error loading links. Refresh to try again.');
+                }
             });
         }
     }
@@ -205,13 +212,21 @@ $(document).ready(function() {
                 setPostSummaryInfo(posts[id], id);
                 var url = "http://www.reddit.com" + posts[id].link + urlEnd;
                 detail.append("<p class='loading'>Loading comments...</p>");
-                $.getJSON(url, function(result) {
-                    if(hiloActual !== id) return; // In case of trying to load a different thread before this one loaded.
-                    updateSummaryInfo(result[0].data.children[0].data, id);
-                    $(".loading").remove();
-                    var comments = result[1].data.children;
-                    loadComments(comments, detail, id);
-                    loadingComments = false;
+                $.ajax({
+                    dataType: 'jsonp',
+                    url: url,
+                    success: function(result) {
+                        if(hiloActual !== id) return; // In case of trying to load a different thread before this one loaded.
+                        updateSummaryInfo(result[0].data.children[0].data, id);
+                        $(".loading").remove();
+                        var comments = result[1].data.children;
+                        loadComments(comments, detail, id);
+                        loadingComments = false;
+                    },
+                    error: function() {
+                        loadingComments = false;
+                        $('.loading').text('Error loading comments. Refresh to try again.');
+                    }
                 });
             }
 
@@ -393,10 +408,17 @@ $(document).ready(function() {
                 main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
             } else {
                 main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(botonAgregarSubManualTemplate);
-                $.getJSON(urlInit + "reddits/.json?limit=50&jsonp=?", function(list) {
-                    ultimoSub = list.data.after;
-                    subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
-                    main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
+                $.ajax({
+                    url: urlInit + "reddits/.json?limit=50&jsonp=?",
+                    dataType: 'jsonp',
+                    success: function(list) {
+                        ultimoSub = list.data.after;
+                        subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
+                        main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
+                    },
+                    error: function() {
+                        $('.loading').text('Error loading subreddits.');
+                    }
                 });
             }
         }, isLargeScreen ? 1 : 351);
@@ -541,12 +563,19 @@ $(document).ready(function() {
         if(!newSubr) return; // Si no se ingreso nada, no pasa nada.
         // En caso de haber ingresado algo
         // Cargar el contenido del nuevo subrredit, de forma asincrona
-        $.getJSON(urlInit + "r/" + newSubr + "/" + urlLimitEnd, function(data) {
-            loadLinks("", false, data);
-            setSubTitle(newSubr);
-            limpiarSubrSeleccionado();
-            setCurrentSub(newSubr);
-            insertSubsToList(newSubr, true);
+        $.ajax({
+            url: urlInit + "r/" + newSubr + "/" + urlLimitEnd,
+            dataType: 'jsonp',
+            success: function(data) {
+                loadLinks("", false, data);
+                setSubTitle(newSubr);
+                limpiarSubrSeleccionado();
+                setCurrentSub(newSubr);
+                insertSubsToList(newSubr, true);
+            },
+            error: function() {
+                alert('Oh, the subreddit you entered is not valid...');
+            }
         });
     });
 
@@ -798,12 +827,19 @@ $(document).ready(function() {
             $(target).parent().remove();
             var main = $('#mainWrap');
             main.append("<p class='loading'>Loading subreddits...</p>");
-            $.getJSON(urlInit + 'reddits/' + urlEnd + '&after=' + ultimoSub, function(list) {
-                var nuevosSubs = Mustache.to_html(allSubredditsTemplate, list.data);
-                ultimoSub = list.data.after;
-                $('.loading', main).remove();
-                main.append(nuevosSubs).append(botonCargarMasSubsTemplate);
-                subreddits = subreddits + nuevosSubs;
+            $.ajax({
+                url: urlInit + 'reddits/' + urlEnd + '&after=' + ultimoSub,
+                dataType: 'jsonp',
+                success: function(list) {
+                    var nuevosSubs = Mustache.to_html(allSubredditsTemplate, list.data);
+                    ultimoSub = list.data.after;
+                    $('.loading', main).remove();
+                    main.append(nuevosSubs).append(botonCargarMasSubsTemplate);
+                    subreddits = subreddits + nuevosSubs;
+                },
+                error: function() {
+                    $('.loading').text('Error loading more links. Refresh to try again.');
+                }
             });
         },
         activeClass: 'listButton-active'
