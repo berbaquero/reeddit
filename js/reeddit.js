@@ -225,7 +225,12 @@ $(document).ready(function() {
                     },
                     error: function() {
                         loadingComments = false;
-                        $('.loading').text('Error loading comments. Refresh to try again.');
+                        var error = 'Error loading comments. Refresh to try again.';
+                        if(isWideScreen) {
+                            $('.loading').html(error + '<div class="commentsButton" id="wideRefresh">Refresh</div>');
+                        } else {
+                            $('.loading').text(error);
+                        }
                     }
                 });
             }
