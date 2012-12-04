@@ -26,7 +26,7 @@ body {
 
 a { color: #999; }
 
-a.link:visited div p.linkTitle { color: #888; }
+.link:visited div .linkTitle { color: #888; }
 
 /*--------------------- Vistas ---------------------------*/
 
@@ -168,7 +168,7 @@ a.link:visited div p.linkTitle { color: #888; }
     display: block;
 }
 
-/*--------------------- Menú -----------------------------*/
+/*--------------------- Menu -----------------------------*/
 
 #mainMenu { box-shadow: inset -3px 0 10px black; height: 92%; }
 
@@ -317,6 +317,8 @@ a.link:visited div p.linkTitle { color: #888; }
 }
 
 .link-active div p { color: white; }
+
+.link-active:visited .linkInfo .linkTitle { color: whiteSmoke; }
 
 .listButton { padding: 20px; }
 
