@@ -766,6 +766,14 @@ $(document).ready(function() {
         activeClassDelay: 100
     });
 
+    tappable("#wideRefresh", {
+        onTap: function() {
+            if(!hiloActual) return;
+            procesarComentarios(hiloActual, true);
+        },
+        activeClass: 'repliesButton-active'
+    });
+
     tappable("#subTitle", {
         onTap: function(e) {
 
