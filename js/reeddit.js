@@ -172,7 +172,7 @@ $(document).ready(function() {
             var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass(isPoster ? "commentPoster" : "commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
 
             if(c.data.replies) {
-                comment.append($("<span/>").addClass("repliesButton").attr("comment-id", c.data.id).text("See replies"));
+                comment.append($("<span/>").addClass("commentsButton repliesButton").attr("comment-id", c.data.id).text("See replies"));
                 replies[c.data.id] = c.data.replies.data.children;
             }
 
