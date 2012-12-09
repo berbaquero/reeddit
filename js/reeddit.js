@@ -192,6 +192,7 @@ $(document).ready(function() {
             moverMenu(mover.izquierda);
             delay = 351;
         }
+        if(!posts[id]) return; // Quick fix for missing id
         setTimeout(function() {
             if(loadingComments && hiloActual && hiloActual === id) return;
             loadingComments = true;
