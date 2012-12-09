@@ -240,7 +240,7 @@ $(document).ready(function() {
                 if(isWideScreen) {
                     $("#detailView").removeClass("fuera");
                 } else {
-                    slideFromRight();
+                    if(vistaActual !== vista.comentarios) slideFromRight();
                 }
             }
 
