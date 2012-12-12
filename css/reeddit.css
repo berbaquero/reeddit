@@ -860,7 +860,7 @@ header > div {
     .imagePreview { width: 60%; }
 }
 
-/* Tablet Landscape */
+/* Tablet Landscape / Widescreen */
 
 @media only screen and (min-width: 1000px) and (min-height: 500px) {
     #container { right: 0; width: 84%; }
@@ -871,7 +871,7 @@ header > div {
 
     #detailView { width: 60%; right: 0; border-left: 1px solid; }
 
-    .toComments { display: none; }
+    header, .toComments { display: none; }
 
     .link { width: 100%; }
 
@@ -879,9 +879,9 @@ header > div {
 
     .fuera { left: auto; }
 
-    header { display: none; }
-
     .imagePreview { width: 70%; }
+
+    .commentWrap, #selfText p { font-size: 14px; }
 }
 
 /* Wide-ass stuff */
