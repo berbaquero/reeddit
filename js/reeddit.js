@@ -501,9 +501,9 @@ $(document).ready(function() {
     }
 
     function mostrarIngresoSubManual() {
-        var retrasar = false;
+        var delay = 1;
         if(!isLargeScreen) {
-            if(showingMenu) retrasar = true;
+            if(showingMenu) delay = 351;
             moveMenu(move.left);
         }
         setTimeout(function() {
@@ -515,13 +515,13 @@ $(document).ready(function() {
                 modal.css('opacity', 1);
                 document.getElementById('txtNuevoSub').focus();
             }, 1);
-        }, (retrasar ? 351 : 1));
+        }, delay);
     }
 
     function showNewChannelForm() {
-        var retrasar = false;
+        var delay = 1;
         if(!isLargeScreen) {
-            if(showingMenu) retrasar = true;
+            if(showingMenu) delay = 351;
             moveMenu(move.left);
         }
         setTimeout(function() {
@@ -533,7 +533,7 @@ $(document).ready(function() {
                 modal.css('opacity', 1);
                 document.getElementById('txtChannel').focus();
             }, 1);
-        }, (retrasar ? 351 : 1));
+        }, delay);
     }
 
     function quitarModal() {
@@ -938,10 +938,10 @@ $(document).ready(function() {
 
     tappable("#about", {
         onTap: function() {
-            var retraso = 1;
+            var delay = 1;
             if(!isLargeScreen) {
                 moveMenu(move.left);
-                retraso = 351;
+                delay = 351;
             }
             setTimeout(function() {
                 if(esModal) return;
@@ -951,7 +951,7 @@ $(document).ready(function() {
                 setTimeout(function() {
                     modal.css('opacity', 1);
                 }, 1);
-            }, retraso);
+            }, delay);
         },
         activeClass: 'link-active'
     });
@@ -1083,15 +1083,19 @@ $(document).ready(function() {
     // Pseudo-hash-router
     window.addEventListener('hashchange', function() {
         if(location.hash === '') {
+            var delay = 1;
             if(currentView === view.comments) {
                 backToMainView();
                 slideFromLeft();
+                delay = 351;
             }
             if(isWideScreen) {
                 $('.link.link-active').removeClass('link-active');
                 $('#detailWrap').html(noLinkTemplate);
             } else {
-                $('#detailWrap').empty();
+                setTimeout(function() {
+                    $('#detailWrap').empty();
+                }, delay);
             }
         } else {
             var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
