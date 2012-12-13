@@ -18,8 +18,8 @@ $(document).ready(function() {
 
     // Pseudo-Globals
     var ancho = $(window).width(),
-        vistaActual = 1,
-        editando = false,
+        currentView = 1,
+        editingSubs = false,
         urlInit = "http://www.reddit.com/",
         urlEnd = ".json?jsonp=?",
         urlLimitEnd = ".json?limit=30&jsonp=?",
@@ -28,20 +28,20 @@ $(document).ready(function() {
         replies = {},
         current = {},
         channels = [],
-        mostrandoMenu = false,
+        showingMenu = false,
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         loadingComments = false,
         hiloActual, savedSubs, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         // Pseudo-Enums
-        mover = {
-            izquierda: 1,
-            derecha: 2
+        move = {
+            left: 1,
+            right: 2
         },
-        vista = {
-            principal: 1,
-            comentarios: 2
+        view = {
+            main: 1,
+            comments: 2
         },
         selection = {
             sub: 1,
@@ -70,7 +70,7 @@ $(document).ready(function() {
 
     function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
-        editando = false;
+        editingSubs = false;
         loadingComments = false;
         if(fromSub) { // Si viene de se seleccionar un subreddit
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
@@ -188,8 +188,8 @@ $(document).ready(function() {
 
     function procesarComentarios(id, refresh) {
         var delay = 0;
-        if(mostrandoMenu) {
-            moverMenu(mover.izquierda);
+        if(showingMenu) {
+            moveMenu(move.left);
             delay = 351;
         }
         if(!posts[id]) return; // Quick fix for missing id
@@ -240,7 +240,7 @@ $(document).ready(function() {
                 if(isWideScreen) {
                     $("#detailView").removeClass("fuera");
                 } else {
-                    if(vistaActual !== vista.comentarios) slideFromRight();
+                    if(currentView !== view.comments) slideFromRight();
                 }
             }
 
@@ -365,7 +365,7 @@ $(document).ready(function() {
     }
 
     function loadSub(sub) {
-        if(sub !== current.name || editando) {
+        if(sub !== current.name || editingSubs) {
             var url;
             if(sub.toUpperCase() === 'frontPage'.toUpperCase()) {
                 url = urlInit + "r/" + getAllSubsString() + "/";
@@ -378,32 +378,32 @@ $(document).ready(function() {
         setSubTitle(sub);
     }
 
-    function moverMenu(direccion) {
-        if(direccion === mover.izquierda) {
+    function moveMenu(direction) {
+        if(direction === move.left) {
             $("#container").css({
                 '-webkit-transform': transforms.translateTo0,
                 'transform': transforms.translateTo0
             });
             setTimeout(function() {
-                mostrandoMenu = false;
+                showingMenu = false;
             });
         }
-        if(direccion === mover.derecha) {
+        if(direction === move.right) {
             $("#container").css({
                 '-webkit-transform': transforms.translateTo140,
                 'transform': transforms.translateTo140
             });
             setTimeout(function() {
-                mostrandoMenu = true;
+                showingMenu = true;
             });
         }
     }
 
     function loadSubredditListToAdd() {
         if(!isLargeScreen) {
-            moverMenu(mover.izquierda);
+            moveMenu(move.left);
         }
-        if(vistaActual === vista.comentarios) {
+        if(currentView === view.comments) {
             backToMainView();
             slideFromLeft();
         }
@@ -430,14 +430,14 @@ $(document).ready(function() {
         }, isLargeScreen ? 1 : 351);
         limpiarSubrSeleccionado();
         setSubTitle("+ Subreddits");
-        editando = true;
+        editingSubs = true;
     }
 
     function loadSubredditListToRemove() {
         if(!isLargeScreen) {
-            moverMenu(mover.izquierda);
+            moveMenu(move.left);
         }
-        if(vistaActual === vista.comentarios) {
+        if(currentView === view.comments) {
             backToMainView();
             slideFromLeft();
         }
@@ -455,7 +455,7 @@ $(document).ready(function() {
             limpiarSubrSeleccionado();
         }, isLargeScreen ? 1 : 351);
         setSubTitle('- Subreddits');
-        editando = true;
+        editingSubs = true;
     }
 
     function limpiarSubrSeleccionado() {
@@ -503,8 +503,8 @@ $(document).ready(function() {
     function mostrarIngresoSubManual() {
         var retrasar = false;
         if(!isLargeScreen) {
-            if(mostrandoMenu) retrasar = true;
-            moverMenu(mover.izquierda);
+            if(showingMenu) retrasar = true;
+            moveMenu(move.left);
         }
         setTimeout(function() {
             if(esModal) return;
@@ -521,8 +521,8 @@ $(document).ready(function() {
     function showNewChannelForm() {
         var retrasar = false;
         if(!isLargeScreen) {
-            if(mostrandoMenu) retrasar = true;
-            moverMenu(mover.izquierda);
+            if(showingMenu) retrasar = true;
+            moveMenu(move.left);
         }
         setTimeout(function() {
             if(esModal) return;
@@ -666,11 +666,11 @@ $(document).ready(function() {
         onTap: function(e, target) {
             var channel = $(target);
             var channelName = channel.children().first().text();
-            moverMenu(mover.izquierda);
-            if(channelName === current.name && !editando) return;
+            moveMenu(move.left);
+            if(channelName === current.name && !editingSubs) return;
             limpiarSubrSeleccionado();
             channel.addClass('channel-active');
-            if(vistaActual === vista.comentarios) {
+            if(currentView === view.comments) {
                 backToMainView();
                 slideFromLeft();
             }
@@ -695,11 +695,11 @@ $(document).ready(function() {
     tappable(".sub", {
         onTap: function(e, target) {
             var sub = $(target);
-            moverMenu(mover.izquierda);
+            moveMenu(move.left);
             loadSub(sub.first().text());
             limpiarSubrSeleccionado();
             sub.addClass('sub-active');
-            if(vistaActual === vista.comentarios) {
+            if(currentView === view.comments) {
                 backToMainView();
                 slideFromLeft();
             }
@@ -720,13 +720,13 @@ $(document).ready(function() {
 
     tappable("#refresh", {
         onTap: function(e) {
-            if(vistaActual === vista.comentarios) {
+            if(currentView === view.comments) {
                 if(!hiloActual) return;
                 procesarComentarios(hiloActual, true);
             }
-            if(vistaActual === vista.principal) {
+            if(currentView === view.main) {
                 doByCurrentSelection(function() { // if it's subreddit
-                    if(editando) {
+                    if(editingSubs) {
                         return;
                     } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
                         loadLinks(urlInit + "r/" + getAllSubsString() + "/");
@@ -786,7 +786,7 @@ $(document).ready(function() {
             if(isLargeScreen) {
                 return;
             }
-            moverMenu(mostrandoMenu ? mover.izquierda : mover.derecha);
+            moveMenu(showingMenu ? move.left : move.right);
         },
         activeClass: 'subTitle-active'
     });
@@ -943,7 +943,7 @@ $(document).ready(function() {
         onTap: function() {
             var retraso = 1;
             if(!isLargeScreen) {
-                moverMenu(mover.izquierda);
+                moveMenu(move.left);
                 retraso = 351;
             }
             setTimeout(function() {
@@ -974,8 +974,8 @@ $(document).ready(function() {
         if(isWideScreen || isLargeScreen) {
             return;
         }
-        if(vistaActual === vista.principal) {
-            moverMenu(mover.derecha);
+        if(currentView === view.main) {
+            moveMenu(move.right);
         }
     });
 
@@ -983,8 +983,8 @@ $(document).ready(function() {
         if(isWideScreen || isLargeScreen) {
             return;
         }
-        if(mostrandoMenu) {
-            moverMenu(mover.izquierda);
+        if(showingMenu) {
+            moveMenu(move.left);
         }
     });
 
@@ -992,7 +992,7 @@ $(document).ready(function() {
         if(isWideScreen) {
             return;
         }
-        if(!mostrandoMenu) {
+        if(!showingMenu) {
             var id = $(this).attr('data-id');
             goToComments(id);
         }
@@ -1021,7 +1021,7 @@ $(document).ready(function() {
                 main.removeClass("slideTransition").css(cssTransformBack).removeClass("fuera");
                 det.css(cssTransformBack).removeClass("slideTransition");
                 $("#detailView").addClass("fuera"); // Hide
-                vistaActual = vista.principal;
+                currentView = view.main;
             }, 351);
         }, 50);
     }
@@ -1045,7 +1045,7 @@ $(document).ready(function() {
                 };
                 det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css(cssTransformBack);
                 main.removeClass("slideTransition").addClass("fuera").css(cssTransformBack);
-                vistaActual = vista.comentarios;
+                currentView = view.comments;
             }, 351);
         }, 100);
     }
@@ -1080,8 +1080,8 @@ $(document).ready(function() {
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         scrollTop();
-        if(isLargeScreen && mostrandoMenu) {
-            moverMenu(mover.izquierda);
+        if(isLargeScreen && showingMenu) {
+            moveMenu(move.left);
         }
     }, false);
 
@@ -1106,7 +1106,7 @@ $(document).ready(function() {
         }
     }, false);
 
-    // Inicio de la app
+    // App init
     var title = $("#title"),
         headerIcon = $("#headerIcon"),
         touch = "touchmove";
@@ -1117,7 +1117,7 @@ $(document).ready(function() {
 
     current = loadCurrentSelection();
 
-    // Cargar lista de subreddits y canales
+    // Load subreddits and channels list
     loadSubsList();
     loadSavedChannels();
 
@@ -1128,7 +1128,7 @@ $(document).ready(function() {
             var activeSub = document.getElementsByClassName('sub')[i];
             $(activeSub).addClass('sub-active');
         }
-        // Cargar links
+        // Load links
         if(current.name.toUpperCase() !== 'frontPage'.toUpperCase()) {
             loadLinks(urlInit + "r/" + current.name + "/");
         } else {
@@ -1136,7 +1136,7 @@ $(document).ready(function() {
             loadLinks(urlInit + "r/" + getAllSubsString() + "/");
         }
         setSubTitle(current.name);
-    }, function() { // En caso de ser un channel
+    }, function() { // If it's a channel
         var channel;
         for(var i = 0; i < channels.length; i++) {
             channel = channels[i];
@@ -1156,7 +1156,7 @@ $(document).ready(function() {
             e.preventDefault();
         }, false);
         document.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
-            if(mostrandoMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
+            if(showingMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
                 e.preventDefault();
             }
         }, false);
