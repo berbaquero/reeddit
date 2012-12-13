@@ -711,9 +711,6 @@ $(document).ready(function() {
 
     tappable("#navBack", {
         onTap: function(e) {
-            setTimeout(function() {
-                $('#detailWrap').empty();
-            }, 351);
             history.back(); // Should go to "/"
         }
     });
@@ -964,9 +961,6 @@ $(document).ready(function() {
         if(isWideScreen) {
             return;
         }
-        setTimeout(function() {
-            $('#detailWrap').empty();
-        }, 351);
         history.back(); // Should go to "/"
     });
 
@@ -1089,13 +1083,15 @@ $(document).ready(function() {
     // Pseudo-hash-router
     window.addEventListener('hashchange', function() {
         if(location.hash === '') {
-            if(vistaActual === vista.comentarios) {
+            if(currentView === view.comments) {
                 backToMainView();
                 slideFromLeft();
             }
             if(isWideScreen) {
                 $('.link.link-active').removeClass('link-active');
                 $('#detailWrap').html(noLinkTemplate);
+            } else {
+                $('#detailWrap').empty();
             }
         } else {
             var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
