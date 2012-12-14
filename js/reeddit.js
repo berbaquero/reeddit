@@ -1064,9 +1064,14 @@ $(document).ready(function() {
 
     // Show option to reload app after update
     if(window.applicationCache) window.applicationCache.addEventListener("updateready", function(e) {
-        if(window.applicationCache.status === window.applicationCache.UPDATEREADY) window.applicationCache.swapCache();
-        if(window.confirm("Reeddit updated. Reload?")) window.location.reload();
-    });
+        $('#mainWrap').prepend("<div id='topButtons'><div id='btnUpdate'>Reeddit updated. Click to reload</div></div>");
+        tappable('#btnUpdate', {
+            onTap: function() {
+                window.location.reload();
+            },
+            activeClass: 'listButton-active'
+        });
+    }, false);
 
     // Do stuff after finishing resizing the windows
     window.addEventListener("resizeend", function() {
