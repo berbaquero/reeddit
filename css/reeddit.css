@@ -338,7 +338,7 @@ a { color: #999; }
     margin: 0 auto;
 }
 
-#btnsAddSubs {
+#topButtons {
     padding: 10px;
     display: -webkit-box;
     display: -moz-box;
@@ -347,7 +347,7 @@ a { color: #999; }
     width: 100%;
 }
 
-#btnsAddSubs > div {
+#topButtons > div {
     color: #555;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
