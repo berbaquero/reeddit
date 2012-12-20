@@ -448,9 +448,9 @@ header > div {
     width: 30px;
     height: 30px;
     margin: 0 auto;
-    background-image: -webkit-linear-gradient(top, #ff6600 90%, #e32918 30%);
-    background-image: -moz-linear-gradient(top, #ff6600 90%, #e32918 30%);
-    background-image: linear-gradient(top, #ff6600 90%, #e32918 30%);
+    background-image: -webkit-linear-gradient(top, #ff6600 50%, #e32918 90%);
+    background-image: -moz-linear-gradient(top, #ff6600 50%, #e32918 90%);
+    background-image: linear-gradient(top, #ff6600 50%, #e32918 90%);
 }
 
 #refreshIcon div {   
