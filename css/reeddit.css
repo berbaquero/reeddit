@@ -59,7 +59,7 @@ a { color: #999; }
 #mainView, #detailView {
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
-    background-color: #eee;
+    background-color: whiteSmoke;
     background-image: url('../img/bgnoise.png');
 }
 
@@ -374,9 +374,11 @@ header {
     display: -webkit-box;
     display: -moz-box;
     display: box;
-    border-bottom: 1px solid;
     height: 44px;
-    background-image: url('../img/darkdenim3.png');
+    background-image: -webkit-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
+    background-image: -moz-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
+    background-image: linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
+    border-bottom: 1px solid #888;
 }
 
 header > div {
@@ -395,10 +397,10 @@ header > div {
 }
 
 #title {
-    color: white;
+    color: #333;
+    text-shadow: 0 1px 1px white;
     text-align: center;
     font-size: 20px;
-    text-shadow: 0 -1px 1px #000;
     width: 100%;
     margin: 0;
     white-space: nowrap;
@@ -446,9 +448,9 @@ header > div {
     width: 30px;
     height: 30px;
     margin: 0 auto;
-    background-image: -webkit-linear-gradient(top, #ff6600 0%, #e32918 100%);
-    background-image: -moz-linear-gradient(top, #ff6600 0%, #e32918 100%);
-    background-image: linear-gradient(top, #ff6600 0%, #e32918 100%);
+    background-image: -webkit-linear-gradient(top, #ff6600 90%, #e32918 30%);
+    background-image: -moz-linear-gradient(top, #ff6600 90%, #e32918 30%);
+    background-image: linear-gradient(top, #ff6600 90%, #e32918 30%);
 }
 
 #refreshIcon div {   
@@ -544,7 +546,8 @@ header > div {
 #subTitle {
     margin: 0 0 0 5px;
     padding: 0 5px;
-    color: whiteSmoke;
+    color: #333;
+    text-shadow: 0 1px 1px whiteSmoke;
 }
 
 .subTitle-active { text-shadow: 0 1px 7px whiteSmoke !important; }
@@ -806,6 +809,7 @@ header > div {
         background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
         background-image: -moz-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
         background-image: linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
+        border-bottom: 1px solid #333;
     }
 
     .button { border: none; background-image: none; }
@@ -818,11 +822,7 @@ header > div {
 
     #refreshIcon:active div { background-image: url('../img/refresh.png'); }
 
-    #subTitle { color: #333; text-shadow: 0 1px 1px whiteSmoke; }
-
     .subTitle-active { text-shadow: 0 -1px 1px whiteSmoke !important; }
-
-    #title { color: #333; text-shadow: 0 1px 1px white; }
 
     #mainView, #detailView { background-color: #fafafa; }
 
