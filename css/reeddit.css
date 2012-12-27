@@ -60,7 +60,6 @@ a { color: #999; }
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
     background-color: whiteSmoke;
-    background-image: url('../img/bgnoise.png');
 }
 
 .wrapper {
@@ -108,6 +107,16 @@ a { color: #999; }
 
 #linkSummary { background-color: #6D6D6D; padding: 10px 0 16px; }
 
+#linkSummary:before {
+    content: '';
+    position: absolute;
+    height: 300px;
+    width: 100%;
+    background-color: #6D6D6D;
+    -webkit-transform: translate3d(0, -300px, 0);
+    transform: translate3d(0, -300px, 0);
+}
+
 #linkSummary p { margin: 0; padding: 0 10px; }
 
 #linkSummary a { text-decoration: none; }
@@ -125,9 +134,7 @@ a { color: #999; }
 #summaryCommentNum { text-align: right; }
 
 #summaryExtra {
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
+    display: -webkit-box; display: -moz-box; display: box;
     background-color: #333;
     font-weight: bold;
     padding: 0 10px;
@@ -137,9 +144,7 @@ a { color: #999; }
 
 #summaryExtra p {
     color: #FAFAFA;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1;
     margin: 0;
     padding: 5px 0;
     width: 33%;
@@ -152,10 +157,7 @@ a { color: #999; }
     border-radius: 5px;
     background-color: #DDD;
     box-shadow: inset 0 0 7px #777;    
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
+    -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
 }
 
 #selfText p { margin-top: 5px; }
@@ -179,12 +181,8 @@ a { color: #999; }
     background-color: #222;
     z-index: 1;
     height: 8%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-box-align: center;
+    display: -webkit-box; display: -moz-box; display: box;
+    -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center;
 }
 
 .btnEditSubr {
@@ -211,11 +209,7 @@ a { color: #999; }
 
 #channels { padding-top: 0; }
 
-.channel {
-    margin: 0;
-    font-size: 14px;
-    padding: 5px 10px;
-}
+.channel { margin: 0; font-size: 14px; padding: 5px 10px; }
 
 .channel > p { color: whiteSmoke; margin: 0; }
 
@@ -254,24 +248,20 @@ a { color: #999; }
     padding: 10px 5px 10px 10px;
     cursor: none;
     -webkit-tap-highlight-color: transparent;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
 .linkWrap {
     border-bottom: 1px solid #ccc;
     border-top: 1px solid #fff;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
+    display: -webkit-box; display: -moz-box; display: box;
     width: 100%;
 }
 
+.linkWrap:first-child { border-top: 0; }
+
 .linkThumb {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     width: 70px;
     max-width: 70px;
     min-width: 70px;
@@ -292,16 +282,12 @@ a { color: #999; }
 .linkTitle {
     font-weight: bold;
     font-size: 15px;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     margin: 0;
 }
 
 .linkInfo {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     width: 67%;
     padding-right: 10px;
 }
@@ -359,9 +345,7 @@ a { color: #999; }
     font-weight: bold;
     width: 50%;
     text-align: center;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
 /*---------------------------- Cabecera -----------------------------*/
@@ -371,9 +355,7 @@ header {
     width: 100%;
     position: fixed;
     z-index: 2;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
+    display: -webkit-box; display: -moz-box; display: box;
     height: 44px;
     background-image: -webkit-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
     background-image: -moz-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
@@ -382,18 +364,10 @@ header {
 }
 
 header > div {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
-    box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     width: 70%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-box-align: center;
-    box-align: center;
+    display: -webkit-box; display: -moz-box; display: box;
+    -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
 }
 
 #title {
@@ -429,18 +403,10 @@ header > div {
 }
 
 .corner {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
-    box-flex: 1;
     width: 15%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-box-align: center;
-    box-align: center;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
+    display: -webkit-box; display: -moz-box; display: box;
+    -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
 }
 
 .button {
@@ -481,16 +447,9 @@ header > div {
 
 .toComments {    
     width: 15%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-box-align: center;
-    box-align: center;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
+    display: -webkit-box; display: -moz-box; display: box;
+    -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
+    -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
 .toComments div {
@@ -569,34 +528,21 @@ header > div {
     padding-left: 10px;
     border-bottom: 1px solid #CCC;
     border-top: 1px solid white;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    display: box;
+    display: -webkit-box; display: -moz-box; display: -ms-box; display: box;
     width: 100%;
 }
 
 .subreddit > div:first-child {
     width: 85%;
     padding: 10px 5px 10px 0;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
+    -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
 .btnAddSub {
     width: 15%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    display: box;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-box-align: center;
-    box-align: center;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
+    display: -webkit-box; display: -moz-box; display: -ms-box; display: box;
+    -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
+    -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
 .btnAddSub > div {
@@ -655,11 +601,7 @@ header > div {
     background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
 }
 
-#formNuevoSub {
-    height: 50px;
-    top: 50%;
-    margin-top: -100px;
-}
+#formNuevoSub { height: 50px; top: 50%; margin-top: -100px; }
 
 #formNuevoSub input { width: 100%; height: 40px; font-size: 20px; }
 
@@ -678,22 +620,13 @@ header > div {
     text-shadow: 0 1px 1px whiteSmoke;
 }
 
-.removeList {
-    margin: 0;
-    padding: 0;
-}
+.removeList { margin: 0; padding: 0; }
 
 .itemToRemove {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    display: box;
+    display: -webkit-box; display: -moz-box; display: -ms-box; display: box;
     border-bottom: 1px solid #DDD;
     border-top: 1px solid white;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-box-align: center;
-    box-align: center;
+    -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
     height: 60px;
 }
 
@@ -777,11 +710,17 @@ header > div {
 }
 
 .aboutReeddit { top: 80px; }
+
 .aboutReeddit ul { list-style: none; padding: 0; }
+
 .aboutReeddit li { font-size: 18px; text-align: center; }
+
 .aboutReeddit li a:hover { color: inherit; }
+
 .aboutReeddit li:first-child a { border-top: 0; }
+
 .aboutReeddit li:last-child a { border-bottom: 0; }
+
 .aboutReeddit p a { text-decoration: none; color: #777; }
 
 .aboutReeddit li a {
@@ -914,9 +853,9 @@ header > div {
 }
 
 @-moz-document url-prefix() { /* Firefox only - layout hacks, for lack of solid flexbox */
-    
+
     #removeSubr, .itemToRemove > div, .toComments { float: right; }
-    
+
     #addNewSubr, .itemToRemove > p, .corner, header > div { float: left; }
 
     .itemToRemove { width: 100%; }
@@ -936,5 +875,4 @@ header > div {
     .subreddit > div:first-child { display: table-cell; }
 
     .btnAddSub { display: table-cell; vertical-align: middle; }
-
 }
