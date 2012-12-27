@@ -9,22 +9,22 @@
 
 #linkSummary a:hover #summaryTitle { text-shadow: 0 1px 7px whiteSmoke; }
 
-/* Estilo las barras de scrolling (Desktop) */
+/* Scrolling bars style */
 ::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
 
-/* Track Principal*/
+/* Track Principal */
 ::-webkit-scrollbar-track { border-radius: 10px; background-color: whiteSmoke; }
 
-/* Handle Principal*/
+/* Handle Principal */
 ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
 
-/* Track Menu*/
+/* Track Menu */
 #mainMenu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
 
-/* Handle Menu*/
-#mainMenu::-webkit-scrollbar-thumb { border-radius: 10px; background: #444; }
+/* Handle Menu */
+#mainMenu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: #444; }
 
-.button:hover { border: 1px solid #888; background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); }
+.button:hover { border: 1px solid #888; background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); background-image: linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); }
 
 .button:active { background-image: none; background-color: #777; }
 
