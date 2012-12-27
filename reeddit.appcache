@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-#v1.1 20-12-2012
+#v1.1 26-12-2012
 
 CACHE:
 
@@ -12,7 +12,6 @@ css/reeddit.css
 #style sheet images
 img/add.png
 img/alienHead.png
-img/bgnoise.png
 img/cancel.png
 img/comment_24.png
 img/darkdenim3.png
