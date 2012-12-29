@@ -138,8 +138,8 @@ a { color: #999; }
     background-color: #333;
     font-weight: bold;
     padding: 0 10px;
-    box-shadow: 0px 0px 10px #333;
     width: 100%;
+    box-shadow: 0 0 10px #333;
 }
 
 #summaryExtra p {
@@ -194,20 +194,20 @@ a { color: #999; }
     margin: -5px 0;
 }
 
-#subs, #channels { padding: 10px 0 0 0; margin: 0; cursor: default; }
+#subs, #channels { padding: 0; margin: 0; cursor: default; }
 
 .sub {
     color: whiteSmoke;
-    margin: 10px 0;
+    margin: 0;
     font-size: 14px;
-    padding: 5px 10px;
+    padding: 10px 10px;
     text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-#channels { padding-top: 0; }
+#subs > li:first-child { padding-top: 10px; }
 
 .channel { margin: 0; font-size: 14px; padding: 5px 10px; }
 
@@ -236,6 +236,7 @@ a { color: #999; }
     width: 140px;
     z-index: 0;
     height: 100%;
+    background-color: #363636;
     background-image: url('../img/darkdenim3.png');
 }
 
@@ -360,7 +361,8 @@ header {
     background-image: -webkit-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
     background-image: -moz-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
     background-image: linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
-    border-bottom: 1px solid #888;
+    border-bottom: 1px solid #777;
+    border-top: 1px solid white;
 }
 
 header > div {
@@ -417,6 +419,8 @@ header > div {
     background-image: -webkit-linear-gradient(top, #ff6600 50%, #e32918 90%);
     background-image: -moz-linear-gradient(top, #ff6600 50%, #e32918 90%);
     background-image: linear-gradient(top, #ff6600 50%, #e32918 90%);
+    border-top: 1px solid rgb(255, 179, 129);
+    border-bottom: 1px solid rgb(136, 24, 14);
 }
 
 #refreshIcon div {   
@@ -692,15 +696,9 @@ header > div {
     background-size: 18px;
 }
 
-#noLink {
-    margin: 50% auto;
-    width: 140px;
-}
+#noLink { margin: 50% auto; width: 140px; }
 
-#noLink p {
-    font-size: 16px;
-    text-shadow: 0 1px 1px white;
-}
+#noLink p { font-size: 16px; text-shadow: 0 1px 1px white; }
 
 .option {
     color: whiteSmoke;
@@ -708,6 +706,8 @@ header > div {
     letter-spacing: 1px;
     font-size: 14px;
 }
+
+.option:last-child { margin-bottom: 15px; }
 
 .aboutReeddit { top: 80px; }
 
@@ -748,7 +748,8 @@ header > div {
         background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
         background-image: -moz-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
         background-image: linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
-        border-bottom: 1px solid #333;
+        border-bottom: 1px solid #333;    
+        border-top: 0;
     }
 
     .button { border: none; background-image: none; }
@@ -767,7 +768,7 @@ header > div {
 
     #mainMenu { height: 95%; }
 
-    .sub { margin: 7px 0; }
+    .sub { padding: 9px 10px; }
 
     .linkWrap { border-bottom: 1px solid #ddd; }
 
