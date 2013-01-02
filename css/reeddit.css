@@ -207,8 +207,6 @@ a { color: #999; }
     text-overflow: ellipsis;
 }
 
-#subs > li:first-child { padding-top: 10px; }
-
 .channel { margin: 0; font-size: 14px; padding: 5px 10px; }
 
 .channel > p { color: whiteSmoke; margin: 0; }
@@ -705,6 +703,22 @@ header > div {
     padding: 10px 15px;
     letter-spacing: 1px;
     font-size: 14px;
+}
+
+.menu-desc {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 12px;
+    text-transform: uppercase;
+    text-shadow: rgba(0, 0, 0, 0.7) 0px 1px 0px;
+    margin: 0px;
+    width: 100%;
+    padding-left: 10px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid black; 
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
 }
 
 .option:last-child { margin-bottom: 15px; }
