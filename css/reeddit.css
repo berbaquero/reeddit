@@ -716,8 +716,9 @@ header > div {
     height: 40px;
     line-height: 40px;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.15);
-    border-bottom: 1px solid black; 
+    background: rgba(0, 0, 0, 0.20);
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #111;
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
 }
 
