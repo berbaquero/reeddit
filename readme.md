@@ -31,7 +31,7 @@ To build Reeddit, I used this awesome resources:
 
 For now, Reeddit works properly on recent versions of Webkit-based browsers (Chrome and Safari, desktop and mobile) - it's been tested on iOS 5+ (iPhone and iPad) and Android 4+.
 
-I used the flexbox module for layout, and Firefox's implementation is kinda wonky. Besides that, it works good on FF.
+I used the flexbox module for layout, and Firefox's implementation is kinda wonky. Besides that, it works good on latest Firefox versions.
 
 My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
 
