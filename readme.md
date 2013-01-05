@@ -36,3 +36,7 @@ I used the flexbox module for layout, and Firefox's implementation is kinda wonk
 My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
 
 On the Desktop, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710) on Google Chrome, or as a Mac app, with [Fluid](http://fluidapp.com/). :D
+
+### License
+
+Licensed under the [MIT License](http://berbaquero.mit-license.org/).
