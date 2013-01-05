@@ -114,6 +114,7 @@ a { color: #999; }
     width: 100%;
     background-color: #6D6D6D;
     -webkit-transform: translate3d(0, -300px, 0);
+    -moz-transform: translate3d(0, -300px, 0);
     transform: translate3d(0, -300px, 0);
 }
 
