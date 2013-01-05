@@ -18,7 +18,7 @@ For screenshots and additional info, visit [Reeddit's presentation page](http://
 
 ## Tools
 
-To build Reeddit, I used this awesome resources:
+To build Reeddit, I used these awesome resources:
 
 *	[Zepto.js](http://zeptojs.com/) -- basically, jQuery for modern browsers. Lighter, and with various useful tools for mobile sites and apps.
 *	[Tappable](https://github.com/cheeaun/tappable) -- Great 'tap' events handler.
