@@ -34,6 +34,7 @@ $(document).ready(function() {
         loadingComments = false,
         hiloActual, savedSubs, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
+        isiPad, scrollFix,
         // Pseudo-Enums
         move = {
             left: 1,
@@ -1089,6 +1090,9 @@ $(document).ready(function() {
         if(isLargeScreen && showingMenu) {
             moveMenu(move.left);
         }
+        if(isiPad) {
+            scrollFix();
+        }
     }, false);
 
     if(location.hash) location.hash = ''; // Clear hash at first app loading
@@ -1172,5 +1176,17 @@ $(document).ready(function() {
                 e.preventDefault();
             }
         }, false);
+        isiPad = /iPad/.test(navigator.userAgent);
+        if(isiPad) {
+            scrollFix = function() {
+                // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
+                var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
+                setTimeout(function() {
+                    $('.menu-desc').css('height', nextHeight);
+                    console.log('ScrollFix!' + nextHeight);
+                }, 500);
+            };
+            scrollFix();
+        }
     }
 });
