@@ -116,6 +116,11 @@ a { color: #999; }
     -webkit-transform: translate3d(0, -300px, 0);
     -moz-transform: translate3d(0, -300px, 0);
     transform: translate3d(0, -300px, 0);
+    background-image: url('../img/alienHead.png');
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 90%;
+    background-size: 25%;
 }
 
 #linkSummary p { margin: 0; padding: 0 10px; }
