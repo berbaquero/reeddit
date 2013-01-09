@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>Reeddit - Minimalist, elastic and read-only web app client for Reddit</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="normalize.css" type="text/css" />
+		<title>Reeddit - Minimalist, elastic and read-only web app client for Reddit</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="normalize.css" type="text/css" />
 		<style>
 			* {
 				-moz-box-sizing: border-box;
@@ -99,21 +99,23 @@
 
 			#links { padding: 25px 0; }
 
-			#share { width: 100%; text-align: center; padding-top: 25px; }
-                        
-            #press {
-                padding: 10px 10px 25px 10px;
-                background-color: white;
-                border-radius: 5px;
-                box-shadow: 0 2px 3px #CCC;
-                margin: 15px auto;
-                width: 60%;
-                text-align: center;
-            }
+			#share { width: 100%; text-align: center; padding: 25px 0; }
 
-            #press h3 { color: #555; margin-bottom: 0; }
+			#share > div { margin-bottom: 20px; }
+	                    
+	        #press {
+	            padding: 10px 10px 25px 10px;
+	            background-color: white;
+	            border-radius: 5px;
+	            box-shadow: 0 2px 3px #CCC;
+	            margin: 15px auto;
+	            width: 60%;
+	            text-align: center;
+	        }
 
-            #press p { font-size: 14px; margin: 0; }
+	        #press h3 { color: #555; margin-bottom: 0; }
+
+	        #press p { font-size: 14px; margin: 0; }
 			
 			footer { padding: 30px 30px 40px 60px; }
 			
@@ -126,8 +128,8 @@
 				#mainWrapper, footer { padding: 10px; }
 				
 				#description > ul { padding: 0; }
-                                
-                #press { width: 80%; }
+	                            
+	            #press { width: 80%; }
 			}			
 		</style>
 	</head>
@@ -187,8 +189,14 @@
 				<p>The source code, tools used and compatibility info is on <a href="https://github.com/berbaquero/reeddit" target="_blank">GitHub</a>.</p>
 			</div>
 			<div id='share'>
-				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
-				<a href="http://www.reddit.com/submit?url=berbaquero.github.com/reeddit/about/" target="_blank"> <img src="http://www.reddit.com/static/spreddit7.gif" alt="submit to reddit" border="0" /></a>
+				<div>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+					<a href="https://twitter.com/berbaquero" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @berbaquero</a>
+				</div>
+				<div>
+					<iframe src="http://ghbtns.com/github-btn.html?user=berbaquero&repo=reeddit&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+					<iframe src="http://ghbtns.com/github-btn.html?user=berbaquero&repo=reeddit&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+				</div>
 			</div>
 		</footer>
 
