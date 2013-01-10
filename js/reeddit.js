@@ -190,6 +190,16 @@ $(document).ready(function() {
         if(idParent) loadedLinks[idParent] = com;
 
         $("#detailWrap a").attr("target", "_blank");
+
+        if(!isDesktop) {
+            // Make comments section always scrollable
+            var detailWrap = document.querySelector('#detailWrap');
+            var detailWrapHeight = detailWrap.offsetHeight;
+            var linkSummary = detailWrap.querySelector('section:first-child');
+            var linkSummaryHeight = linkSummary.offsetHeight;
+            var minHeight = detailWrapHeight - linkSummaryHeight + 1;
+            $('#detailWrap > section + section').css('min-height', minHeight);
+        }
     }
 
     function procesarComentarios(id, refresh) {
