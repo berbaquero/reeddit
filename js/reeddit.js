@@ -642,6 +642,20 @@ $(document).ready(function() {
         location.hash = '#comments:' + id;
     }
 
+    function refreshCurrentStream() {
+        doByCurrentSelection(function() { // if it's subreddit
+            if(editingSubs) {
+                return;
+            } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+                loadLinks(urlInit + "r/" + getAllSubsString() + "/");
+            } else {
+                loadLinks(urlInit + "r/" + current.name + "/");
+            }
+        }, function() { // if it's channel
+            loadChannel(getChannelByName(current.name));
+        });
+    }
+
     // Taps
     tappable("#btnAddNewChannel", {
         onTap: function() {
@@ -728,17 +742,7 @@ $(document).ready(function() {
                 procesarComentarios(hiloActual, true);
             }
             if(currentView === view.main) {
-                doByCurrentSelection(function() { // if it's subreddit
-                    if(editingSubs) {
-                        return;
-                    } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
-                        loadLinks(urlInit + "r/" + getAllSubsString() + "/");
-                    } else {
-                        loadLinks(urlInit + "r/" + current.name + "/");
-                    }
-                }, function() { // if it's channel
-                    loadChannel(getChannelByName(current.name));
-                });
+                refreshCurrentStream();
             }
         }
     });
@@ -785,7 +789,6 @@ $(document).ready(function() {
 
     tappable("#subTitle", {
         onTap: function(e) {
-
             if(isLargeScreen) {
                 return;
             }
@@ -959,7 +962,8 @@ $(document).ready(function() {
                 }, 1);
             }, delay);
         },
-        activeClass: 'link-active'
+        activeClass: 'link-active',
+        activeClassDelay: 100
     });
 
     // Swipes
