@@ -623,7 +623,7 @@ $(document).ready(function() {
     }
 
     function loadChannel(channel) {
-        loadLinks(urlInit + channel.url, true);
+        loadLinks(urlInit + channel.url + '/', true);
         setSubTitle(channel.name);
         setCurrentChannel(channel);
     }
@@ -818,7 +818,7 @@ $(document).ready(function() {
                 loadLinks(url, false, false, '&after=' + ultimoLink);
             }, function() {
                 var channel = getChannelByName(current.name);
-                loadLinks(urlInit + channel.url, false, false, '&after=' + ultimoLink);
+                loadLinks(urlInit + channel.url + '/', false, false, '&after=' + ultimoLink);
             });
 
         },
