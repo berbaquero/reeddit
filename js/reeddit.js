@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
     // Templates
-    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
-        linksTemplateLeft = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div>",
+    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
+        linksTemplateLeft = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
         linkSummaryTemplate = "<section><div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a><p id='summaryAuthor'>by {{author}}</p></div><div id='summaryExtra'><p id='summarySub'>{{subreddit}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{num_comments}} comments</p></div></section>",
         allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
         botonAgregarSubManualTemplate = "<div id='topButtons'><div id='btnSubMan'>Insert Manually</div><div id='btnAddChannel'>Add Channel</div></div>",
@@ -35,7 +35,7 @@ $(document).ready(function() {
         loadingLinks = false,
         hiloActual, savedSubs, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
-        isiPad, scrollFix,
+        isiPad, scrollFix, currentSortingChoice = 'hot',
         // Pseudo-Enums
         move = {
             left: 1,
@@ -98,7 +98,7 @@ $(document).ready(function() {
             }
             $.ajax({
                 dataType: 'jsonp',
-                url: baseUrl + urlLimitEnd + paging,
+                url: baseUrl + getSorting() + urlLimitEnd + paging,
                 success: function(result) {
                     processAndRenderLinks(result, fromSub, main);
                 },
@@ -159,7 +159,12 @@ $(document).ready(function() {
             }
         });
         // Remove 'More links' button if there are less than 30 links
-        if(links.children.length < 30) { $('#moreLinks').parent().remove(); }
+        if(links.children.length < 30) {
+            $('#moreLinks').parent().remove();
+        }
+        if(!isDesktop) {
+            scrollFixLinks();
+        }
     }
 
     function loadComments(data, baseElement, idParent) {
@@ -192,14 +197,38 @@ $(document).ready(function() {
         $("#detailWrap a").attr("target", "_blank");
 
         if(!isDesktop) {
-            // Make comments section always scrollable
-            var detailWrap = document.querySelector('#detailWrap');
-            var detailWrapHeight = detailWrap.offsetHeight;
-            var linkSummary = detailWrap.querySelector('section:first-child');
-            var linkSummaryHeight = linkSummary.offsetHeight;
-            var minHeight = detailWrapHeight - linkSummaryHeight + 1;
-            $('#detailWrap > section + section').css('min-height', minHeight);
+            scrollFixComments();
         }
+    }
+
+    function scrollFixLinks() {
+        // Make links section always scrollable
+        var wraps = document.querySelectorAll('.linkWrap');
+        var totalHeight = 0;
+        for(var w = 0; w < wraps.length; w++) {
+            totalHeight += wraps[w].offsetHeight;
+        }
+        var containerHeight = document.querySelector('#container').offsetHeight;
+        var headerHeight = document.querySelector('header').offsetHeight;
+        if(totalHeight > (containerHeight - headerHeight)) {
+            $('#mainOverflow').css('min-height', '');
+        } else {
+            $('#mainOverflow').css('min-height', (containerHeight - headerHeight) - totalHeight + 1);
+        }
+    }
+
+    function scrollFixComments() {
+        // Make comments section always scrollable
+        var detailWrap = document.querySelector('#detailWrap');
+        var detailWrapHeight = detailWrap.offsetHeight;
+        var linkSummary = detailWrap.querySelector('section:first-child');
+        var linkSummaryHeight = linkSummary.offsetHeight;
+        var selfText = detailWrap.querySelector('#selfText');
+        var selfTextHeight = selfText ? selfText.offsetHeight : 0;
+        var imagePreview = detailWrap.querySelector('.imagePreview');
+        var imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0;
+        var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight + 1;
+        $('#detailWrap > section + ' + (selfTextHeight > 0 ? '#selfText +' : '') + (imagePreviewHeight > 0 ? '.imagePreview +' : '') + ' section').css('min-height', minHeight);
     }
 
     function procesarComentarios(id, refresh) {
@@ -586,7 +615,7 @@ $(document).ready(function() {
         // En caso de haber ingresado algo
         // Cargar el contenido del nuevo subrredit, de forma asincrona
         $.ajax({
-            url: urlInit + "r/" + newSubr + "/" + urlLimitEnd,
+            url: urlInit + "r/" + newSubr + "/" + getSorting() + urlLimitEnd,
             dataType: 'jsonp',
             success: function(data) {
                 loadLinks("", false, data);
@@ -664,6 +693,22 @@ $(document).ready(function() {
         }, function() { // if it's channel
             loadChannel(getChannelByName(current.name));
         });
+    }
+
+    function getSorting() {
+        return(currentSortingChoice !== 'hot' ? (currentSortingChoice + '/') : '');
+    }
+
+    function changeSorting(sorting) {
+        currentSortingChoice = sorting;
+        var delay = 1;
+        if(showingMenu) {
+            moveMenu(move.left);
+            delay = 351;
+        }
+        setTimeout(function() {
+            refreshCurrentStream();
+        }, delay);
     }
 
     // Taps
@@ -976,6 +1021,19 @@ $(document).ready(function() {
         activeClassDelay: 100
     });
 
+    tappable('#sorting p', {
+        onTap: function(e, target) {
+            var choice = $(target);
+            var sortingChoice = choice.text();
+            if(sortingChoice === currentSortingChoice) return;
+            $('.sorting-choice').removeClass('sorting-choice');
+            choice.addClass('sorting-choice');
+            changeSorting(sortingChoice);
+        },
+        activeClass: 'link-active',
+        activeClassDelay: 100
+    });
+
     // Swipes
     $("#detailView").swipeRight(function() {
         if(isWideScreen) {
@@ -1202,7 +1260,6 @@ $(document).ready(function() {
                 var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
                 setTimeout(function() {
                     $('.menu-desc').css('height', nextHeight);
-                    console.log('ScrollFix!' + nextHeight);
                 }, 500);
             };
             scrollFix();

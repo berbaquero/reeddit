@@ -244,6 +244,17 @@ a { color: #999; }
     background-image: url('../img/darkdenim3.png');
 }
 
+#sorting p {
+    color: whiteSmoke;
+    margin: 0;
+    padding: 8px 10px;
+    text-transform: capitalize;
+}
+
+.sorting-choice { border-left: 3px solid; }
+
+#mainOverflow { width: 100%; }
+
 /*--------------------- Principal -------------------------*/
 
 .link {
