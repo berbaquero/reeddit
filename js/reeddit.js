@@ -32,6 +32,7 @@ $(document).ready(function() {
         subreddits, store = window.fluid ? allCookies : window.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         loadingComments = false,
+        loadingLinks = false,
         hiloActual, savedSubs, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix,
@@ -73,11 +74,12 @@ $(document).ready(function() {
         var main = $("#mainWrap");
         editingSubs = false;
         loadingComments = false;
-        if(fromSub) { // Si viene de se seleccionar un subreddit
+        loadingLinks = true;
+        if(fromSub) { // Si viene de seleccionar un subreddit
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             if(!links) {
                 setTimeout(function() {
-                    main.prepend("<p class='loading'>Loading links...</p>");
+                    if(loadingLinks) main.prepend("<p class='loading'>Loading links...</p>");
                 }, 351);
             }
         } else { // Si se esta cargando inicialmente
@@ -110,6 +112,7 @@ $(document).ready(function() {
     function processAndRenderLinks(result, fromSub, main) {
         var links = result.data;
         ultimoLink = links.after;
+        loadingLinks = false;
         var numThumbs = 0;
         for(var i = 0; i < links.children.length; i++) {
             var link = links.children[i];
