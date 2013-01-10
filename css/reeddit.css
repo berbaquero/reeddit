@@ -105,14 +105,14 @@ a { color: #999; }
 
 .commentBody p { margin: 10px 0; }
 
-#linkSummary { background-color: #6D6D6D; padding: 10px 0 16px; }
+#linkSummary { background-color: #777; padding: 10px 0 16px; }
 
 #linkSummary:before {
     content: '';
     position: absolute;
     height: 300px;
     width: 100%;
-    background-color: #6D6D6D;
+    background-color: #777;
     -webkit-transform: translate3d(0, -300px, 0);
     -moz-transform: translate3d(0, -300px, 0);
     transform: translate3d(0, -300px, 0);
