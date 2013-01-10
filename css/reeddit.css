@@ -706,10 +706,12 @@ header > div {
 
 .option {
     color: whiteSmoke;
-    padding: 10px 15px;
+    padding: 10px;
     letter-spacing: 1px;
     font-size: 14px;
 }
+
+.option:last-child { margin-bottom: 15px; }
 
 .menu-desc {
     color: rgba(255, 255, 255, 0.82);
@@ -728,8 +730,6 @@ header > div {
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
     cursor: default;
 }
-
-.option:last-child { margin-bottom: 15px; }
 
 .aboutReeddit { top: 80px; }
 
