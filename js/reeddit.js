@@ -158,6 +158,8 @@ $(document).ready(function() {
                 thumb.parent().remove();
             }
         });
+        // Remove 'More links' button if there are less than 30 links
+        if(links.children.length < 30) { $('#moreLinks').parent().remove(); }
     }
 
     function loadComments(data, baseElement, idParent) {
