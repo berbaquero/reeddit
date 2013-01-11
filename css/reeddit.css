@@ -536,7 +536,8 @@ header > div {
     font-size: 15px;
     font-weight: bold;
     color: #777;
-    margin-top: 15px;
+    padding: 13px 0;
+    margin: 0;
 }
 
 #wideRefresh { padding: 5px 10px; font-size: 15px; }

@@ -149,19 +149,29 @@ $(document).ready(function() {
         }
 
         main.append(html); // Add new links to the list
-        // Remove thumbnail space for those links with invalid ones.
-        var thumbs = $('.linkThumb div');
-        $.each(thumbs, function(i, t) {
-            var thumb = $(t);
-            var bg = thumb.attr('style');
-            if(bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
-                thumb.parent().remove();
+        if(links.children.length === 0) {
+            var message = document.querySelector('#mainWrap .loading');
+            if(message) {
+                message.innerText('No Links available.');
+            } else {
+                main.prepend('<p class="loading">No Links available.</p>');
             }
-        });
+        } else {
+            // Remove thumbnail space for those links with invalid ones.
+            var thumbs = $('.linkThumb div');
+            $.each(thumbs, function(i, t) {
+                var thumb = $(t);
+                var bg = thumb.attr('style');
+                if(bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
+                    thumb.parent().remove();
+                }
+            });
+        }
         // Remove 'More links' button if there are less than 30 links
         if(links.children.length < 30) {
             $('#moreLinks').parent().remove();
         }
+
         if(!isDesktop) {
             scrollFixLinks();
         }
@@ -210,10 +220,13 @@ $(document).ready(function() {
         }
         var containerHeight = document.querySelector('#container').offsetHeight;
         var headerHeight = document.querySelector('header').offsetHeight;
-        if(totalHeight > (containerHeight - headerHeight)) {
+        var message = document.querySelector('#mainWrap .loading');
+        var messageHeight = message ? message.offsetHeight : 0;
+        var minHeight = containerHeight - headerHeight - messageHeight;
+        if(totalHeight > minHeight) {
             $('#mainOverflow').css('min-height', '');
         } else {
-            $('#mainOverflow').css('min-height', (containerHeight - headerHeight) - totalHeight + 1);
+            $('#mainOverflow').css('min-height', minHeight - totalHeight + 1);
         }
     }
 
