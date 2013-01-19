@@ -354,8 +354,8 @@ $(document).ready(function() {
         if(!matching) return '';
         if(matching[1]) { // normal image link
             return url;
-        } else if(matching[2]) { // imgur link
-            if(matching[0].slice(0,5)==="imgur") {
+        } else if(matching[2]) { // imgur or quickmeme link
+            if(matching[0].slice(0, 5) === "imgur") {
                 return 'http://imgur.com/' + matching[2] + '.jpg';
             } else {
                 return 'http://i.qkme.me/' + matching[2] + '.jpg';
