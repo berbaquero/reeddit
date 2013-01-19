@@ -12,7 +12,6 @@
     "128": "/img/icons/icon128.png",
     "256": "/img/icons/icon256.png"
   },
-  "orientation": ["landscape"],
   "version": "0.1.2",
   "developer": {
     "name": "Bernardo Baquero Stand",
