@@ -141,7 +141,7 @@
 				<p id='appDescription'>A minimalist, elastic and read-only <a href="http://reddit.com/" target="_blank">Reddit</a> web-app client, that lets you create custom &#8216;Channels&#8217; with up to 3 subreddits each.</p>
 				
 				<a class='button' href='http://berbaquero.github.com/reeddit/' target="_blank">Launch Reeddit</a>
-				
+				<div id="FireFoxDiv"></div>
 				<ul>
 					<li><h4 id="minimalist">Minimalist</h4>
 					
@@ -215,6 +215,21 @@
 				window.scrollTo(0, 1);
 			}, 100);
 		</script>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+		</script>
+		<script>
+		if (window.navigator.mozApps) {
+			(function(window){
+				var string = "<p>or</p><button class='button' id='FireFoxInstall' >Install on Firefox</button>"
+				var ffDiv = document.getElementById("FireFoxDiv");
+				ffDiv.innerHTML = string;
+				var foxButton = document.getElementById("FireFoxInstall");
+				foxButton.onclick = function(){
+					window.navigator.mozApps.install("http://berbaquero.github.com/reeddit/manifest.webapp");
+					false;
+				}
+			})(window);
+		}
+		</script>
 	</body>
 </html>
