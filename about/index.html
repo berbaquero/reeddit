@@ -141,7 +141,8 @@
 				<p id='appDescription'>A minimalist, elastic and read-only <a href="http://reddit.com/" target="_blank">Reddit</a> web-app client, that lets you create custom &#8216;Channels&#8217; with up to 3 subreddits each.</p>
 				
 				<a class='button' href='http://berbaquero.github.com/reeddit/' target="_blank">Launch Reeddit</a>
-				
+				<p>or</p>
+				<a class='button' href='#' id='FireFoxInstall' target="_blank">Install on Firefox</a>
 				<ul>
 					<li><h4 id="minimalist">Minimalist</h4>
 					
@@ -215,6 +216,10 @@
 				window.scrollTo(0, 1);
 			}, 100);
 		</script>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+		$("#FireFoxInstall").on("click",function(){
+		window.navigator.mozApps.install(("https://github.com/berbaquero/reeddit/manifest.webapp");
+		});
+		</script>
 	</body>
 </html>
