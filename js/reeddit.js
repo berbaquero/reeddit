@@ -350,12 +350,16 @@ $(document).ready(function() {
     }
 
     function checkImageLink(url) {
-        var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|imgur\.com\/([^?#\/.]*)(?:[?#].*)?$/);
+        var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|www.quickmeme\.com\/meme|qkme\.me)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
         if(!matching) return '';
         if(matching[1]) { // normal image link
             return url;
         } else if(matching[2]) { // imgur link
-            return 'http://imgur.com/' + matching[2] + '.jpg';
+            if(matching[0].slice(0,5)==="imgur") {
+                return 'http://imgur.com/' + matching[2] + '.jpg';
+            } else {
+                return 'http://i.qkme.me/' + matching[2] + '.jpg';
+            }
         } else {
             return null;
         }
