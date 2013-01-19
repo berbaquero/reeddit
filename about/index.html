@@ -120,6 +120,8 @@
 			footer { padding: 30px 30px 40px 60px; }
 			
 			footer p { color: #777; }
+
+			#FireFoxDiv > p { text-align: center; }
 			
 			@media (max-width: 630px) {
 				
@@ -220,7 +222,7 @@
 		<script>
 		if (window.navigator.mozApps) {
 			(function(window){
-				var string = "<p>or</p><button class='button' id='FireFoxInstall' >Install on Firefox</button>"
+				var string = "<p>or</p><a class='button' id='FireFoxInstall' >Install on Firefox</a>"
 				var ffDiv = document.getElementById("FireFoxDiv");
 				ffDiv.innerHTML = string;
 				var foxButton = document.getElementById("FireFoxInstall");
