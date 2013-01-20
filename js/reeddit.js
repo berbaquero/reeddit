@@ -807,7 +807,7 @@ $(document).ready(function() {
         }
     });
 
-    tappable("#refresh", {
+    tappable(".refresh", {
         onTap: function(e) {
             if(currentView === view.comments) {
                 if(!hiloActual) return;

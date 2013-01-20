@@ -776,6 +776,22 @@ header > div {
     text-align: center;
 }
 
+.refresh-icon-FS {
+    background-image: url('../img/refresh.png');
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: 14px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-position: center;
+    border-radius: 5px;
+    display: none; /*  only visible on full-view mode (through MQ, below) */
+}
+
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header {
@@ -856,6 +872,8 @@ header > div {
     .imagePreview { width: 70%; }
 
     .commentWrap, #selfText p { font-size: 14px; }
+
+    .refresh-icon-FS { display: block; }
 }
 
 /* Wide-ass stuff */
@@ -910,4 +928,6 @@ header > div {
     .subreddit > div:first-child { display: table-cell; }
 
     .btnAddSub { display: table-cell; vertical-align: middle; }
+
+    .refresh-icon-FS { right: 20px; }
 }

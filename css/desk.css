@@ -2,10 +2,12 @@
 
 .btnEditSubr:hover { color: #4286F5; }
 
+.refresh-icon-FS:hover { background-color: rgba(0, 0, 0, 0.7); }
+
 .sub:hover, .channel:hover > p, .option:hover, #sorting p:hover { text-shadow: 0 0 10px #CCC; }
 
 .link, .sub, .channel, .listButton > span, #topButtons > div, .commentsButton, #addNewSubr, #removeSubr,
-.itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel, .option, #sorting p { cursor: pointer; }
+.itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel, .option, #sorting p, .refresh-icon-FS { cursor: pointer; }
 
 #linkSummary a:hover #summaryTitle { text-shadow: 0 1px 7px whiteSmoke; }
 
