@@ -23,29 +23,52 @@
     <body>
 
         <header>
-            <div id='mainTitle'><p id='subTitle'></p></div>
+            <div id='mainTitle'>
+                <p id='subTitle'></p>
+            </div>
             <section id="navBack" class="corner invisible">
                 <div class="button" id="backArrow"><div></div></div>
             </section>
-
-            <div id="titleHead"><div id="headerIcon"></div><p id="title"></p></div>
-
-            <section class="corner" id="refresh">
+            <div id="titleHead">
+                <div id="headerIcon"></div>
+                <p id="title"></p>
+            </div>
             <section class="corner refresh">
                 <div class="button" id="refreshIcon"><div></div></div>
             </section>
-
         </header>
 
         <div id="container">
-            <div class="view" id="mainView"><div class="wrapper" id="mainWrap"></div></div>
-            <div class="view fuera" id="detailView"><div class="wrapper" id="detailWrap"></div></div>
+            <div class="view" id="mainView">
                 <div class='refresh refresh-icon-FS'></div>
+                <div class="wrapper" id="mainWrap"></div>
+            </div>
+            <div class="view fuera" id="detailView">
+                <div class="wrapper" id="detailWrap"></div>
+            </div>
         </div>
 
         <div id="menuContainer">
-            <div class='view'><div id='editSubs'><p class='btnEditSubr' id='addNewSubr'>+</p><p class='btnEditSubr' id='removeSubr'>-</p></div>
-                <div class='wrapper' id="mainMenu"><div class='menu-desc'>Subreddits</div><ul id='subs'></ul><div class='menu-desc'>Channels</div><ul id='channels'></ul><div class='menu-desc'>Sorting</div><div id='sorting'><p class='sorting-choice'>hot</p><p>new</p><p>controversial</p><p>top</p></div><div class='menu-desc'>Options</div><div class='option' id='about'>About</div></div>
+            <div class='view'>
+                <div id='editSubs'>
+                    <p class='btnEditSubr' id='addNewSubr'>+</p>
+                    <p class='btnEditSubr' id='removeSubr'>-</p>
+                </div>
+                <div class='wrapper' id="mainMenu">
+                    <div class='menu-desc'>Subreddits</div>
+                    <ul id='subs'></ul>
+                    <div class='menu-desc'>Channels</div>
+                    <ul id='channels'></ul>
+                    <div class='menu-desc'>Sorting</div>
+                    <div id='sorting'>
+                        <p class='sorting-choice'>hot</p>
+                        <p>new</p>
+                        <p>controversial</p>
+                        <p>top</p>
+                    </div>
+                    <div class='menu-desc'>Options</div>
+                    <div class='option' id='about'>About</div>
+                </div>
             </div>
         </div>
 
