@@ -72,7 +72,7 @@ $(document).ready(function() {
 
     function loadLinks(baseUrl, fromSub, links, paging) {
         var main = $("#mainWrap");
-        editingSubs = false;
+        setEditingSubs(false);
         loadingComments = false;
         loadingLinks = true;
         if(fromSub) { // Si viene de seleccionar un subreddit
@@ -494,7 +494,7 @@ $(document).ready(function() {
         }, isLargeScreen ? 1 : 351);
         limpiarSubrSeleccionado();
         setSubTitle("+ Subreddits");
-        editingSubs = true;
+        setEditingSubs(true);
     }
 
     function loadSubredditListToRemove() {
@@ -519,7 +519,16 @@ $(document).ready(function() {
             limpiarSubrSeleccionado();
         }, isLargeScreen ? 1 : 351);
         setSubTitle('- Subreddits');
-        editingSubs = true;
+        setEditingSubs(true);
+    }
+
+    function setEditingSubs(editing) { // editing: boolean
+        editingSubs = editing;
+        if(isWideScreen) {
+            // If it's showing the add or remove subreddits/channels panel, hide the refresh button
+            var refreshButton = document.querySelector('.refresh-icon-FS');
+            refreshButton.style.display = editing ? 'none' : '';
+        }
     }
 
     function limpiarSubrSeleccionado() {

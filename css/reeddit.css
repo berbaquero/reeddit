@@ -832,7 +832,7 @@ header > div {
     .btnAddSub > div { background-image: url('../img/add@2.png'); }
 }
 
-/* Tablet Portrait */
+/* Tablet Portrait / 'LargeScreen' */
 
 @media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {
     #container { right: 0; width: 72%; }
@@ -850,7 +850,7 @@ header > div {
     .imagePreview { width: 60%; }
 }
 
-/* Tablet Landscape / Widescreen */
+/* Tablet Landscape / 'WideScreen' */
 
 @media only screen and (min-width: 1000px) and (min-height: 500px) {
     #container { right: 0; width: 84%; }
