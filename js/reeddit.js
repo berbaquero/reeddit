@@ -711,9 +711,7 @@ $(document).ready(function() {
 
     function refreshCurrentStream() {
         doByCurrentSelection(function() { // if it's subreddit
-            if(editingSubs) {
-                return;
-            } else if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+            if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
                 loadLinks(urlInit + "r/" + getAllSubsString() + "/");
             } else {
                 loadLinks(urlInit + "r/" + current.name + "/");
@@ -731,6 +729,8 @@ $(document).ready(function() {
 
     function changeSorting(sorting) {
         currentSortingChoice = sorting;
+        if(editingSubs) return; // No subreddit or channel selected - just change the sorting type
+        // Only refresh with the new sorting, when a subreddit or channel is selected
         var delay = 1;
         if(showingMenu) {
             moveMenu(move.left);
@@ -826,7 +826,7 @@ $(document).ready(function() {
                 if(!hiloActual) return;
                 procesarComentarios(hiloActual, true);
             }
-            if(currentView === view.main) {
+            if(currentView === view.main && !editingSubs) {
                 refreshCurrentStream();
             }
         }
@@ -1053,6 +1053,7 @@ $(document).ready(function() {
 
     tappable('#sorting p', {
         onTap: function(e, target) {
+            if(editingSubs && !isDesktop) return; // Block while editing subs/channels - it weirdly breaks the overflowing divs on mobile :/
             var choice = $(target);
             var sortingChoice = choice.text();
             if(sortingChoice === currentSortingChoice) return;
