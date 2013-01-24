@@ -212,12 +212,14 @@ $(document).ready(function() {
     }
 
     function scrollFixLinks() {
-        // Make links section always scrollable
-        var wraps = document.querySelectorAll('.linkWrap');
+        // Make links section always scrollable / Necessary when using the other Sorting options.
         var totalHeight = 0;
+        // Calculate the total of link wrappers heigth
+        var wraps = document.querySelectorAll('.linkWrap');
         for(var w = 0; w < wraps.length; w++) {
             totalHeight += wraps[w].offsetHeight;
         }
+        // Get each element static section heigth
         var containerHeight = document.querySelector('#container').offsetHeight;
         var headerHeight = document.querySelector('header').offsetHeight;
         var message = document.querySelector('#mainWrap .loading');
@@ -712,6 +714,8 @@ $(document).ready(function() {
         });
     }
 
+    // Sorting Functions
+
     function getSorting() {
         return(currentSortingChoice !== 'hot' ? (currentSortingChoice + '/') : '');
     }
@@ -802,7 +806,7 @@ $(document).ready(function() {
     });
 
     tappable("#navBack", {
-        onTap: function(e) {
+        onTap: function() {
             history.back(); // Should go to "/"
         }
     });
@@ -1087,7 +1091,7 @@ $(document).ready(function() {
         }
     });
 
-    // Animaciones
+    // Animations
 
     function slideFromLeft() {
         var main = $("#mainView");
