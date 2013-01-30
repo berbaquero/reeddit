@@ -876,7 +876,7 @@ $(document).ready(function() {
 
     tappable("#subTitle", {
         onTap: function(e) {
-            if(isLargeScreen) {
+            if((!isDesktop && loadingLinks) || isLargeScreen) {
                 return;
             }
             moveMenu(showingMenu ? move.left : move.right);
@@ -1076,7 +1076,7 @@ $(document).ready(function() {
     });
 
     $("#mainView").swipeRight(function() {
-        if(isWideScreen || isLargeScreen) {
+        if((!isDesktop && loadingLinks) || isLargeScreen) {
             return;
         }
         if(currentView === view.main) {
@@ -1085,7 +1085,7 @@ $(document).ready(function() {
     });
 
     $("#mainView").swipeLeft(function() {
-        if(isWideScreen || isLargeScreen) {
+        if((!isDesktop && loadingLinks) || isLargeScreen) {
             return;
         }
         if(showingMenu) {
