@@ -30,6 +30,6 @@
 
 .button:active { background-image: none; background-color: #777; }
 
-#subTitle:hover { background-color: #999; border-radius: 5px; }
+#subTitle:hover { background-color: rgba(0, 0, 0, 0.2); }
 
 .channel > div p { font-size: 11px; letter-spacing: 1px; }
