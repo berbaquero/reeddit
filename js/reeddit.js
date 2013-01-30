@@ -71,10 +71,11 @@ $(document).ready(function() {
     }
 
     function loadLinks(baseUrl, fromSub, links, paging) {
-        var main = $("#mainWrap");
-        setEditingSubs(false);
-        loadingComments = false;
+        if(loadingLinks) return;
         loadingLinks = true;
+        loadingComments = false;
+        setEditingSubs(false);
+        var main = $("#mainWrap");
         if(fromSub) { // Si viene de seleccionar un subreddit
             document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
             if(!links) {
@@ -101,8 +102,10 @@ $(document).ready(function() {
                 url: baseUrl + getSorting() + urlLimitEnd + paging,
                 success: function(result) {
                     processAndRenderLinks(result, fromSub, main);
+                    loadingLinks = false;
                 },
                 error: function() {
+                    loadingLinks = false;
                     $('.loading').text('Error loading links. Refresh to try again.');
                 }
             });
@@ -112,7 +115,6 @@ $(document).ready(function() {
     function processAndRenderLinks(result, fromSub, main) {
         var links = result.data;
         ultimoLink = links.after;
-        loadingLinks = false;
         var numThumbs = 0;
         for(var i = 0; i < links.children.length; i++) {
             var link = links.children[i];
@@ -254,7 +256,7 @@ $(document).ready(function() {
         }
         if(!posts[id]) return; // Quick fix for missing id
         setTimeout(function() {
-            if(loadingComments && hiloActual && hiloActual === id) return;
+            if(loadingComments || (hiloActual && hiloActual === id)) return;
             loadingComments = true;
             hiloActual = id;
 
