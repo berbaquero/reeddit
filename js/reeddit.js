@@ -33,7 +33,7 @@ $(document).ready(function() {
         ultimoLink, ultimoSub, esModal = false,
         loadingComments = false,
         loadingLinks = false,
-        hiloActual, savedSubs, isWideScreen = checkWideScreen(),
+        currentThread, savedSubs, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
         // Pseudo-Enums
@@ -190,7 +190,7 @@ $(document).ready(function() {
 
             var html = converter.makeHtml(c.data.body);
 
-            var isPoster = posts[hiloActual].author === c.data.author;
+            var isPoster = posts[currentThread].author === c.data.author;
 
             var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass(isPoster ? "commentPoster" : "commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
 
@@ -256,9 +256,12 @@ $(document).ready(function() {
         }
         if(!posts[id]) return; // Quick fix for missing id
         setTimeout(function() {
-            if(loadingComments || (hiloActual && hiloActual === id)) return;
+
+            // Stop if it hasn't finished loading this comments for the first time before trying to load them aga
+            if(loadingComments && currentThread && currentThread === id) return;
+
             loadingComments = true;
-            hiloActual = id;
+            currentThread = id;
 
             $("#navBack").removeClass("invisible"); // Show
             var detail = $("#detailWrap");
@@ -279,7 +282,7 @@ $(document).ready(function() {
                     dataType: 'jsonp',
                     url: url,
                     success: function(result) {
-                        if(hiloActual !== id) return; // In case of trying to load a different thread before this one loaded.
+                        if(currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
                         updateSummaryInfo(result[0].data.children[0].data, id);
                         $(".loading").remove();
                         var comments = result[1].data.children;
@@ -825,8 +828,8 @@ $(document).ready(function() {
     tappable(".refresh", {
         onTap: function(e) {
             if(currentView === view.comments) {
-                if(!hiloActual) return;
-                procesarComentarios(hiloActual, true);
+                if(!currentThread) return;
+                procesarComentarios(currentThread, true);
             }
             if(currentView === view.main && !editingSubs) {
                 refreshCurrentStream();
@@ -868,8 +871,8 @@ $(document).ready(function() {
 
     tappable("#wideRefresh", {
         onTap: function() {
-            if(!hiloActual) return;
-            procesarComentarios(hiloActual, true);
+            if(!currentThread) return;
+            procesarComentarios(currentThread, true);
         },
         activeClass: 'repliesButton-active'
     });
