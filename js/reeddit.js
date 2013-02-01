@@ -102,7 +102,6 @@ $(document).ready(function() {
                 url: baseUrl + getSorting() + urlLimitEnd + paging,
                 success: function(result) {
                     processAndRenderLinks(result, fromSub, main);
-                    loadingLinks = false;
                 },
                 error: function() {
                     loadingLinks = false;
@@ -113,6 +112,7 @@ $(document).ready(function() {
     }
 
     function processAndRenderLinks(result, fromSub, main) {
+        loadingLinks = false;
         var links = result.data;
         ultimoLink = links.after;
         var numThumbs = 0;
