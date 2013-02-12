@@ -221,7 +221,7 @@ $(document).ready(function() {
         for(var w = 0; w < wraps.length; w++) {
             totalHeight += wraps[w].offsetHeight;
         }
-        // Get each element static section heigth
+        // Get each element's static section heigth
         var containerHeight = document.querySelector('#container').offsetHeight;
         var headerHeight = document.querySelector('header').offsetHeight;
         var message = document.querySelector('#mainWrap .loading');
@@ -1237,7 +1237,7 @@ $(document).ready(function() {
 
     // App init
     var title = $("#title"),
-        headerIcon = $("#headerIcon"),
+        headerIcon = $("#header-icon"),
         touch = "touchmove";
 
     $("#title").remove();

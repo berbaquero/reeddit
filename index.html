@@ -16,21 +16,21 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/reeddit.css">
 
-        <script>if(location.hostname==='berbaquero.github.com'){var _gaq=[['_setAccount','UA-36097133-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))}</script>
+        <script>if(location.hostname==="berbaquero.github.com"){var _gaq=[["_setAccount","UA-36097133-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"))}</script>
 
     </head>
 
     <body>
 
         <header>
-            <div id='mainTitle'>
-                <p id='subTitle'></p>
+            <div id="mainTitle">
+                <p id="subTitle"></p>
             </div>
             <section id="navBack" class="corner invisible">
                 <div class="button" id="backArrow"><div></div></div>
             </section>
             <div id="titleHead">
-                <div id="headerIcon"></div>
+                <div id="header-icon"></div>
                 <p id="title"></p>
             </div>
             <section class="corner refresh">
@@ -40,7 +40,7 @@
 
         <div id="container">
             <div class="view" id="mainView">
-                <div class='refresh refresh-icon-FS'></div>
+                <div class="refresh refresh-icon-FS"></div>
                 <div class="wrapper" id="mainWrap"></div>
             </div>
             <div class="view fuera" id="detailView">
@@ -49,25 +49,25 @@
         </div>
 
         <div id="menuContainer">
-            <div class='view'>
-                <div id='editSubs'>
-                    <p class='btnEditSubr' id='addNewSubr'>+</p>
-                    <p class='btnEditSubr' id='removeSubr'>-</p>
+            <div class="view">
+                <div id="editSubs">
+                    <p class="btnEditSubr" id="addNewSubr">+</p>
+                    <p class="btnEditSubr" id="removeSubr">-</p>
                 </div>
-                <div class='wrapper' id="mainMenu">
-                    <div class='menu-desc'>Subreddits</div>
-                    <ul id='subs'></ul>
-                    <div class='menu-desc'>Channels</div>
-                    <ul id='channels'></ul>
-                    <div class='menu-desc'>Sorting</div>
-                    <div id='sorting'>
-                        <p class='sorting-choice'>hot</p>
+                <div class="wrapper" id="mainMenu">
+                    <div class="menu-desc">Subreddits</div>
+                    <ul id="subs"></ul>
+                    <div class="menu-desc">Channels</div>
+                    <ul id="channels"></ul>
+                    <div class="menu-desc">Sorting</div>
+                    <div id="sorting">
+                        <p class="sorting-choice">hot</p>
                         <p>new</p>
                         <p>controversial</p>
                         <p>top</p>
                     </div>
-                    <div class='menu-desc'>Options</div>
-                    <div class='option' id='about'>About</div>
+                    <div class="menu-desc">Options</div>
+                    <div class="option" id="about">About</div>
                 </div>
             </div>
         </div>
@@ -75,9 +75,9 @@
         <script>
             var isDesktop = !/iPhone|iPod|iPad|Android/.test(navigator.userAgent);
             if (isDesktop) {
-                var deskLink = document.createElement('link');
-                deskLink.rel = 'stylesheet';
-                deskLink.href = 'css/desk.css';
+                var deskLink = document.createElement("link");
+                deskLink.rel = "stylesheet";
+                deskLink.href = "css/desk.css";
                 document.head.appendChild(deskLink);
             }
         </script>

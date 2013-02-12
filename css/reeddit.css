@@ -400,7 +400,7 @@ header > div {
     font-weight: bold;
 }
 
-#headerIcon {
+#header-icon {
     background-image: url('../img/alienHead.png');
     background-size: 35px;
     background-repeat: no-repeat;
