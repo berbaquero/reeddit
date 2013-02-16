@@ -1,23 +1,23 @@
-$(document).ready(function() {
+(function(win) {
 
-    // Templates
-    var linksTemplate = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkInfo'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div><div class='linkThumb'><div style='background-image: url({{data.thumbnail}})'></div></div></a><div class='toComments' data-id='{{data.id}}'><div></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
-        linksTemplateLeft = "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
-        linkSummaryTemplate = "<section><div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a><p id='summaryAuthor'>by {{author}}</p></div><div id='summaryExtra'><p id='summarySub'>{{subreddit}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{num_comments}} comments</p></div></section>",
-        allSubredditsTemplate = "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
-        botonAgregarSubManualTemplate = "<div id='topButtons'><div id='btnSubMan'>Insert Manually</div><div id='btnAddChannel'>Add Channel</div></div>",
-        formAgregarSubManualTemplate = '<div class="newForm" id="formNuevoSub"><div class="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
-        formAddNewChannelTemplate = '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btnAddNewChannel">Add Channel</div></div>',
-        botonCargarMasSubsTemplate = "<div class='listButton'><span id='moreSubs'>More</span></div>",
-        savedSubredditsListToRemoveTemplate = "<ul class='removeList'>{{#.}}<div class='itemToRemove subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
-        savedChannelsListToRemoveTemplate = "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove'><p>{{name}}</p><div></div></div>{{/.}}</ul>",
-        channelTemplate = '<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
-        channelsTemplate = '{{#.}}' + channelTemplate + '{{/.}}',
-        noLinkTemplate = "<div id='noLink'><p>No Post Selected.</div>",
-        aboutTemplate = "<div class='newForm aboutReeddit'><div class='closeForm'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='https://twitter.com/berbaquero' target='_blank'>@BerBaquero</a></p></div>";
+    var Templates = {
+        links: "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
+        linkSummary: "<section><div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a><p id='summaryAuthor'>by {{author}}</p></div><div id='summaryExtra'><p id='summarySub'>{{subreddit}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{num_comments}} comments</p></div></section>",
+        allSubreddits: "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
+        botonAgregarSubManual: "<div id='topButtons'><div id='btnSubMan'>Insert Manually</div><div id='btnAddChannel'>Add Channel</div></div>",
+        formAgregarSubManual: '<div class="newForm" id="formNuevoSub"><div class="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
+        formAddNewChannel: '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btnAddNewChannel">Add Channel</div></div>',
+        botonCargarMasSubs: "<div class='listButton'><span id='moreSubs'>More</span></div>",
+        savedSubredditsListToRemove: "<ul class='removeList'>{{#.}}<div class='itemToRemove subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
+        savedChannelsListToRemove: "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove'><p>{{name}}</p><div></div></div>{{/.}}</ul>",
+        channel: '<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
+        channels: '{{#.}}<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}',
+        noLink: "<div id='noLink'><p>No Post Selected.</div>",
+        about: "<div class='newForm aboutReeddit'><div class='closeForm'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='https://twitter.com/berbaquero' target='_blank'>@BerBaquero</a></p></div>"
+    };
 
     // Pseudo-Globals
-    var ancho = $(window).width(),
+    var ancho = $(win).width(),
         currentView = 1,
         editingSubs = false,
         urlInit = "http://www.reddit.com/",
@@ -29,7 +29,7 @@ $(document).ready(function() {
         current = {},
         channels = [],
         showingMenu = false,
-        subreddits, store = window.fluid ? allCookies : window.localStorage,
+        subreddits, store = win.fluid ? allCookies : win.localStorage,
         ultimoLink, ultimoSub, esModal = false,
         loadingComments = false,
         loadingLinks = false,
@@ -63,11 +63,11 @@ $(document).ready(function() {
     }];
 
     function checkWideScreen() {
-        return window.matchMedia("(min-width: 1000px)").matches;
+        return win.matchMedia("(min-width: 1000px)").matches;
     }
 
     function checkLargeScreen() {
-        return window.matchMedia("(min-width: 490px)").matches;
+        return win.matchMedia("(min-width: 490px)").matches;
     }
 
     function loadLinks(baseUrl, fromSub, links, paging) {
@@ -142,8 +142,7 @@ $(document).ready(function() {
             }
         }
 
-        // If more than half of the links contains thumbnails, show them on the left.
-        var html = Mustache.to_html(numThumbs > 15 ? linksTemplateLeft : linksTemplate, links);
+        var html = Mustache.to_html(Templates.links, links);
         if(fromSub) {
             main.empty();
         } else {
@@ -323,7 +322,7 @@ $(document).ready(function() {
 
     function setPostSummaryInfo(data, postID) {
         // Main content
-        var summaryHTML = Mustache.to_html(linkSummaryTemplate, data);
+        var summaryHTML = Mustache.to_html(Templates.linkSummary, data);
         var imageLink = checkImageLink(posts[postID].url);
         if(imageLink) { // If it's an image link
             summaryHTML += "<img class='imagePreview' src='" + imageLink + "' />";
@@ -480,16 +479,16 @@ $(document).ready(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Go to the container top
             var main = $("#mainWrap");
             if(subreddits) {
-                main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
+                main.empty().append(Templates.botonAgregarSubManual).append(subreddits).append(Templates.botonCargarMasSubs);
             } else {
-                main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(botonAgregarSubManualTemplate);
+                main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(Templates.botonAgregarSubManual);
                 $.ajax({
                     url: urlInit + "reddits/.json?limit=50&jsonp=?",
                     dataType: 'jsonp',
                     success: function(list) {
                         ultimoSub = list.data.after;
-                        subreddits = Mustache.to_html(allSubredditsTemplate, list.data);
-                        main.empty().append(botonAgregarSubManualTemplate).append(subreddits).append(botonCargarMasSubsTemplate);
+                        subreddits = Mustache.to_html(Templates.allSubreddits, list.data);
+                        main.empty().append(Templates.botonAgregarSubManual).append(subreddits).append(Templates.botonCargarMasSubs);
                     },
                     error: function() {
                         $('.loading').text('Error loading subreddits.');
@@ -512,10 +511,10 @@ $(document).ready(function() {
         }
         setTimeout(function() {
             document.getElementById("mainWrap").scrollTop = 0; // Up to container top
-            var htmlSubs = Mustache.to_html(savedSubredditsListToRemoveTemplate, savedSubs);
+            var htmlSubs = Mustache.to_html(Templates.savedSubredditsListToRemove, savedSubs);
             var htmlChannels = '';
             if(channels && channels.length > 0) {
-                htmlChannels = Mustache.to_html(savedChannelsListToRemoveTemplate, channels);
+                htmlChannels = Mustache.to_html(Templates.savedChannelsListToRemove, channels);
             }
             var html = '<div id="removeWrap">' + htmlSubs + htmlChannels + "</div>";
             setTimeout(function() { // Intentional delay / fix for iOS
@@ -587,7 +586,7 @@ $(document).ready(function() {
         setTimeout(function() {
             if(esModal) return;
             var modal = $('<div/>').attr('id', 'modal');
-            $('body').append(modal).append(formAgregarSubManualTemplate);
+            $('body').append(modal).append(Templates.formAgregarSubManual);
             esModal = true;
             setTimeout(function() {
                 modal.css('opacity', 1);
@@ -605,7 +604,7 @@ $(document).ready(function() {
         setTimeout(function() {
             if(esModal) return;
             var modal = $('<div/>').attr('id', 'modal');
-            $('body').append(modal).append(formAddNewChannelTemplate);
+            $('body').append(modal).append(Templates.formAddNewChannel);
             esModal = true;
             setTimeout(function() {
                 modal.css('opacity', 1);
@@ -667,7 +666,7 @@ $(document).ready(function() {
 
     function insertChannel(channel) {
         channels.push(channel);
-        var html = Mustache.to_html(channelTemplate, channel);
+        var html = Mustache.to_html(Templates.channel, channel);
         $('#channels').append(html);
         store.setItem('channels', JSON.stringify(channels));
     }
@@ -679,7 +678,7 @@ $(document).ready(function() {
         } else { // Load default channel(s?)
             channels = defaultChannel;
         }
-        var html = Mustache.to_html(channelsTemplate, channels);
+        var html = Mustache.to_html(Templates.channels, channels);
         $('#channels').html(html);
     }
 
@@ -941,10 +940,10 @@ $(document).ready(function() {
                 url: urlInit + 'reddits/' + urlEnd + '&after=' + ultimoSub,
                 dataType: 'jsonp',
                 success: function(list) {
-                    var nuevosSubs = Mustache.to_html(allSubredditsTemplate, list.data);
+                    var nuevosSubs = Mustache.to_html(Templates.allSubreddits, list.data);
                     ultimoSub = list.data.after;
                     $('.loading', main).remove();
-                    main.append(nuevosSubs).append(botonCargarMasSubsTemplate);
+                    main.append(nuevosSubs).append(Templates.botonCargarMasSubs);
                     subreddits = subreddits + nuevosSubs;
                 },
                 error: function() {
@@ -1045,7 +1044,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 if(esModal) return;
                 var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(aboutTemplate);
+                $('body').append(modal).append(Templates.about);
                 esModal = true;
                 setTimeout(function() {
                     modal.css('opacity', 1);
@@ -1161,23 +1160,23 @@ $(document).ready(function() {
     var d = document,
         body = d.body;
 
-    var supportOrientation = typeof window.orientation !== 'undefined',
+    var supportOrientation = typeof win.orientation !== 'undefined',
         getScrollTop = function() {
-            return window.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
+            return win.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
         },
         scrollTop = function() {
             if(!supportOrientation) return;
             body.style.height = screen.height + 'px';
             setTimeout(function() {
-                window.scrollTo(0, 1);
+                win.scrollTo(0, 1);
                 var top = getScrollTop();
-                window.scrollTo(0, top === 1 ? 0 : 1);
-                body.style.height = window.innerHeight + 'px';
+                win.scrollTo(0, top === 1 ? 0 : 1);
+                body.style.height = win.innerHeight + 'px';
             }, 1);
         };
 
     // Show option to reload app after update
-    if(window.applicationCache) window.applicationCache.addEventListener("updateready", function(e) {
+    if(win.applicationCache) win.applicationCache.addEventListener("updateready", function(e) {
         var delay = 1;
         if(showingMenu) {
             moveMenu(move.left);
@@ -1187,7 +1186,7 @@ $(document).ready(function() {
             $('#mainWrap').prepend("<div id='topButtons'><div id='btnUpdate'>Reeddit updated. Click to reload</div></div>");
             tappable('#btnUpdate', {
                 onTap: function() {
-                    window.location.reload();
+                    win.location.reload();
                 },
                 activeClass: 'listButton-active'
             });
@@ -1195,8 +1194,8 @@ $(document).ready(function() {
     }, false);
 
     // Do stuff after finishing resizing the windows
-    window.addEventListener("resizeend", function() {
-        ancho = $(window).width();
+    win.addEventListener("resizeend", function() {
+        ancho = $(win).width();
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         scrollTop();
@@ -1210,7 +1209,7 @@ $(document).ready(function() {
 
     if(location.hash) location.hash = ''; // Clear hash at first app loading
     // Pseudo-hash-router
-    window.addEventListener('hashchange', function() {
+    win.addEventListener('hashchange', function() {
         if(location.hash === '') {
             var delay = 1;
             if(currentView === view.comments) {
@@ -1220,7 +1219,7 @@ $(document).ready(function() {
             }
             if(isWideScreen) {
                 $('.link.link-active').removeClass('link-active');
-                $('#detailWrap').html(noLinkTemplate);
+                $('#detailWrap').html(Templates.noLink);
             } else {
                 setTimeout(function() {
                     $('#detailWrap').empty();
@@ -1242,7 +1241,7 @@ $(document).ready(function() {
 
     $("#title").remove();
 
-    if(isWideScreen) $('#detailWrap').html(noLinkTemplate);
+    if(isWideScreen) $('#detailWrap').html(Templates.noLink);
 
     current = loadCurrentSelection();
 
@@ -1301,4 +1300,5 @@ $(document).ready(function() {
             scrollFix();
         }
     }
-});
+
+})(window);
