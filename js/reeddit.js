@@ -263,7 +263,7 @@ $(document).ready(function() {
             loadingComments = true;
             currentThread = id;
 
-            $("#navBack").removeClass("invisible"); // Show
+            $("#nav-back").removeClass("invisible"); // Show
             var detail = $("#detailWrap");
             detail.empty();
 
@@ -425,7 +425,7 @@ $(document).ready(function() {
     }
 
     function backToMainView(newTitle) {
-        $("#navBack").addClass("invisible");
+        $("#nav-back").addClass("invisible");
         $("#mainTitle").removeClass('invisible');
         $("#titleHead").empty().append(headerIcon);
         if(newTitle) {
@@ -819,7 +819,7 @@ $(document).ready(function() {
         activeClass: 'link-active'
     });
 
-    tappable("#navBack", {
+    tappable("#nav-back", {
         onTap: function() {
             history.back(); // Should go to "/"
         }

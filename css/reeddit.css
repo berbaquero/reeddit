@@ -325,13 +325,8 @@ a { color: #999; }
 .listButton { padding: 20px; }
 
 .listButton > span {
-    color: #555;
-    background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
-    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
-    background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     padding: 5px 10px;
     border-radius: 5px;
-    border: 1.5px solid #CCC;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
@@ -350,18 +345,24 @@ a { color: #999; }
 }
 
 #topButtons > div {
-    color: #555;
-    background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
-    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
-    background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     padding: 3px 10px;
     border-radius: 5px;
-    border: 1.5px solid #CCC;
     font-size: 14px;
     font-weight: bold;
     width: 50%;
     text-align: center;
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+}
+
+.commentsButton, #topButtons > div, .listButton > span {
+    color: #555;
+    background-image: -webkit-linear-gradient(whiteSmoke 0%, #CCC 100%);
+    background-image: -moz-linear-gradient(whiteSmoke 0%, #CCC 100%);
+    background-image: -o-linear-gradient(whiteSmoke 0%, #CCC 100%);
+    background-image: linear-gradient(whiteSmoke 0%, #CCC 100%);
+    box-shadow: rgba(255, 255, 255, .4) 0 1px 0 inset,
+                rgba(255, 255, 255, .3) 0 25px 30px -12px inset,
+                rgba(0, 0, 0, .6) 0 1px 2px;
 }
 
 /*---------------------------- Cabecera -----------------------------*/
@@ -411,7 +412,7 @@ header > div {
 
 /*-- Botones --*/
 
-#navBack {    
+#nav-back {    
     -webkit-transition-duration: 350ms;
     -moz-transition-duration: 350ms;
     -ms-transition-duration: 350ms;
@@ -446,7 +447,7 @@ header > div {
     margin: 0 auto;
 }
 
-#backArrow, #refreshIcon {
+#back-arrow, #refreshIcon {
     display: -webkit-box;
     display: -moz-box;
     display: box;
@@ -455,7 +456,7 @@ header > div {
     box-align: center;
 }
 
-#backArrow div {
+#back-arrow div {
     border-bottom: 7px solid transparent;
     border-right: 14px solid white;
     border-top: 7px solid transparent;
@@ -483,13 +484,8 @@ header > div {
 .button-active { background-color: #ddd; }
 
 .commentsButton {
-    color: #555;
-    background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #ccc 100%);
-    background-image: -moz-linear-gradient(top, whiteSmoke 0%, #ccc 100%);
-    background-image: linear-gradient(top, whiteSmoke 0%, #ccc 100%);
     padding: 3px 10px;
     border-radius: 8px;
-    border: 1.5px solid #CCC;
     font-size: 11px;
     font-weight: bold;
     display: block;
@@ -805,9 +801,9 @@ header > div {
 
     .button { border: none; background-image: none; }
 
-    #backArrow:active div { border-right: 12px solid #fff; }
+    #back-arrow:active div { border-right: 12px solid #fff; }
 
-    #backArrow div { border-bottom: 6px solid transparent; border-right: 12px solid #333; border-top: 6px solid transparent; }
+    #back-arrow div { border-bottom: 6px solid transparent; border-right: 12px solid #333; border-top: 6px solid transparent; }
 
     #refreshIcon div { background-image: url('../img/refresh1.png'); }
 
@@ -914,7 +910,7 @@ header > div {
 
     .itemToRemove { width: 100%; }
 
-    .linkWrap, #backArrow, #refreshIcon, .itemToRemove { display: block; }
+    .linkWrap, #back-arrow, #refreshIcon, .itemToRemove { display: block; }
 
     .toComments { padding-top: 30px; }
 
@@ -922,7 +918,7 @@ header > div {
 
     #refreshIcon > div { position: relative; top: 5px; }
 
-    #backArrow > div { position: relative; left: -2px;  top: 8px; }
+    #back-arrow > div { position: relative; left: -2px;  top: 8px; }
 
     .subreddit { display: table; }
 
