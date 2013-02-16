@@ -26,9 +26,25 @@
 /* Handle Menu */
 #mainMenu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: #444; }
 
-.button:hover { border: 1px solid #888; background-image: -webkit-linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); background-image: linear-gradient(top, #d1d1d1 50%, #a1a1a1 100%); }
+.button:hover {
+	box-shadow: rgba(255, 255, 255, .4) 0 1px 0 inset,
+				rgba(255, 255, 255, .3) 0 25px 30px -12px inset,
+				rgba(0, 0, 0, .6) 0 1px 2px;
+	background-image: -webkit-linear-gradient(#d1d1d1 50%, #a1a1a1 100%);
+	background-image: -moz-linear-gradient(#d1d1d1 50%, #a1a1a1 100%);
+	background-image: -o-linear-gradient(#d1d1d1 50%, #a1a1a1 100%);
+	background-image: linear-gradient(#d1d1d1 50%, #a1a1a1 100%);
 
-.button:active { background-image: none; background-color: #777; }
+}
+
+.button:active {
+	background-image: -webkit-linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
+	background-image: -moz-linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
+	background-image: -o-linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
+	background-image: linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
+	box-shadow: 0 2px 7px black inset,
+				rgba(255, 255, 255, .4) 0 1px 0;
+}
 
 #subTitle:hover { background-color: rgba(0, 0, 0, 0.2); }
 
