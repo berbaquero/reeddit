@@ -189,6 +189,8 @@ a { color: #999; }
     height: 8%;
     display: -webkit-box; display: -moz-box; display: box;
     -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center;
+    border-top: 1px solid rgba(0, 0, 0, .5);
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
 }
 
 .btnEditSubr {
@@ -233,7 +235,7 @@ a { color: #999; }
 
 .sub-active { text-shadow: 0 0 10px #CCC; border-left: 3px solid #4286F5; }
 
-#menuContainer {
+#menu-container {
     overflow-y: auto; overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     position: absolute;
@@ -834,7 +836,7 @@ header > div {
 @media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {
     #container { right: 0; width: 72%; }
 
-    #menuContainer, #editSubs { width: 28%; }
+    #menu-container, #editSubs { width: 28%; }
 
     .imagePreview { width: 80%; }
 }
@@ -842,7 +844,7 @@ header > div {
 @media only screen and (min-width: 760px) and (max-width: 999px) and (min-height: 500px) {
     #container { right: 0; width: 78%; }
 
-    #menuContainer, #editSubs { width: 22%; }
+    #menu-container, #editSubs { width: 22%; }
 
     .imagePreview { width: 60%; }
 }
@@ -852,7 +854,7 @@ header > div {
 @media only screen and (min-width: 1000px) and (min-height: 500px) {
     #container { right: 0; width: 84%; }
 
-    #menuContainer, #editSubs { width: 16%; }
+    #menu-container, #editSubs { width: 16%; }
 
     #mainView { width: 40%; }
 
