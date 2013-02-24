@@ -106,8 +106,8 @@
         Subreddits: {
             list: [],
             add: function(sub) {
-                if(!M.Subreddits.listHasSub(newSub)) {
-                    M.Subreddits.list.push(newSub);
+                if(!M.Subreddits.listHasSub(sub)) {
+                    M.Subreddits.list.push(sub);
                     store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
                 }
             },
@@ -510,7 +510,7 @@
                 });
             },
             loadFromManualInput: function(loadedLinks) {
-                C.Posts.show(links);
+                C.Posts.show(loadedLinks);
             },
             show: function(result, paging) {
                 var links = result.data;
