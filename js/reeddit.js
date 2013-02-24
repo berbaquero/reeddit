@@ -1,20 +1,36 @@
 (function(win) {
 
-    var Templates = {
-        links: "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
+    var T = { // Templates
+        Posts: "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
+        Subreddits: {
+            list: "{{#.}}<li data-name='{{.}}'><p class='sub'>{{.}}</p></li>{{/.}}",
+            toRemoveList: "<ul class='removeList'>{{#.}}<div class='itemToRemove subToRemove' data-name='{{.}}'><p>{{.}}</p><div data-name='{{.}}'></div></div>{{/.}}</ul>",
+            toAddList: "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}"
+        },
+        Channels: {
+            toRemoveList: "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove' data-title='{{name}}'><p>{{name}}</p><div data-title='{{name}}'></div></div>{{/.}}</ul>",
+            single: '<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
+            list: '{{#.}}<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}'
+        },
         linkSummary: "<section><div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a><p id='summaryAuthor'>by {{author}}</p></div><div id='summaryExtra'><p id='summarySub'>{{subreddit}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{num_comments}} comments</p></div></section>",
-        allSubreddits: "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}",
         botonAgregarSubManual: "<div id='topButtons'><div id='btnSubMan'>Insert Manually</div><div id='btnAddChannel'>Add Channel</div></div>",
         formAgregarSubManual: '<div class="newForm" id="formNuevoSub"><div class="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
         formAddNewChannel: '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btnAddNewChannel">Add Channel</div></div>',
         botonCargarMasSubs: "<div class='listButton'><span id='moreSubs'>More</span></div>",
-        savedSubredditsListToRemove: "<ul class='removeList'>{{#.}}<div class='itemToRemove subToRemove'><p>{{.}}</p><div></div></div>{{/.}}</ul>",
-        savedChannelsListToRemove: "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove'><p>{{name}}</p><div></div></div>{{/.}}</ul>",
-        channel: '<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
-        channels: '{{#.}}<li><div class="channel"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}',
         noLink: "<div id='noLink'><p>No Post Selected.</div>",
         about: "<div class='newForm aboutReeddit'><div class='closeForm'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='https://twitter.com/berbaquero' target='_blank'>@BerBaquero</a></p></div>"
     };
+
+    var doc = win.document,
+        body = doc.body;
+
+    function $id(id) {
+        return doc.getElementById(id);
+    }
+
+    function $query(query) {
+        return doc.querySelector(query);
+    }
 
     // Pseudo-Globals
     var ancho = $(win).width(),
@@ -24,16 +40,13 @@
         urlEnd = ".json?jsonp=?",
         urlLimitEnd = ".json?limit=30&jsonp=?",
         loadedLinks = {},
-        posts = {},
         replies = {},
-        current = {},
-        channels = [],
         showingMenu = false,
         subreddits, store = win.fluid ? allCookies : win.localStorage,
-        ultimoLink, ultimoSub, esModal = false,
+        esModal = false,
         loadingComments = false,
         loadingLinks = false,
-        currentThread, savedSubs, isWideScreen = checkWideScreen(),
+        currentThread, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
         // Pseudo-Enums
@@ -56,11 +69,668 @@
 
     var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "geek", "videos", "reactiongifs", "AdviceAnimals", "aww"];
 
-    var defaultChannel = [{
+    var defaultChannel = {
         name: 'Media',
         subs: ["movies", "music", "games"],
         url: 'r/movies+music+games'
-    }];
+    };
+
+    var M = { // Model
+        Posts: {
+            list: {},
+            setList: function(posts) {
+                for(var i = 0; i < posts.children.length; i++) {
+                    var post = posts.children[i];
+                    if(M.Posts.list[post.data.id]) { // Si ya se ha cargado este link localmente
+                        // Se actualizan los datos dinamicos
+                        M.Posts.list[post.data.id].num_comments = post.data.num_comments;
+                        M.Posts.list[post.data.id].created_utc = post.data.created_utc;
+                    } else { // Si no se han cargado los links localmente
+                        M.Posts.list[post.data.id] = {
+                            title: post.data.title,
+                            selftext: post.data.selftext,
+                            created_utc: post.data.created_utc,
+                            domain: post.data.domain,
+                            subreddit: post.data.subreddit,
+                            num_comments: post.data.num_comments,
+                            url: post.data.url,
+                            self: post.data.is_self,
+                            link: post.data.permalink,
+                            author: post.data.author
+                        };
+                    }
+                }
+            },
+            idLast: ''
+        },
+        Subreddits: {
+            list: [],
+            add: function(sub) {
+                if(!M.Subreddits.listHasSub(newSub)) {
+                    M.Subreddits.list.push(newSub);
+                    store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+                }
+            },
+            setList: function(subs) {
+                M.Subreddits.list = subs;
+                store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+            },
+            remove: function(sub) {
+                var idx = M.Subreddits.list.indexOf(sub);
+                M.Subreddits.list.splice(idx, 1);
+                store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+            },
+            listHasSub: function(sub) {
+                if(M.Subreddits.list) {
+                    var i = M.Subreddits.list.indexOf(sub);
+                    return i > -1;
+                }
+                return false;
+            },
+            getAllString: function() {
+                var allSubs = '';
+                for(var i = 0; i < M.Subreddits.list.length; i++) {
+                    var sub = M.Subreddits.list[i];
+                    if(sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
+                    allSubs += sub + '+';
+                }
+                return allSubs.substring(0, allSubs.length - 1);
+            },
+            idLast: ''
+        },
+        Channels: {
+            list: [],
+            getChannelURLfromSubs: function(subs) {
+                var url = 'r/';
+                for(var i = 0; i < subs.length; i++) {
+                    var sub = subs[i];
+                    url += sub + '+';
+                }
+                url = url.substring(0, url.length - 1);
+                return url;
+            },
+            add: function(channel) {
+                M.Channels.list.push(channel);
+                store.setItem('channels', JSON.stringify(M.Channels.list));
+            },
+            remove: function(name) {
+                for(var j = 0; j < M.Channels.list.length; j++) {
+                    if(M.Channels.list[j].name === name) {
+                        M.Channels.list.splice(j, 1);
+                        break;
+                    }
+                }
+                store.setItem('channels', JSON.stringify(M.Channels.list));
+            },
+            getByName: function(name) {
+                var foundChannel;
+                for(var i = 0; i < M.Channels.list.length; i++) {
+                    if(M.Channels.list[i].name === name) {
+                        foundChannel = M.Channels.list[i];
+                        break;
+                    }
+                }
+                return foundChannel;
+            }
+        },
+        currentSelection: {
+            load: function() {
+                var loadedSelection = store.getItem('currentSelection');
+                if(loadedSelection) loadedSelection = JSON.parse(loadedSelection);
+                M.currentSelection.name = loadedSelection ? loadedSelection.name : 'frontPage';
+                M.currentSelection.type = loadedSelection ? loadedSelection.type : selection.sub;
+            },
+            setSubreddit: function(sub) {
+                M.currentSelection.name = sub;
+                M.currentSelection.type = selection.sub;
+                store.setItem('currentSelection', JSON.stringify(M.currentSelection));
+            },
+            setChannel: function(channel) {
+                M.currentSelection.name = channel.name;
+                M.currentSelection.type = selection.channel;
+                store.setItem('currentSelection', JSON.stringify(M.currentSelection));
+            }
+        }
+    };
+
+    var V = { // View
+        mainWrap: $("#mainWrap"),
+        detailWrap: $("#detailWrap"),
+        mainView: $("#mainView"),
+        detailView: $("#detailView"),
+        subtitle: $("#mainTitle"),
+        subtitleText: $("#subTitle"),
+        headerSection: $("#titleHead"),
+        title: $("#title"),
+        headerIcon: $("#header-icon"),
+        container: $("#container"),
+        mainOverflow: $("#mainOverflow"),
+        btnNavBack: $("#nav-back"),
+        Channels: {
+            menuContainer: $("#channels"),
+            add: function(channel) {
+                V.Channels.menuContainer.append(Mustache.to_html(T.Channels.single, channel));
+            },
+            loadList: function() {
+                V.Channels.menuContainer.html(Mustache.to_html(T.Channels.list, M.Channels.list));
+            },
+            remove: function(name) {
+                $('.channel[data-title="' + name + '"]').parent().remove();
+                $('.channelToRemove[data-title="' + name + '"]').remove();
+            },
+            showNewChannelForm: function() {
+                var delay = 1;
+                if(!isLargeScreen) {
+                    if(showingMenu) delay = 351;
+                    V.Actions.moveMenu(move.left);
+                }
+                setTimeout(function() {
+                    if(esModal) return;
+                    var modal = $('<div/>').attr('id', 'modal');
+                    $('body').append(modal).append(T.formAddNewChannel);
+                    esModal = true;
+                    setTimeout(function() {
+                        modal.css('opacity', 1);
+                        $id('txtChannel').focus();
+                    }, 1);
+                }, delay);
+            }
+        },
+        Subreddits: {
+            listContainer: $("#subs"),
+            insert: function(subs, active) {
+                var subsList = V.Subreddits.listContainer;
+                if(subs instanceof Array) {
+                    subsList.append(Mustache.to_html(T.Subreddits.list, subs));
+                } else {
+                    if(!M.Subreddits.listHasSub(subs)) {
+                        subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
+                        M.Subreddits.add(subs);
+                    }
+                }
+            },
+            remove: function(sub) {
+                $(".subToRemove[data-name='" + sub + "']").remove();
+                $("#subs > li[data-name='" + sub + "']").remove();
+            },
+            cleanSelected: function() {
+                $(".sub.sub-active").removeClass("sub-active");
+                $(".channel.channel-active").removeClass("channel-active");
+            },
+            showManualInput: function() {
+                var delay = 1;
+                if(!isLargeScreen) {
+                    if(showingMenu) delay = 351;
+                    V.Actions.moveMenu(move.left);
+                }
+                setTimeout(function() {
+                    if(esModal) return;
+                    var modal = $('<div/>').attr('id', 'modal');
+                    $('body').append(modal).append(T.formAgregarSubManual);
+                    esModal = true;
+                    setTimeout(function() {
+                        modal.css('opacity', 1);
+                        $id('txtNuevoSub').focus();
+                    }, 1);
+                }, delay);
+            }
+        },
+        Posts: {
+            show: function(links, paging) { // links: API raw data
+                var linksCount = links.children.length,
+                    main = V.mainWrap;
+
+                if(paging) $(".loading").remove();
+                else main.empty();
+
+                main.append(Mustache.to_html(T.Posts, links)); // Add new links to the list
+                if(linksCount === 0) {
+                    var message = $query('#mainWrap .loading');
+                    if(message) message.innerText = 'No Links available.';
+                    else main.prepend('<p class="loading">No Links available.</p>');
+                } else {
+                    // Remove thumbnail space for those links with invalid backgrounds.
+                    var thumbs = $('.linkThumb > div');
+                    for(var i = 0; i < thumbs.length; i++) {
+                        var thumb = $(thumbs[i]),
+                            bg = thumb.attr('style'),
+                            bgImg = 'background-image: ';
+                        if(bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') thumb.parent().remove();
+                    }
+                }
+                // Remove 'More links' button if there are less than 30 links
+                if(linksCount < 30) $('moreLinks').parent().remove();
+                if(!isDesktop) V.Misc.scrollFixLinks();
+            }
+        },
+        Actions: {
+            setSubTitle: function(title) {
+                V.subtitleText.text(title);
+            },
+            backToMainView: function(newTitle) {
+                V.btnNavBack.addClass("invisible");
+                V.subtitle.removeClass("invisible");
+                V.headerSection.empty().append(V.headerIcon);
+                if(newTitle) V.Actions.setSubTitle(newTitle);
+                V.Anims.slideFromLeft();
+            },
+            moveMenu: function(direction) {
+                if(direction === move.left) {
+                    V.container.css({
+                        '-webkit-transform': transforms.translateTo0,
+                        'transform': transforms.translateTo0
+                    });
+                    setTimeout(function() {
+                        showingMenu = false;
+                    });
+                }
+                if(direction === move.right) {
+                    V.container.css({
+                        '-webkit-transform': transforms.translateTo140,
+                        'transform': transforms.translateTo140
+                    });
+                    setTimeout(function() {
+                        showingMenu = true;
+                    });
+                }
+            },
+            loadForAdding: function() {
+                if(!isLargeScreen) V.Actions.moveMenu(move.left);
+                if(currentView === view.comments) V.Actions.backToMainView();
+
+                setTimeout(function() {
+                    $id("mainWrap").scrollTop = 0; // Go to the container top
+                    var main = V.mainWrap;
+                    if(subreddits) {
+                        main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
+                    } else {
+                        main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(T.botonAgregarSubManual);
+                        $.ajax({
+                            url: urlInit + "reddits/.json?limit=50&jsonp=?",
+                            dataType: 'jsonp',
+                            success: function(list) {
+                                M.Subreddits.idLast = list.data.after;
+                                subreddits = Mustache.to_html(T.Subreddits.toAddList, list.data);
+                                main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
+                            },
+                            error: function() {
+                                $('.loading').text('Error loading subreddits.');
+                            }
+                        });
+                    }
+                }, isLargeScreen ? 1 : 351);
+                V.Subreddits.cleanSelected();
+                V.Actions.setSubTitle("+ Subreddits");
+                setEditingSubs(true);
+            },
+            loadForRemoving: function() {
+                if(!isLargeScreen) V.Actions.moveMenu(move.left);
+                if(currentView === view.comments) V.Actions.backToMainView();
+
+                setTimeout(function() {
+                    $id("mainWrap").scrollTop = 0; // Up to container top
+                    var htmlSubs = Mustache.to_html(T.Subreddits.toRemoveList, M.Subreddits.list);
+                    var htmlChannels = '';
+                    if(M.Channels.list && M.Channels.list.length > 0) {
+                        htmlChannels = Mustache.to_html(T.Channels.toRemoveList, M.Channels.list);
+                    }
+                    var html = '<div id="removeWrap">' + htmlSubs + htmlChannels + "</div>";
+                    setTimeout(function() { // Intentional delay / fix for iOS
+                        $id("mainWrap").innerHTML = html;
+                    }, 10);
+                    V.Subreddits.cleanSelected();
+                }, isLargeScreen ? 1 : 351);
+                V.Actions.setSubTitle('- Subreddits');
+                setEditingSubs(true);
+            },
+            removeModal: function() {
+                var modal = $('#modal');
+                modal.css('opacity', '');
+                $('.closeForm').remove();
+                $('.newForm').remove();
+                esModal = false;
+                setTimeout(function() {
+                    modal.remove();
+                }, 351);
+            }
+        },
+        Misc: {
+            scrollFixComments: function() {
+                // Make comments section always scrollable
+                var detailWrap = $query('#detailWrap');
+                var detailWrapHeight = detailWrap.offsetHeight;
+                var linkSummary = detailWrap.querySelector('section:first-child');
+                var linkSummaryHeight = linkSummary.offsetHeight;
+                var selfText = detailWrap.querySelector('#selfText');
+                var selfTextHeight = selfText ? selfText.offsetHeight : 0;
+                var imagePreview = detailWrap.querySelector('.imagePreview');
+                var imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0;
+                var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight + 1;
+                $('#detailWrap > section + ' + (selfTextHeight > 0 ? '#selfText +' : '') + (imagePreviewHeight > 0 ? '.imagePreview +' : '') + ' section').css('min-height', minHeight);
+            },
+            scrollFixLinks: function() {
+                // Make links section always scrollable / Necessary when using the other Sorting options.
+                var totalHeight = 0;
+                // Calculate the total of link wrappers heigth
+                var wraps = doc.querySelectorAll('.linkWrap');
+                for(var w = 0; w < wraps.length; w++) {
+                    totalHeight += wraps[w].offsetHeight;
+                }
+                // Get each element's static section heigth
+                var containerHeight = $query('#container').offsetHeight;
+                var headerHeight = $query('header').offsetHeight;
+                var message = $query('#mainWrap .loading');
+                var messageHeight = message ? message.offsetHeight : 0;
+                var minHeight = containerHeight - headerHeight - messageHeight;
+
+                if(totalHeight > minHeight) V.mainOverflow.css('min-height', '');
+                else V.mainOverflow.css('min-height', minHeight - totalHeight + 1);
+            }
+        },
+        Anims: {
+            slideFromLeft: function() {
+                var main = V.mainView,
+                    det = V.detailView;
+                main.css("left", -ancho);
+                setTimeout(function() {
+                    var translate = 'translate3d(' + ancho + 'px, 0px, 0px)';
+                    var cssTransform = {
+                        '-webkit-transform': translate,
+                        'transform': translate
+                    };
+                    main.addClass("slideTransition").css(cssTransform);
+                    det.addClass("slideTransition").css(cssTransform);
+                    setTimeout(function() {
+                        var cssTransformBack = {
+                            '-webkit-transform': '',
+                            'transform': '',
+                            'left': ''
+                        };
+                        main.removeClass("slideTransition").css(cssTransformBack).removeClass("fuera");
+                        det.css(cssTransformBack).removeClass("slideTransition");
+                        V.detailView.addClass("fuera"); // Hide
+                        currentView = view.main;
+                    }, 351);
+                }, 50);
+            },
+            slideFromRight: function() {
+                var main = V.mainView,
+                    det = V.detailView;
+                det.css("left", ancho);
+                setTimeout(function() {
+                    var translate = 'translate3d(-' + ancho + 'px, 0px, 0px)';
+                    var cssTransform = {
+                        '-webkit-transform': translate,
+                        'transform': translate
+                    };
+                    main.addClass("slideTransition").css(cssTransform);
+                    det.addClass("slideTransition").css(cssTransform);
+                    setTimeout(function() { // Quita las propiedades de transition
+                        var cssTransformBack = {
+                            '-webkit-transform': '',
+                            'transform': ''
+                        };
+                        det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css(cssTransformBack);
+                        main.removeClass("slideTransition").addClass("fuera").css(cssTransformBack);
+                        currentView = view.comments;
+                    }, 351);
+                }, 100);
+            }
+        }
+    };
+
+    var C = { // "Controller"
+        Posts: {
+            load: function(baseUrl, paging) {
+                if(loadingLinks) return;
+                loadingLinks = true;
+                loadingComments = false;
+                setEditingSubs(false);
+                var main = V.mainWrap;
+                if(paging) {
+                    $("#moreLinks").parent().remove(); // Se quita el boton de 'More' actual
+                    main.append("<p class='loading'>Loading links...</p>");
+                } else {
+                    $id("mainWrap").scrollTop = 0; // Sube al top del contenedor
+                    setTimeout(function() {
+                        main.prepend("<p class='loading'>Loading links...</p>");
+                    }, showingMenu ? 351 : 1);
+                    paging = ''; //// Si no hay paginacion, se pasa una cadena vacia, para no paginar
+                }
+                $.ajax({
+                    dataType: 'jsonp',
+                    url: baseUrl + C.Sorting.get() + urlLimitEnd + paging,
+                    success: function(result) {
+                        C.Posts.show(result, paging);
+                    },
+                    error: function() {
+                        loadingLinks = false;
+                        $('.loading').text('Error loading links. Refresh to try again.');
+                    }
+                });
+            },
+            loadFromManualInput: function(loadedLinks) {
+                C.Posts.show(links);
+            },
+            show: function(result, paging) {
+                var links = result.data;
+                loadingLinks = false;
+                M.Posts.idLast = links.after;
+
+                V.Posts.show(links, paging);
+                M.Posts.setList(links);
+            }
+        },
+        Comments: {
+            load: function(data, baseElement, idParent) {
+                var now = new Date().getTime();
+                var converter = new Markdown.Converter();
+                var com = $("<section/>");
+                for(var i = 0; i < data.length; i++) {
+                    var c = data[i];
+
+                    if(c.kind !== "t1") continue;
+
+                    var html = converter.makeHtml(c.data.body);
+
+                    var isPoster = M.Posts.list[currentThread].author === c.data.author;
+
+                    var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass(isPoster ? "commentPoster" : "commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
+
+                    if(c.data.replies) {
+                        comment.append($("<span/>").addClass("commentsButton repliesButton").attr("comment-id", c.data.id).text("See replies"));
+                        replies[c.data.id] = c.data.replies.data.children;
+                    }
+
+                    com.append(comment);
+                }
+
+                baseElement.append(com);
+
+                if(idParent) loadedLinks[idParent] = com;
+
+                $("#detailWrap a").attr("target", "_blank");
+
+                if(!isDesktop) {
+                    V.Misc.scrollFixComments();
+                }
+            },
+            show: function(id, refresh) {
+                var delay = 0;
+                if(showingMenu) {
+                    V.Actions.moveMenu(move.left);
+                    delay = 351;
+                }
+                if(!M.Posts.list[id]) return; // Quick fix for missing id
+                setTimeout(function() {
+
+                    // Stop if it hasn't finished loading this comments for the first time before trying to load them again
+                    if(loadingComments && currentThread && currentThread === id) return;
+
+                    loadingComments = true;
+                    currentThread = id;
+
+                    V.btnNavBack.removeClass("invisible"); // Show
+                    var detail = V.detailWrap;
+                    detail.empty();
+
+                    $id("detailWrap").scrollTop = 0;
+
+                    if(loadedLinks[id] && !refresh) {
+                        detail.append(M.Posts.list[id].summary);
+                        detail.append(loadedLinks[id]);
+                        C.Misc.updatePostSummary(M.Posts.list[id], id);
+                        loadingComments = false;
+                    } else {
+                        C.Misc.setPostSummary(M.Posts.list[id], id);
+                        var url = "http://www.reddit.com" + M.Posts.list[id].link + urlEnd;
+                        detail.append("<p class='loading'>Loading comments...</p>");
+                        $.ajax({
+                            dataType: 'jsonp',
+                            url: url,
+                            success: function(result) {
+                                if(currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
+                                C.Misc.updatePostSummary(result[0].data.children[0].data, id);
+                                $(".loading").remove();
+                                var comments = result[1].data.children;
+                                C.Comments.load(comments, detail, id);
+                                loadingComments = false;
+                            },
+                            error: function() {
+                                loadingComments = false;
+                                var error = 'Error loading comments. Refresh to try again.';
+                                if(isWideScreen) $('.loading').html(error + '<div class="commentsButton" id="wideRefresh">Refresh</div>');
+                                else $('.loading').text(error);
+                            }
+                        });
+                    }
+
+                    if(!refresh) {
+                        if(isWideScreen) V.detailView.removeClass("fuera");
+                        else if(currentView !== view.comments) V.Anims.slideFromRight();
+                    }
+
+                    if(isWideScreen) {
+                        // Refresh active link indicator
+                        $(".link.link-active").removeClass("link-active");
+                        $('.link[data-id="' + id + '"]').addClass('link-active');
+                    }
+
+                    V.headerSection.empty().append(V.title);
+                    V.title.text(M.Posts.list[id].title);
+                    V.subtitle.addClass('invisible');
+                }, delay);
+            }
+        },
+        Subreddits: {
+            loadSaved: function() { // Only should execute when first loading the app
+                var subs = store.getItem("subreeddits");
+                if(subs) subs = JSON.parse(subs);
+                M.Subreddits.list = subs;
+                if(!M.Subreddits.list) M.Subreddits.setList(defaultSubs); // If it hasn't been loaded to the 'local store', save default subreddits
+                V.Subreddits.insert(M.Subreddits.list);
+            },
+            loadPosts: function(sub) {
+                if(sub !== M.currentSelection.name || editingSubs) {
+                    var url;
+                    if(sub.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
+                    else url = urlInit + "r/" + sub + "/";
+                    C.Posts.load(url);
+                    C.currentSelection.setSubreddit(sub);
+                }
+                V.Actions.setSubTitle(sub);
+            },
+            remove: function(sub) {
+                M.Subreddits.remove(sub);
+                V.Subreddits.remove(sub);
+                if(M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
+            }
+        },
+        Channels: {
+            add: function(channel) {
+                M.Channels.add(channel);
+                V.Channels.add(channel);
+            },
+            loadSaved: function() { // Should only execute when first loading the app
+                M.Channels.list = store.getItem('channels');
+                if(M.Channels.list) M.Channels.list = JSON.parse(M.Channels.list);
+                else M.Channels.list = [defaultChannel]; // Load default channel(s)
+                V.Channels.loadList();
+            },
+            loadPosts: function(channel) {
+                C.Posts.load(urlInit + channel.url + '/');
+                V.Actions.setSubTitle(channel.name);
+                C.currentSelection.setChannel(channel);
+            },
+            remove: function(name) {
+                M.Channels.remove(name);
+                V.Channels.remove(name);
+                // If it was the current selection
+                if(M.currentSelection.type === selection.channel && M.currentSelection.name === name) C.currentSelection.setSubreddit('frontPage');
+            }
+        },
+        currentSelection: {
+            setSubreddit: function(sub) {
+                M.currentSelection.setSubreddit(sub);
+            },
+            setChannel: function(channel) {
+                M.currentSelection.setChannel(channel);
+            }
+        },
+        Sorting: {
+            get: function() {
+                return(currentSortingChoice !== 'hot' ? (currentSortingChoice + '/') : '');
+            },
+            change: function(sorting) {
+                currentSortingChoice = sorting;
+                if(editingSubs) return; // No subreddit or channel selected - just change the sorting type
+                // Only refresh with the new sorting, when a subreddit or channel is selected
+                var delay = 1;
+                if(showingMenu) {
+                    V.Actions.moveMenu(move.left);
+                    delay = 351;
+                }
+                setTimeout(function() {
+                    refreshCurrentStream();
+                }, delay);
+            }
+        },
+        Misc: {
+            setPostSummary: function(data, postID) {
+                // Main content
+                var summaryHTML = Mustache.to_html(T.linkSummary, data);
+                var imageLink = checkImageLink(M.Posts.list[postID].url);
+                if(imageLink) { // If it's an image link
+                    summaryHTML += "<img class='imagePreview' src='" + imageLink + "' />";
+                }
+                if(data.selftext) { // If it has self-text
+                    var selfText;
+                    if(M.Posts.list[postID].selftextParsed) {
+                        selfText = M.Posts.list[postID].selftext;
+                    } else {
+                        var summaryConverter1 = new Markdown.Converter();
+                        selfText = summaryConverter1.makeHtml(data.selftext);
+                        M.Posts.list[postID].selftext = selfText;
+                        M.Posts.list[postID].selftextParsed = true;
+                    }
+                    summaryHTML += "<div id='selfText'>" + selfText + "</div>";
+                }
+                V.detailWrap.append(summaryHTML);
+                C.Misc.updatePostTime(data.created_utc);
+                M.Posts.list[postID].summary = summaryHTML;
+            },
+            updatePostSummary: function(data, postID) {
+                $id("summaryCommentNum").innerText = data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments');
+                // Time ago
+                C.Misc.updatePostTime(data.created_utc);
+                M.Posts.list[postID].num_comments = data.num_comments;
+                M.Posts.list[postID].created_utc = data.created_utc;
+            },
+            updatePostTime: function(time) {
+                $id("summaryTime").innerText = timeSince(new Date().getTime(), time);
+            }
+        }
+    };
 
     function checkWideScreen() {
         return win.matchMedia("(min-width: 1000px)").matches;
@@ -70,313 +740,30 @@
         return win.matchMedia("(min-width: 490px)").matches;
     }
 
-    function loadLinks(baseUrl, fromSub, links, paging) {
-        if(loadingLinks) return;
-        loadingLinks = true;
-        loadingComments = false;
-        setEditingSubs(false);
-        var main = $("#mainWrap");
-        if(fromSub) { // Si viene de seleccionar un subreddit
-            document.getElementById("mainWrap").scrollTop = 0; // Sube al top del contenedor
-            if(!links) {
-                setTimeout(function() {
-                    if(loadingLinks) main.prepend("<p class='loading'>Loading links...</p>");
-                }, 351);
-            }
-        } else { // Si se esta cargando inicialmente
-            if(!paging) { // Si no hay paginacion
-                main.empty(); // Se quitan los links actuales
-            } else { // Si hay paginacion
-                $("#moreLinks").parent().remove(); // Solo se quita el boton de 'More' actual
-            }
-            main.append("<p class='loading'>Loading links...</p>");
-        }
-        if(links) { // Si ya los links fueron pedidos y devueltos
-            processAndRenderLinks(links, fromSub, main);
-        } else { // Si aun no se piden los links
-            if(!paging) { // Si no hay paginacion
-                paging = ''; // Se pasa una cadena vacia, para no paginar
-            }
-            $.ajax({
-                dataType: 'jsonp',
-                url: baseUrl + getSorting() + urlLimitEnd + paging,
-                success: function(result) {
-                    processAndRenderLinks(result, fromSub, main);
-                },
-                error: function() {
-                    loadingLinks = false;
-                    $('.loading').text('Error loading links. Refresh to try again.');
-                }
-            });
-        }
-    }
-
-    function processAndRenderLinks(result, fromSub, main) {
-        loadingLinks = false;
-        var links = result.data;
-        ultimoLink = links.after;
-        var numThumbs = 0;
-        for(var i = 0; i < links.children.length; i++) {
-            var link = links.children[i];
-            if(posts[link.data.id]) { // Si ya se ha cargado este link localmente
-                // Se actualizan los datos dinamicos
-                posts[link.data.id].num_comments = link.data.num_comments;
-                posts[link.data.id].created_utc = link.data.created_utc;
-            } else { // Si no se han cargado los links localmente
-                posts[link.data.id] = {
-                    "title": link.data.title,
-                    "selftext": link.data.selftext,
-                    "created_utc": link.data.created_utc,
-                    "domain": link.data.domain,
-                    "subreddit": link.data.subreddit,
-                    "num_comments": link.data.num_comments,
-                    "url": link.data.url,
-                    "self": link.data.is_self,
-                    "link": link.data.permalink,
-                    "author": link.data.author
-                };
-            }
-            // Se cuentan los thumbnails que se pueden mostrar
-            if(link.data.thumbnail || link.data.thumbnail === 'detault' || link.data.thumbnail === 'nsfw' || link.data.thumbnail === 'self') {
-                numThumbs++;
-            }
-        }
-
-        var html = Mustache.to_html(Templates.links, links);
-        if(fromSub) {
-            main.empty();
-        } else {
-            $(".loading").remove();
-        }
-
-        main.append(html); // Add new links to the list
-        if(links.children.length === 0) {
-            var message = document.querySelector('#mainWrap .loading');
-            if(message) {
-                message.innerText('No Links available.');
-            } else {
-                main.prepend('<p class="loading">No Links available.</p>');
-            }
-        } else {
-            // Remove thumbnail space for those links with invalid ones.
-            var thumbs = $('.linkThumb div');
-            $.each(thumbs, function(i, t) {
-                var thumb = $(t);
-                var bg = thumb.attr('style');
-                if(bg === 'background-image: url()' || bg === 'background-image: url(default)' || bg === 'background-image: url(nsfw)' || bg === 'background-image: url(self)') {
-                    thumb.parent().remove();
-                }
-            });
-        }
-        // Remove 'More links' button if there are less than 30 links
-        if(links.children.length < 30) {
-            $('#moreLinks').parent().remove();
-        }
-
-        if(!isDesktop) {
-            scrollFixLinks();
-        }
-    }
-
-    function loadComments(data, baseElement, idParent) {
-        var now = new Date().getTime();
-        var converter = new Markdown.Converter();
-        var com = $("<section/>");
-        for(var i = 0; i < data.length; i++) {
-            var c = data[i];
-
-            if(c.kind !== "t1") continue;
-
-            var html = converter.makeHtml(c.data.body);
-
-            var isPoster = posts[currentThread].author === c.data.author;
-
-            var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass(isPoster ? "commentPoster" : "commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
-
-            if(c.data.replies) {
-                comment.append($("<span/>").addClass("commentsButton repliesButton").attr("comment-id", c.data.id).text("See replies"));
-                replies[c.data.id] = c.data.replies.data.children;
-            }
-
-            com.append(comment);
-        }
-
-        baseElement.append(com);
-
-        if(idParent) loadedLinks[idParent] = com;
-
-        $("#detailWrap a").attr("target", "_blank");
-
-        if(!isDesktop) {
-            scrollFixComments();
-        }
-    }
-
-    function scrollFixLinks() {
-        // Make links section always scrollable / Necessary when using the other Sorting options.
-        var totalHeight = 0;
-        // Calculate the total of link wrappers heigth
-        var wraps = document.querySelectorAll('.linkWrap');
-        for(var w = 0; w < wraps.length; w++) {
-            totalHeight += wraps[w].offsetHeight;
-        }
-        // Get each element's static section heigth
-        var containerHeight = document.querySelector('#container').offsetHeight;
-        var headerHeight = document.querySelector('header').offsetHeight;
-        var message = document.querySelector('#mainWrap .loading');
-        var messageHeight = message ? message.offsetHeight : 0;
-        var minHeight = containerHeight - headerHeight - messageHeight;
-        if(totalHeight > minHeight) {
-            $('#mainOverflow').css('min-height', '');
-        } else {
-            $('#mainOverflow').css('min-height', minHeight - totalHeight + 1);
-        }
-    }
-
-    function scrollFixComments() {
-        // Make comments section always scrollable
-        var detailWrap = document.querySelector('#detailWrap');
-        var detailWrapHeight = detailWrap.offsetHeight;
-        var linkSummary = detailWrap.querySelector('section:first-child');
-        var linkSummaryHeight = linkSummary.offsetHeight;
-        var selfText = detailWrap.querySelector('#selfText');
-        var selfTextHeight = selfText ? selfText.offsetHeight : 0;
-        var imagePreview = detailWrap.querySelector('.imagePreview');
-        var imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0;
-        var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight + 1;
-        $('#detailWrap > section + ' + (selfTextHeight > 0 ? '#selfText +' : '') + (imagePreviewHeight > 0 ? '.imagePreview +' : '') + ' section').css('min-height', minHeight);
-    }
-
-    function procesarComentarios(id, refresh) {
-        var delay = 0;
-        if(showingMenu) {
-            moveMenu(move.left);
-            delay = 351;
-        }
-        if(!posts[id]) return; // Quick fix for missing id
-        setTimeout(function() {
-
-            // Stop if it hasn't finished loading this comments for the first time before trying to load them aga
-            if(loadingComments && currentThread && currentThread === id) return;
-
-            loadingComments = true;
-            currentThread = id;
-
-            $("#nav-back").removeClass("invisible"); // Show
-            var detail = $("#detailWrap");
-            detail.empty();
-
-            document.getElementById("detailWrap").scrollTop = 0;
-
-            if(loadedLinks[id] && !refresh) {
-                detail.append(posts[id].summary);
-                detail.append(loadedLinks[id]);
-                updateSummaryInfo(posts[id], id);
-                loadingComments = false;
-            } else {
-                setPostSummaryInfo(posts[id], id);
-                var url = "http://www.reddit.com" + posts[id].link + urlEnd;
-                detail.append("<p class='loading'>Loading comments...</p>");
-                $.ajax({
-                    dataType: 'jsonp',
-                    url: url,
-                    success: function(result) {
-                        if(currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
-                        updateSummaryInfo(result[0].data.children[0].data, id);
-                        $(".loading").remove();
-                        var comments = result[1].data.children;
-                        loadComments(comments, detail, id);
-                        loadingComments = false;
-                    },
-                    error: function() {
-                        loadingComments = false;
-                        var error = 'Error loading comments. Refresh to try again.';
-                        if(isWideScreen) {
-                            $('.loading').html(error + '<div class="commentsButton" id="wideRefresh">Refresh</div>');
-                        } else {
-                            $('.loading').text(error);
-                        }
-                    }
-                });
-            }
-
-            if(!refresh) {
-                if(isWideScreen) {
-                    $("#detailView").removeClass("fuera");
-                } else {
-                    if(currentView !== view.comments) slideFromRight();
-                }
-            }
-
-            if(isWideScreen) {
-                // Refresh active link indicator
-                $(".link.link-active").removeClass("link-active");
-                $('.link[data-id="' + id + '"]').addClass('link-active');
-            }
-
-            $("#titleHead").empty().append(title);
-            $("#title").text(posts[id].title);
-            $("#mainTitle").addClass('invisible');
-        }, delay);
-    }
-
-    function setPostSummaryInfo(data, postID) {
-        // Main content
-        var summaryHTML = Mustache.to_html(Templates.linkSummary, data);
-        var imageLink = checkImageLink(posts[postID].url);
-        if(imageLink) { // If it's an image link
-            summaryHTML += "<img class='imagePreview' src='" + imageLink + "' />";
-        }
-        if(data.selftext) { // If it has self-text
-            var selfText;
-            if(posts[postID].selftextParsed) {
-                selfText = posts[postID].selftext;
-            } else {
-                var summaryConverter1 = new Markdown.Converter();
-                selfText = summaryConverter1.makeHtml(data.selftext);
-                posts[postID].selftext = selfText;
-                posts[postID].selftextParsed = 1; // truey
-            }
-            summaryHTML += "<div id='selfText'>" + selfText + "</div>";
-        }
-        $("#detailWrap").append(summaryHTML);
-
-        // Time ago
-        updatePostTime(data.created_utc);
-
-        posts[postID].summary = summaryHTML;
-    }
-
-    function updateSummaryInfo(data, postID) {
-        $("#summaryCommentNum").text(data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments'));
-        // Time ago
-        updatePostTime(data.created_utc);
-        posts[postID].num_comments = data.num_comments;
-        posts[postID].created_utc = data.created_utc;
-    }
-
     function checkImageLink(url) {
         var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|www.quickmeme\.com\/meme|qkme\.me)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
         if(!matching) return '';
         if(matching[1]) { // normal image link
             return url;
         } else if(matching[2]) { // imgur or quickmeme link
-            if(matching[0].slice(0, 5) === "imgur") {
-                return 'http://imgur.com/' + matching[2] + '.jpg';
-            } else {
-                return 'http://i.qkme.me/' + matching[2] + '.jpg';
-            }
+            if(matching[0].slice(0, 5) === "imgur") return 'http://imgur.com/' + matching[2] + '.jpg';
+            else return 'http://i.qkme.me/' + matching[2] + '.jpg';
         } else {
             return null;
         }
     }
 
-    function updatePostTime(time) {
-        $("#summaryTime").text(timeSince(new Date().getTime(), time));
+    function setEditingSubs(editing) { // editing: boolean
+        editingSubs = editing;
+        if(isWideScreen) {
+            // If it's showing the add or remove subreddits/channels panel, hide the refresh button
+            var refreshButton = $query('.refresh-icon-FS');
+            refreshButton.style.display = editing ? 'none' : '';
+        }
     }
 
     function doByCurrentSelection(caseSub, caseChannel) {
-        switch(current.type) {
+        switch(M.currentSelection.type) {
         case selection.sub:
             caseSub();
             break;
@@ -386,275 +773,21 @@
         }
     }
 
-    function loadSubsList() { // Only should execute when first loading the app
-        savedSubs = getSavedSubs();
-        if(savedSubs) {
-            insertSubsToList(savedSubs);
-        } else { // If it hasn't been loaded to the 'local store'
-            savedSubs = defaultSubs; // save default subreddits
-            insertSubsToList(savedSubs);
-            store.setItem("subreeddits", JSON.stringify(savedSubs));
-        }
-    }
-
-    function setCurrentSub(sub) {
-        current.name = sub;
-        current.type = selection.sub;
-        store.setItem('currentSelection', JSON.stringify(current));
-    }
-
-    function setCurrentChannel(channel) {
-        current.name = channel.name;
-        current.type = selection.channel;
-        store.setItem('currentSelection', JSON.stringify(current));
-    }
-
-    function getAllSubsString() {
-        var allSubs = '';
-        for(var i = 0; i < savedSubs.length; i++) {
-            var sub = savedSubs[i];
-            if(sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
-            allSubs += sub + '+';
-        }
-        return allSubs.substring(0, allSubs.length - 1);
-    }
-
-    function setSubTitle(title) {
-        $("#subTitle").text(title);
-    }
-
-    function backToMainView(newTitle) {
-        $("#nav-back").addClass("invisible");
-        $("#mainTitle").removeClass('invisible');
-        $("#titleHead").empty().append(headerIcon);
-        if(newTitle) {
-            setSubTitle(newTitle);
-        }
-    }
-
-    function loadSub(sub) {
-        if(sub !== current.name || editingSubs) {
-            var url;
-            if(sub.toUpperCase() === 'frontPage'.toUpperCase()) {
-                url = urlInit + "r/" + getAllSubsString() + "/";
-            } else {
-                url = urlInit + "r/" + sub + "/";
-            }
-            loadLinks(url, true);
-            setCurrentSub(sub);
-        }
-        setSubTitle(sub);
-    }
-
-    function moveMenu(direction) {
-        if(direction === move.left) {
-            $("#container").css({
-                '-webkit-transform': transforms.translateTo0,
-                'transform': transforms.translateTo0
-            });
-            setTimeout(function() {
-                showingMenu = false;
-            });
-        }
-        if(direction === move.right) {
-            $("#container").css({
-                '-webkit-transform': transforms.translateTo140,
-                'transform': transforms.translateTo140
-            });
-            setTimeout(function() {
-                showingMenu = true;
-            });
-        }
-    }
-
-    function loadSubredditListToAdd() {
-        if(!isLargeScreen) {
-            moveMenu(move.left);
-        }
-        if(currentView === view.comments) {
-            backToMainView();
-            slideFromLeft();
-        }
-        setTimeout(function() {
-            document.getElementById("mainWrap").scrollTop = 0; // Go to the container top
-            var main = $("#mainWrap");
-            if(subreddits) {
-                main.empty().append(Templates.botonAgregarSubManual).append(subreddits).append(Templates.botonCargarMasSubs);
-            } else {
-                main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(Templates.botonAgregarSubManual);
-                $.ajax({
-                    url: urlInit + "reddits/.json?limit=50&jsonp=?",
-                    dataType: 'jsonp',
-                    success: function(list) {
-                        ultimoSub = list.data.after;
-                        subreddits = Mustache.to_html(Templates.allSubreddits, list.data);
-                        main.empty().append(Templates.botonAgregarSubManual).append(subreddits).append(Templates.botonCargarMasSubs);
-                    },
-                    error: function() {
-                        $('.loading').text('Error loading subreddits.');
-                    }
-                });
-            }
-        }, isLargeScreen ? 1 : 351);
-        limpiarSubrSeleccionado();
-        setSubTitle("+ Subreddits");
-        setEditingSubs(true);
-    }
-
-    function loadSubredditListToRemove() {
-        if(!isLargeScreen) {
-            moveMenu(move.left);
-        }
-        if(currentView === view.comments) {
-            backToMainView();
-            slideFromLeft();
-        }
-        setTimeout(function() {
-            document.getElementById("mainWrap").scrollTop = 0; // Up to container top
-            var htmlSubs = Mustache.to_html(Templates.savedSubredditsListToRemove, savedSubs);
-            var htmlChannels = '';
-            if(channels && channels.length > 0) {
-                htmlChannels = Mustache.to_html(Templates.savedChannelsListToRemove, channels);
-            }
-            var html = '<div id="removeWrap">' + htmlSubs + htmlChannels + "</div>";
-            setTimeout(function() { // Intentional delay / fix for iOS
-                document.getElementById("mainWrap").innerHTML = html;
-            }, 10);
-            limpiarSubrSeleccionado();
-        }, isLargeScreen ? 1 : 351);
-        setSubTitle('- Subreddits');
-        setEditingSubs(true);
-    }
-
-    function setEditingSubs(editing) { // editing: boolean
-        editingSubs = editing;
-        if(isWideScreen) {
-            // If it's showing the add or remove subreddits/channels panel, hide the refresh button
-            var refreshButton = document.querySelector('.refresh-icon-FS');
-            refreshButton.style.display = editing ? 'none' : '';
-        }
-    }
-
-    function limpiarSubrSeleccionado() {
-        $(".sub.sub-active").removeClass("sub-active");
-        $(".channel.channel-active").removeClass("channel-active");
-    }
-
-    function insertSubsToList(subs, active) {
-        var subsList = $("#subs");
-        if(subs instanceof Array) {
-            var subListTemplate = "{{#.}}<li><p class='sub'>{{.}}</p></li>{{/.}}";
-            var html = Mustache.to_html(subListTemplate, subs);
-            subsList.append(html);
-        } else {
-            if(!listContainsSub(subs)) {
-                subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
-                saveSub(subs);
-            }
-        }
-    }
-
-    function getSavedSubs() {
-        var subs = store.getItem("subreeddits");
-        if(subs) {
-            subs = JSON.parse(subs);
-            return subs;
-        } else {
-            return null;
-        }
-    }
-
-    function loadCurrentSelection() {
-        current = store.getItem('currentSelection');
-        if(current) {
-            current = JSON.parse(current);
-        } else {
-            current = {
-                name: 'frontPage',
-                type: selection.sub
-            };
-        }
-        return current;
-    }
-
-    function mostrarIngresoSubManual() {
-        var delay = 1;
-        if(!isLargeScreen) {
-            if(showingMenu) delay = 351;
-            moveMenu(move.left);
-        }
-        setTimeout(function() {
-            if(esModal) return;
-            var modal = $('<div/>').attr('id', 'modal');
-            $('body').append(modal).append(Templates.formAgregarSubManual);
-            esModal = true;
-            setTimeout(function() {
-                modal.css('opacity', 1);
-                document.getElementById('txtNuevoSub').focus();
-            }, 1);
-        }, delay);
-    }
-
-    function showNewChannelForm() {
-        var delay = 1;
-        if(!isLargeScreen) {
-            if(showingMenu) delay = 351;
-            moveMenu(move.left);
-        }
-        setTimeout(function() {
-            if(esModal) return;
-            var modal = $('<div/>').attr('id', 'modal');
-            $('body').append(modal).append(Templates.formAddNewChannel);
-            esModal = true;
-            setTimeout(function() {
-                modal.css('opacity', 1);
-                document.getElementById('txtChannel').focus();
-            }, 1);
-        }, delay);
-    }
-
-    function quitarModal() {
-        var modal = $('#modal');
-        modal.css('opacity', '');
-        $('.closeForm').remove();
-        $('.newForm').remove();
-        esModal = false;
-        setTimeout(function() {
-            modal.remove();
-        }, 351);
-    }
-
-    function saveSub(newSub) {
-        if(!listContainsSub(newSub)) {
-            savedSubs.push(newSub);
-            store.setItem("subreeddits", JSON.stringify(savedSubs));
-        }
-    }
-
-    function listContainsSub(sub) {
-        if(savedSubs) {
-            var i = savedSubs.indexOf(sub);
-            return i > -1;
-        }
-        return false;
-    }
-
     $('body').on('submit', '#formNuevoSub form', function(e) {
         e.preventDefault();
         var newSubr = $('#txtNuevoSub').val();
-        quitarModal();
+        V.Actions.removeModal();
         if(!newSubr) return; // Si no se ingreso nada, no pasa nada.
-        // En caso de haber ingresado algo
-        // Cargar el contenido del nuevo subrredit, de forma asincrona
+        // En caso de haber ingresado algo, cargar el contenido del nuevo subreddit, de forma asincrona
         $.ajax({
-            url: urlInit + "r/" + newSubr + "/" + getSorting() + urlLimitEnd,
+            url: urlInit + "r/" + newSubr + "/" + C.Sorting.get() + urlLimitEnd,
             dataType: 'jsonp',
             success: function(data) {
-                loadLinks("", false, data);
-                setSubTitle(newSubr);
-                limpiarSubrSeleccionado();
-                setCurrentSub(newSubr);
-                insertSubsToList(newSubr, true);
+                C.Posts.loadFromManualInput(data);
+                V.Actions.setSubTitle(newSubr);
+                V.Subreddits.cleanSelected();
+                C.currentSelection.setSubreddit(newSubr);
+                V.Subreddits.insert(newSubr, true);
             },
             error: function() {
                 alert('Oh, the subreddit you entered is not valid...');
@@ -662,87 +795,17 @@
         });
     });
 
-    // Channel Functions
-
-    function insertChannel(channel) {
-        channels.push(channel);
-        var html = Mustache.to_html(Templates.channel, channel);
-        $('#channels').append(html);
-        store.setItem('channels', JSON.stringify(channels));
-    }
-
-    function loadSavedChannels() { // Should only execute when first loading the app
-        channels = store.getItem('channels');
-        if(channels) {
-            channels = JSON.parse(channels);
-        } else { // Load default channel(s?)
-            channels = defaultChannel;
-        }
-        var html = Mustache.to_html(Templates.channels, channels);
-        $('#channels').html(html);
-    }
-
-    function getChannelByName(name) {
-        var foundChannel;
-        for(var i = 0; i < channels.length; i++) {
-            if(channels[i].name === name) {
-                foundChannel = channels[i];
-                break;
-            }
-        }
-        return foundChannel;
-    }
-
-    function loadChannel(channel) {
-        loadLinks(urlInit + channel.url + '/', true);
-        setSubTitle(channel.name);
-        setCurrentChannel(channel);
-    }
-
-    function getChannelURLfromSubs(subs) {
-        var url = 'r/';
-        for(var i = 0; i < subs.length; i++) {
-            var sub = subs[i];
-            url += sub + '+';
-        }
-        url = url.substring(0, url.length - 1);
-        return url;
-    }
-
     function goToComments(id) {
         location.hash = '#comments:' + id;
     }
 
     function refreshCurrentStream() {
         doByCurrentSelection(function() { // if it's subreddit
-            if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
-                loadLinks(urlInit + "r/" + getAllSubsString() + "/");
-            } else {
-                loadLinks(urlInit + "r/" + current.name + "/");
-            }
+            if(M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
+            else C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
         }, function() { // if it's channel
-            loadChannel(getChannelByName(current.name));
+            C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
         });
-    }
-
-    // Sorting Functions
-
-    function getSorting() {
-        return(currentSortingChoice !== 'hot' ? (currentSortingChoice + '/') : '');
-    }
-
-    function changeSorting(sorting) {
-        currentSortingChoice = sorting;
-        if(editingSubs) return; // No subreddit or channel selected - just change the sorting type
-        // Only refresh with the new sorting, when a subreddit or channel is selected
-        var delay = 1;
-        if(showingMenu) {
-            moveMenu(move.left);
-            delay = 351;
-        }
-        setTimeout(function() {
-            refreshCurrentStream();
-        }, delay);
     }
 
     // Taps
@@ -750,7 +813,7 @@
         onTap: function() {
             var channelName = $('#txtChannel').val();
             if(!channelName) {
-                quitarModal();
+                V.Actions.removeModal();
                 return;
             }
 
@@ -761,12 +824,12 @@
                 if(!sub) continue;
                 subreddits.push(sub);
             }
-            quitarModal();
+            V.Actions.removeModal();
             var channel = {};
             channel.name = channelName;
             channel.subs = subreddits;
-            channel.url = getChannelURLfromSubs(subreddits);
-            insertChannel(channel);
+            channel.url = M.Channels.getChannelURLfromSubs(subreddits);
+            C.Channels.add(channel);
         },
         activeClass: 'listButton-active'
     });
@@ -775,15 +838,14 @@
         onTap: function(e, target) {
             var channel = $(target);
             var channelName = channel.children().first().text();
-            moveMenu(move.left);
-            if(channelName === current.name && !editingSubs) return;
-            limpiarSubrSeleccionado();
+            V.Actions.moveMenu(move.left);
+            if(channelName === M.currentSelection.name && !editingSubs) return;
+            V.Subreddits.cleanSelected();
             channel.addClass('channel-active');
             if(currentView === view.comments) {
-                backToMainView();
-                slideFromLeft();
+                V.Actions.backToMainView();
             }
-            loadChannel(getChannelByName(channelName));
+            C.Channels.loadPosts(M.Channels.getByName(channelName));
 
         },
         activeClassDelay: 100,
@@ -795,7 +857,7 @@
             var parent = $(target);
             var commentID = parent.attr('comment-id');
             var comments = replies[commentID];
-            loadComments(comments, parent.parent());
+            C.Comments.load(comments, parent.parent());
             parent.remove();
         },
         activeClass: 'repliesButton-active'
@@ -804,13 +866,12 @@
     tappable(".sub", {
         onTap: function(e, target) {
             var sub = $(target);
-            moveMenu(move.left);
-            loadSub(sub.first().text());
-            limpiarSubrSeleccionado();
+            V.Actions.moveMenu(move.left);
+            C.Subreddits.loadPosts(sub.first().text());
+            V.Subreddits.cleanSelected();
             sub.addClass('sub-active');
             if(currentView === view.comments) {
-                backToMainView();
-                slideFromLeft();
+                V.Actions.backToMainView();
             }
         },
         allowClick: false,
@@ -828,7 +889,7 @@
         onTap: function(e) {
             if(currentView === view.comments) {
                 if(!currentThread) return;
-                procesarComentarios(currentThread, true);
+                C.Comments.show(currentThread, true);
             }
             if(currentView === view.main && !editingSubs) {
                 refreshCurrentStream();
@@ -840,16 +901,16 @@
         onTap: function(e, target) {
             var comm = $(target);
             var id = comm.attr("data-id");
-            var link = posts[id];
+            var link = M.Posts.list[id];
             if(link.self || isWideScreen) {
                 goToComments(id);
             } else {
                 var url = comm.attr("href");
-                var a = document.createElement('a');
+                var a = doc.createElement('a');
                 a.setAttribute("href", url);
                 a.setAttribute("target", "_blank");
 
-                var dispatch = document.createEvent("HTMLEvents");
+                var dispatch = doc.createEvent("HTMLEvents");
                 dispatch.initEvent("click", true, true);
                 a.dispatchEvent(dispatch);
             }
@@ -871,30 +932,28 @@
     tappable("#wideRefresh", {
         onTap: function() {
             if(!currentThread) return;
-            procesarComentarios(currentThread, true);
+            C.Comments.show(currentThread, true);
         },
         activeClass: 'repliesButton-active'
     });
 
     tappable("#subTitle", {
-        onTap: function(e) {
-            if((!isDesktop && loadingLinks) || isLargeScreen) {
-                return;
-            }
-            moveMenu(showingMenu ? move.left : move.right);
+        onTap: function() {
+            if((!isDesktop && loadingLinks) || isLargeScreen) return;
+            V.Actions.moveMenu(showingMenu ? move.left : move.right);
         },
         activeClass: 'subTitle-active'
     });
 
     tappable("#addNewSubr", {
-        onTap: function(e) {
-            loadSubredditListToAdd();
+        onTap: function() {
+            V.Actions.loadForAdding();
         }
     });
 
     tappable("#removeSubr", {
-        onTap: function(e) {
-            loadSubredditListToRemove();
+        onTap: function() {
+            V.Actions.loadForRemoving();
         }
     });
 
@@ -902,15 +961,12 @@
         onTap: function() {
             doByCurrentSelection(function() {
                 var url;
-                if(current.name.toUpperCase() === 'frontPage'.toUpperCase()) {
-                    url = urlInit + "r/" + getAllSubsString() + "/";
-                } else {
-                    url = urlInit + "r/" + current.name + "/";
-                }
-                loadLinks(url, false, false, '&after=' + ultimoLink);
+                if(M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
+                else url = urlInit + "r/" + M.currentSelection.name + "/";
+                C.Posts.load(url, '&after=' + M.Posts.idLast);
             }, function() {
-                var channel = getChannelByName(current.name);
-                loadLinks(urlInit + channel.url + '/', false, false, '&after=' + ultimoLink);
+                var channel = M.Channels.getByName(M.currentSelection.name);
+                C.Posts.load(urlInit + channel.url + '/', '&after=' + M.Posts.idLast);
             });
 
         },
@@ -919,14 +975,14 @@
 
     tappable("#btnSubMan", {
         onTap: function() {
-            mostrarIngresoSubManual();
+            V.Subreddits.showManualInput();
         },
         activeClass: 'listButton-active'
     });
 
     tappable("#btnAddChannel", {
         onTap: function() {
-            showNewChannelForm();
+            V.Channels.showNewChannelForm();
         },
         activeClass: 'listButton-active'
     });
@@ -934,16 +990,16 @@
     tappable('#moreSubs', {
         onTap: function(e, target) {
             $(target).parent().remove();
-            var main = $('#mainWrap');
+            var main = V.mainWrap;
             main.append("<p class='loading'>Loading subreddits...</p>");
             $.ajax({
-                url: urlInit + 'reddits/' + urlEnd + '&after=' + ultimoSub,
+                url: urlInit + 'reddits/' + urlEnd + '&after=' + M.Subreddits.idLast,
                 dataType: 'jsonp',
                 success: function(list) {
-                    var nuevosSubs = Mustache.to_html(Templates.allSubreddits, list.data);
-                    ultimoSub = list.data.after;
+                    var nuevosSubs = Mustache.to_html(T.Subreddits.toAddList, list.data);
+                    M.Subreddits.idLast = list.data.after;
                     $('.loading', main).remove();
-                    main.append(nuevosSubs).append(Templates.botonCargarMasSubs);
+                    main.append(nuevosSubs).append(T.botonCargarMasSubs);
                     subreddits = subreddits + nuevosSubs;
                 },
                 error: function() {
@@ -958,79 +1014,28 @@
         onTap: function(e, target) {
             var parent = $(target).parent();
             var newSub = $('.subredditTitle', parent).text();
-            insertSubsToList(newSub);
+            V.Subreddits.insert(newSub);
         },
         activeClass: 'button-active'
     });
 
     tappable(".subToRemove > div", {
         onTap: function(e, target) {
-            var subParent = $(target).parent();
-            var subreddit = $("p", subParent).text();
-            var subsFromList = $('.sub');
-
-            for(var i = subsFromList.length - 1; i >= 0; i--) {
-                var subText = subsFromList[i].innerHTML;
-                if(subText === subreddit) {
-                    $(subsFromList[i]).parent().remove();
-                    break;
-                }
-            }
-
-            var idx = savedSubs.indexOf(subreddit);
-            savedSubs.splice(idx, 1);
-
-            store.setItem("subreeddits", JSON.stringify(savedSubs));
-            subParent.remove();
-
-            // Verificar si era la seleccion actual
-            if(current.type === selection.sub) {
-                if(current.name === subreddit) {
-                    setCurrentSub('frontPage');
-                }
-            }
+            C.Subreddits.remove($(target).data('name'));
         },
         activeClass: 'button-active'
     });
 
     tappable(".channelToRemove > div", {
         onTap: function(e, target) {
-            var channelParent = $(target).parent();
-            var channel = $("p", channelParent).text();
-            var channelsFromList = $('.channel');
-
-            for(var i = channelsFromList.length - 1; i >= 0; i--) {
-                var channelText = $('p', channelsFromList[i]).first().text();
-                if(channelText === channel) {
-                    $(channelsFromList[i]).parent().remove();
-                    break;
-                }
-            }
-
-            for(var j = 0; j < channels.length; j++) {
-                if(channels[j].name === channel) {
-                    channels.splice(j, 1);
-                    break;
-                }
-            }
-
-            store.setItem('channels', JSON.stringify(channels));
-            channelParent.remove();
-
-            // Verificar si era la seleccion actual
-            if(current.type === selection.channel) {
-                if(current.name === channel) {
-                    setCurrentSub('frontPage');
-                }
-            }
-
+            C.Channels.remove($(target).data('title'));
         },
         activeClass: 'button-active'
     });
 
     tappable(".closeForm", {
         onTap: function() {
-            quitarModal();
+            V.Actions.removeModal();
         }
     });
 
@@ -1038,13 +1043,13 @@
         onTap: function() {
             var delay = 1;
             if(!isLargeScreen) {
-                moveMenu(move.left);
+                V.Actions.moveMenu(move.left);
                 delay = 351;
             }
             setTimeout(function() {
                 if(esModal) return;
                 var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(Templates.about);
+                $('body').append(modal).append(T.about);
                 esModal = true;
                 setTimeout(function() {
                     modal.css('opacity', 1);
@@ -1063,106 +1068,39 @@
             if(sortingChoice === currentSortingChoice) return;
             $('.sorting-choice').removeClass('sorting-choice');
             choice.addClass('sorting-choice');
-            changeSorting(sortingChoice);
+            C.Sorting.change(sortingChoice);
         },
         activeClass: 'link-active',
         activeClassDelay: 100
     });
 
     // Swipes
-    $("#detailView").swipeRight(function() {
-        if(isWideScreen) {
-            return;
-        }
+    V.detailView.swipeRight(function() {
+        if(isWideScreen) return;
         history.back(); // Should go to "/"
     });
 
-    $("#mainView").swipeRight(function() {
-        if((!isDesktop && loadingLinks) || isLargeScreen) {
-            return;
-        }
-        if(currentView === view.main) {
-            moveMenu(move.right);
-        }
+    V.mainView.swipeRight(function() {
+        if((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if(currentView === view.main) V.Actions.moveMenu(move.right);
     });
 
-    $("#mainView").swipeLeft(function() {
-        if((!isDesktop && loadingLinks) || isLargeScreen) {
-            return;
-        }
-        if(showingMenu) {
-            moveMenu(move.left);
-        }
+    V.mainView.swipeLeft(function() {
+        if((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if(showingMenu) V.Actions.moveMenu(move.left);
     });
 
-    $("#mainView").on("swipeLeft", ".link", function() {
-        if(isWideScreen) {
-            return;
-        }
+    V.mainView.on("swipeLeft", ".link", function() {
+        if(isWideScreen) return;
         if(!showingMenu) {
             var id = $(this).attr('data-id');
             goToComments(id);
         }
     });
 
-    // Animations
-
-    function slideFromLeft() {
-        var main = $("#mainView");
-        var det = $("#detailView");
-        main.css("left", -ancho);
-        setTimeout(function() {
-            var translate = 'translate3d(' + ancho + 'px, 0px, 0px)';
-            var cssTransform = {
-                '-webkit-transform': translate,
-                'transform': translate
-            };
-            main.addClass("slideTransition").css(cssTransform);
-            det.addClass("slideTransition").css(cssTransform);
-            setTimeout(function() {
-                var cssTransformBack = {
-                    '-webkit-transform': '',
-                    'transform': '',
-                    'left': ''
-                };
-                main.removeClass("slideTransition").css(cssTransformBack).removeClass("fuera");
-                det.css(cssTransformBack).removeClass("slideTransition");
-                $("#detailView").addClass("fuera"); // Hide
-                currentView = view.main;
-            }, 351);
-        }, 50);
-    }
-
-    function slideFromRight() {
-        var main = $("#mainView");
-        var det = $("#detailView");
-        det.css("left", ancho);
-        setTimeout(function() {
-            var translate = 'translate3d(-' + ancho + 'px, 0px, 0px)';
-            var cssTransform = {
-                '-webkit-transform': translate,
-                'transform': translate
-            };
-            main.addClass("slideTransition").css(cssTransform);
-            det.addClass("slideTransition").css(cssTransform);
-            setTimeout(function() { // Quita las propiedades de transition
-                var cssTransformBack = {
-                    '-webkit-transform': '',
-                    'transform': ''
-                };
-                det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css(cssTransformBack);
-                main.removeClass("slideTransition").addClass("fuera").css(cssTransformBack);
-                currentView = view.comments;
-            }, 351);
-        }, 100);
-    }
-
-    var d = document,
-        body = d.body;
-
     var supportOrientation = typeof win.orientation !== 'undefined',
         getScrollTop = function() {
-            return win.pageYOffset || d.compatMode === 'CSS1Compat' && d.documentElement.scrollTop || body.scrollTop || 0;
+            return win.pageYOffset || doc.compatMode === 'CSS1Compat' && doc.documentElement.scrollTop || body.scrollTop || 0;
         },
         scrollTop = function() {
             if(!supportOrientation) return;
@@ -1179,11 +1117,11 @@
     if(win.applicationCache) win.applicationCache.addEventListener("updateready", function(e) {
         var delay = 1;
         if(showingMenu) {
-            moveMenu(move.left);
+            V.Actions.moveMenu(move.left);
             delay = 351;
         }
         setTimeout(function() {
-            $('#mainWrap').prepend("<div id='topButtons'><div id='btnUpdate'>Reeddit updated. Click to reload</div></div>");
+            V.mainWrap.prepend("<div id='topButtons'><div id='btnUpdate'>Reeddit updated. Click to reload</div></div>");
             tappable('#btnUpdate', {
                 onTap: function() {
                     win.location.reload();
@@ -1200,7 +1138,7 @@
         isLargeScreen = checkLargeScreen();
         scrollTop();
         if(isLargeScreen && showingMenu) {
-            moveMenu(move.left);
+            V.Actions.moveMenu(move.left);
         }
         if(isiPad) {
             scrollFix();
@@ -1213,80 +1151,74 @@
         if(location.hash === '') {
             var delay = 1;
             if(currentView === view.comments) {
-                backToMainView();
-                slideFromLeft();
+                V.Actions.backToMainView();
                 delay = 351;
             }
             if(isWideScreen) {
                 $('.link.link-active').removeClass('link-active');
-                $('#detailWrap').html(Templates.noLink);
+                V.detailWrap.html(T.noLink);
             } else {
                 setTimeout(function() {
-                    $('#detailWrap').empty();
+                    V.detailWrap.empty();
                 }, delay);
             }
         } else {
             var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
             if(match && match[2]) {
                 var id = match[2];
-                procesarComentarios(id);
+                C.Comments.show(id);
             }
         }
     }, false);
 
     // App init
-    var title = $("#title"),
-        headerIcon = $("#header-icon"),
-        touch = "touchmove";
+    V.title.remove();
 
-    $("#title").remove();
+    if(isWideScreen) V.detailWrap.html(T.noLink);
 
-    if(isWideScreen) $('#detailWrap').html(Templates.noLink);
-
-    current = loadCurrentSelection();
+    M.currentSelection.load();
 
     // Load subreddits and channels list
-    loadSubsList();
-    loadSavedChannels();
+    C.Subreddits.loadSaved();
+    C.Channels.loadSaved();
 
     // Cargar links y marcar como activo al subreddit actual - la 1ra vez sera el 'frontPage'
     doByCurrentSelection(function() { // En caso de ser un subreddit
-        var i = savedSubs.indexOf(current.name);
+        var i = M.Subreddits.list.indexOf(M.currentSelection.name);
         if(i > -1) {
-            var activeSub = document.getElementsByClassName('sub')[i];
+            var activeSub = doc.getElementsByClassName('sub')[i];
             $(activeSub).addClass('sub-active');
         }
         // Load links
-        if(current.name.toUpperCase() !== 'frontPage'.toUpperCase()) {
-            loadLinks(urlInit + "r/" + current.name + "/");
+        if(M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+            C.currentSelection.setSubreddit('frontPage');
+            C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
         } else {
-            setCurrentSub('frontPage');
-            loadLinks(urlInit + "r/" + getAllSubsString() + "/");
+            C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
         }
-        setSubTitle(current.name);
+        V.Actions.setSubTitle(M.currentSelection.name);
     }, function() { // If it's a channel
         var channel;
-        for(var i = 0; i < channels.length; i++) {
-            channel = channels[i];
-            if(channel.name === current.name) {
-                var active = document.getElementsByClassName('channel')[i];
+        for(var i = 0; i < M.Channels.list.length; i++) {
+            channel = M.Channels.list[i];
+            if(channel.name === M.currentSelection.name) {
+                var active = doc.getElementsByClassName('channel')[i];
                 $(active).addClass('channel-active');
                 break;
             }
         }
-        loadChannel(channel);
+        C.Channels.loadPosts(channel);
     });
 
     scrollTop();
 
     if(!isDesktop) {
-        document.getElementById("editSubs").addEventListener(touch, function(e) {
+        var touch = "touchmove";
+        $id("editSubs").addEventListener(touch, function(e) {
             e.preventDefault();
         }, false);
-        document.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
-            if(showingMenu) { // Cheat temporal, para evitar que las vistas hagan overflow...
-                e.preventDefault();
-            }
+        doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
+            if(showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
         }, false);
         isiPad = /iPad/.test(navigator.userAgent);
         if(isiPad) {
