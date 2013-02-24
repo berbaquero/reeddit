@@ -974,7 +974,7 @@
         onTap: function() {
             V.Subreddits.showManualInput();
         },
-        activeClass: 'listButton-active'
+        activeClass: 'list-button-active'
     });
 
     tappable("#btn-add-channel", {
