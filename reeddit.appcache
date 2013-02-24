@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-#v1.3 16-02-2013
+#v1.4.0 24-02-2013
 
 CACHE:
 
@@ -17,6 +17,7 @@ img/comment_24.png
 img/darkdenim3.png
 img/delete.png
 img/refresh.png
+img/refresh1.png
 
 #javascript files
 http://www.google-analytics.com/ga.js
