@@ -26,7 +26,7 @@ body {
 
 a { color: #999; }
 
-.link:visited div .linkTitle { color: #888; }
+.link:visited div .link-title { color: #888; }
 
 /*--------------------- Vistas ---------------------------*/
 
@@ -56,7 +56,7 @@ a { color: #999; }
     z-index: 1;
 }
 
-#mainView, #detailView {
+#main-view, #detail-view {
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
     background-color: whiteSmoke;
@@ -71,9 +71,9 @@ a { color: #999; }
 
 /*--------------------- Comentarios ----------------------*/
 
-#detailWrap > section > .commentWrap { padding-right: 10px; }
+#detail-wrap > section > .comment-wrap { padding-right: 10px; }
 
-.commentWrap {
+.comment-wrap {
     padding: 10px 0 10px 10px;
     border-bottom: 1px solid #DDD;
     border-left: 1px solid #DDD;
@@ -83,7 +83,7 @@ a { color: #999; }
     user-select: text;
 }
 
-#detailWrap > section > .commentWrap > div:first-child {
+#detail-wrap > section > .comment-wrap > div:first-child {
     background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
     background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
     background-image: linear-gradient(bottom, rgba(255, 255, 255, 0) 85%, rgba(220, 220, 220, 0.7));
@@ -91,23 +91,23 @@ a { color: #999; }
     margin: -10px -10px 0;
 }
 
-.commentData { display: -webkit-box; display: -moz-box; display: box; width: 100%; }
+.comment-data { display: -webkit-box; display: -moz-box; display: box; width: 100%; }
 
-.commentData > div { -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1; width: 50%; }
+.comment-data > div { -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1; width: 50%; }
 
-.commentAuthor p { color: #E34A28; font-weight: bold; }
+.comment-author p { color: #E34A28; font-weight: bold; }
 
-.commentPoster p { color: #f60; font-weight: bold; font-style: italic; }
+.comment-poster p { color: #f60; font-weight: bold; font-style: italic; }
 
-.commentInfo { text-align: right; width: 50%; }
+.comment-info { text-align: right; width: 50%; }
 
-.commentInfo p { color: #aaa; font-weight: bold; }
+.comment-info p { color: #aaa; font-weight: bold; }
 
-.commentBody p { margin: 10px 0; }
+.comment-body p { margin: 10px 0; }
 
-#linkSummary { background-color: #777; padding: 10px 0 16px; }
+#link-summary { background-color: #777; padding: 10px 0 16px; }
 
-#linkSummary:before {
+#link-summary:before {
     content: '';
     position: absolute;
     height: 300px;
@@ -123,23 +123,23 @@ a { color: #999; }
     background-size: 25%;
 }
 
-#linkSummary p { margin: 0; padding: 0 10px; }
+#link-summary p { margin: 0; padding: 0 10px; }
 
-#linkSummary a { text-decoration: none; }
+#link-summary a { text-decoration: none; }
 
-#summaryTitle { font-size: 16px; color: #fafafa; font-weight: bold; }
+#summary-title { font-size: 16px; color: #fafafa; font-weight: bold; }
 
-#summaryTime { color: white; text-align: center; }
+#summary-time { color: white; text-align: center; }
 
-#summaryDomain { color: #F60; font-weight: bold; font-size: 13px; }
+#summary-domain { color: #F60; font-weight: bold; font-size: 13px; }
 
-#summaryAuthor { color: #BBB; font-weight: bold; }
+#summary-author { color: #BBB; font-weight: bold; }
 
-#summarySub { color: #FAFAFA; text-align: left; }
+#summary-sub { color: #FAFAFA; text-align: left; }
 
-#summaryCommentNum { text-align: right; }
+#summary-comment-num { text-align: right; }
 
-#summaryExtra {
+#summary-extra {
     display: -webkit-box; display: -moz-box; display: box;
     background-color: #333;
     font-weight: bold;
@@ -148,7 +148,7 @@ a { color: #999; }
     box-shadow: 0 0 10px #333;
 }
 
-#summaryExtra p {
+#summary-extra p {
     color: #FAFAFA;
     -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1;
     margin: 0;
@@ -156,7 +156,7 @@ a { color: #999; }
     width: 33%;
 }
 
-#selfText {
+#selftext {
     padding: 10px;
     border: 1px solid #999;
     margin: 10px;
@@ -166,9 +166,9 @@ a { color: #999; }
     -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
 }
 
-#selfText p { margin-top: 5px; }
+#selftext p { margin-top: 5px; }
 
-.imagePreview {
+.image-preview {
     padding: 10px;
     width: 100%;
     height: auto;
@@ -178,9 +178,9 @@ a { color: #999; }
 
 /*--------------------- Menu -----------------------------*/
 
-#mainMenu { box-shadow: inset -3px 0 10px black; height: 92%; }
+#main-menu { box-shadow: inset -3px 0 10px black; height: 92%; }
 
-#editSubs {
+#edit-subs {
     position: fixed;
     bottom: 0;
     width: 140px;
@@ -193,7 +193,7 @@ a { color: #999; }
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
 }
 
-.btnEditSubr {
+.btn-edit-sub {
     font-weight: bold;
     text-align: center;
     width: 50%;
@@ -255,7 +255,7 @@ a { color: #999; }
 
 .sorting-choice { border-left: 3px solid; }
 
-#mainOverflow { width: 100%; }
+#main-overflow { width: 100%; }
 
 /*--------------------- Principal -------------------------*/
 
@@ -269,23 +269,23 @@ a { color: #999; }
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
-.linkWrap {
+.link-wrap {
     border-bottom: 1px solid #ccc;
     border-top: 1px solid #fff;
     display: -webkit-box; display: -moz-box; display: box;
     width: 100%;
 }
 
-.linkWrap:first-child { border-top: 0; }
+.link-wrap:first-child { border-top: 0; }
 
-.linkThumb {
+.link-thumb {
     -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     width: 70px;
     max-width: 70px;
     min-width: 70px;
 }
 
-.linkThumb div {
+.link-thumb div {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70px;
@@ -297,22 +297,22 @@ a { color: #999; }
     box-shadow: inset 0 1px 3px #333;
 }
 
-.linkTitle {
+.link-title {
     font-weight: bold;
     font-size: 15px;
     -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     margin: 0;
 }
 
-.linkInfo {
+.link-info {
     -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1; box-flex: 1;
     width: 67%;
     padding-right: 10px;
 }
 
-.linkDomain { margin: 0; color: #E34A28; }
+.link-domain { margin: 0; color: #E34A28; }
 
-.linkSub { margin: 0; color: #777; }
+.link-sub { margin: 0; color: #777; }
 
 .link-active {
     background-image: -webkit-linear-gradient(top, #4286F5, #194FDB);
@@ -322,11 +322,11 @@ a { color: #999; }
 
 .link-active div p { color: white; }
 
-.link-active:visited .linkInfo .linkTitle { color: whiteSmoke; }
+.link-active:visited .link-info .link-title { color: whiteSmoke; }
 
-.listButton { padding: 20px; }
+.list-button { padding: 20px; }
 
-.listButton > span {
+.list-button > span {
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
@@ -337,7 +337,7 @@ a { color: #999; }
     margin: 0 auto;
 }
 
-#topButtons {
+#top-buttons {
     padding: 10px;
     display: -webkit-box;
     display: -moz-box;
@@ -346,7 +346,7 @@ a { color: #999; }
     width: 100%;
 }
 
-#topButtons > div {
+#top-buttons > div {
     padding: 3px 10px;
     border-radius: 5px;
     font-size: 14px;
@@ -356,7 +356,7 @@ a { color: #999; }
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
-.commentsButton, #topButtons > div, .listButton > span {
+.comments-button, #top-buttons > div, .list-button > span {
     color: #555;
     background-image: -webkit-linear-gradient(whiteSmoke 0%, #CCC 100%);
     background-image: -moz-linear-gradient(whiteSmoke 0%, #CCC 100%);
@@ -441,7 +441,7 @@ header > div {
     border-bottom: 1px solid rgb(136, 24, 14);
 }
 
-#refreshIcon div {   
+#refresh-icon div {   
     background-image: url('../img/refresh.png');
     width: 14px; height: 18px;
     background-repeat: no-repeat;
@@ -449,7 +449,7 @@ header > div {
     margin: 0 auto;
 }
 
-#back-arrow, #refreshIcon {
+#back-arrow, #refresh-icon {
     display: -webkit-box;
     display: -moz-box;
     display: box;
@@ -467,14 +467,14 @@ header > div {
     margin: 0 auto;
 }
 
-.toComments {    
+.to-comments {    
     width: 15%;
     display: -webkit-box; display: -moz-box; display: box;
     -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
-.toComments div {
+.to-comments div {
     background-image: url('../img/comment_24.png');
     width: 24px;
     height: 24px;
@@ -485,7 +485,7 @@ header > div {
 
 .button-active { background-color: #ddd; }
 
-.commentsButton {
+.comments-button {
     padding: 3px 10px;
     border-radius: 8px;
     font-size: 11px;
@@ -496,14 +496,14 @@ header > div {
     margin: 0 auto;
 }
 
-.repliesButton-active, .listButton-active {
+.replies-button-active, .list-button-active {
     background-image: -webkit-linear-gradient(top, #ccc 0%, #777 100%) !important;
     background-image: -moz-linear-gradient(top, #ccc 0%, #777 100%) !important;
     background-image: linear-gradient(top, #ccc 0%, #777 100%) !important;
     color: white !important;
 }
 
-#mainTitle {
+#main-title {
     position: fixed;
     width: 40%;
     font-size: 15px;
@@ -519,7 +519,7 @@ header > div {
     overflow: hidden;
 }
 
-#subTitle {
+#sub-title {
     margin: 0 0 0 5px;
     padding: 0 5px;
     color: #333;
@@ -527,7 +527,7 @@ header > div {
     border-radius: 5px;
 }
 
-.subTitle-active { text-shadow: 0 1px 7px whiteSmoke !important; background-color: rgba(0, 0, 0, 0.2) !important; }
+.sub-title-active { text-shadow: 0 1px 7px whiteSmoke !important; background-color: rgba(0, 0, 0, 0.2) !important; }
 
 .loading {
     width: 100%;
@@ -539,7 +539,7 @@ header > div {
     margin: 0;
 }
 
-#wideRefresh { padding: 5px 10px; font-size: 15px; }
+#wide-refresh { padding: 5px 10px; font-size: 15px; }
 
 /*--- Subreddits ---*/
 
@@ -557,14 +557,14 @@ header > div {
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
-.btnAddSub {
+.btn-add-sub {
     width: 15%;
     display: -webkit-box; display: -moz-box; display: -ms-box; display: box;
     -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
-.btnAddSub > div {
+.btn-add-sub > div {
     background-image: url('../img/add.png');
     background-repeat: no-repeat;
     background-size: 24px;
@@ -573,17 +573,16 @@ header > div {
     margin: 0 auto;
 }
 
-.subredditDesc { margin: 5px 0; }
+.subreddit-desc { margin: 5px 0; }
 
-
-.subredditTitle {
+.subreddit-title {
     font-weight: bold;
     font-size: 15px;
     margin: 5px 0;
     color: #E34A28;
 }
 
-.newForm {
+.new-form {
     width: 300px;
     background-color: #ddd;
     box-shadow: 0 0 15px black;
@@ -595,12 +594,9 @@ header > div {
     margin-left: -150px;
 }
 
-#formNewChannel {
-    min-height: 160px;
-    top: 55px;
-}
+#form-new-channel { min-height: 160px; top: 55px; }
 
-#formNewChannel input {
+#form-new-channel input {
     width: 100%;
     padding-top: 10px;
     margin-top: 5px;
@@ -608,7 +604,7 @@ header > div {
     font-size: 15px;
 }
 
-#btnAddNewChannel {
+#btn-add-new-channel {
     border: 1px #aaa solid;
     margin: 10px 10px 5px 10px;
     padding: 5px;
@@ -620,15 +616,15 @@ header > div {
     background-image: linear-gradient(top, whiteSmoke 0%, #CCC 100%);
 }
 
-#formNuevoSub { height: 50px; top: 50%; margin-top: -100px; }
+#form-new-sub { height: 50px; top: 50%; margin-top: -100px; }
 
-#formNuevoSub input { width: 100%; height: 40px; font-size: 20px; }
+#form-new-sub input { width: 100%; height: 40px; font-size: 20px; }
 
-#agregarSubManual { padding: 10px; }
+#add-sub-manual { padding: 10px; }
 
-#removeWrap { height: 100%; }
+#remove-wrap { height: 100%; }
 
-#removeTitle {
+#remove-title {
     padding: 10px;
     font-weight: bold;
     font-size: 19px;
@@ -639,9 +635,9 @@ header > div {
     text-shadow: 0 1px 1px whiteSmoke;
 }
 
-.removeList { margin: 0; padding: 0; }
+.remove-list { margin: 0; padding: 0; }
 
-.itemToRemove {
+.item-to-remove {
     display: -webkit-box; display: -moz-box; display: -ms-box; display: box;
     border-bottom: 1px solid #DDD;
     border-top: 1px solid white;
@@ -649,7 +645,7 @@ header > div {
     height: 60px;
 }
 
-.itemToRemove > p {    
+.item-to-remove > p {    
     width: 85%;
     text-transform: capitalize;
     font-size: 16px;
@@ -657,7 +653,7 @@ header > div {
     padding-left: 10px;
 }
 
-.itemToRemove > div {
+.item-to-remove > div {
     background-image: url('../img/delete.png');
     width: 15%;
     height: 100%;
@@ -672,11 +668,11 @@ header > div {
 
 .fuera { left: -9999px; }
 
-.thumbLeft { padding-right: 0 !important; }
+.thumb-left { padding-right: 0 !important; }
 
 .marginless { margin: 0 !important; }
 
-.slideTransition {
+.slide-transition {
     -webkit-transition-duration: 350ms;
     -moz-transition-duration: 350ms;
     -ms-transition-duration: 350ms;
@@ -697,7 +693,7 @@ header > div {
     z-index: 9999;
 }
 
-.closeForm {
+.close-form {
     position: absolute;
     top: -30px;
     z-index: 10001;
@@ -711,9 +707,9 @@ header > div {
     background-size: 18px;
 }
 
-#noLink { margin: 50% auto; width: 140px; }
+#no-link { margin: 50% auto; width: 140px; }
 
-#noLink p { font-size: 16px; text-shadow: 0 1px 1px white; }
+#no-link p { font-size: 16px; text-shadow: 0 1px 1px white; }
 
 .option {
     color: whiteSmoke;
@@ -742,21 +738,21 @@ header > div {
     cursor: default;
 }
 
-.aboutReeddit { top: 80px; }
+.about-reeddit { top: 80px; }
 
-.aboutReeddit ul { list-style: none; padding: 0; }
+.about-reeddit ul { list-style: none; padding: 0; }
 
-.aboutReeddit li { font-size: 18px; text-align: center; }
+.about-reeddit li { font-size: 18px; text-align: center; }
 
-.aboutReeddit li a:hover { color: inherit; }
+.about-reeddit li a:hover { color: inherit; }
 
-.aboutReeddit li:first-child a { border-top: 0; }
+.about-reeddit li:first-child a { border-top: 0; }
 
-.aboutReeddit li:last-child a { border-bottom: 0; }
+.about-reeddit li:last-child a { border-bottom: 0; }
 
-.aboutReeddit p a { text-decoration: none; color: #777; }
+.about-reeddit p a { text-decoration: none; color: #777; }
 
-.aboutReeddit li a {
+.about-reeddit li a {
     text-decoration: none;
     letter-spacing: 1px;
     font-weight: bold;
@@ -768,7 +764,7 @@ header > div {
     color: #777;
 }
 
-.aboutReeddit p {
+.about-reeddit p {
     color: #777;
     text-shadow: 0 1px 1px white;
     font-size: 12px;
@@ -807,28 +803,28 @@ header > div {
 
     #back-arrow div { border-bottom: 6px solid transparent; border-right: 12px solid #333; border-top: 6px solid transparent; }
 
-    #refreshIcon div { background-image: url('../img/refresh1.png'); }
+    #refresh-icon div { background-image: url('../img/refresh1.png'); }
 
-    #refreshIcon:active div { background-image: url('../img/refresh.png'); }
+    #refresh-icon:active div { background-image: url('../img/refresh.png'); }
 
-    .subTitle-active { text-shadow: 0 -1px 1px whiteSmoke !important; }
+    .sub-title-active { text-shadow: 0 -1px 1px whiteSmoke !important; }
 
-    #mainView, #detailView { background-color: #fafafa; }
+    #main-view, #detail-view { background-color: #fafafa; }
 
-    #mainMenu { height: 95%; }
+    #main-menu { height: 95%; }
 
     .sub { padding: 9px 10px; }
 
-    .linkWrap { border-bottom: 1px solid #ddd; }
+    .link-wrap { border-bottom: 1px solid #ddd; }
 
-    #editSubs { height: 5%; }
+    #edit-subs { height: 5%; }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
 
-    .toComments div { background-image: url('../img/comment_48.png'); }
+    .to-comments div { background-image: url('../img/comment_48.png'); }
 
-    .btnAddSub > div { background-image: url('../img/add@2.png'); }
+    .btn-add-sub > div { background-image: url('../img/add@2.png'); }
 }
 
 /* Tablet Portrait / 'LargeScreen' */
@@ -836,17 +832,17 @@ header > div {
 @media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {
     #container { right: 0; width: 72%; }
 
-    #menu-container, #editSubs { width: 28%; }
+    #menu-container, #edit-subs { width: 28%; }
 
-    .imagePreview { width: 80%; }
+    .image-preview { width: 80%; }
 }
 
 @media only screen and (min-width: 760px) and (max-width: 999px) and (min-height: 500px) {
     #container { right: 0; width: 78%; }
 
-    #menu-container, #editSubs { width: 22%; }
+    #menu-container, #edit-subs { width: 22%; }
 
-    .imagePreview { width: 60%; }
+    .image-preview { width: 60%; }
 }
 
 /* Tablet Landscape / 'WideScreen' */
@@ -854,13 +850,13 @@ header > div {
 @media only screen and (min-width: 1000px) and (min-height: 500px) {
     #container { right: 0; width: 84%; }
 
-    #menu-container, #editSubs { width: 16%; }
+    #menu-container, #edit-subs { width: 16%; }
 
-    #mainView { width: 40%; }
+    #main-view { width: 40%; }
 
-    #detailView { width: 60%; right: 0; border-left: 1px solid; }
+    #detail-view { width: 60%; right: 0; border-left: 1px solid; }
 
-    header, .toComments { display: none; }
+    header, .to-comments { display: none; }
 
     .link { width: 100%; }
 
@@ -868,16 +864,16 @@ header > div {
 
     .fuera { left: auto; }
 
-    .imagePreview { width: 70%; }
+    .image-preview { width: 70%; }
 
-    .commentWrap, #selfText p { font-size: 14px; }
+    .comment-wrap, #selftext p { font-size: 14px; }
 
     .refresh-icon-FS { display: block; }
 }
 
 /* Wide-ass stuff */
 @media only screen and (min-width: 1500px) {
-    .imagePreview { width: 50%; }
+    .image-preview { width: 50%; }
 }
 
 /* Landscape phone */
@@ -889,36 +885,36 @@ header > div {
 
     #title { font-size: 16px; }
 
-    #refreshIcon div { width: 15px; height: 20px; }
+    #refresh-icon div { width: 15px; height: 20px; }
 
     .button { width: 25px; height: 25px; }
 
-    #mainTitle { top: 6px; }
+    #main-title { top: 6px; }
 
-    .btnEditSubr { margin: -10px 0; }
+    .btn-edit-sub { margin: -10px 0; }
 }
 
 @media only screen and (min-height: 890px) {
-    #mainMenu { height: 96%; }
+    #main-menu { height: 96%; }
 
-    #editSubs { height: 4%; }
+    #edit-subs { height: 4%; }
 }
 
 @-moz-document url-prefix() { /* Firefox only - layout hacks, for lack of solid flexbox */
 
-    #removeSubr, .itemToRemove > div, .toComments { float: right; }
+    #remove-sub, .item-to-remove > div, .to-comments { float: right; }
 
-    #addNewSubr, .itemToRemove > p, .corner, header > div { float: left; }
+    #add-new-sub, .item-to-remove > p, .corner, header > div { float: left; }
 
-    .itemToRemove { width: 100%; }
+    .item-to-remove { width: 100%; }
 
-    .linkWrap, #back-arrow, #refreshIcon, .itemToRemove { display: block; }
+    .link-wrap, #back-arrow, #refresh-icon, .item-to-remove { display: block; }
 
-    .toComments { padding-top: 30px; }
+    .to-comments { padding-top: 30px; }
 
     header { padding-top: 5px; }
 
-    #refreshIcon > div { position: relative; top: 5px; }
+    #refresh-icon > div { position: relative; top: 5px; }
 
     #back-arrow > div { position: relative; left: -2px;  top: 8px; }
 
@@ -926,7 +922,7 @@ header > div {
 
     .subreddit > div:first-child { display: table-cell; }
 
-    .btnAddSub { display: table-cell; vertical-align: middle; }
+    .btn-add-sub { display: table-cell; vertical-align: middle; }
 
     .refresh-icon-FS { right: 20px; }
 }

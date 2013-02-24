@@ -1,18 +1,18 @@
-.btnEditSubr, .sub, .channel > p, #summaryTitle, .option, #sorting p { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
+.btn-edit-sub, .sub, .channel > p, #summary-title, .option, #sorting p { -webkit-transition-duration: 200ms; transition-duration: 200ms; }
 
-.btnEditSubr:hover { color: #4286F5; }
+.btn-edit-sub:hover { color: #4286F5; }
 
 .refresh-icon-FS:hover { background-color: rgba(0, 0, 0, 0.7); }
 
 .sub:hover, .channel:hover > p, .option:hover, #sorting p:hover { text-shadow: 0 0 10px #CCC; }
 
-.link, .sub, .channel, .listButton > span, #topButtons > div, .commentsButton, #addNewSubr, #removeSubr,
-.itemToRemove > div, .btnAddSub, .closeForm, #btnAddNewChannel, .option, #sorting p, .refresh-icon-FS { cursor: pointer; }
+.link, .sub, .channel, .list-button > span, #top-buttons > div, .comments-button, #add-new-sub, #remove-sub,
+.item-to-remove > div, .btn-add-sub, .close-form, #btn-add-new-channel, .option, #sorting p, .refresh-icon-FS { cursor: pointer; }
 
-#linkSummary a:hover #summaryTitle { text-shadow: 0 1px 7px whiteSmoke; }
+#link-summary a:hover #summary-title { text-shadow: 0 1px 7px whiteSmoke; }
 
 /* Scrolling bars style */
-::-webkit-scrollbar, #mainMenu::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar, #main-menu::-webkit-scrollbar { width: 7px; }
 
 /* Track Principal */
 ::-webkit-scrollbar-track { border-radius: 10px; background-color: whiteSmoke; }
@@ -21,10 +21,10 @@
 ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
 
 /* Track Menu */
-#mainMenu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
+#main-menu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
 
 /* Handle Menu */
-#mainMenu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: #444; }
+#main-menu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: #444; }
 
 .button:hover {
 	box-shadow: rgba(255, 255, 255, .4) 0 1px 0 inset,
@@ -46,6 +46,6 @@
 				rgba(255, 255, 255, .4) 0 1px 0;
 }
 
-#subTitle:hover { background-color: rgba(0, 0, 0, 0.2); }
+#sub-title:hover { background-color: rgba(0, 0, 0, 0.2); }
 
 .channel > div p { font-size: 11px; letter-spacing: 1px; }

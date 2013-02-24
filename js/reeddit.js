@@ -1,24 +1,24 @@
 (function(win) {
 
     var T = { // Templates
-        Posts: "{{#children}}<article class='linkWrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='linkThumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='linkInfo thumbLeft'><p class='linkTitle'>{{data.title}}</p><p class='linkDomain'>{{data.domain}}</p><p class='linkSub'>{{data.subreddit}}</p></div></a><div class='toComments' data-id='{{data.id}}'><div class='rightArrow'></div></div></article>{{/children}}<div class='listButton'><span id='moreLinks'>More</span></div><div id='mainOverflow'></div>",
+        Posts: "{{#children}}<article class='link-wrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='link-thumb'><div class='marginless' style='background-image: url({{data.thumbnail}})'></div></div><div class='link-info thumbLeft'><p class='link-title'>{{data.title}}</p><p class='link-domain'>{{data.domain}}</p><p class='link-sub'>{{data.subreddit}}</p></div></a><div class='to-comments' data-id='{{data.id}}'><div class='right-arrow'></div></div></article>{{/children}}<div class='list-button'><span id='more-links'>More</span></div><div id='main-overflow'></div>",
         Subreddits: {
             list: "{{#.}}<li data-name='{{.}}'><p class='sub'>{{.}}</p></li>{{/.}}",
-            toRemoveList: "<ul class='removeList'>{{#.}}<div class='itemToRemove subToRemove' data-name='{{.}}'><p>{{.}}</p><div data-name='{{.}}'></div></div>{{/.}}</ul>",
-            toAddList: "{{#children}}<div class='subreddit'><div><p class='subredditTitle'>{{data.display_name}}</p><p class='subredditDesc'>{{data.public_description}}</p></div><div class='btnAddSub'><div></div></div></div>{{/children}}"
+            toRemoveList: "<ul class='remove-list'>{{#.}}<div class='item-to-remove sub-to-remove' data-name='{{.}}'><p>{{.}}</p><div data-name='{{.}}'></div></div>{{/.}}</ul>",
+            toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit-title'>{{data.display_name}}</p><p class='subreddit-desc'>{{data.public_description}}</p></div><div class='btn-add-sub'><div></div></div></div>{{/children}}"
         },
         Channels: {
-            toRemoveList: "<p id='removeTitle'>Channels</p><ul class='removeList'>{{#.}}<div class='itemToRemove channelToRemove' data-title='{{name}}'><p>{{name}}</p><div data-title='{{name}}'></div></div>{{/.}}</ul>",
+            toRemoveList: "<p id='remove-title'>Channels</p><ul class='remove-list'>{{#.}}<div class='item-to-remove channel-to-remove' data-title='{{name}}'><p>{{name}}</p><div data-title='{{name}}'></div></div>{{/.}}</ul>",
             single: '<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
             list: '{{#.}}<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}'
         },
-        linkSummary: "<section><div id='linkSummary'><a href='{{url}}' target='_blank'><p id='summaryTitle'>{{title}}</p><p id='summaryDomain'>{{domain}}</p></a><p id='summaryAuthor'>by {{author}}</p></div><div id='summaryExtra'><p id='summarySub'>{{subreddit}}</p><p id='summaryTime'></p><p id='summaryCommentNum'>{{num_comments}} comments</p></div></section>",
-        botonAgregarSubManual: "<div id='topButtons'><div id='btnSubMan'>Insert Manually</div><div id='btnAddChannel'>Add Channel</div></div>",
-        formAgregarSubManual: '<div class="newForm" id="formNuevoSub"><div class="closeForm">close</div><form><input type="text" id="txtNuevoSub" placeholder="New subreddit name" /></form></div>',
-        formAddNewChannel: '<div class="newForm" id="formNewChannel"><div class="closeForm">close</div><input type="text" id="txtChannel" placeholder="Channel name" /><div id="subsForChannel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btnAddNewChannel">Add Channel</div></div>',
-        botonCargarMasSubs: "<div class='listButton'><span id='moreSubs'>More</span></div>",
-        noLink: "<div id='noLink'><p>No Post Selected.</div>",
-        about: "<div class='newForm aboutReeddit'><div class='closeForm'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='https://twitter.com/berbaquero' target='_blank'>@BerBaquero</a></p></div>"
+        linkSummary: "<section><div id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p></a><p id='summary-author'>by {{author}}</p></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><p id='summary-comment-num'>{{num_comments}} comments</p></div></section>",
+        botonAgregarSubManual: "<div id='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Add Channel</div></div>",
+        formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
+        formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-new-channel">Add Channel</div></div>',
+        botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
+        noLink: "<div id='no-link'><p>No Post Selected.</div>",
+        about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='./about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='https://twitter.com/berbaquero' target='_blank'>@BerBaquero</a></p></div>"
     };
 
     var doc = win.document,
@@ -194,17 +194,17 @@
     };
 
     var V = { // View
-        mainWrap: $("#mainWrap"),
-        detailWrap: $("#detailWrap"),
-        mainView: $("#mainView"),
-        detailView: $("#detailView"),
-        subtitle: $("#mainTitle"),
-        subtitleText: $("#subTitle"),
-        headerSection: $("#titleHead"),
+        mainWrap: $("#main-wrap"),
+        detailWrap: $("#detail-wrap"),
+        mainView: $("#main-view"),
+        detailView: $("#detail-view"),
+        subtitle: $("#main-title"),
+        subtitleText: $("#sub-title"),
+        headerSection: $("#title-head"),
         title: $("#title"),
         headerIcon: $("#header-icon"),
         container: $("#container"),
-        mainOverflow: $("#mainOverflow"),
+        mainOverflow: $("#main-overflow"),
         btnNavBack: $("#nav-back"),
         Channels: {
             menuContainer: $("#channels"),
@@ -216,7 +216,7 @@
             },
             remove: function(name) {
                 $('.channel[data-title="' + name + '"]').parent().remove();
-                $('.channelToRemove[data-title="' + name + '"]').remove();
+                $('.channel-to-remove[data-title="' + name + '"]').remove();
             },
             showNewChannelForm: function() {
                 var delay = 1;
@@ -231,7 +231,7 @@
                     esModal = true;
                     setTimeout(function() {
                         modal.css('opacity', 1);
-                        $id('txtChannel').focus();
+                        $id('txt-channel').focus();
                     }, 1);
                 }, delay);
             }
@@ -250,7 +250,7 @@
                 }
             },
             remove: function(sub) {
-                $(".subToRemove[data-name='" + sub + "']").remove();
+                $(".sub-to-remove[data-name='" + sub + "']").remove();
                 $("#subs > li[data-name='" + sub + "']").remove();
             },
             cleanSelected: function() {
@@ -270,7 +270,7 @@
                     esModal = true;
                     setTimeout(function() {
                         modal.css('opacity', 1);
-                        $id('txtNuevoSub').focus();
+                        $id('txt-new-sub').focus();
                     }, 1);
                 }, delay);
             }
@@ -285,12 +285,12 @@
 
                 main.append(Mustache.to_html(T.Posts, links)); // Add new links to the list
                 if(linksCount === 0) {
-                    var message = $query('#mainWrap .loading');
+                    var message = $query('#main-wrap .loading');
                     if(message) message.innerText = 'No Links available.';
                     else main.prepend('<p class="loading">No Links available.</p>');
                 } else {
                     // Remove thumbnail space for those links with invalid backgrounds.
-                    var thumbs = $('.linkThumb > div');
+                    var thumbs = $('.link-thumb > div');
                     for(var i = 0; i < thumbs.length; i++) {
                         var thumb = $(thumbs[i]),
                             bg = thumb.attr('style'),
@@ -299,7 +299,7 @@
                     }
                 }
                 // Remove 'More links' button if there are less than 30 links
-                if(linksCount < 30) $('moreLinks').parent().remove();
+                if(linksCount < 30) $('more-links').parent().remove();
                 if(!isDesktop) V.Misc.scrollFixLinks();
             }
         },
@@ -339,7 +339,7 @@
                 if(currentView === view.comments) V.Actions.backToMainView();
 
                 setTimeout(function() {
-                    $id("mainWrap").scrollTop = 0; // Go to the container top
+                    $id("main-wrap").scrollTop = 0; // Go to the container top
                     var main = V.mainWrap;
                     if(subreddits) {
                         main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
@@ -368,15 +368,15 @@
                 if(currentView === view.comments) V.Actions.backToMainView();
 
                 setTimeout(function() {
-                    $id("mainWrap").scrollTop = 0; // Up to container top
+                    $id("main-wrap").scrollTop = 0; // Up to container top
                     var htmlSubs = Mustache.to_html(T.Subreddits.toRemoveList, M.Subreddits.list);
                     var htmlChannels = '';
                     if(M.Channels.list && M.Channels.list.length > 0) {
                         htmlChannels = Mustache.to_html(T.Channels.toRemoveList, M.Channels.list);
                     }
-                    var html = '<div id="removeWrap">' + htmlSubs + htmlChannels + "</div>";
+                    var html = '<div id="remove-wrap">' + htmlSubs + htmlChannels + "</div>";
                     setTimeout(function() { // Intentional delay / fix for iOS
-                        $id("mainWrap").innerHTML = html;
+                        $id("main-wrap").innerHTML = html;
                     }, 10);
                     V.Subreddits.cleanSelected();
                 }, isLargeScreen ? 1 : 351);
@@ -386,8 +386,8 @@
             removeModal: function() {
                 var modal = $('#modal');
                 modal.css('opacity', '');
-                $('.closeForm').remove();
-                $('.newForm').remove();
+                $('.close-form').remove();
+                $('.new-form').remove();
                 esModal = false;
                 setTimeout(function() {
                     modal.remove();
@@ -397,29 +397,29 @@
         Misc: {
             scrollFixComments: function() {
                 // Make comments section always scrollable
-                var detailWrap = $query('#detailWrap');
+                var detailWrap = $query('#detail-wrap');
                 var detailWrapHeight = detailWrap.offsetHeight;
                 var linkSummary = detailWrap.querySelector('section:first-child');
                 var linkSummaryHeight = linkSummary.offsetHeight;
-                var selfText = detailWrap.querySelector('#selfText');
+                var selfText = detailWrap.querySelector('#selftext');
                 var selfTextHeight = selfText ? selfText.offsetHeight : 0;
-                var imagePreview = detailWrap.querySelector('.imagePreview');
+                var imagePreview = detailWrap.querySelector('.image-preview');
                 var imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0;
                 var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight + 1;
-                $('#detailWrap > section + ' + (selfTextHeight > 0 ? '#selfText +' : '') + (imagePreviewHeight > 0 ? '.imagePreview +' : '') + ' section').css('min-height', minHeight);
+                $('#detail-wrap > section + ' + (selfTextHeight > 0 ? '#selftext +' : '') + (imagePreviewHeight > 0 ? '.image-preview +' : '') + ' section').css('min-height', minHeight);
             },
             scrollFixLinks: function() {
                 // Make links section always scrollable / Necessary when using the other Sorting options.
                 var totalHeight = 0;
                 // Calculate the total of link wrappers heigth
-                var wraps = doc.querySelectorAll('.linkWrap');
+                var wraps = doc.querySelectorAll('.link-wrap');
                 for(var w = 0; w < wraps.length; w++) {
                     totalHeight += wraps[w].offsetHeight;
                 }
                 // Get each element's static section heigth
-                var containerHeight = $query('#container').offsetHeight;
+                var containerHeight = $id('container').offsetHeight;
                 var headerHeight = $query('header').offsetHeight;
-                var message = $query('#mainWrap .loading');
+                var message = $query('#main-wrap .loading');
                 var messageHeight = message ? message.offsetHeight : 0;
                 var minHeight = containerHeight - headerHeight - messageHeight;
 
@@ -438,16 +438,16 @@
                         '-webkit-transform': translate,
                         'transform': translate
                     };
-                    main.addClass("slideTransition").css(cssTransform);
-                    det.addClass("slideTransition").css(cssTransform);
+                    main.addClass("slide-transition").css(cssTransform);
+                    det.addClass("slide-transition").css(cssTransform);
                     setTimeout(function() {
                         var cssTransformBack = {
                             '-webkit-transform': '',
                             'transform': '',
                             'left': ''
                         };
-                        main.removeClass("slideTransition").css(cssTransformBack).removeClass("fuera");
-                        det.css(cssTransformBack).removeClass("slideTransition");
+                        main.removeClass("slide-transition").css(cssTransformBack).removeClass("fuera");
+                        det.css(cssTransformBack).removeClass("slide-transition");
                         V.detailView.addClass("fuera"); // Hide
                         currentView = view.main;
                     }, 351);
@@ -463,15 +463,15 @@
                         '-webkit-transform': translate,
                         'transform': translate
                     };
-                    main.addClass("slideTransition").css(cssTransform);
-                    det.addClass("slideTransition").css(cssTransform);
+                    main.addClass("slide-transition").css(cssTransform);
+                    det.addClass("slide-transition").css(cssTransform);
                     setTimeout(function() { // Quita las propiedades de transition
                         var cssTransformBack = {
                             '-webkit-transform': '',
                             'transform': ''
                         };
-                        det.css("left", 0).removeClass("slideTransition").removeClass("fuera").css(cssTransformBack);
-                        main.removeClass("slideTransition").addClass("fuera").css(cssTransformBack);
+                        det.css("left", 0).removeClass("slide-transition").removeClass("fuera").css(cssTransformBack);
+                        main.removeClass("slide-transition").addClass("fuera").css(cssTransformBack);
                         currentView = view.comments;
                     }, 351);
                 }, 100);
@@ -488,10 +488,10 @@
                 setEditingSubs(false);
                 var main = V.mainWrap;
                 if(paging) {
-                    $("#moreLinks").parent().remove(); // Se quita el boton de 'More' actual
+                    $("#more-links").parent().remove(); // Se quita el boton de 'More' actual
                     main.append("<p class='loading'>Loading links...</p>");
                 } else {
-                    $id("mainWrap").scrollTop = 0; // Sube al top del contenedor
+                    $id("main-wrap").scrollTop = 0; // Sube al top del contenedor
                     setTimeout(function() {
                         main.prepend("<p class='loading'>Loading links...</p>");
                     }, showingMenu ? 351 : 1);
@@ -535,10 +535,10 @@
 
                     var isPoster = M.Posts.list[currentThread].author === c.data.author;
 
-                    var comment = $("<div/>").addClass("commentWrap").append($('<div/>').append($("<div/>").addClass("commentData").append($("<div/>").addClass(isPoster ? "commentPoster" : "commentAuthor").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("commentInfo").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("commentBody").html(html)));
+                    var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
 
                     if(c.data.replies) {
-                        comment.append($("<span/>").addClass("commentsButton repliesButton").attr("comment-id", c.data.id).text("See replies"));
+                        comment.append($("<span/>").addClass("comments-button replies-button").attr("comment-id", c.data.id).text("See replies"));
                         replies[c.data.id] = c.data.replies.data.children;
                     }
 
@@ -549,11 +549,9 @@
 
                 if(idParent) loadedLinks[idParent] = com;
 
-                $("#detailWrap a").attr("target", "_blank");
+                $("#detail-wrap a").attr("target", "_blank");
 
-                if(!isDesktop) {
-                    V.Misc.scrollFixComments();
-                }
+                if(!isDesktop) V.Misc.scrollFixComments();
             },
             show: function(id, refresh) {
                 var delay = 0;
@@ -574,7 +572,7 @@
                     var detail = V.detailWrap;
                     detail.empty();
 
-                    $id("detailWrap").scrollTop = 0;
+                    $id("detail-wrap").scrollTop = 0;
 
                     if(loadedLinks[id] && !refresh) {
                         detail.append(M.Posts.list[id].summary);
@@ -599,7 +597,7 @@
                             error: function() {
                                 loadingComments = false;
                                 var error = 'Error loading comments. Refresh to try again.';
-                                if(isWideScreen) $('.loading').html(error + '<div class="commentsButton" id="wideRefresh">Refresh</div>');
+                                if(isWideScreen) $('.loading').html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
                                 else $('.loading').text(error);
                             }
                         });
@@ -679,7 +677,7 @@
         },
         Sorting: {
             get: function() {
-                return(currentSortingChoice !== 'hot' ? (currentSortingChoice + '/') : '');
+                return (currentSortingChoice !== 'hot' ? (currentSortingChoice + '/') : '');
             },
             change: function(sorting) {
                 currentSortingChoice = sorting;
@@ -701,9 +699,9 @@
                 var summaryHTML = Mustache.to_html(T.linkSummary, data);
                 var imageLink = checkImageLink(M.Posts.list[postID].url);
                 if(imageLink) { // If it's an image link
-                    summaryHTML += "<img class='imagePreview' src='" + imageLink + "' />";
+                    summaryHTML += "<img class='image-preview' src='" + imageLink + "' />";
                 }
-                if(data.selftext) { // If it has self-text
+                if(data.selftext) { // If it has selftext
                     var selfText;
                     if(M.Posts.list[postID].selftextParsed) {
                         selfText = M.Posts.list[postID].selftext;
@@ -713,21 +711,21 @@
                         M.Posts.list[postID].selftext = selfText;
                         M.Posts.list[postID].selftextParsed = true;
                     }
-                    summaryHTML += "<div id='selfText'>" + selfText + "</div>";
+                    summaryHTML += "<div id='selftext'>" + selfText + "</div>";
                 }
                 V.detailWrap.append(summaryHTML);
                 C.Misc.updatePostTime(data.created_utc);
                 M.Posts.list[postID].summary = summaryHTML;
             },
             updatePostSummary: function(data, postID) {
-                $id("summaryCommentNum").innerText = data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments');
+                $id("summary-comment-num").innerText = data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments');
                 // Time ago
                 C.Misc.updatePostTime(data.created_utc);
                 M.Posts.list[postID].num_comments = data.num_comments;
                 M.Posts.list[postID].created_utc = data.created_utc;
             },
             updatePostTime: function(time) {
-                $id("summaryTime").innerText = timeSince(new Date().getTime(), time);
+                $id("summary-time").innerText = timeSince(new Date().getTime(), time);
             }
         }
     };
@@ -764,30 +762,30 @@
 
     function doByCurrentSelection(caseSub, caseChannel) {
         switch(M.currentSelection.type) {
-        case selection.sub:
-            caseSub();
-            break;
-        case selection.channel:
-            caseChannel();
-            break;
+            case selection.sub:
+                caseSub();
+                break;
+            case selection.channel:
+                caseChannel();
+                break;
         }
     }
 
-    $('body').on('submit', '#formNuevoSub form', function(e) {
+    $('body').on('submit', '#form-new-sub form', function(e) {
         e.preventDefault();
-        var newSubr = $('#txtNuevoSub').val();
+        var newSub = $('#txt-new-sub').val();
         V.Actions.removeModal();
-        if(!newSubr) return; // Si no se ingreso nada, no pasa nada.
+        if(!newSub) return; // Si no se ingreso nada, no pasa nada.
         // En caso de haber ingresado algo, cargar el contenido del nuevo subreddit, de forma asincrona
         $.ajax({
-            url: urlInit + "r/" + newSubr + "/" + C.Sorting.get() + urlLimitEnd,
+            url: urlInit + "r/" + newSub + "/" + C.Sorting.get() + urlLimitEnd,
             dataType: 'jsonp',
             success: function(data) {
                 C.Posts.loadFromManualInput(data);
-                V.Actions.setSubTitle(newSubr);
+                V.Actions.setSubTitle(newSub);
                 V.Subreddits.cleanSelected();
-                C.currentSelection.setSubreddit(newSubr);
-                V.Subreddits.insert(newSubr, true);
+                C.currentSelection.setSubreddit(newSub);
+                V.Subreddits.insert(newSub, true);
             },
             error: function() {
                 alert('Oh, the subreddit you entered is not valid...');
@@ -809,16 +807,16 @@
     }
 
     // Taps
-    tappable("#btnAddNewChannel", {
+    tappable("#btn-add-new-channel", {
         onTap: function() {
-            var channelName = $('#txtChannel').val();
+            var channelName = $('#txt-channel').val();
             if(!channelName) {
                 V.Actions.removeModal();
                 return;
             }
 
             var subreddits = [];
-            var subs = $('#subsForChannel input');
+            var subs = $('#subs-for-channel input');
             for(var i = 0; i < subs.length; i++) {
                 var sub = $(subs[i]).val();
                 if(!sub) continue;
@@ -831,7 +829,7 @@
             channel.url = M.Channels.getChannelURLfromSubs(subreddits);
             C.Channels.add(channel);
         },
-        activeClass: 'listButton-active'
+        activeClass: 'list-button-active'
     });
 
     tappable('.channel', {
@@ -852,7 +850,7 @@
         activeClass: 'link-active'
     });
 
-    tappable(".repliesButton", {
+    tappable(".replies-button", {
         onTap: function(e, target) {
             var parent = $(target);
             var commentID = parent.attr('comment-id');
@@ -860,7 +858,7 @@
             C.Comments.load(comments, parent.parent());
             parent.remove();
         },
-        activeClass: 'repliesButton-active'
+        activeClass: 'replies-button-active'
     });
 
     tappable(".sub", {
@@ -920,7 +918,7 @@
         activeClass: 'link-active'
     });
 
-    tappable(".toComments", {
+    tappable(".to-comments", {
         onTap: function(e, target) {
             var id = $(target).attr('data-id');
             goToComments(id);
@@ -929,35 +927,35 @@
         activeClassDelay: 100
     });
 
-    tappable("#wideRefresh", {
+    tappable("#wide-refresh", {
         onTap: function() {
             if(!currentThread) return;
             C.Comments.show(currentThread, true);
         },
-        activeClass: 'repliesButton-active'
+        activeClass: 'replies-button-active'
     });
 
-    tappable("#subTitle", {
+    tappable("#sub-title", {
         onTap: function() {
             if((!isDesktop && loadingLinks) || isLargeScreen) return;
             V.Actions.moveMenu(showingMenu ? move.left : move.right);
         },
-        activeClass: 'subTitle-active'
+        activeClass: 'sub-title-active'
     });
 
-    tappable("#addNewSubr", {
+    tappable("#add-new-sub", {
         onTap: function() {
             V.Actions.loadForAdding();
         }
     });
 
-    tappable("#removeSubr", {
+    tappable("#remove-sub", {
         onTap: function() {
             V.Actions.loadForRemoving();
         }
     });
 
-    tappable("#moreLinks", {
+    tappable("#more-links", {
         onTap: function() {
             doByCurrentSelection(function() {
                 var url;
@@ -968,26 +966,25 @@
                 var channel = M.Channels.getByName(M.currentSelection.name);
                 C.Posts.load(urlInit + channel.url + '/', '&after=' + M.Posts.idLast);
             });
-
         },
-        activeClass: 'listButton-active'
+        activeClass: 'list-button-active'
     });
 
-    tappable("#btnSubMan", {
+    tappable("#btn-sub-man", {
         onTap: function() {
             V.Subreddits.showManualInput();
         },
         activeClass: 'listButton-active'
     });
 
-    tappable("#btnAddChannel", {
+    tappable("#btn-add-channel", {
         onTap: function() {
             V.Channels.showNewChannelForm();
         },
-        activeClass: 'listButton-active'
+        activeClass: 'list-button-active'
     });
 
-    tappable('#moreSubs', {
+    tappable('#more-subs', {
         onTap: function(e, target) {
             $(target).parent().remove();
             var main = V.mainWrap;
@@ -1007,33 +1004,33 @@
                 }
             });
         },
-        activeClass: 'listButton-active'
+        activeClass: 'list-button-active'
     });
 
-    tappable('.btnAddSub', {
+    tappable('.btn-add-sub', {
         onTap: function(e, target) {
             var parent = $(target).parent();
-            var newSub = $('.subredditTitle', parent).text();
+            var newSub = $('.subreddit-title', parent).text();
             V.Subreddits.insert(newSub);
         },
         activeClass: 'button-active'
     });
 
-    tappable(".subToRemove > div", {
+    tappable(".sub-to-remove > div", {
         onTap: function(e, target) {
             C.Subreddits.remove($(target).data('name'));
         },
         activeClass: 'button-active'
     });
 
-    tappable(".channelToRemove > div", {
+    tappable(".channel-to-remove > div", {
         onTap: function(e, target) {
             C.Channels.remove($(target).data('title'));
         },
         activeClass: 'button-active'
     });
 
-    tappable(".closeForm", {
+    tappable(".close-form", {
         onTap: function() {
             V.Actions.removeModal();
         }
@@ -1121,12 +1118,12 @@
             delay = 351;
         }
         setTimeout(function() {
-            V.mainWrap.prepend("<div id='topButtons'><div id='btnUpdate'>Reeddit updated. Click to reload</div></div>");
-            tappable('#btnUpdate', {
+            V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Click to reload</div></div>");
+            tappable('#btn-update', {
                 onTap: function() {
                     win.location.reload();
                 },
-                activeClass: 'listButton-active'
+                activeClass: 'list-button-active'
             });
         }, delay);
     }, false);
@@ -1214,7 +1211,7 @@
 
     if(!isDesktop) {
         var touch = "touchmove";
-        $id("editSubs").addEventListener(touch, function(e) {
+        $id("edit-subs").addEventListener(touch, function(e) {
             e.preventDefault();
         }, false);
         doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
