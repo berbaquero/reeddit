@@ -79,9 +79,9 @@
         Posts: {
             list: {},
             setList: function(posts) {
-                for(var i = 0; i < posts.children.length; i++) {
+                for (var i = 0; i < posts.children.length; i++) {
                     var post = posts.children[i];
-                    if(M.Posts.list[post.data.id]) { // Si ya se ha cargado este link localmente
+                    if (M.Posts.list[post.data.id]) { // Si ya se ha cargado este link localmente
                         // Se actualizan los datos dinamicos
                         M.Posts.list[post.data.id].num_comments = post.data.num_comments;
                         M.Posts.list[post.data.id].created_utc = post.data.created_utc;
@@ -106,7 +106,7 @@
         Subreddits: {
             list: [],
             add: function(sub) {
-                if(!M.Subreddits.listHasSub(sub)) {
+                if (!M.Subreddits.listHasSub(sub)) {
                     M.Subreddits.list.push(sub);
                     store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
                 }
@@ -121,7 +121,7 @@
                 store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
             },
             listHasSub: function(sub) {
-                if(M.Subreddits.list) {
+                if (M.Subreddits.list) {
                     var i = M.Subreddits.list.indexOf(sub);
                     return i > -1;
                 }
@@ -129,9 +129,9 @@
             },
             getAllString: function() {
                 var allSubs = '';
-                for(var i = 0; i < M.Subreddits.list.length; i++) {
+                for (var i = 0; i < M.Subreddits.list.length; i++) {
                     var sub = M.Subreddits.list[i];
-                    if(sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
+                    if (sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
                     allSubs += sub + '+';
                 }
                 return allSubs.substring(0, allSubs.length - 1);
@@ -142,7 +142,7 @@
             list: [],
             getChannelURLfromSubs: function(subs) {
                 var url = 'r/';
-                for(var i = 0; i < subs.length; i++) {
+                for (var i = 0; i < subs.length; i++) {
                     var sub = subs[i];
                     url += sub + '+';
                 }
@@ -154,8 +154,8 @@
                 store.setItem('channels', JSON.stringify(M.Channels.list));
             },
             remove: function(name) {
-                for(var j = 0; j < M.Channels.list.length; j++) {
-                    if(M.Channels.list[j].name === name) {
+                for (var j = 0; j < M.Channels.list.length; j++) {
+                    if (M.Channels.list[j].name === name) {
                         M.Channels.list.splice(j, 1);
                         break;
                     }
@@ -164,8 +164,8 @@
             },
             getByName: function(name) {
                 var foundChannel;
-                for(var i = 0; i < M.Channels.list.length; i++) {
-                    if(M.Channels.list[i].name === name) {
+                for (var i = 0; i < M.Channels.list.length; i++) {
+                    if (M.Channels.list[i].name === name) {
                         foundChannel = M.Channels.list[i];
                         break;
                     }
@@ -176,7 +176,7 @@
         currentSelection: {
             load: function() {
                 var loadedSelection = store.getItem('currentSelection');
-                if(loadedSelection) loadedSelection = JSON.parse(loadedSelection);
+                if (loadedSelection) loadedSelection = JSON.parse(loadedSelection);
                 M.currentSelection.name = loadedSelection ? loadedSelection.name : 'frontPage';
                 M.currentSelection.type = loadedSelection ? loadedSelection.type : selection.sub;
             },
@@ -220,12 +220,12 @@
             },
             showNewChannelForm: function() {
                 var delay = 1;
-                if(!isLargeScreen) {
-                    if(showingMenu) delay = 351;
+                if (!isLargeScreen) {
+                    if (showingMenu) delay = 351;
                     V.Actions.moveMenu(move.left);
                 }
                 setTimeout(function() {
-                    if(esModal) return;
+                    if (esModal) return;
                     var modal = $('<div/>').attr('id', 'modal');
                     $('body').append(modal).append(T.formAddNewChannel);
                     esModal = true;
@@ -240,10 +240,10 @@
             listContainer: $("#subs"),
             insert: function(subs, active) {
                 var subsList = V.Subreddits.listContainer;
-                if(subs instanceof Array) {
+                if (subs instanceof Array) {
                     subsList.append(Mustache.to_html(T.Subreddits.list, subs));
                 } else {
-                    if(!M.Subreddits.listHasSub(subs)) {
+                    if (!M.Subreddits.listHasSub(subs)) {
                         subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
                         M.Subreddits.add(subs);
                     }
@@ -259,12 +259,12 @@
             },
             showManualInput: function() {
                 var delay = 1;
-                if(!isLargeScreen) {
-                    if(showingMenu) delay = 351;
+                if (!isLargeScreen) {
+                    if (showingMenu) delay = 351;
                     V.Actions.moveMenu(move.left);
                 }
                 setTimeout(function() {
-                    if(esModal) return;
+                    if (esModal) return;
                     var modal = $('<div/>').attr('id', 'modal');
                     $('body').append(modal).append(T.formAgregarSubManual);
                     esModal = true;
@@ -280,27 +280,27 @@
                 var linksCount = links.children.length,
                     main = V.mainWrap;
 
-                if(paging) $(".loading").remove();
+                if (paging) $(".loading").remove();
                 else main.empty();
 
                 main.append(Mustache.to_html(T.Posts, links)); // Add new links to the list
-                if(linksCount === 0) {
+                if (linksCount === 0) {
                     var message = $query('#main-wrap .loading');
-                    if(message) message.innerText = 'No Links available.';
+                    if (message) message.innerText = 'No Links available.';
                     else main.prepend('<p class="loading">No Links available.</p>');
                 } else {
                     // Remove thumbnail space for those links with invalid backgrounds.
                     var thumbs = $('.link-thumb > div');
-                    for(var i = 0; i < thumbs.length; i++) {
+                    for (var i = 0; i < thumbs.length; i++) {
                         var thumb = $(thumbs[i]),
                             bg = thumb.attr('style'),
                             bgImg = 'background-image: ';
-                        if(bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') thumb.parent().remove();
+                        if (bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') thumb.parent().remove();
                     }
                 }
                 // Remove 'More links' button if there are less than 30 links
-                if(linksCount < 30) $('more-links').parent().remove();
-                if(!isDesktop) V.Misc.scrollFixLinks();
+                if (linksCount < 30) $('more-links').parent().remove();
+                if (!isDesktop) V.Misc.scrollFixLinks();
             }
         },
         Actions: {
@@ -311,11 +311,11 @@
                 V.btnNavBack.addClass("invisible");
                 V.subtitle.removeClass("invisible");
                 V.headerSection.empty().append(V.headerIcon);
-                if(newTitle) V.Actions.setSubTitle(newTitle);
+                if (newTitle) V.Actions.setSubTitle(newTitle);
                 V.Anims.slideFromLeft();
             },
             moveMenu: function(direction) {
-                if(direction === move.left) {
+                if (direction === move.left) {
                     V.container.css({
                         '-webkit-transform': transforms.translateTo0,
                         'transform': transforms.translateTo0
@@ -324,7 +324,7 @@
                         showingMenu = false;
                     });
                 }
-                if(direction === move.right) {
+                if (direction === move.right) {
                     V.container.css({
                         '-webkit-transform': transforms.translateTo140,
                         'transform': transforms.translateTo140
@@ -335,13 +335,13 @@
                 }
             },
             loadForAdding: function() {
-                if(!isLargeScreen) V.Actions.moveMenu(move.left);
-                if(currentView === view.comments) V.Actions.backToMainView();
+                if (!isLargeScreen) V.Actions.moveMenu(move.left);
+                if (currentView === view.comments) V.Actions.backToMainView();
 
                 setTimeout(function() {
                     $id("main-wrap").scrollTop = 0; // Go to the container top
                     var main = V.mainWrap;
-                    if(subreddits) {
+                    if (subreddits) {
                         main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
                     } else {
                         main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(T.botonAgregarSubManual);
@@ -364,14 +364,14 @@
                 setEditingSubs(true);
             },
             loadForRemoving: function() {
-                if(!isLargeScreen) V.Actions.moveMenu(move.left);
-                if(currentView === view.comments) V.Actions.backToMainView();
+                if (!isLargeScreen) V.Actions.moveMenu(move.left);
+                if (currentView === view.comments) V.Actions.backToMainView();
 
                 setTimeout(function() {
                     $id("main-wrap").scrollTop = 0; // Up to container top
                     var htmlSubs = Mustache.to_html(T.Subreddits.toRemoveList, M.Subreddits.list);
                     var htmlChannels = '';
-                    if(M.Channels.list && M.Channels.list.length > 0) {
+                    if (M.Channels.list && M.Channels.list.length > 0) {
                         htmlChannels = Mustache.to_html(T.Channels.toRemoveList, M.Channels.list);
                     }
                     var html = '<div id="remove-wrap">' + htmlSubs + htmlChannels + "</div>";
@@ -413,7 +413,7 @@
                 var totalHeight = 0;
                 // Calculate the total of link wrappers heigth
                 var wraps = doc.querySelectorAll('.link-wrap');
-                for(var w = 0; w < wraps.length; w++) {
+                for (var w = 0; w < wraps.length; w++) {
                     totalHeight += wraps[w].offsetHeight;
                 }
                 // Get each element's static section heigth
@@ -423,7 +423,7 @@
                 var messageHeight = message ? message.offsetHeight : 0;
                 var minHeight = containerHeight - headerHeight - messageHeight;
 
-                if(totalHeight > minHeight) V.mainOverflow.css('min-height', '');
+                if (totalHeight > minHeight) V.mainOverflow.css('min-height', '');
                 else V.mainOverflow.css('min-height', minHeight - totalHeight + 1);
             }
         },
@@ -482,12 +482,12 @@
     var C = { // "Controller"
         Posts: {
             load: function(baseUrl, paging) {
-                if(loadingLinks) return;
+                if (loadingLinks) return;
                 loadingLinks = true;
                 loadingComments = false;
                 setEditingSubs(false);
                 var main = V.mainWrap;
-                if(paging) {
+                if (paging) {
                     $("#more-links").parent().remove(); // Se quita el boton de 'More' actual
                     main.append("<p class='loading'>Loading links...</p>");
                 } else {
@@ -526,10 +526,10 @@
                 var now = new Date().getTime();
                 var converter = new Markdown.Converter();
                 var com = $("<section/>");
-                for(var i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     var c = data[i];
 
-                    if(c.kind !== "t1") continue;
+                    if (c.kind !== "t1") continue;
 
                     var html = converter.makeHtml(c.data.body);
 
@@ -537,7 +537,7 @@
 
                     var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
 
-                    if(c.data.replies) {
+                    if (c.data.replies) {
                         comment.append($("<span/>").addClass("comments-button replies-button").attr("comment-id", c.data.id).text("See replies"));
                         replies[c.data.id] = c.data.replies.data.children;
                     }
@@ -547,23 +547,23 @@
 
                 baseElement.append(com);
 
-                if(idParent) loadedLinks[idParent] = com;
+                if (idParent) loadedLinks[idParent] = com;
 
                 $("#detail-wrap a").attr("target", "_blank");
 
-                if(!isDesktop) V.Misc.scrollFixComments();
+                if (!isDesktop) V.Misc.scrollFixComments();
             },
             show: function(id, refresh) {
                 var delay = 0;
-                if(showingMenu) {
+                if (showingMenu) {
                     V.Actions.moveMenu(move.left);
                     delay = 351;
                 }
-                if(!M.Posts.list[id]) return; // Quick fix for missing id
+                if (!M.Posts.list[id]) return; // Quick fix for missing id
                 setTimeout(function() {
 
                     // Stop if it hasn't finished loading this comments for the first time before trying to load them again
-                    if(loadingComments && currentThread && currentThread === id) return;
+                    if (loadingComments && currentThread && currentThread === id) return;
 
                     loadingComments = true;
                     currentThread = id;
@@ -574,7 +574,7 @@
 
                     $id("detail-wrap").scrollTop = 0;
 
-                    if(loadedLinks[id] && !refresh) {
+                    if (loadedLinks[id] && !refresh) {
                         detail.append(M.Posts.list[id].summary);
                         detail.append(loadedLinks[id]);
                         C.Misc.updatePostSummary(M.Posts.list[id], id);
@@ -587,7 +587,7 @@
                             dataType: 'jsonp',
                             url: url,
                             success: function(result) {
-                                if(currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
+                                if (currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
                                 C.Misc.updatePostSummary(result[0].data.children[0].data, id);
                                 $(".loading").remove();
                                 var comments = result[1].data.children;
@@ -597,18 +597,18 @@
                             error: function() {
                                 loadingComments = false;
                                 var error = 'Error loading comments. Refresh to try again.';
-                                if(isWideScreen) $('.loading').html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
+                                if (isWideScreen) $('.loading').html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
                                 else $('.loading').text(error);
                             }
                         });
                     }
 
-                    if(!refresh) {
-                        if(isWideScreen) V.detailView.removeClass("fuera");
-                        else if(currentView !== view.comments) V.Anims.slideFromRight();
+                    if (!refresh) {
+                        if (isWideScreen) V.detailView.removeClass("fuera");
+                        else if (currentView !== view.comments) V.Anims.slideFromRight();
                     }
 
-                    if(isWideScreen) {
+                    if (isWideScreen) {
                         // Refresh active link indicator
                         $(".link.link-active").removeClass("link-active");
                         $('.link[data-id="' + id + '"]').addClass('link-active');
@@ -623,15 +623,15 @@
         Subreddits: {
             loadSaved: function() { // Only should execute when first loading the app
                 var subs = store.getItem("subreeddits");
-                if(subs) subs = JSON.parse(subs);
+                if (subs) subs = JSON.parse(subs);
                 M.Subreddits.list = subs;
-                if(!M.Subreddits.list) M.Subreddits.setList(defaultSubs); // If it hasn't been loaded to the 'local store', save default subreddits
+                if (!M.Subreddits.list) M.Subreddits.setList(defaultSubs); // If it hasn't been loaded to the 'local store', save default subreddits
                 V.Subreddits.insert(M.Subreddits.list);
             },
             loadPosts: function(sub) {
-                if(sub !== M.currentSelection.name || editingSubs) {
+                if (sub !== M.currentSelection.name || editingSubs) {
                     var url;
-                    if(sub.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
+                    if (sub.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
                     else url = urlInit + "r/" + sub + "/";
                     C.Posts.load(url);
                     C.currentSelection.setSubreddit(sub);
@@ -641,7 +641,7 @@
             remove: function(sub) {
                 M.Subreddits.remove(sub);
                 V.Subreddits.remove(sub);
-                if(M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
+                if (M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
             }
         },
         Channels: {
@@ -651,7 +651,7 @@
             },
             loadSaved: function() { // Should only execute when first loading the app
                 M.Channels.list = store.getItem('channels');
-                if(M.Channels.list) M.Channels.list = JSON.parse(M.Channels.list);
+                if (M.Channels.list) M.Channels.list = JSON.parse(M.Channels.list);
                 else M.Channels.list = [defaultChannel]; // Load default channel(s)
                 V.Channels.loadList();
             },
@@ -664,7 +664,7 @@
                 M.Channels.remove(name);
                 V.Channels.remove(name);
                 // If it was the current selection
-                if(M.currentSelection.type === selection.channel && M.currentSelection.name === name) C.currentSelection.setSubreddit('frontPage');
+                if (M.currentSelection.type === selection.channel && M.currentSelection.name === name) C.currentSelection.setSubreddit('frontPage');
             }
         },
         currentSelection: {
@@ -681,10 +681,10 @@
             },
             change: function(sorting) {
                 currentSortingChoice = sorting;
-                if(editingSubs) return; // No subreddit or channel selected - just change the sorting type
+                if (editingSubs) return; // No subreddit or channel selected - just change the sorting type
                 // Only refresh with the new sorting, when a subreddit or channel is selected
                 var delay = 1;
-                if(showingMenu) {
+                if (showingMenu) {
                     V.Actions.moveMenu(move.left);
                     delay = 351;
                 }
@@ -698,12 +698,12 @@
                 // Main content
                 var summaryHTML = Mustache.to_html(T.linkSummary, data);
                 var imageLink = checkImageLink(M.Posts.list[postID].url);
-                if(imageLink) { // If it's an image link
+                if (imageLink) { // If it's an image link
                     summaryHTML += "<img class='image-preview' src='" + imageLink + "' />";
                 }
-                if(data.selftext) { // If it has selftext
+                if (data.selftext) { // If it has selftext
                     var selfText;
-                    if(M.Posts.list[postID].selftextParsed) {
+                    if (M.Posts.list[postID].selftextParsed) {
                         selfText = M.Posts.list[postID].selftext;
                     } else {
                         var summaryConverter1 = new Markdown.Converter();
@@ -740,11 +740,11 @@
 
     function checkImageLink(url) {
         var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|www.quickmeme\.com\/meme|qkme\.me)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
-        if(!matching) return '';
-        if(matching[1]) { // normal image link
+        if (!matching) return '';
+        if (matching[1]) { // normal image link
             return url;
-        } else if(matching[2]) { // imgur or quickmeme link
-            if(matching[0].slice(0, 5) === "imgur") return 'http://imgur.com/' + matching[2] + '.jpg';
+        } else if (matching[2]) { // imgur or quickmeme link
+            if (matching[0].slice(0, 5) === "imgur") return 'http://imgur.com/' + matching[2] + '.jpg';
             else return 'http://i.qkme.me/' + matching[2] + '.jpg';
         } else {
             return null;
@@ -753,7 +753,7 @@
 
     function setEditingSubs(editing) { // editing: boolean
         editingSubs = editing;
-        if(isWideScreen) {
+        if (isWideScreen) {
             // If it's showing the add or remove subreddits/channels panel, hide the refresh button
             var refreshButton = $query('.refresh-icon-FS');
             refreshButton.style.display = editing ? 'none' : '';
@@ -761,7 +761,7 @@
     }
 
     function doByCurrentSelection(caseSub, caseChannel) {
-        switch(M.currentSelection.type) {
+        switch (M.currentSelection.type) {
             case selection.sub:
                 caseSub();
                 break;
@@ -775,7 +775,7 @@
         e.preventDefault();
         var newSub = $('#txt-new-sub').val();
         V.Actions.removeModal();
-        if(!newSub) return; // Si no se ingreso nada, no pasa nada.
+        if (!newSub) return; // Si no se ingreso nada, no pasa nada.
         // En caso de haber ingresado algo, cargar el contenido del nuevo subreddit, de forma asincrona
         $.ajax({
             url: urlInit + "r/" + newSub + "/" + C.Sorting.get() + urlLimitEnd,
@@ -799,7 +799,7 @@
 
     function refreshCurrentStream() {
         doByCurrentSelection(function() { // if it's subreddit
-            if(M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
+            if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
             else C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
         }, function() { // if it's channel
             C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
@@ -810,16 +810,16 @@
     tappable("#btn-add-new-channel", {
         onTap: function() {
             var channelName = $('#txt-channel').val();
-            if(!channelName) {
+            if (!channelName) {
                 V.Actions.removeModal();
                 return;
             }
 
             var subreddits = [];
             var subs = $('#subs-for-channel input');
-            for(var i = 0; i < subs.length; i++) {
+            for (var i = 0; i < subs.length; i++) {
                 var sub = $(subs[i]).val();
-                if(!sub) continue;
+                if (!sub) continue;
                 subreddits.push(sub);
             }
             V.Actions.removeModal();
@@ -837,10 +837,10 @@
             var channel = $(target);
             var channelName = channel.children().first().text();
             V.Actions.moveMenu(move.left);
-            if(channelName === M.currentSelection.name && !editingSubs) return;
+            if (channelName === M.currentSelection.name && !editingSubs) return;
             V.Subreddits.cleanSelected();
             channel.addClass('channel-active');
-            if(currentView === view.comments) {
+            if (currentView === view.comments) {
                 V.Actions.backToMainView();
             }
             C.Channels.loadPosts(M.Channels.getByName(channelName));
@@ -868,7 +868,7 @@
             C.Subreddits.loadPosts(sub.first().text());
             V.Subreddits.cleanSelected();
             sub.addClass('sub-active');
-            if(currentView === view.comments) {
+            if (currentView === view.comments) {
                 V.Actions.backToMainView();
             }
         },
@@ -885,11 +885,11 @@
 
     tappable(".refresh", {
         onTap: function(e) {
-            if(currentView === view.comments) {
-                if(!currentThread) return;
+            if (currentView === view.comments) {
+                if (!currentThread) return;
                 C.Comments.show(currentThread, true);
             }
-            if(currentView === view.main && !editingSubs) {
+            if (currentView === view.main && !editingSubs) {
                 refreshCurrentStream();
             }
         }
@@ -900,7 +900,7 @@
             var comm = $(target);
             var id = comm.attr("data-id");
             var link = M.Posts.list[id];
-            if(link.self || isWideScreen) {
+            if (link.self || isWideScreen) {
                 goToComments(id);
             } else {
                 var url = comm.attr("href");
@@ -929,7 +929,7 @@
 
     tappable("#wide-refresh", {
         onTap: function() {
-            if(!currentThread) return;
+            if (!currentThread) return;
             C.Comments.show(currentThread, true);
         },
         activeClass: 'replies-button-active'
@@ -937,7 +937,7 @@
 
     tappable("#sub-title", {
         onTap: function() {
-            if((!isDesktop && loadingLinks) || isLargeScreen) return;
+            if ((!isDesktop && loadingLinks) || isLargeScreen) return;
             V.Actions.moveMenu(showingMenu ? move.left : move.right);
         },
         activeClass: 'sub-title-active'
@@ -959,7 +959,7 @@
         onTap: function() {
             doByCurrentSelection(function() {
                 var url;
-                if(M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
+                if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
                 else url = urlInit + "r/" + M.currentSelection.name + "/";
                 C.Posts.load(url, '&after=' + M.Posts.idLast);
             }, function() {
@@ -1039,12 +1039,12 @@
     tappable("#about", {
         onTap: function() {
             var delay = 1;
-            if(!isLargeScreen) {
+            if (!isLargeScreen) {
                 V.Actions.moveMenu(move.left);
                 delay = 351;
             }
             setTimeout(function() {
-                if(esModal) return;
+                if (esModal) return;
                 var modal = $('<div/>').attr('id', 'modal');
                 $('body').append(modal).append(T.about);
                 esModal = true;
@@ -1059,10 +1059,10 @@
 
     tappable('#sorting p', {
         onTap: function(e, target) {
-            if(editingSubs && !isDesktop) return; // Block while editing subs/channels - it weirdly breaks the overflowing divs on mobile :/
+            if (editingSubs && !isDesktop) return; // Block while editing subs/channels - it weirdly breaks the overflowing divs on mobile :/
             var choice = $(target);
             var sortingChoice = choice.text();
-            if(sortingChoice === currentSortingChoice) return;
+            if (sortingChoice === currentSortingChoice) return;
             $('.sorting-choice').removeClass('sorting-choice');
             choice.addClass('sorting-choice');
             C.Sorting.change(sortingChoice);
@@ -1073,23 +1073,23 @@
 
     // Swipes
     V.detailView.swipeRight(function() {
-        if(isWideScreen) return;
+        if (isWideScreen) return;
         history.back(); // Should go to "/"
     });
 
     V.mainView.swipeRight(function() {
-        if((!isDesktop && loadingLinks) || isLargeScreen) return;
-        if(currentView === view.main) V.Actions.moveMenu(move.right);
+        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if (currentView === view.main) V.Actions.moveMenu(move.right);
     });
 
     V.mainView.swipeLeft(function() {
-        if((!isDesktop && loadingLinks) || isLargeScreen) return;
-        if(showingMenu) V.Actions.moveMenu(move.left);
+        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if (showingMenu) V.Actions.moveMenu(move.left);
     });
 
     V.mainView.on("swipeLeft", ".link", function() {
-        if(isWideScreen) return;
-        if(!showingMenu) {
+        if (isWideScreen) return;
+        if (!showingMenu) {
             var id = $(this).attr('data-id');
             goToComments(id);
         }
@@ -1100,7 +1100,7 @@
             return win.pageYOffset || doc.compatMode === 'CSS1Compat' && doc.documentElement.scrollTop || body.scrollTop || 0;
         },
         scrollTop = function() {
-            if(!supportOrientation) return;
+            if (!supportOrientation) return;
             body.style.height = screen.height + 'px';
             setTimeout(function() {
                 win.scrollTo(0, 1);
@@ -1111,9 +1111,9 @@
         };
 
     // Show option to reload app after update
-    if(win.applicationCache) win.applicationCache.addEventListener("updateready", function(e) {
+    if (win.applicationCache) win.applicationCache.addEventListener("updateready", function(e) {
         var delay = 1;
-        if(showingMenu) {
+        if (showingMenu) {
             V.Actions.moveMenu(move.left);
             delay = 351;
         }
@@ -1134,24 +1134,20 @@
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         scrollTop();
-        if(isLargeScreen && showingMenu) {
-            V.Actions.moveMenu(move.left);
-        }
-        if(isiPad) {
-            scrollFix();
-        }
+        if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
+        if (isiPad) scrollFix();
     }, false);
 
-    if(location.hash) location.hash = ''; // Clear hash at first app loading
+    if (location.hash) location.hash = ''; // Clear hash at first app loading
     // Pseudo-hash-router
     win.addEventListener('hashchange', function() {
-        if(location.hash === '') {
+        if (location.hash === '') {
             var delay = 1;
-            if(currentView === view.comments) {
+            if (currentView === view.comments) {
                 V.Actions.backToMainView();
                 delay = 351;
             }
-            if(isWideScreen) {
+            if (isWideScreen) {
                 $('.link.link-active').removeClass('link-active');
                 V.detailWrap.html(T.noLink);
             } else {
@@ -1161,7 +1157,7 @@
             }
         } else {
             var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
-            if(match && match[2]) {
+            if (match && match[2]) {
                 var id = match[2];
                 C.Comments.show(id);
             }
@@ -1171,7 +1167,7 @@
     // App init
     V.title.remove();
 
-    if(isWideScreen) V.detailWrap.html(T.noLink);
+    if (isWideScreen) V.detailWrap.html(T.noLink);
 
     M.currentSelection.load();
 
@@ -1182,12 +1178,12 @@
     // Cargar links y marcar como activo al subreddit actual - la 1ra vez sera el 'frontPage'
     doByCurrentSelection(function() { // En caso de ser un subreddit
         var i = M.Subreddits.list.indexOf(M.currentSelection.name);
-        if(i > -1) {
+        if (i > -1) {
             var activeSub = doc.getElementsByClassName('sub')[i];
             $(activeSub).addClass('sub-active');
         }
         // Load links
-        if(M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
+        if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
             C.currentSelection.setSubreddit('frontPage');
             C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
         } else {
@@ -1196,9 +1192,9 @@
         V.Actions.setSubTitle(M.currentSelection.name);
     }, function() { // If it's a channel
         var channel;
-        for(var i = 0; i < M.Channels.list.length; i++) {
+        for (var i = 0; i < M.Channels.list.length; i++) {
             channel = M.Channels.list[i];
-            if(channel.name === M.currentSelection.name) {
+            if (channel.name === M.currentSelection.name) {
                 var active = doc.getElementsByClassName('channel')[i];
                 $(active).addClass('channel-active');
                 break;
@@ -1209,16 +1205,16 @@
 
     scrollTop();
 
-    if(!isDesktop) {
+    if (!isDesktop) {
         var touch = "touchmove";
         $id("edit-subs").addEventListener(touch, function(e) {
             e.preventDefault();
         }, false);
         doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
-            if(showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
+            if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
         }, false);
         isiPad = /iPad/.test(navigator.userAgent);
-        if(isiPad) {
+        if (isiPad) {
             scrollFix = function() {
                 // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
                 var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
