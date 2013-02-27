@@ -174,7 +174,7 @@
             }
         },
         currentSelection: {
-            load: function() {
+            loadSaved: function() {
                 var loadedSelection = store.getItem('currentSelection');
                 if (loadedSelection) loadedSelection = JSON.parse(loadedSelection);
                 M.currentSelection.name = loadedSelection ? loadedSelection.name : 'frontPage';
@@ -290,11 +290,11 @@
                     else main.prepend('<p class="loading">No Links available.</p>');
                 } else {
                     // Remove thumbnail space for those links with invalid backgrounds.
-                    var thumbs = $('.link-thumb > div');
+                    var thumbs = $('.link-thumb > div'),
+                        bgImg = 'background-image: ';
                     for (var i = 0; i < thumbs.length; i++) {
                         var thumb = $(thumbs[i]),
-                            bg = thumb.attr('style'),
-                            bgImg = 'background-image: ';
+                            bg = thumb.attr('style');
                         if (bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') thumb.parent().remove();
                     }
                 }
@@ -1169,9 +1169,8 @@
 
     if (isWideScreen) V.detailWrap.html(T.noLink);
 
-    M.currentSelection.load();
+    M.currentSelection.loadSaved();
 
-    // Load subreddits and channels list
     C.Subreddits.loadSaved();
     C.Channels.loadSaved();
 
