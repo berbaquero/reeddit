@@ -283,12 +283,13 @@
                 if (paging) $(".loading").remove();
                 else main.empty();
 
-                main.append(Mustache.to_html(T.Posts, links)); // Add new links to the list
                 if (linksCount === 0) {
                     var message = $query('#main-wrap .loading');
                     if (message) message.innerText = 'No Links available.';
                     else main.prepend('<p class="loading">No Links available.</p>');
                 } else {
+                    main.append(Mustache.to_html(T.Posts, links)); // Add new links to the list
+
                     // Remove thumbnail space for those links with invalid backgrounds.
                     var thumbs = $('.link-thumb > div'),
                         bgImg = 'background-image: ';
@@ -301,6 +302,7 @@
                 // Remove 'More links' button if there are less than 30 links
                 if (linksCount < 30) $('more-links').parent().remove();
                 if (!isDesktop) V.Misc.scrollFixLinks();
+                if (!paging) V.Anims.reveal();
             }
         },
         Actions: {
@@ -475,6 +477,13 @@
                         currentView = view.comments;
                     }, 351);
                 }, 100);
+            },
+            reveal: function() {
+                var wrap = V.mainWrap;
+                wrap.addClass("anim-reveal");
+                setTimeout(function() {
+                    wrap.removeClass("anim-reveal");
+                }, 700);
             }
         }
     };

@@ -787,6 +787,18 @@ header > div {
     display: none; /*  only visible on full-view mode (through MQ, below) */
 }
 
+/* Here be da smooths */
+@-webkit-keyframes reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+@-moz-keyframes reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+.anim-reveal {
+    opacity: 0;
+    -webkit-animation: reveal 700ms ease both;
+    -moz-animation: reveal 700ms ease both;
+    animation: reveal 700ms ease both;
+}
+
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header {
