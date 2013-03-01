@@ -376,11 +376,11 @@ header {
     z-index: 2;
     display: -webkit-box; display: -moz-box; display: box;
     height: 44px;
-    background-image: -webkit-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
-    background-image: -moz-linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
-    background-image: linear-gradient(top, #eff0f3 0%, #a1a6b3 110%);
     border-bottom: 1px solid #777;
     border-top: 1px solid white;
+    background-color: #eff0f3;
+    background-image: url(../img/bg.png);
+    box-shadow: 0 -25px 24px -10px rgba(0, 0, 0, .3) inset;
 }
 
 header > div {
@@ -401,6 +401,7 @@ header > div {
     text-overflow: ellipsis;
     overflow: hidden;
     font-weight: bold;
+    cursor: default;
 }
 
 #header-icon {
@@ -802,11 +803,11 @@ header > div {
 @media only screen and (min-width: 350px) and (min-height: 500px) {
 
     header {
-        background-image: -webkit-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
-        background-image: -moz-linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
-        background-image: linear-gradient(top, #d1d1d1 0%, #a1a1a1 100%);
-        border-bottom: 1px solid #333;    
+        background-color: #e7e7e7;
+        border-bottom: 1px solid #333;
         border-top: 0;
+        box-shadow: rgba(255, 255, 255, .5) 0 32px 20px -10px inset,
+                    0 44px 0 rgba(0, 0, 0, .33) inset;
     }
 
     .button { border: none; background-image: none; }
