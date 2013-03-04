@@ -48,4 +48,4 @@
 
 #sub-title:hover { background-color: rgba(0, 0, 0, 0.2); }
 
-.channel > div p { font-size: 11px; letter-spacing: 1px; }
+.channel > div p { font-size: 11px; letter-spacing: 1px; line-height: 15px; margin: 4px 0; }
