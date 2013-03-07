@@ -1127,7 +1127,7 @@
             delay = 351;
         }
         setTimeout(function() {
-            V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Click to reload</div></div>");
+            V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
             tappable('#btn-update', {
                 onTap: function() {
                     win.location.reload();
