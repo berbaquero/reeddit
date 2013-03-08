@@ -204,7 +204,6 @@
         title: $("#title"),
         headerIcon: $("#header-icon"),
         container: $("#container"),
-        mainOverflow: $("#main-overflow"),
         btnNavBack: $("#nav-back"),
         Channels: {
             menuContainer: $("#channels"),
@@ -280,13 +279,16 @@
                 var linksCount = links.children.length,
                     main = V.mainWrap;
 
-                if (paging) $(".loading").remove();
+                if (paging) $(".loader").remove();
                 else main.empty();
 
                 if (linksCount === 0) {
-                    var message = $query('#main-wrap .loading');
-                    if (message) message.innerText = 'No Links available.';
-                    else main.prepend('<p class="loading">No Links available.</p>');
+                    var message = $query('.loader');
+                    if (message) {
+                        message.innerText = 'No Links available.';
+                        message.classList.add('loader-error');
+                        main.append('<div id="#main-overflow"></div>');
+                    } else main.prepend('<div class="loader loader-error">No Links available.</div><div id="main-overflow"></div>');
                 } else {
                     main.append(Mustache.to_html(T.Posts, links)); // Add new links to the list
 
@@ -346,7 +348,7 @@
                     if (subreddits) {
                         main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
                     } else {
-                        main.prepend("<p class='loading'>Loading subreddits...</p>").prepend(T.botonAgregarSubManual);
+                        main.prepend("<div class='loader'></div>").prepend(T.botonAgregarSubManual);
                         $.ajax({
                             url: urlInit + "reddits/.json?limit=50&jsonp=?",
                             dataType: 'jsonp',
@@ -356,7 +358,7 @@
                                 main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
                             },
                             error: function() {
-                                $('.loading').text('Error loading subreddits.');
+                                $('.loader').addClass("loader-error").text('Error loading subreddits.');
                             }
                         });
                     }
@@ -399,16 +401,19 @@
         Misc: {
             scrollFixComments: function() {
                 // Make comments section always scrollable
-                var detailWrap = $query('#detail-wrap');
-                var detailWrapHeight = detailWrap.offsetHeight;
-                var linkSummary = detailWrap.querySelector('section:first-child');
-                var linkSummaryHeight = linkSummary.offsetHeight;
-                var selfText = detailWrap.querySelector('#selftext');
-                var selfTextHeight = selfText ? selfText.offsetHeight : 0;
-                var imagePreview = detailWrap.querySelector('.image-preview');
-                var imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0;
-                var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight + 1;
-                $('#detail-wrap > section + ' + (selfTextHeight > 0 ? '#selftext +' : '') + (imagePreviewHeight > 0 ? '.image-preview +' : '') + ' section').css('min-height', minHeight);
+                var detailWrap = $query('#detail-wrap'),
+                    detailWrapHeight = detailWrap.offsetHeight,
+                    linkSummary = detailWrap.querySelector('section:first-child'),
+                    linkSummaryHeight = linkSummary.offsetHeight,
+                    selfText = detailWrap.querySelector('#selftext'),
+                    selfTextHeight = selfText ? selfText.offsetHeight : 0,
+                    imagePreview = detailWrap.querySelector('.image-preview'),
+                    imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0,
+                    loader = detailWrap.querySelector('.loader'),
+                    loaderHeight = loader ? loader.offsetHeight : 0;
+
+                var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight - loaderHeight + 1;
+                $('#detail-wrap > section + ' + (selfTextHeight > 0 ? '#selftext +' : '') + (imagePreviewHeight > 0 ? '.image-preview +' : '') + (loaderHeight > 0 ? '.loader +' : '') + ' section').css('min-height', minHeight);
             },
             scrollFixLinks: function() {
                 // Make links section always scrollable / Necessary when using the other Sorting options.
@@ -419,14 +424,20 @@
                     totalHeight += wraps[w].offsetHeight;
                 }
                 // Get each element's static section heigth
-                var containerHeight = $id('container').offsetHeight;
-                var headerHeight = $query('header').offsetHeight;
-                var message = $query('#main-wrap .loading');
-                var messageHeight = message ? message.offsetHeight : 0;
-                var minHeight = containerHeight - headerHeight - messageHeight;
+                var containerHeight = $id('container').offsetHeight,
+                    headerHeight = $query('header').offsetHeight,
+                    message = $query('.loader'),
+                    messageHeight = message ? message.offsetHeight : 0,
+                    listButton = $query('.list-button'),
+                    listButtonHeight = listButton ? listButton.offsetHeight : 0;
 
-                if (totalHeight > minHeight) V.mainOverflow.css('min-height', '');
-                else V.mainOverflow.css('min-height', minHeight - totalHeight + 1);
+                var minHeight = containerHeight - headerHeight - messageHeight - listButtonHeight;
+
+                if (totalHeight > minHeight) {
+                    $("#main-overflow").css('min-height', '');
+                } else {
+                    $("#main-overflow").css('min-height', minHeight - totalHeight + 1);
+                }
             }
         },
         Anims: {
@@ -498,11 +509,11 @@
                 var main = V.mainWrap;
                 if (paging) {
                     $("#more-links").parent().remove(); // Se quita el boton de 'More' actual
-                    main.append("<p class='loading'>Loading links...</p>");
+                    main.append("<div class='loader'></div>");
                 } else {
                     $id("main-wrap").scrollTop = 0; // Sube al top del contenedor
                     setTimeout(function() {
-                        main.prepend("<p class='loading'>Loading links...</p>");
+                        main.prepend("<div class='loader'></div>");
                     }, showingMenu ? 351 : 1);
                     paging = ''; //// Si no hay paginacion, se pasa una cadena vacia, para no paginar
                 }
@@ -514,7 +525,7 @@
                     },
                     error: function() {
                         loadingLinks = false;
-                        $('.loading').text('Error loading links. Refresh to try again.');
+                        $('.loader').addClass("loader-error").text('Error loading links. Refresh to try again.');
                     }
                 });
             },
@@ -591,14 +602,14 @@
                     } else {
                         C.Misc.setPostSummary(M.Posts.list[id], id);
                         var url = "http://www.reddit.com" + M.Posts.list[id].link + urlEnd;
-                        detail.append("<p class='loading'>Loading comments...</p>");
+                        detail.append("<div class='loader'></div>");
                         $.ajax({
                             dataType: 'jsonp',
                             url: url,
                             success: function(result) {
                                 if (currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
                                 C.Misc.updatePostSummary(result[0].data.children[0].data, id);
-                                $(".loading").remove();
+                                $(".loader").remove();
                                 var comments = result[1].data.children;
                                 C.Comments.load(comments, detail, id);
                                 loadingComments = false;
@@ -606,8 +617,12 @@
                             error: function() {
                                 loadingComments = false;
                                 var error = 'Error loading comments. Refresh to try again.';
-                                if (isWideScreen) $('.loading').html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
-                                else $('.loading').text(error);
+                                if (isWideScreen) $('.loader').addClass("loader-error").html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
+                                else $('.loader').addClass("loader-error").text(error);
+                                if (!isDesktop) {
+                                    detail.append($("<section/>"));
+                                    V.Misc.scrollFixComments();
+                                }
                             }
                         });
                     }
@@ -997,19 +1012,19 @@
         onTap: function(e, target) {
             $(target).parent().remove();
             var main = V.mainWrap;
-            main.append("<p class='loading'>Loading subreddits...</p>");
+            main.append("<div class='loader'></div>");
             $.ajax({
                 url: urlInit + 'reddits/' + urlEnd + '&after=' + M.Subreddits.idLast,
                 dataType: 'jsonp',
                 success: function(list) {
                     var nuevosSubs = Mustache.to_html(T.Subreddits.toAddList, list.data);
                     M.Subreddits.idLast = list.data.after;
-                    $('.loading', main).remove();
+                    $('.loader', main).remove();
                     main.append(nuevosSubs).append(T.botonCargarMasSubs);
                     subreddits = subreddits + nuevosSubs;
                 },
                 error: function() {
-                    $('.loading').text('Error loading more links. Refresh to try again.');
+                    $('.loader').addClass('loader-error').text('Error loading more subreddits. Refresh to try again.');
                 }
             });
         },
