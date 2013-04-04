@@ -1,13 +1,11 @@
 CACHE MANIFEST
 
-#v1.4.4 08-03-2013
+#v1.4.4 03-04-2013
 
-#style sheets
 css/style.css
 css/desk.css
 css/reeddit.css
 
-#style sheet images
 img/add.png
 img/alienHead.png
 img/cancel.png
@@ -18,8 +16,6 @@ img/refresh.png
 img/refresh1.png
 img/bg.png
 
-#javascript files
-http://www.google-analytics.com/ga.js
 js/zepto.js
 js/libs.js
 js/reeddit.js
