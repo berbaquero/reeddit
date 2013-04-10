@@ -243,7 +243,7 @@
                     subsList.append(Mustache.to_html(T.Subreddits.list, subs));
                 } else {
                     if (!M.Subreddits.listHasSub(subs)) {
-                        subsList.append($("<li/>").append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
+                        subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
                         M.Subreddits.add(subs);
                     }
                 }
