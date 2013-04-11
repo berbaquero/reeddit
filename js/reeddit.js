@@ -903,7 +903,7 @@
 
     tappable("#nav-back", {
         onTap: function() {
-            history.back(); // Should go to "/"
+            location.hash = "#";
         }
     });
 
@@ -1098,7 +1098,7 @@
     // Swipes
     V.detailView.swipeRight(function() {
         if (isWideScreen) return;
-        history.back(); // Should go to "/"
+        location.hash = "#";
     });
 
     V.mainView.swipeRight(function() {
