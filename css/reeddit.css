@@ -137,7 +137,7 @@ a { color: #999; }
 
 #summary-sub { color: #FAFAFA; text-align: left; }
 
-#summary-comment-num { text-align: right; }
+#summary-comment-num { text-align: right; text-decoration: none; display: block; }
 
 #summary-extra {
     display: -webkit-box; display: -moz-box; display: box;
@@ -148,7 +148,7 @@ a { color: #999; }
     box-shadow: 0 0 10px #333;
 }
 
-#summary-extra p {
+#summary-extra p, #summary-comment-num {
     color: #FAFAFA;
     -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1;
     margin: 0;
