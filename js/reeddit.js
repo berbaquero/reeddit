@@ -531,6 +531,7 @@
             },
             loadFromManualInput: function(loadedLinks) {
                 C.Posts.show(loadedLinks);
+                setEditingSubs(false);
             },
             show: function(result, paging) {
                 var links = result.data;
