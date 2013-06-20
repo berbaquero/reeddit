@@ -101,7 +101,7 @@ a { color: #999; }
 
 .comment-info { text-align: right; width: 50%; }
 
-.comment-info p { color: #aaa; font-weight: bold; }
+.comment-info a { color: #aaa; font-weight: bold; text-decoration: none; }
 
 .comment-body p { margin: 10px 0; }
 

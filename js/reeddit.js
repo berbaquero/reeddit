@@ -552,11 +552,11 @@
 
                     if (c.kind !== "t1") continue;
 
-                    var html = converter.makeHtml(c.data.body);
+                    var html = converter.makeHtml(c.data.body),
+                        isPoster = M.Posts.list[currentThread].author === c.data.author,
+                        permalink = "http://reddit.com" + M.Posts.list[currentThread].link + c.data.id;
 
-                    var isPoster = M.Posts.list[currentThread].author === c.data.author;
-
-                    var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<p/>").text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
+                    var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr({"href":permalink,"target": "_blank"}).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
 
                     if (c.data.replies) {
                         comment.append($("<span/>").addClass("comments-button replies-button").attr("comment-id", c.data.id).text("See replies"));
