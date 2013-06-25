@@ -322,13 +322,18 @@ a { color: #999; }
 .link-active div p { color: white; }
 
 .link-nsfw {    
+    font-size: 11px;
+    margin-left: 5px;
+    color: #D13;
+    font-weight: bold;
+    display: inline;
+}
+
+.summary-nsfw {
     background-color: #D13;
     color: white;
     border-radius: 5px;
     padding: 1px 3px;
-    font-weight: bold;
-    font-size: 11px;
-    margin-left: 5px;
 }
 
 .link-active:visited .link-info .link-title { color: whiteSmoke; }
