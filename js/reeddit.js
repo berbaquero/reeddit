@@ -555,9 +555,13 @@
 
                     var html = converter.makeHtml(c.data.body),
                         isPoster = M.Posts.list[currentThread].author === c.data.author,
-                        permalink = "http://reddit.com" + M.Posts.list[currentThread].link + c.data.id;
+                        permalink = "http://reddit.com" + M.Posts.list[currentThread].link + c.data.id,
+                        commentLink = {
+                            "href": permalink,
+                            "target": "_blank"
+                        };
 
-                    var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr({"href":permalink,"target": "_blank"}).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
+                    var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
 
                     if (c.data.replies) {
                         comment.append($("<span/>").addClass("comments-button replies-button").attr("comment-id", c.data.id).text("See replies"));
@@ -1137,22 +1141,23 @@
         };
 
     // Show option to reload app after update
-    if (win.applicationCache) win.applicationCache.addEventListener("updateready", function(e) {
-        var delay = 1;
-        if (showingMenu) {
-            V.Actions.moveMenu(move.left);
-            delay = 351;
-        }
-        setTimeout(function() {
-            V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
-            tappable('#btn-update', {
-                onTap: function() {
-                    win.location.reload();
-                },
-                activeClass: 'list-button-active'
-            });
-        }, delay);
-    }, false);
+    if (win.applicationCache)
+        win.applicationCache.addEventListener("updateready", function(e) {
+            var delay = 1;
+            if (showingMenu) {
+                V.Actions.moveMenu(move.left);
+                delay = 351;
+            }
+            setTimeout(function() {
+                V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
+                tappable('#btn-update', {
+                    onTap: function() {
+                        win.location.reload();
+                    },
+                    activeClass: 'list-button-active'
+                });
+            }, delay);
+        }, false);
 
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
