@@ -67,12 +67,12 @@
             translateTo140: 'translate3d(140px, 0px, 0px)'
         };
 
-    var defaultSubs = ["frontPage", "pics", "funny", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "geek", "videos", "reactiongifs", "AdviceAnimals", "aww"];
+    var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "reactiongifs", "books", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
 
     var defaultChannel = {
-        name: 'Media',
-        subs: ["movies", "music", "games"],
-        url: 'r/movies+music+games'
+        name: "Media",
+        subs: ["movies", "games", "music"],
+        url: "r/movies+games+music"
     };
 
     var M = { // Model
