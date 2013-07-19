@@ -168,6 +168,8 @@ a { color: #999; }
 
 #selftext p { margin-top: 5px; }
 
+#selftext p:last-child { margin-bottom: 5px; }
+
 .image-preview {
     padding: 10px;
     width: 100%;
