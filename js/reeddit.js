@@ -838,7 +838,8 @@
 
     // Taps
     tappable("#btn-add-new-channel", {
-        onTap: function() {
+        onTap: function(e, target) {
+            var btn = $(target);
             var channelName = $('#txt-channel').val();
             if (!channelName) {
                 V.Actions.removeModal();
@@ -852,12 +853,23 @@
                 if (!sub) continue;
                 subreddits.push(sub);
             }
-            V.Actions.removeModal();
             var channel = {};
             channel.name = channelName;
             channel.subs = subreddits;
             channel.url = M.Channels.getChannelURLfromSubs(subreddits);
             C.Channels.add(channel);
+
+            // confirmation feedback on button itself
+            btn.text("Channel Added.");
+            btn.css({
+                "background-image": "none",
+                "background-color": "#33B300",
+                "color": "white"
+            });
+            // remove modal after a moment
+            setTimeout(function() {
+                V.Actions.removeModal();
+            }, 1500);
         },
         activeClass: 'list-button-active'
     });
@@ -1039,8 +1051,10 @@
 
     tappable('.btn-add-sub', {
         onTap: function(e, target) {
-            var parent = $(target).parent();
-            var newSub = $('.subreddit-title', parent).text();
+            var parent = $(target).parent(),
+                subTitle = $(".subreddit-title", parent);
+            subTitle.css("color", "#33b300"); // 'adding sub' little UI feedback
+            var newSub = subTitle.text();
             V.Subreddits.insert(newSub);
         },
         activeClass: 'button-active'
