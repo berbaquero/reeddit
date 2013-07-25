@@ -95,13 +95,13 @@ a { color: #999; }
 
 .comment-data > div { -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1; width: 50%; }
 
-.comment-author p { color: #E34A28; font-weight: bold; }
+.comment-author p { color: #E34A28; font-weight: 700; }
 
-.comment-poster p { color: #f60; font-weight: bold; font-style: italic; }
+.comment-poster p { color: #f60; font-weight: 700; font-style: italic; }
 
 .comment-info { text-align: right; width: 50%; }
 
-.comment-info a { color: #aaa; font-weight: bold; text-decoration: none; }
+.comment-info a { color: #aaa; font-weight: 700; text-decoration: none; }
 
 .comment-body p { margin: 10px 0; }
 
@@ -123,17 +123,17 @@ a { color: #999; }
     background-size: 25%;
 }
 
-#link-summary p { margin: 0; padding-left: 10px; }
+#link-summary p { margin: 0; padding: 0 10px; }
 
 #link-summary a { text-decoration: none; }
 
-#summary-title { font-size: 16px; color: #fafafa; font-weight: bold; }
+#summary-title { font-size: 16px; color: #fafafa; font-weight: 700; }
 
 #summary-time { color: white; text-align: center; }
 
-#summary-domain { color: #F60; font-weight: bold; font-size: 13px; }
+#summary-domain { color: #F60; font-weight: 700; font-size: 13px; }
 
-#summary-author { color: #BBB; font-weight: bold; display: inline; }
+#summary-author { color: #BBB; font-weight: 700; display: inline; }
 
 #summary-sub { color: #FAFAFA; text-align: left; }
 
@@ -142,7 +142,7 @@ a { color: #999; }
 #summary-extra {
     display: -webkit-box; display: -moz-box; display: box;
     background-color: #333;
-    font-weight: bold;
+    font-weight: 700;
     padding: 0 10px;
     width: 100%;
     box-shadow: 0 0 10px #333;
@@ -196,7 +196,7 @@ a { color: #999; }
 }
 
 .btn-edit-sub {
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
     width: 50%;
     font-size: 25px;
@@ -327,7 +327,7 @@ a { color: #999; }
     font-size: 11px;
     margin-left: 5px;
     color: #D13;
-    font-weight: bold;
+    font-weight: 700;
     display: inline;
 }
 
@@ -346,7 +346,7 @@ a { color: #999; }
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
     display: block;
     width: 80%;
@@ -366,7 +366,7 @@ a { color: #999; }
     padding: 3px 10px;
     border-radius: 5px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     width: 50%;
     text-align: center;
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
@@ -416,7 +416,7 @@ header > div {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-weight: bold;
+    font-weight: 700;
     cursor: default;
 }
 
@@ -506,7 +506,7 @@ header > div {
     padding: 3px 10px;
     border-radius: 8px;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 700;
     display: block;
     text-align: center;
     width: 90px;
@@ -525,7 +525,7 @@ header > div {
     width: 40%;
     font-size: 15px;
     top: 12px;
-    font-weight: bold;
+    font-weight: 700;
     cursor: default;
     -webkit-transition-duration: 350ms;
     -moz-transition-duration: 350ms;
@@ -583,7 +583,7 @@ header > div {
 .subreddit-desc { margin: 5px 0; }
 
 .subreddit-title {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 15px;
     margin: 5px 0;
     color: #E34A28;
@@ -616,7 +616,7 @@ header > div {
     margin: 10px 10px 5px 10px;
     padding: 5px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 5px;
     background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
     background-image: -moz-linear-gradient(top, whiteSmoke 0%, #CCC 100%);
@@ -633,7 +633,7 @@ header > div {
 
 #remove-title {
     padding: 10px;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 19px;
     margin: 0;
     text-align: center;
@@ -656,7 +656,7 @@ header > div {
     width: 85%;
     text-transform: capitalize;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
     padding-left: 10px;
 }
 
@@ -710,7 +710,7 @@ header > div {
     width: 60px;
     background-repeat: no-repeat;
     padding-left: 20px;
-    font-weight: bold;
+    font-weight: 700;
     background-size: 18px;
 }
 
@@ -762,7 +762,7 @@ header > div {
 .about-reeddit li a {
     text-decoration: none;
     letter-spacing: 1px;
-    font-weight: bold;
+    font-weight: 700;
     text-shadow: 0 1px 1px white;
     padding: 12px;
     display: block;
@@ -818,7 +818,7 @@ header > div {
     animation: loading 1000ms ease 150ms infinite;
     text-align: center;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 700;
     display: block;
 }
 
