@@ -979,7 +979,7 @@
 
     tappable("#sub-title", {
         onTap: function() {
-            if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+            if (isLargeScreen) return;
             V.Actions.moveMenu(showingMenu ? move.left : move.right);
         },
         activeClass: 'sub-title-active'
