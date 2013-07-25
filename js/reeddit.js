@@ -1055,7 +1055,7 @@
         onTap: function(e, target) {
             var parent = $(target).parent(),
                 subTitle = $(".subreddit-title", parent);
-            subTitle.css("color", "#33b300"); // 'adding sub' little UI feedback
+            subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
             var newSub = subTitle.text();
             V.Subreddits.insert(newSub);
         },
@@ -1136,7 +1136,7 @@
     V.mainView.on("swipeLeft", ".link", function() {
         if (isWideScreen) return;
         if (!showingMenu) {
-            var id = $(this).attr('data-id');
+            var id = $(this).data("id");
             goToComments(id);
         }
     });
