@@ -879,7 +879,7 @@
     tappable('.channel', {
         onTap: function(e, target) {
             var channel = $(target);
-            var channelName = channel.children().first().text();
+            var channelName = channel.data("title");
             V.Actions.moveMenu(move.left);
             if (channelName === M.currentSelection.name && !editingSubs) return;
             V.Subreddits.cleanSelected();
