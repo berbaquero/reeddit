@@ -884,11 +884,8 @@
             if (channelName === M.currentSelection.name && !editingSubs) return;
             V.Subreddits.cleanSelected();
             channel.addClass('channel-active');
-            if (currentView === view.comments) {
-                V.Actions.backToMainView();
-            }
+            if (currentView === view.comments) V.Actions.backToMainView();
             C.Channels.loadPosts(M.Channels.getByName(channelName));
-
         },
         activeClassDelay: 100,
         activeClass: 'link-active'
