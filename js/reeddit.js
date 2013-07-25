@@ -363,6 +363,7 @@
                             }
                         });
                     }
+                    loadingLinks = false;
                 }, isLargeScreen ? 1 : 351);
                 V.Subreddits.cleanSelected();
                 V.Actions.setSubTitle("+ Subreddits");
@@ -384,6 +385,7 @@
                         $id("main-wrap").innerHTML = html;
                     }, 10);
                     V.Subreddits.cleanSelected();
+                    loadingLinks = false;
                 }, isLargeScreen ? 1 : 351);
                 V.Actions.setSubTitle('- Subreddits');
                 setEditingSubs(true);
