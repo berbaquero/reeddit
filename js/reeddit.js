@@ -71,8 +71,7 @@
 
     var defaultChannel = {
         name: "Media",
-        subs: ["movies", "games", "music"],
-        url: "r/movies+games+music"
+        subs: ["movies", "games", "music"]
     };
 
     var M = { // Model
@@ -141,14 +140,13 @@
         },
         Channels: {
             list: [],
-            getChannelURLfromSubs: function(subs) {
-                var url = 'r/';
-                for (var i = 0; i < subs.length; i++) {
-                    var sub = subs[i];
-                    url += sub + '+';
+            getURL: function(channel) {
+                if (channel.subs.length === 1) { // Reddit API-related hack
+                    // If there's one subreddit in a "Channel", and this subreddit name's invalid, reddit.com responds with a search-results HTML - not json data - and throws a hard-to-catch error...
+                    return "r/" + channel.subs[0] + "+" + channel.subs[0]; // Repeating the one subreddit in the URL avoids this problem :)
+                } else {
+                    return "r/" + channel.subs.join("+");
                 }
-                url = url.substring(0, url.length - 1);
-                return url;
             },
             add: function(channel) {
                 M.Channels.list.push(channel);
@@ -688,7 +686,7 @@
                 V.Channels.loadList();
             },
             loadPosts: function(channel) {
-                C.Posts.load(urlInit + channel.url + '/');
+                C.Posts.load(urlInit + M.Channels.getURL(channel) + '/');
                 V.Actions.setSubTitle(channel.name);
                 C.currentSelection.setChannel(channel);
             },
@@ -858,7 +856,6 @@
             var channel = {};
             channel.name = channelName;
             channel.subs = subreddits;
-            channel.url = M.Channels.getChannelURLfromSubs(subreddits);
             C.Channels.add(channel);
 
             // confirmation feedback on button itself
@@ -1005,7 +1002,7 @@
                 C.Posts.load(url, '&after=' + M.Posts.idLast);
             }, function() {
                 var channel = M.Channels.getByName(M.currentSelection.name);
-                C.Posts.load(urlInit + channel.url + '/', '&after=' + M.Posts.idLast);
+                C.Posts.load(urlInit + M.Channels.getURL(channel) + '/', '&after=' + M.Posts.idLast);
             });
         },
         activeClass: 'list-button-active'
