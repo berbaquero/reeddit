@@ -121,11 +121,16 @@ a { color: #999; }
     background-size: 25%;
 }
 
-#link-summary p { margin: 0; padding: 0 10px; }
+#link-summary p { margin: 0; padding-left: 10px; }
 
 #link-summary a { text-decoration: none; }
 
-#summary-title { font-size: 16px; color: #fafafa; font-weight: 700; }
+#summary-title {
+    font-size: 16px;
+    color: #fafafa;
+    font-weight: 700;
+    padding-right: 10px;
+}
 
 #summary-time { color: white; text-align: center; }
 
