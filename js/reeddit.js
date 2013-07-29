@@ -18,7 +18,7 @@
         formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-new-channel">Add Channel</div></div>',
         botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
         noLink: "<div id='no-link'><p>No Post Selected.</div>",
-        about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit info site</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>"
+        about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>"
     };
 
     var doc = win.document,
