@@ -103,7 +103,7 @@ a { color: #999; }
 
 .comment-body p { margin: 10px 0; color: #3D525E; }
 
-#link-summary { background-color: #777; padding: 10px 0 16px; }
+#link-summary { background-color: #777; padding: 10px 0 0; }
 
 #link-summary:before {
     content: '';
@@ -130,13 +130,26 @@ a { color: #999; }
     color: #fafafa;
     font-weight: 700;
     padding-right: 10px;
+    padding-bottom: 2px;
 }
 
 #summary-time { color: white; text-align: center; }
 
-#summary-domain { color: #F75433; font-weight: 700; font-size: 13px; }
+#summary-domain { color: #F75433; font-weight: 700; font-size: 13px; display: inline; }
 
-#summary-author { color: #E2E2E0; font-weight: 700; display: inline; }
+#summary-author {
+    color: #E2E2E0; font-weight: 700;
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1;
+}
+
+#share-tw { /* Share button position */
+    -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1;
+    background-color: #BBB;
+    padding: 3px 6px;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+}
 
 #summary-sub { color: #FAFAFA; text-align: left; }
 
@@ -156,6 +169,12 @@ a { color: #999; }
     margin: 0;
     padding: 5px 0;
     width: 33%;
+}
+
+#summary-footer {
+    display: -webkit-box; display: -moz-box; display: box;
+    padding-bottom: 10px;
+    padding-top: 2px;
 }
 
 #selftext {
@@ -373,7 +392,7 @@ a { color: #999; }
     -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
 }
 
-.comments-button, #top-buttons > div, .list-button > span {
+.comments-button, #top-buttons > div, .list-button > span, #share-tw {
     color: #555;
     background-image: -webkit-linear-gradient(whiteSmoke 0%, #CCC 100%);
     background-image: -moz-linear-gradient(whiteSmoke 0%, #CCC 100%);
@@ -505,7 +524,7 @@ header > div {
 
 .comments-button {
     padding: 3px 10px;
-    border-radius: 8px;
+    border-radius: 5px;
     font-size: 11px;
     font-weight: 700;
     display: block;
@@ -953,15 +972,15 @@ header > div {
     #edit-subs { height: 4%; }
 }
 
-@-moz-document url-prefix() { /* Firefox only - layout hacks, for lack of solid flexbox */
+@-moz-document url-prefix() { /* Firefox only - layout hacks (TODO: update to new flexbox) */
 
-    #remove-sub, .item-to-remove > div, .to-comments { float: right; }
+    #remove-sub, .item-to-remove > div, .to-comments, #share-tw { float: right; }
 
-    #add-new-sub, .item-to-remove > p, .corner, header > div { float: left; }
+    #add-new-sub, .item-to-remove > p, .corner, header > div, #summary-author { float: left; }
 
     .item-to-remove { width: 100%; }
 
-    .link-wrap, #back-arrow, #refresh-icon, .item-to-remove { display: block; }
+    .link-wrap, #back-arrow, #refresh-icon, .item-to-remove, #summary-footer { display: block; }
 
     .to-comments { padding-top: 30px; }
 
@@ -978,4 +997,6 @@ header > div {
     .btn-add-sub { display: table-cell; vertical-align: middle; }
 
     .refresh-icon-FS { right: 20px; }
+
+    #share-tw { margin-bottom: 7px; }
 }
