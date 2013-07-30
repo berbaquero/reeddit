@@ -2,6 +2,8 @@
 
 This is an experimental branch, to create a Mac app (OS X) version of Reeddit, using [node-webkit](https://github.com/rogerwang/node-webkit).
 
+[Download Reeddit.app (experimental)](http://cl.ly/1y2E350f2C2e).
+
 # Reeddit
 
 A minimalist, elastic and read-only [Reddit](http://reddit.com/) web app client, that lets you create custom 'Channels' with up to 3 subreddits each.
