@@ -1202,25 +1202,6 @@
             }, 1);
         };
 
-    // Show option to reload app after update
-    if (win.applicationCache)
-        win.applicationCache.addEventListener("updateready", function(e) {
-            var delay = 1;
-            if (showingMenu) {
-                V.Actions.moveMenu(move.left);
-                delay = 351;
-            }
-            setTimeout(function() {
-                V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
-                tappable('#btn-update', {
-                    onTap: function() {
-                        win.location.reload();
-                    },
-                    activeClass: 'list-button-active'
-                });
-            }, delay);
-        }, false);
-
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
         ancho = mainWindow.width;
