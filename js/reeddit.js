@@ -839,7 +839,34 @@
         });
     }
 
+    var openWindow = function(url, width, height) {
+        gui.Window.open(url, {
+          position: 'center',
+          width: width || 800,
+          height: height || 600,
+          frame: true,
+          toolbar: false,
+          resize: true
+        });
+    }
+
     // Taps
+    tappable("#share-tw", {
+        onTap: function(e, target) {
+            var url = $(target).attr("href");
+            openWindow(url, 520, 430);
+        },
+        allowClick: false,
+    });
+
+    tappable("#summary-title", {
+        onTap: function(e, target) {
+            var url = $(target).parent().attr("href");
+            openWindow(url);
+        },
+        allowClick: false,
+    });
+
     tappable("#btn-add-new-channel", {
         onTap: function(e, target) {
             var btn = $(target);
@@ -945,13 +972,7 @@
                 goToComments(id);
             } else {
                 var url = comm.attr("href");
-                var a = doc.createElement('a');
-                a.setAttribute("href", url);
-                a.setAttribute("target", "_blank");
-
-                var dispatch = doc.createEvent("HTMLEvents");
-                dispatch.initEvent("click", true, true);
-                a.dispatchEvent(dispatch);
+                openWindow(url);
             }
         },
         allowClick: false,
