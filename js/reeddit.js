@@ -1163,30 +1163,6 @@
         activeClassDelay: 100
     });
 
-    // Swipes
-    V.detailView.swipeRight(function() {
-        if (isWideScreen) return;
-        location.hash = "#";
-    });
-
-    V.mainView.swipeRight(function() {
-        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
-        if (currentView === view.main) V.Actions.moveMenu(move.right);
-    });
-
-    V.mainView.swipeLeft(function() {
-        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
-        if (showingMenu) V.Actions.moveMenu(move.left);
-    });
-
-    V.mainView.on("swipeLeft", ".link", function() {
-        if (isWideScreen) return;
-        if (!showingMenu) {
-            var id = $(this).data("id");
-            goToComments(id);
-        }
-    });
-
     var supportOrientation = typeof win.orientation !== 'undefined',
         getScrollTop = function() {
             return win.pageYOffset || doc.compatMode === 'CSS1Compat' && doc.documentElement.scrollTop || body.scrollTop || 0;
