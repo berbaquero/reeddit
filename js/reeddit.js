@@ -1195,9 +1195,9 @@
 
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
-        ancho = $(win).width();
+        ancho = mainWindow.width;
         store.setItem("win:width", ancho);
-        store.setItem("win:height", $(win).height());
+        store.setItem("win:height", mainWindow.height);
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         scrollTop();
@@ -1234,11 +1234,19 @@
     // App init
     V.title.remove();
 
-    var mainWinWidth = store.getItem("win:width");
-    var mainWinHeight = store.getItem("win:height");
+    var mainWinWidth = store.getItem("win:width"),
+        mainWinHeight = store.getItem("win:height"),
+        mainWinX = store.getItem("win:x"),
+        mainWinY = store.getItem("win:y");
 
     if (mainWinHeight && mainWinWidth) {
-        mainWindow.resizeTo(mainWinWidth, mainWinHeight);
+        mainWindow.width = mainWinWidth;
+        mainWindow.height = mainWinHeight;
+    }
+
+    if (mainWinX && mainWinY) {
+        mainWindow.x = mainWinX;
+        mainWindow.y = mainWinY;
     }
 
     if (isWideScreen) V.detailWrap.html(T.noLink);
@@ -1298,5 +1306,11 @@
             scrollFix();
         }
     }
+
+    mainWindow.on("close", function() {
+        store.setItem("win:x", mainWindow.x);
+        store.setItem("win:y", mainWindow.y);
+        mainWindow.close(true);
+    });
 
 })(window);
