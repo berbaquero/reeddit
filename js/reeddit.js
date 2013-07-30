@@ -838,6 +838,10 @@
             C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
         });
     }
+    
+    var openURL = function(url) {
+        gui.Shell.openExternal(url);
+    }
 
     var openWindow = function(url, width, height) {
         gui.Window.open(url, {
@@ -856,15 +860,39 @@
             var url = $(target).attr("href");
             openWindow(url, 520, 430);
         },
-        allowClick: false,
+        allowClick: false
     });
 
     tappable("#summary-title", {
         onTap: function(e, target) {
             var url = $(target).parent().attr("href");
-            openWindow(url);
+            openURL(url);
         },
-        allowClick: false,
+        allowClick: false
+    });
+
+    tappable("#summary-comment-num", {
+        onTap: function(e, target) {
+            var url = $(target).attr("href");
+            openURL(url);
+        },
+        allowClick: false
+    });
+
+    tappable(".comment-info a", {
+        onTap: function(e, target) {
+            var url = $(target).attr("href");
+            openURL(url);
+        }
+    });
+
+    tappable(".comment-body a", {
+        onTap: function(e, target) {
+            var url = $(target).attr("href");
+            alert(url);
+            openURL(url);
+        },
+        allowClick: false
     });
 
     tappable("#btn-add-new-channel", {
@@ -972,7 +1000,7 @@
                 goToComments(id);
             } else {
                 var url = comm.attr("href");
-                openWindow(url);
+                openURL(url);
             }
         },
         allowClick: false,
