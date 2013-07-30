@@ -65,7 +65,9 @@
         transforms = {
             translateTo0: 'translate3d(0px, 0px, 0px)',
             translateTo140: 'translate3d(140px, 0px, 0px)'
-        };
+        },
+        gui = require('nw.gui'),
+        mainWindow = gui.Window.get();
 
     var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "reactiongifs", "books", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
 
@@ -1173,6 +1175,8 @@
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
         ancho = $(win).width();
+        store.setItem("win:width", ancho);
+        store.setItem("win:height", $(win).height());
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         scrollTop();
@@ -1208,6 +1212,13 @@
 
     // App init
     V.title.remove();
+
+    var mainWinWidth = store.getItem("win:width");
+    var mainWinHeight = store.getItem("win:height");
+
+    if (mainWinHeight && mainWinWidth) {
+        mainWindow.resizeTo(mainWinWidth, mainWinHeight);
+    }
 
     if (isWideScreen) V.detailWrap.html(T.noLink);
 
