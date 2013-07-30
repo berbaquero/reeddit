@@ -33,7 +33,9 @@
     }
 
     // Pseudo-Globals
-    var ancho = $(win).width(),
+    var gui = require('nw.gui'),
+        mainWindow = gui.Window.get(),
+        ancho = mainWindow.width,
         currentView = 1,
         editingSubs = false,
         urlInit = "http://www.reddit.com/",
@@ -65,9 +67,7 @@
         transforms = {
             translateTo0: 'translate3d(0px, 0px, 0px)',
             translateTo140: 'translate3d(140px, 0px, 0px)'
-        },
-        gui = require('nw.gui'),
-        mainWindow = gui.Window.get();
+        };
 
     var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "reactiongifs", "books", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
 
@@ -305,7 +305,6 @@
                 }
                 // Remove 'More links' button if there are less than 30 links
                 if (linksCount < 30) $('more-links').parent().remove();
-                if (!isDesktop) V.Misc.scrollFixLinks();
                 if (!paging) V.Anims.reveal();
             }
         },
@@ -579,8 +578,6 @@
                 if (idParent) loadedLinks[idParent] = com;
 
                 $("#detail-wrap a").attr("target", "_blank");
-
-                if (!isDesktop) V.Misc.scrollFixComments();
             },
             show: function(id, refresh) {
                 var delay = 0;
@@ -628,10 +625,6 @@
                                 var error = 'Error loading comments. Refresh to try again.';
                                 if (isWideScreen) $('.loader').addClass("loader-error").html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
                                 else $('.loader').addClass("loader-error").text(error);
-                                if (!isDesktop) {
-                                    detail.append($("<section/>"));
-                                    V.Misc.scrollFixComments();
-                                }
                             }
                         });
                     }
@@ -1027,7 +1020,7 @@
 
     tappable("#sub-title", {
         onTap: function() {
-            if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+            if (isLargeScreen) return;
             V.Actions.moveMenu(showingMenu ? move.left : move.right);
         },
         activeClass: 'sub-title-active'
@@ -1151,7 +1144,6 @@
 
     tappable('#sorting p', {
         onTap: function(e, target) {
-            if (editingSubs && !isDesktop) return; // Block while editing subs/channels - it weirdly breaks the overflowing divs on mobile :/
             var choice = $(target);
             var sortingChoice = choice.text();
             if (sortingChoice === currentSortingChoice) return;
@@ -1162,21 +1154,6 @@
         activeClass: 'link-active',
         activeClassDelay: 100
     });
-
-    var supportOrientation = typeof win.orientation !== 'undefined',
-        getScrollTop = function() {
-            return win.pageYOffset || doc.compatMode === 'CSS1Compat' && doc.documentElement.scrollTop || body.scrollTop || 0;
-        },
-        scrollTop = function() {
-            if (!supportOrientation) return;
-            body.style.height = screen.height + 'px';
-            setTimeout(function() {
-                win.scrollTo(0, 1);
-                var top = getScrollTop();
-                win.scrollTo(0, top === 1 ? 0 : 1);
-                body.style.height = win.innerHeight + 'px';
-            }, 1);
-        };
 
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
@@ -1268,29 +1245,6 @@
         }
         C.Channels.loadPosts(channel);
     });
-
-    scrollTop();
-
-    if (!isDesktop) {
-        var touch = "touchmove";
-        $id("edit-subs").addEventListener(touch, function(e) {
-            e.preventDefault();
-        }, false);
-        doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
-            if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
-        }, false);
-        isiPad = /iPad/.test(navigator.userAgent);
-        if (isiPad) {
-            scrollFix = function() {
-                // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
-                var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
-                setTimeout(function() {
-                    $('.menu-desc').css('height', nextHeight);
-                }, 500);
-            };
-            scrollFix();
-        }
-    }
 
     mainWindow.on("close", function() {
         store.setItem("win:x", mainWindow.x);
