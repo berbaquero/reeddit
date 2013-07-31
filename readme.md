@@ -2,7 +2,7 @@
 
 This is an experimental branch, to create a Mac app (OS X) version of Reeddit, using [node-webkit](https://github.com/rogerwang/node-webkit).
 
-[Download Reeddit.app (experimental)](http://cl.ly/3O3s2M0I1b0y).
+[Download Reeddit.app (experimental)](https://dl.dropboxusercontent.com/u/1631373/Reeddit.app.zip).
 
 # Reeddit
 
