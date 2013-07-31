@@ -14,7 +14,9 @@ Being a personal side-project of mine, Reeddit can be used for browsing subreddi
 * #### Channels
 You can group up to 3 subreddits into a Channel, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
 
-For screenshots and additional info, visit [Reeddit's presentation page](http://berbaquero.github.com/reeddit/about).
+For screenshots and additional info, visit [Reeddit's Homepage](http://reedditapp.com/about).
+
+Follow the updates and send quick feedback on Twitter: [@ReedditApp](https://twitter.com/reedditapp).
 
 ## Tools
 
