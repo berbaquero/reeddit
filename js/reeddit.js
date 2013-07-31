@@ -831,7 +831,7 @@
             C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
         });
     }
-    
+
     var openURL = function(url) {
         gui.Shell.openExternal(url);
     }
@@ -882,7 +882,6 @@
     tappable(".comment-body a", {
         onTap: function(e, target) {
             var url = $(target).attr("href");
-            alert(url);
             openURL(url);
         },
         allowClick: false
