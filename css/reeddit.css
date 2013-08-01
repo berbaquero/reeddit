@@ -337,7 +337,9 @@ a { color: #999; }
     background-image: linear-gradient(top, #4286F5, #194FDB);
 }
 
-.link-active div p { color: white; }
+.link-domain { margin: 0; color: #D43030; }
+
+.link-sub { margin: 0; color: #777; display: inline; }
 
 .link-nsfw {
     font-size: 11px;
