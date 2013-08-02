@@ -13,9 +13,9 @@
             list: '{{#.}}<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}'
         },
         linkSummary: "<section><div id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p>{{#over_18}}<span class='link-nsfw summary-nsfw'>NSFW</span>{{/over_18}}</a><div id='summary-footer'><p id='summary-author'>by {{author}}</p><a class='btn-general' id='share-tw' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><a id='summary-comment-num' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a></div></section>",
-        botonAgregarSubManual: "<div id='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Add Channel</div></div>",
+        botonAgregarSubManual: "<div id='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>",
         formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-        formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-new-channel">Add Channel</div></div>',
+        formAddNewChannel: '<div class="new-form" id="form-new-channel"><div id="form-left-corner"><div class="btn-general" id="btn-add-new-channel">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub" class="btn-general">Add another subreddit</div></div>',
         botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
         noLink: "<div id='no-link'><p>No Post Selected.</div>",
         about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>v1.5.3</p><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
@@ -50,6 +50,7 @@
         currentThread, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
+        subsInChannel = 3,
         // Pseudo-Enums
         move = {
             left: 1,
@@ -841,10 +842,11 @@
     // Taps
     tappable("#btn-add-new-channel", {
         onTap: function(e, target) {
-            var btn = $(target);
-            var channelName = $('#txt-channel').val();
+            var btn = $(target),
+                txtChannelName = $('#txt-channel');
+            var channelName = txtChannelName.val();
             if (!channelName) {
-                V.Actions.removeModal();
+                txtChannelName.attr("placeholder", "Enter a Channel name!");
                 return;
             }
 
@@ -855,24 +857,35 @@
                 if (!sub) continue;
                 subreddits.push(sub);
             }
+            if (subreddits.length === 0) {
+                subs[0].placeholder = "Enter at least one subreddit!";
+                return;
+            }
             var channel = {};
             channel.name = channelName;
             channel.subs = subreddits;
             C.Channels.add(channel);
 
-            // confirmation feedback on button itself
-            btn.text("Channel Added.");
-            btn.css({
-                "background-image": "none",
-                "background-color": "#33B300",
-                "color": "white"
-            });
+            // confirmation feedback
+            btn.remove();
+            $("#form-left-corner").append("<p class='channel-added-msg'>'" + channel.name + "' added. Cool!</p>");
             // remove modal after a moment
             setTimeout(function() {
                 V.Actions.removeModal();
+                subsInChannel = 3; // default count
             }, 1500);
         },
-        activeClass: 'list-button-active'
+        activeClass: "btn-general-active"
+    });
+
+    tappable("#btn-add-another-sub", {
+        onTap: function() {
+            subsInChannel++;
+            var container = $("#subs-for-channel");
+            container.append("<input type='text' placeholder='Subreddit " + subsInChannel + " '></input>");
+            container[0].scrollTop = container.height();
+        },
+        activeClass: "btn-general-active"
     });
 
     tappable('.channel', {
@@ -1075,6 +1088,7 @@
 
     tappable(".close-form", {
         onTap: function() {
+            subsInChannel = 3;
             V.Actions.removeModal();
         }
     });
