@@ -642,8 +642,8 @@
 
                     if (isWideScreen) {
                         // Refresh active link indicator
-                        $(".link.link-active").removeClass("link-active");
-                        $('.link[data-id="' + id + '"]').addClass('link-active');
+                        $(".link.link-selected").removeClass("link-selected");
+                        $('.link[data-id="' + id + '"]').addClass('link-selected');
                     }
 
                     V.headerSection.empty().append(V.title);
@@ -955,6 +955,7 @@
         },
         allowClick: false,
         activeClassDelay: 100,
+        inactiveClassDelay: 200,
         activeClass: 'link-active'
     });
 
