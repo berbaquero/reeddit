@@ -12,7 +12,7 @@ Reeddit has 3 different elastic layouts - you can use it on any window size. So 
 Being a personal side-project of mine, Reeddit can be used for browsing subreddits and viewing links/post and its comments, but not for voting or commenting... for now ;) -- However, the subreddits and channels you add are saved locally, so you don't lose any of that data.
 
 * #### Channels
-You can group up to 3 subreddits into a Channel, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
+Channels let you group subreddits into one stream, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
 
 For screenshots and additional info, visit [Reeddit's Homepage](http://reedditapp.com/about).
 
