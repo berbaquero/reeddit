@@ -1,6 +1,6 @@
 # Reeddit
 
-A minimalist, elastic and read-only [Reddit](http://reddit.com/) web app client, that lets you create custom 'Channels' with up to 3 subreddits each.
+A minimalist, elastic and read-only [Reddit](http://reddit.com/) web app client, that lets you create "Channels", which groups as many subreddits as you want into one stream.
 
 * #### Minimalist
 While aiming for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.
