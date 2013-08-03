@@ -7,7 +7,7 @@
 .sub:hover, .channel:hover > p, .option:hover, #sorting p:hover { text-shadow: 0 0 10px #CCC; }
 
 .link, .sub, .channel, .list-button > span, #top-buttons > div, .comments-button, #add-new-sub, #remove-sub,
-.item-to-remove > div, .btn-add-sub, .close-form, #btn-add-new-channel, .option, #sorting p, .refresh-icon-FS { cursor: pointer; }
+.item-to-remove > div, .btn-add-sub, .close-form, #btn-add-new-channel, .option, #sorting p, .refresh-icon-FS, .btn-general { cursor: pointer; }
 
 #link-summary a:hover #summary-title { text-shadow: 0 1px 7px whiteSmoke; }
 
