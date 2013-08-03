@@ -145,7 +145,6 @@ a { color: #999; }
 #share-tw { /* Share button position */
     -webkit-box-flex: 1; -moz-box-flex: 1; -ms-box-flex: 1;
     margin-right: 10px;
-    color: #555;
 }
 
 #summary-sub { color: #FAFAFA; text-align: left; }
@@ -377,14 +376,13 @@ a { color: #999; }
     margin: 0 auto;
 }
 
-#top-buttons {
+.top-buttons {
     padding: 10px 20px;
     border-bottom: 1px solid #CCC;
 }
 
-#top-buttons > div {
+.top-buttons > div {
     padding: 3px 10px;
-    border-radius: 5px;
     font-size: 14px;
     font-weight: 700;
     width: 50%;
@@ -392,21 +390,22 @@ a { color: #999; }
     display: inline-block;
 }
 
-#top-buttons div:first-child {
-    border-radius: 4px 0 0 4px;
+.top-buttons div:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
-#top-buttons div:last-child {
-    border-radius: 0 4px 4px 0;
+.top-buttons div:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 #btn-update {
-    width: 100% !important;
-    display: block !important;
-    border-radius: 4px !important;
+    display: block;
+    width: 100%;
 }
 
-.comments-button, #top-buttons > div, .list-button > span, .btn-general {
+.comments-button, .top-buttons > div, .list-button > span, .btn-general {
     color: #555;
     background-image: -webkit-linear-gradient(whiteSmoke 0%, #CCC 100%);
     background-image: -moz-linear-gradient(whiteSmoke 0%, #CCC 100%);

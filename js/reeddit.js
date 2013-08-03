@@ -13,7 +13,7 @@
             list: '{{#.}}<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}'
         },
         linkSummary: "<section><div id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p>{{#over_18}}<span class='link-nsfw summary-nsfw'>NSFW</span>{{/over_18}}</a><div id='summary-footer'><p id='summary-author'>by {{author}}</p><a class='btn-general' id='share-tw' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><a id='summary-comment-num' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a></div></section>",
-        botonAgregarSubManual: "<div id='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>",
+        botonAgregarSubManual: "<div class='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>",
         formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
         formAddNewChannel: '<div class="new-form" id="form-new-channel"><div id="form-left-corner"><div class="btn-general" id="btn-add-new-channel">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">+ another subreddit</div></div>',
         botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
@@ -50,7 +50,6 @@
         currentThread, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
-        subsInChannel = 3,
         // Pseudo-Enums
         move = {
             left: 1,
@@ -872,7 +871,6 @@
             // remove modal after a moment
             setTimeout(function() {
                 V.Actions.removeModal();
-                subsInChannel = 3; // default count
             }, 1500);
         },
         activeClass: "btn-general-active"
@@ -880,9 +878,8 @@
 
     tappable("#btn-add-another-sub", {
         onTap: function() {
-            subsInChannel++;
             var container = $("#subs-for-channel");
-            container.append("<input type='text' placeholder='Subreddit " + subsInChannel + " '></input>");
+            container.append("<input type='text' placeholder='Extra subreddit'></input>");
             container[0].scrollTop = container.height();
         },
         activeClass: "btn-general-active"
@@ -1088,7 +1085,6 @@
 
     tappable(".close-form", {
         onTap: function() {
-            subsInChannel = 3;
             V.Actions.removeModal();
         }
     });
@@ -1224,7 +1220,7 @@
                 delay = 351;
             }
             setTimeout(function() {
-                V.mainWrap.prepend("<div id='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
+                V.mainWrap.prepend("<div class='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
                 tappable('#btn-update', {
                     onTap: function() {
                         win.location.reload();
