@@ -400,6 +400,12 @@ a { color: #999; }
     border-radius: 0 4px 4px 0;
 }
 
+#btn-update {
+    width: 100% !important;
+    display: block !important;
+    border-radius: 4px !important;
+}
+
 .comments-button, #top-buttons > div, .list-button > span, .btn-general {
     color: #555;
     background-image: -webkit-linear-gradient(whiteSmoke 0%, #CCC 100%);
