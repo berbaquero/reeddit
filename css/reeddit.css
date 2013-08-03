@@ -378,12 +378,8 @@ a { color: #999; }
 }
 
 #top-buttons {
-    padding: 10px;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    display: box;
-    width: 100%;
+    padding: 10px 20px;
+    border-bottom: 1px solid #CCC;
 }
 
 #top-buttons > div {
@@ -393,7 +389,15 @@ a { color: #999; }
     font-weight: 700;
     width: 50%;
     text-align: center;
-    -webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+    display: inline-block;
+}
+
+#top-buttons div:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+#top-buttons div:last-child {
+    border-radius: 0 4px 4px 0;
 }
 
 .comments-button, #top-buttons > div, .list-button > span, .btn-general {
@@ -647,20 +651,47 @@ header > div {
 
 #form-new-channel input {
     width: 100%;
-    padding-top: 5px;
     margin-top: 5px;
-    border-radius: 5px;
     font-size: 15px;
+    outline: none;
 }
 
 #subs-for-channel {
-    max-height: 160px;
-    overflow-y: auto;
+    border-radius: 5px 5px 0 0;
+    border: 1px solid #aaa;
+    border-bottom: 0; margin-top: 5px; padding: 0 10px; background-color: #FFF;
+    max-height: 160px; overflow-y: auto;
+}
+
+#subs-for-channel input {
+    border: 0;
+    border-bottom: 1px solid #CCC;
+    padding: 5px;
+}
+
+#subs-for-channel input:last-child {
+    border-bottom: 0;
+    padding-bottom: 10px;
+}
+
+#txt-channel {
+    border: 2px solid #AAA !important;
+    border-radius: 5px;
+    padding: 5px 10px;
 }
 
 #btn-add-new-channel { padding: 5px 10px; }
 
-#btn-add-another-sub { margin-top: 5px; }
+#btn-add-another-sub {
+    background-color: #CCC;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 8px 15px;
+    font-size: 15px;
+    color: #FFF;
+    border: 1px solid #aaa;
+    border-top: 0;
+}
 
 .channel-added-msg {
     color: white;
@@ -936,7 +967,7 @@ header > div {
 
     #edit-subs { height: 5%; }
 
-    #subs-for-channel { max-height: 350px; }
+    #subs-for-channel { max-height: 250px; }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
