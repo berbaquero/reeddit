@@ -166,7 +166,7 @@
             getByName: function(name) {
                 var foundChannel;
                 for (var i = 0; i < M.Channels.list.length; i++) {
-                    if (M.Channels.list[i].name === name) {
+                    if (M.Channels.list[i].name.toLowerCase() === name.toLowerCase()) {
                         foundChannel = M.Channels.list[i];
                         break;
                     }
@@ -873,6 +873,15 @@
                 subs[0].placeholder = "Enter at least one subreddit!";
                 return;
             }
+
+            // Look for Channel name in the saved ones
+            var savedChannel = M.Channels.getByName(channelName);
+            if (savedChannel) { // If it's already saved
+                txtChannelName.val('');
+                txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
+                return;
+            }
+
             var channel = {};
             channel.name = channelName;
             channel.subs = subreddits;
