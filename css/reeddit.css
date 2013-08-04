@@ -637,7 +637,7 @@ header > div {
     font-weight: 700;
     font-size: 15px;
     margin: 5px 0;
-    color: #E34A28;
+    color: #D43030;
 }
 
 .new-form {
@@ -709,7 +709,7 @@ header > div {
 
 #form-new-sub { height: 50px; top: 50%; margin-top: -100px; }
 
-#form-new-sub input { width: 100%; height: 40px; font-size: 20px; }
+#form-new-sub input { width: 100%; height: 40px; font-size: 20px; outline: none; }
 
 #add-sub-manual { padding: 10px; }
 
@@ -798,7 +798,7 @@ header > div {
     background-size: 18px;
 }
 
-#form-left-corner {
+.form-left-corner {
     position: absolute;
     top: -30px;
     z-index: 10001;

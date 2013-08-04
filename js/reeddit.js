@@ -14,8 +14,8 @@
         },
         linkSummary: "<section><div id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p>{{#over_18}}<span class='link-nsfw summary-nsfw'>NSFW</span>{{/over_18}}</a><div id='summary-footer'><p id='summary-author'>by {{author}}</p><a class='btn-general' id='share-tw' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><a id='summary-comment-num' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a></div></section>",
         botonAgregarSubManual: "<div class='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>",
-        formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-        formAddNewChannel: '<div class="new-form" id="form-new-channel"><div id="form-left-corner"><div class="btn-general" id="btn-add-new-channel">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">+ another subreddit</div></div>',
+        formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-sub">Add Subreddit</div></div><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
+        formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-channel">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">+ another subreddit</div></div>',
         botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
         noLink: "<div id='no-link'><p>No Post Selected.</div>",
         about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>v1.5.4.1</p><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
@@ -805,25 +805,32 @@
 
     $('body').on('submit', '#form-new-sub form', function(e) {
         e.preventDefault();
-        var newSub = $('#txt-new-sub').val();
+        addNewSubreddit();
+    });
+
+    function addNewSubreddit() {
+        var txtSub = $id("txt-new-sub"),
+            subName = txtSub.value;
+        if (!subName) {
+            txtSub.setAttribute("placeholder", "Enter a subreddit title!");
+            return;
+        }
         V.Actions.removeModal();
-        if (!newSub) return; // Si no se ingreso nada, no pasa nada.
-        // En caso de haber ingresado algo, cargar el contenido del nuevo subreddit, de forma asincrona
         $.ajax({
-            url: urlInit + "r/" + newSub + "/" + C.Sorting.get() + urlLimitEnd,
+            url: urlInit + "r/" + subName + "/" + C.Sorting.get() + urlLimitEnd,
             dataType: 'jsonp',
             success: function(data) {
                 C.Posts.loadFromManualInput(data);
-                V.Actions.setSubTitle(newSub);
+                V.Actions.setSubTitle(subName);
                 V.Subreddits.cleanSelected();
-                C.currentSelection.setSubreddit(newSub);
-                V.Subreddits.insert(newSub, true);
+                C.currentSelection.setSubreddit(subName);
+                V.Subreddits.insert(subName, true);
             },
             error: function() {
                 alert('Oh, the subreddit you entered is not valid...');
             }
         });
-    });
+    }
 
     function goToComments(id) {
         location.hash = '#comments:' + id;
@@ -839,6 +846,12 @@
     }
 
     // Taps
+    tappable("#btn-add-new-sub", {
+        onTap: function() {
+            addNewSubreddit();
+        }
+    });
+
     tappable("#btn-add-new-channel", {
         onTap: function(e, target) {
             var btn = $(target),
