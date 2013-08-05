@@ -889,7 +889,7 @@
 
             // confirmation feedback
             btn.remove();
-            $("#form-left-corner").append("<p class='channel-added-msg'>'" + channel.name + "' added. Cool!</p>");
+            $(".form-left-corner").append("<p class='channel-added-msg'>'" + channel.name + "' added. Cool!</p>");
             // remove modal after a moment
             setTimeout(function() {
                 V.Actions.removeModal();
