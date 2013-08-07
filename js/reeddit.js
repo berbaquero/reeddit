@@ -1215,8 +1215,6 @@
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
         ancho = mainWindow.width;
-        store.setItem("win:width", ancho);
-        store.setItem("win:height", mainWindow.height);
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
@@ -1321,6 +1319,9 @@
     }));
 
     mainWindow.on("close", function() {
+        // Save latest window size and position before closing
+        store.setItem("win:width", mainWindow.width);
+        store.setItem("win:height", mainWindow.height);
         store.setItem("win:x", mainWindow.x);
         store.setItem("win:y", mainWindow.y);
         mainWindow.close(true);
