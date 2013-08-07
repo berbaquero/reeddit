@@ -12,7 +12,7 @@
             single: '<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>',
             list: '{{#.}}<li><div class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></div></li>{{/.}}'
         },
-        linkSummary: "<section><div id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p>{{#over_18}}<span class='link-nsfw summary-nsfw'>NSFW</span>{{/over_18}}</a><div id='summary-footer'><p id='summary-author'>by {{author}}</p><a class='btn-general' id='share-tw' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><a id='summary-comment-num' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a></div></section>",
+        linkSummary: "<section><div id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p>{{#over_18}}<span class='link-nsfw summary-nsfw'>NSFW</span>{{/over_18}}</a><div id='summary-footer'><p id='summary-author'>by {{author}}</p><div class='btn-general' id='share' >Share</div></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><a id='summary-comment-num' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a></div></section>",
         botonAgregarSubManual: "<div class='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>",
         formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-sub">Add Subreddit</div></div><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
         formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-channel">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">+ another subreddit</div></div>',
@@ -89,7 +89,6 @@
                     } else { // Si no se han cargado los links localmente
                         M.Posts.list[post.data.id] = {
                             title: post.data.title,
-                            encodedTitle: encodeURI(post.data.title),
                             selftext: post.data.selftext,
                             created_utc: post.data.created_utc,
                             domain: post.data.domain,
@@ -861,10 +860,10 @@
         }
     });
 
-    tappable("#share-tw", {
+    tappable("#share", {
         onTap: function(e, target) {
             var url = $(target).attr("href");
-            openWindow(url, 520, 430);
+            shareMenu.popup(e.x, e.y);
         },
         allowClick: false
     });
@@ -1301,6 +1300,25 @@
         }
         C.Channels.loadPosts(channel);
     });
+
+    // Share Menu
+    var shareMenu = new gui.Menu();
+    shareMenu.append(new gui.MenuItem({
+        label: 'Tweet',
+        click: function() {
+            var url = M.Posts.list[currentThread].url,
+                title = M.Posts.list[currentThread].title;
+            openWindow("https://twitter.com/intent/tweet?text=\"" + encodeURI(title) + "\" —&url=" + url + "&via=ReedditApp&related=ReedditApp", 520, 430);
+        }
+    }));
+    shareMenu.append(new gui.MenuItem({
+        label: 'Email',
+        click: function() {
+            var title = M.Posts.list[currentThread].title,
+                url = M.Posts.list[currentThread].url;
+            openURL("mailto:?subject=" + title + "&body=" + url + "%0A%0a%0A%0aShared via @ReedditApp.");
+        }
+    }));
 
     mainWindow.on("close", function() {
         store.setItem("win:x", mainWindow.x);
