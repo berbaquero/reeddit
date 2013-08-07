@@ -17,7 +17,6 @@
         formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-sub">Add Subreddit</div></div><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
         formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-channel">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input type="text" placeholder="Subreddit 1" /><input type="text" placeholder="Subreddit 2" /><input type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">+ another subreddit</div></div>',
         noLink: "<div id='no-link'><p>No Post Selected.</div>",
-        about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>v1.5.4</p><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
         moveData: "<div class='new-form move-data'><div class='close-form'>close</div><h3>Export Data</h3><p>Copy this to move your local subscriptions to any other instance of Reeddit, or just for backup.</p><textarea class='move-data-field export-data'></textarea><h3>Import Data</h3><textarea placeholder='Once you paste your data and press \"Import\", Reeddit will refresh with the imported data.' class='move-data-field import-data'></textarea><div class='btn-general' id='btn-import-data'>Import</div></div>"
     };
 
@@ -1153,27 +1152,6 @@
             subsInChannel = 3;
             V.Actions.removeModal();
         }
-    });
-
-    tappable("#about", {
-        onTap: function() {
-            var delay = 1;
-            if (!isLargeScreen) {
-                V.Actions.moveMenu(move.left);
-                delay = 351;
-            }
-            setTimeout(function() {
-                if (esModal) return;
-                var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(T.about);
-                esModal = true;
-                setTimeout(function() {
-                    modal.css('opacity', 1);
-                }, 1);
-            }, delay);
-        },
-        activeClass: 'link-active',
-        activeClassDelay: 100
     });
 
     tappable('#sorting p', {
