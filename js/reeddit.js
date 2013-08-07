@@ -1318,6 +1318,40 @@
         }
     }));
 
+    // Title Menu
+    var submenu = new gui.Menu();
+    submenu.append(new gui.MenuItem({
+        label: 'Add Subscriptions',
+        click: V.Actions.loadForAdding
+    }));
+    submenu.append(new gui.MenuItem({
+        type: 'separator'
+    }));
+    submenu.append(new gui.MenuItem({
+        label: 'Insert Subreddit Manually',
+        click: V.Subreddits.showManualInput
+    }));
+    submenu.append(new gui.MenuItem({
+        label: 'Create Channel',
+        click: V.Channels.showNewChannelForm
+    }));
+    submenu.append(new gui.MenuItem({
+        type: 'separator'
+    }));
+    submenu.append(new gui.MenuItem({
+        label: 'Remove Subscriptions',
+        click: V.Actions.loadForRemoving
+    }));
+    var menu = new gui.Menu({
+        type: 'menubar'
+    });
+    menu.append(new gui.MenuItem({
+        label: 'Subscriptions',
+        submenu: submenu
+    }));
+
+    gui.Window.get().menu = menu; // Add menu to main app window/title bar
+
     mainWindow.on("close", function() {
         // Save latest window size and position before closing
         store.setItem("win:width", mainWindow.width);
