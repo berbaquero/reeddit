@@ -92,22 +92,7 @@ a { color: #999; }
 
 .comment-body p { margin: 10px 0; color: #3D525E; }
 
-#link-summary { background-color: #777; padding: 10px 0 0; }
-
-#link-summary:before {
-    content: '';
-    position: absolute;
-    height: 300px;
-    width: 100%;
-    background-color: #777;
-    -webkit-transform: translate3d(0, -300px, 0);
-    transform: translate3d(0, -300px, 0);
-    background-image: url('../img/alienHead.png');
-    background-repeat: no-repeat;
-    background-position-x: 50%;
-    background-position-y: 90%;
-    background-size: 25%;
-}
+#link-summary { background-color: #3C444C; padding: 10px 0 0; }
 
 #link-summary p { margin: 0; padding-left: 10px; }
 
@@ -130,10 +115,10 @@ a { color: #999; }
     -webkit-box-flex: 1;
 }
 
-#share-tw { /* Share button position */
+#share {
     -webkit-box-flex: 1;
     margin-right: 10px;
-    color: #555;
+    display: inline-block;
 }
 
 #summary-sub { color: #FAFAFA; text-align: left; }
@@ -142,7 +127,7 @@ a { color: #999; }
 
 #summary-extra {
     display: -webkit-box; display: box;
-    background-color: #333;
+    background-color: rgba(0, 0, 0, 0.4);
     font-weight: 700;
     padding: 0 10px;
     width: 100%;
@@ -248,8 +233,7 @@ a { color: #999; }
     width: 140px;
     z-index: 0;
     height: 100%;
-    background-color: #363636;
-    background-image: url('../img/darkdenim3.png');
+    background-color: #262b30;
 }
 
 #sorting p {
@@ -322,8 +306,8 @@ a { color: #999; }
 
 .link-active,
 .link-selected {
-    background-image: -webkit-linear-gradient(top, #4aabed, #194fdb);
-    background-image: linear-gradient(top, #4aabed, #194fdb);
+    background-image: -webkit-linear-gradient(top, #599ad2, #3d6fba);
+    background-image: linear-gradient(top, #599ad2, #3d6fba);
 }
 
 .link-active .link-title,

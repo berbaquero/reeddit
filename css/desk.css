@@ -21,10 +21,10 @@
 ::-webkit-scrollbar-thumb { border-radius: 10px; background: rgb(200, 200, 200); }
 
 /* Track Menu */
-#main-menu::-webkit-scrollbar-track { border-radius: 10px; background-color: #333; }
+#main-menu::-webkit-scrollbar-track { border-radius: 10px; background-color: #262b30; }
 
 /* Handle Menu */
-#main-menu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: #444; }
+#main-menu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); }
 
 .button:hover {
 	box-shadow: rgba(255, 255, 255, .4) 0 1px 0 inset,
@@ -46,7 +46,7 @@
 				rgba(255, 255, 255, .4) 0 1px 0;
 }
 
-.btn-general:hover { color: #555; }
+.btn-general:hover, .btn-general:visited { color: #555; }
 
 .btn-general:active { color: #f5f5f5; }
 
