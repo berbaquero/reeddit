@@ -72,7 +72,7 @@
 
     var defaultChannel = {
         name: "Media",
-        subs: ["movies", "games", "music"]
+        subs: ["movies", "television", "music", "games"]
     };
 
     var M = { // Model
