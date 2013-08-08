@@ -395,15 +395,15 @@
         },
         Anims: {
             slideFromLeft: function() {
-                var view = css.showView;
-                V.mainView.addClass(view);
-                V.detailView.removeClass(view);
+                var show = css.showView;
+                V.mainView.addClass(show);
+                V.detailView.removeClass(show);
                 currentView = view.main;
             },
             slideFromRight: function() {
-                var view = css.showView;
-                V.mainView.removeClass(view);
-                V.detailView.addClass(view);
+                var show = css.showView;
+                V.mainView.removeClass(show);
+                V.detailView.addClass(show);
                 currentView = view.comments;
             },
             reveal: function() {
@@ -1135,7 +1135,9 @@
         viewOnlyPosts.checked = false;
         viewMenuAndPosts.checked = false;
         viewMenuPostsAndComments.checked = false;
-        if (!isLargeScreen) viewOnlyPosts.checked = true; else if (isLargeScreen && !isWideScreen) viewMenuAndPosts.checked = true; else viewMenuPostsAndComments.checked = true;
+        if (!isLargeScreen) viewOnlyPosts.checked = true;
+        else if (isLargeScreen && !isWideScreen) viewMenuAndPosts.checked = true;
+        else viewMenuPostsAndComments.checked = true;
     }, false);
 
     if (location.hash) location.hash = ''; // Clear hash at first app loading
