@@ -34,8 +34,7 @@
     }
 
     // Pseudo-Globals
-    var ancho = $(win).width(),
-        currentView = 1,
+    var currentView = 1,
         editingSubs = false,
         urlInit = "http://www.reddit.com/",
         urlEnd = ".json?jsonp=?",
@@ -63,9 +62,9 @@
             sub: 1,
             channel: 2
         },
-        transforms = {
-            translateTo0: 'translate3d(0px, 0px, 0px)',
-            translateTo140: 'translate3d(140px, 0px, 0px)'
+        css = {
+            showView: "show-view",
+            showMenu: "show-menu"
         };
 
     var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "reactiongifs", "books", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
@@ -197,14 +196,13 @@
     var V = { // View
         mainWrap: $("#main-wrap"),
         detailWrap: $("#detail-wrap"),
-        mainView: $("#main-view"),
-        detailView: $("#detail-view"),
+        mainView: $(".main-view"),
+        detailView: $(".detail-view"),
         subtitle: $("#main-title"),
         subtitleText: $("#sub-title"),
         headerSection: $("#title-head"),
         title: $("#title"),
         headerIcon: $("#header-icon"),
-        container: $("#container"),
         btnNavBack: $("#nav-back"),
         Channels: {
             menuContainer: $("#channels"),
@@ -321,19 +319,13 @@
             },
             moveMenu: function(direction) {
                 if (direction === move.left) {
-                    V.container.css({
-                        '-webkit-transform': transforms.translateTo0,
-                        'transform': transforms.translateTo0
-                    });
+                    V.mainView.removeClass(css.showMenu);
                     setTimeout(function() {
                         showingMenu = false;
                     });
                 }
                 if (direction === move.right) {
-                    V.container.css({
-                        '-webkit-transform': transforms.translateTo140,
-                        'transform': transforms.translateTo140
-                    });
+                    V.mainView.addClass(css.showMenu);
                     setTimeout(function() {
                         showingMenu = true;
                     });
@@ -427,7 +419,7 @@
                     totalHeight += wraps[w].offsetHeight;
                 }
                 // Get each element's static section heigth
-                var containerHeight = $id('container').offsetHeight,
+                var containerHeight = body.offsetHeight,
                     headerHeight = $query('header').offsetHeight,
                     message = $query('.loader'),
                     messageHeight = message ? message.offsetHeight : 0,
@@ -445,52 +437,16 @@
         },
         Anims: {
             slideFromLeft: function() {
-                var main = V.mainView,
-                    det = V.detailView;
-                main.css("left", -ancho);
-                setTimeout(function() {
-                    var translate = 'translate3d(' + ancho + 'px, 0px, 0px)';
-                    var cssTransform = {
-                        '-webkit-transform': translate,
-                        'transform': translate
-                    };
-                    main.addClass("slide-transition").css(cssTransform);
-                    det.addClass("slide-transition").css(cssTransform);
-                    setTimeout(function() {
-                        var cssTransformBack = {
-                            '-webkit-transform': '',
-                            'transform': '',
-                            'left': ''
-                        };
-                        main.removeClass("slide-transition").css(cssTransformBack).removeClass("fuera");
-                        det.css(cssTransformBack).removeClass("slide-transition");
-                        V.detailView.addClass("fuera"); // Hide
-                        currentView = view.main;
-                    }, 301);
-                }, 10);
+                var show = css.showView;
+                V.mainView.addClass(show);
+                V.detailView.removeClass(show);
+                currentView = view.main;
             },
             slideFromRight: function() {
-                var main = V.mainView,
-                    det = V.detailView;
-                det.css("left", ancho);
-                setTimeout(function() {
-                    var translate = 'translate3d(-' + ancho + 'px, 0px, 0px)';
-                    var cssTransform = {
-                        '-webkit-transform': translate,
-                        'transform': translate
-                    };
-                    main.addClass("slide-transition").css(cssTransform);
-                    det.addClass("slide-transition").css(cssTransform);
-                    setTimeout(function() { // Quita las propiedades de transition
-                        var cssTransformBack = {
-                            '-webkit-transform': '',
-                            'transform': ''
-                        };
-                        det.css("left", 0).removeClass("slide-transition").removeClass("fuera").css(cssTransformBack);
-                        main.removeClass("slide-transition").addClass("fuera").css(cssTransformBack);
-                        currentView = view.comments;
-                    }, 301);
-                }, 10);
+                var show = css.showView;
+                V.mainView.removeClass(show);
+                V.detailView.addClass(show);
+                currentView = view.comments;
             },
             reveal: function() {
                 var wrap = V.mainWrap;
@@ -1254,7 +1210,6 @@
 
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
-        ancho = $(win).width();
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         scrollTop();

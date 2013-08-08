@@ -1,7 +1,6 @@
 <!doctype html>
 <html manifest="reeddit.appcache">
     <head>
-
         <meta charset="utf-8">
 
         <title>Reeddit</title>
@@ -18,7 +17,6 @@
         <link rel="stylesheet" href="css/reeddit.css">
 
         <script>var loc=location.hostname;if(loc==="berbaquero.github.io"||loc==="berbaquero.github.com"||loc==="reedditapp.com"||loc==="berbaquero.com"){var _gaq=[["_setAccount","UA-36097133-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"))}</script>
-
     </head>
 
     <body>
@@ -38,16 +36,6 @@
                 <div class="button" id="refresh-icon"><div></div></div>
             </section>
         </header>
-
-        <div id="container">
-            <div class="view" id="main-view">
-                <div class="refresh refresh-icon-FS"></div>
-                <div class="wrapper" id="main-wrap"></div>
-            </div>
-            <div class="view fuera" id="detail-view">
-                <div class="wrapper" id="detail-wrap"></div>
-            </div>
-        </div>
 
         <nav id="menu-container">
             <div class="view">
@@ -73,6 +61,14 @@
                 </div>
             </div>
         </nav>
+
+        <section class="view main-view show-view">
+            <div class="refresh refresh-icon-FS"></div>
+            <section class="wrapper" id="main-wrap"></section>
+        </section>
+        <section class="view detail-view">
+            <section class="wrapper" id="detail-wrap"></section>
+        </section>
 
         <script>
             var isDesktop = !/iPhone|iPod|iPad|Android/.test(navigator.userAgent);
