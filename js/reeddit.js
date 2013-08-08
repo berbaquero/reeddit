@@ -1132,6 +1132,10 @@
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
+        viewOnlyPosts.checked = false;
+        viewMenuAndPosts.checked = false;
+        viewMenuPostsAndComments.checked = false;
+        if (!isLargeScreen) viewOnlyPosts.checked = true; else if (isLargeScreen && !isWideScreen) viewMenuAndPosts.checked = true; else viewMenuPostsAndComments.checked = true;
     }, false);
 
     if (location.hash) location.hash = ''; // Clear hash at first app loading
@@ -1262,6 +1266,36 @@
     menu.append(new gui.MenuItem({
         label: 'Subscriptions',
         submenu: submenu
+    }));
+    var viewSubmenu = new gui.Menu(),
+        viewOnlyPosts = new gui.MenuItem({
+            label: 'Only Posts',
+            type: 'checkbox',
+            click: function() {
+                mainWindow.width = 354;
+            }
+        }),
+        viewMenuAndPosts = new gui.MenuItem({
+            label: 'Sidebar and Posts',
+            type: 'checkbox',
+            click: function() {
+                mainWindow.width = 490;
+            }
+        }),
+        viewMenuPostsAndComments = new gui.MenuItem({
+            label: 'Sidebar, Posts and Comments',
+            type: 'checkbox',
+            click: function() {
+                mainWindow.width = 1000;
+            }
+        });
+
+    viewSubmenu.append(viewOnlyPosts);
+    viewSubmenu.append(viewMenuAndPosts);
+    viewSubmenu.append(viewMenuPostsAndComments);
+    menu.append(new gui.MenuItem({
+        label: 'View',
+        submenu: viewSubmenu
     }));
 
     gui.Window.get().menu = menu; // Add menu to main app window/title bar
