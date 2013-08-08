@@ -35,8 +35,7 @@
         mainWindow = gui.Window.get();
 
     // Pseudo-Globals
-    var ancho = mainWindow.width,
-        currentView = 1,
+    var currentView = 1,
         editingSubs = false,
         urlInit = "http://www.reddit.com/",
         urlEnd = ".json?jsonp=?",
@@ -50,7 +49,7 @@
         loadingLinks = false,
         currentThread, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
-        isiPad, scrollFix, currentSortingChoice = 'hot',
+        currentSortingChoice = 'hot',
         // Pseudo-Enums
         move = {
             left: 1,
@@ -64,9 +63,9 @@
             sub: 1,
             channel: 2
         },
-        transforms = {
-            translateTo0: 'translate3d(0px, 0px, 0px)',
-            translateTo140: 'translate3d(140px, 0px, 0px)'
+        css = {
+            showView: "show-view",
+            showMenu: "show-menu"
         };
 
     var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "reactiongifs", "books", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
@@ -197,8 +196,8 @@
     var V = { // View
         mainWrap: $("#main-wrap"),
         detailWrap: $("#detail-wrap"),
-        mainView: $("#main-view"),
-        detailView: $("#detail-view"),
+        mainView: $(".main-view"),
+        detailView: $(".detail-view"),
         subtitle: $("#main-title"),
         subtitleText: $("#sub-title"),
         headerSection: $("#title-head"),
@@ -221,7 +220,7 @@
             showNewChannelForm: function() {
                 var delay = 1;
                 if (!isLargeScreen) {
-                    if (showingMenu) delay = 351;
+                    if (showingMenu) delay = 301;
                     V.Actions.moveMenu(move.left);
                 }
                 setTimeout(function() {
@@ -260,7 +259,7 @@
             showManualInput: function() {
                 var delay = 1;
                 if (!isLargeScreen) {
-                    if (showingMenu) delay = 351;
+                    if (showingMenu) delay = 301;
                     V.Actions.moveMenu(move.left);
                 }
                 setTimeout(function() {
@@ -320,19 +319,13 @@
             },
             moveMenu: function(direction) {
                 if (direction === move.left) {
-                    V.container.css({
-                        '-webkit-transform': transforms.translateTo0,
-                        'transform': transforms.translateTo0
-                    });
+                    V.mainView.removeClass(css.showMenu);
                     setTimeout(function() {
                         showingMenu = false;
                     });
                 }
                 if (direction === move.right) {
-                    V.container.css({
-                        '-webkit-transform': transforms.translateTo140,
-                        'transform': transforms.translateTo140
-                    });
+                    V.mainView.addClass(css.showMenu);
                     setTimeout(function() {
                         showingMenu = true;
                     });
@@ -363,7 +356,7 @@
                         });
                     }
                     loadingLinks = false;
-                }, isLargeScreen ? 1 : 351);
+                }, isLargeScreen ? 1 : 301);
                 V.Subreddits.cleanSelected();
                 V.Actions.setSubTitle("+ Subreddits");
                 setEditingSubs(true);
@@ -385,7 +378,7 @@
                     }, 10);
                     V.Subreddits.cleanSelected();
                     loadingLinks = false;
-                }, isLargeScreen ? 1 : 351);
+                }, isLargeScreen ? 1 : 301);
                 V.Actions.setSubTitle('- Subreddits');
                 setEditingSubs(true);
             },
@@ -397,99 +390,21 @@
                 esModal = false;
                 setTimeout(function() {
                     modal.remove();
-                }, 351);
-            }
-        },
-        Misc: {
-            scrollFixComments: function() {
-                // Make comments section always scrollable
-                var detailWrap = $query('#detail-wrap'),
-                    detailWrapHeight = detailWrap.offsetHeight,
-                    linkSummary = detailWrap.querySelector('section:first-child'),
-                    linkSummaryHeight = linkSummary.offsetHeight,
-                    selfText = detailWrap.querySelector('#selftext'),
-                    selfTextHeight = selfText ? selfText.offsetHeight : 0,
-                    imagePreview = detailWrap.querySelector('.image-preview'),
-                    imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0,
-                    loader = detailWrap.querySelector('.loader'),
-                    loaderHeight = loader ? loader.offsetHeight : 0;
-
-                var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight - loaderHeight + 1;
-                $('#detail-wrap > section + ' + (selfTextHeight > 0 ? '#selftext +' : '') + (imagePreviewHeight > 0 ? '.image-preview +' : '') + (loaderHeight > 0 ? '.loader +' : '') + ' section').css('min-height', minHeight);
-            },
-            scrollFixLinks: function() {
-                // Make links section always scrollable / Necessary when using the other Sorting options.
-                var totalHeight = 0;
-                // Calculate the total of link wrappers heigth
-                var wraps = doc.querySelectorAll('.link-wrap');
-                for (var w = 0; w < wraps.length; w++) {
-                    totalHeight += wraps[w].offsetHeight;
-                }
-                // Get each element's static section heigth
-                var containerHeight = $id('container').offsetHeight,
-                    headerHeight = $query('header').offsetHeight,
-                    message = $query('.loader'),
-                    messageHeight = message ? message.offsetHeight : 0,
-                    listButton = $query('.list-button'),
-                    listButtonHeight = listButton ? listButton.offsetHeight : 0;
-
-                var minHeight = containerHeight - headerHeight - messageHeight - listButtonHeight;
-
-                if (totalHeight > minHeight) {
-                    $("#main-overflow").css('min-height', '');
-                } else {
-                    $("#main-overflow").css('min-height', minHeight - totalHeight + 1);
-                }
+                }, 301);
             }
         },
         Anims: {
             slideFromLeft: function() {
-                var main = V.mainView,
-                    det = V.detailView;
-                main.css("left", -ancho);
-                setTimeout(function() {
-                    var translate = 'translate3d(' + ancho + 'px, 0px, 0px)';
-                    var cssTransform = {
-                        '-webkit-transform': translate,
-                        'transform': translate
-                    };
-                    main.addClass("slide-transition").css(cssTransform);
-                    det.addClass("slide-transition").css(cssTransform);
-                    setTimeout(function() {
-                        var cssTransformBack = {
-                            '-webkit-transform': '',
-                            'transform': '',
-                            'left': ''
-                        };
-                        main.removeClass("slide-transition").css(cssTransformBack).removeClass("fuera");
-                        det.css(cssTransformBack).removeClass("slide-transition");
-                        V.detailView.addClass("fuera"); // Hide
-                        currentView = view.main;
-                    }, 351);
-                }, 50);
+                var view = css.showView;
+                V.mainView.addClass(view);
+                V.detailView.removeClass(view);
+                currentView = view.main;
             },
             slideFromRight: function() {
-                var main = V.mainView,
-                    det = V.detailView;
-                det.css("left", ancho);
-                setTimeout(function() {
-                    var translate = 'translate3d(-' + ancho + 'px, 0px, 0px)';
-                    var cssTransform = {
-                        '-webkit-transform': translate,
-                        'transform': translate
-                    };
-                    main.addClass("slide-transition").css(cssTransform);
-                    det.addClass("slide-transition").css(cssTransform);
-                    setTimeout(function() { // Quita las propiedades de transition
-                        var cssTransformBack = {
-                            '-webkit-transform': '',
-                            'transform': ''
-                        };
-                        det.css("left", 0).removeClass("slide-transition").removeClass("fuera").css(cssTransformBack);
-                        main.removeClass("slide-transition").addClass("fuera").css(cssTransformBack);
-                        currentView = view.comments;
-                    }, 351);
-                }, 100);
+                var view = css.showView;
+                V.mainView.removeClass(view);
+                V.detailView.addClass(view);
+                currentView = view.comments;
             },
             reveal: function() {
                 var wrap = V.mainWrap;
@@ -516,7 +431,7 @@
                     $id("main-wrap").scrollTop = 0; // Sube al top del contenedor
                     setTimeout(function() {
                         main.prepend("<div class='loader'></div>");
-                    }, showingMenu ? 351 : 1);
+                    }, showingMenu ? 301 : 1);
                     paging = ''; //// Si no hay paginacion, se pasa una cadena vacia, para no paginar
                 }
                 $.ajax({
@@ -582,7 +497,7 @@
                 var delay = 0;
                 if (showingMenu) {
                     V.Actions.moveMenu(move.left);
-                    delay = 351;
+                    delay = 301;
                 }
                 if (!M.Posts.list[id]) return; // Quick fix for missing id
                 setTimeout(function() {
@@ -711,7 +626,7 @@
                 var delay = 1;
                 if (showingMenu) {
                     V.Actions.moveMenu(move.left);
-                    delay = 351;
+                    delay = 301;
                 }
                 setTimeout(function() {
                     refreshCurrentStream();
@@ -1171,7 +1086,7 @@
             var delay = 1;
             if (!isLargeScreen) {
                 V.Actions.moveMenu(move.left);
-                delay = 351;
+                delay = 301;
             }
             setTimeout(function() {
                 if (esModal) return;
@@ -1214,7 +1129,6 @@
 
     // Do stuff after finishing resizing the windows
     win.addEventListener("resizeend", function() {
-        ancho = mainWindow.width;
         isWideScreen = checkWideScreen();
         isLargeScreen = checkLargeScreen();
         if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
@@ -1227,10 +1141,10 @@
             var delay = 1;
             if (currentView === view.comments) {
                 V.Actions.backToMainView();
-                delay = 351;
+                delay = 301;
             }
             if (isWideScreen) {
-                $('.link.link-active').removeClass('link-active');
+                $('.link.link-selected').removeClass('link-selected');
                 V.detailWrap.html(T.noLink);
             } else {
                 setTimeout(function() {
