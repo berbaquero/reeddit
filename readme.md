@@ -34,7 +34,7 @@ To build Reeddit, I used these awesome resources:
 * 	[Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
 
 ### Compatibility
-I've only tested Reeddit.app on OS X 10.7, so I guess it should work on newer versions.
+I've only tested Reeddit.app on OS X 10.7, so I guess it should work on newer versions, too.
 
 ### License
 
