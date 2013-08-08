@@ -2,7 +2,7 @@
 
 This is an experimental branch, to create a Mac app (OS X) version of Reeddit, using [node-webkit](https://github.com/rogerwang/node-webkit).
 
-[Download Reeddit.app (experimental)](https://dl.dropboxusercontent.com/u/1631373/Reeddit.app.zip).
+[Download Reeddit.app (experimental)](http://cl.ly/0d412y0p3R1s). (v.1.5.6)
 
 # Reeddit
 
@@ -20,7 +20,7 @@ Being a personal side-project of mine, Reeddit can be used for browsing subreddi
 * #### Channels
 You can group up to 3 subreddits into a Channel, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
 
-For screenshots and additional info, visit [Reeddit's presentation page](http://berbaquero.github.com/reeddit/about).
+For screenshots and additional info, visit [Reeddit's Homepage](http://berbaquero.github.com/reeddit/about).
 
 ## Tools
 
@@ -34,14 +34,7 @@ To build Reeddit, I used these awesome resources:
 * 	[Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
 
 ### Compatibility
-
-For now, Reeddit works properly on recent versions of Webkit-based browsers (Chrome and Safari, desktop and mobile) - it's been tested on iOS 5+ (iPhone and iPad) and Android 4+.
-
-I used the Flexbox module (2009 spec) for layout, and Firefox's implementation is kinda wonky. Should be getting into upgrading to the latest flexbox module spec soon.
-
-My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
-
-On the Desktop, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710) on Google Chrome, or as a Mac app, with [Fluid](http://fluidapp.com/), and can be installed as a Firefox App on latest Firefox. :D
+I've only tested Reeddit.app on OS X 10.7, so I guess it should work on newer versions.
 
 ### License
 
