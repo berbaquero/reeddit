@@ -1227,7 +1227,7 @@
                 delay = 301;
             }
             if (isWideScreen) {
-                $('.link.link-active').removeClass('link-active');
+                $('.link.link-selected').removeClass('link-selected');
                 V.detailWrap.html(T.noLink);
             } else {
                 setTimeout(function() {
