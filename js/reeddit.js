@@ -221,7 +221,7 @@
             showNewChannelForm: function() {
                 var delay = 1;
                 if (!isLargeScreen) {
-                    if (showingMenu) delay = 351;
+                    if (showingMenu) delay = 301;
                     V.Actions.moveMenu(move.left);
                 }
                 setTimeout(function() {
@@ -260,7 +260,7 @@
             showManualInput: function() {
                 var delay = 1;
                 if (!isLargeScreen) {
-                    if (showingMenu) delay = 351;
+                    if (showingMenu) delay = 301;
                     V.Actions.moveMenu(move.left);
                 }
                 setTimeout(function() {
@@ -364,7 +364,7 @@
                         });
                     }
                     loadingLinks = false;
-                }, isLargeScreen ? 1 : 351);
+                }, isLargeScreen ? 1 : 301);
                 V.Subreddits.cleanSelected();
                 V.Actions.setSubTitle("+ Subreddits");
                 setEditingSubs(true);
@@ -386,7 +386,7 @@
                     }, 10);
                     V.Subreddits.cleanSelected();
                     loadingLinks = false;
-                }, isLargeScreen ? 1 : 351);
+                }, isLargeScreen ? 1 : 301);
                 V.Actions.setSubTitle('- Subreddits');
                 setEditingSubs(true);
             },
@@ -398,7 +398,7 @@
                 esModal = false;
                 setTimeout(function() {
                     modal.remove();
-                }, 351);
+                }, 301);
             }
         },
         Misc: {
@@ -466,8 +466,8 @@
                         det.css(cssTransformBack).removeClass("slide-transition");
                         V.detailView.addClass("fuera"); // Hide
                         currentView = view.main;
-                    }, 351);
-                }, 50);
+                    }, 301);
+                }, 10);
             },
             slideFromRight: function() {
                 var main = V.mainView,
@@ -489,8 +489,8 @@
                         det.css("left", 0).removeClass("slide-transition").removeClass("fuera").css(cssTransformBack);
                         main.removeClass("slide-transition").addClass("fuera").css(cssTransformBack);
                         currentView = view.comments;
-                    }, 351);
-                }, 100);
+                    }, 301);
+                }, 10);
             },
             reveal: function() {
                 var wrap = V.mainWrap;
@@ -517,7 +517,7 @@
                     $id("main-wrap").scrollTop = 0; // Sube al top del contenedor
                     setTimeout(function() {
                         main.prepend("<div class='loader'></div>");
-                    }, showingMenu ? 351 : 1);
+                    }, showingMenu ? 301 : 1);
                     paging = ''; //// Si no hay paginacion, se pasa una cadena vacia, para no paginar
                 }
                 $.ajax({
@@ -585,7 +585,7 @@
                 var delay = 0;
                 if (showingMenu) {
                     V.Actions.moveMenu(move.left);
-                    delay = 351;
+                    delay = 301;
                 }
                 if (!M.Posts.list[id]) return; // Quick fix for missing id
                 setTimeout(function() {
@@ -718,7 +718,7 @@
                 var delay = 1;
                 if (showingMenu) {
                     V.Actions.moveMenu(move.left);
-                    delay = 351;
+                    delay = 301;
                 }
                 setTimeout(function() {
                     refreshCurrentStream();
@@ -1116,7 +1116,7 @@
             var delay = 1;
             if (!isLargeScreen) {
                 V.Actions.moveMenu(move.left);
-                delay = 351;
+                delay = 301;
             }
             setTimeout(function() {
                 if (esModal) return;
@@ -1151,7 +1151,7 @@
             var delay = 1;
             if (!isLargeScreen) {
                 V.Actions.moveMenu(move.left);
-                delay = 351;
+                delay = 301;
             }
             setTimeout(function() {
                 if (esModal) return;
@@ -1239,7 +1239,7 @@
             var delay = 1;
             if (showingMenu) {
                 V.Actions.moveMenu(move.left);
-                delay = 351;
+                delay = 301;
             }
             setTimeout(function() {
                 V.mainWrap.prepend("<div class='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
@@ -1269,7 +1269,7 @@
             var delay = 1;
             if (currentView === view.comments) {
                 V.Actions.backToMainView();
-                delay = 351;
+                delay = 301;
             }
             if (isWideScreen) {
                 $('.link.link-active').removeClass('link-active');
