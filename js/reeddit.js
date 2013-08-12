@@ -630,6 +630,29 @@
                 M.Subreddits.remove(sub);
                 V.Subreddits.remove(sub);
                 if (M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
+            },
+            addFromNewForm: function() {
+                var txtSub = $id("txt-new-sub"),
+                    subName = txtSub.value;
+                if (!subName) {
+                    txtSub.setAttribute("placeholder", "Enter a subreddit title!");
+                    return;
+                }
+                V.Actions.removeModal();
+                $.ajax({
+                    url: urlInit + "r/" + subName + "/" + C.Sorting.get() + urlLimitEnd,
+                    dataType: 'jsonp',
+                    success: function(data) {
+                        C.Posts.loadFromManualInput(data);
+                        V.Actions.setSubTitle(subName);
+                        V.Subreddits.cleanSelected();
+                        C.currentSelection.setSubreddit(subName);
+                        V.Subreddits.insert(subName, true);
+                    },
+                    error: function() {
+                        alert('Oh, the subreddit you entered is not valid...');
+                    }
+                });
             }
         },
         Channels: {
@@ -761,32 +784,8 @@
 
     $('body').on('submit', '#form-new-sub form', function(e) {
         e.preventDefault();
-        addNewSubreddit();
+        C.Subreddits.addFromNewForm();
     });
-
-    function addNewSubreddit() {
-        var txtSub = $id("txt-new-sub"),
-            subName = txtSub.value;
-        if (!subName) {
-            txtSub.setAttribute("placeholder", "Enter a subreddit title!");
-            return;
-        }
-        V.Actions.removeModal();
-        $.ajax({
-            url: urlInit + "r/" + subName + "/" + C.Sorting.get() + urlLimitEnd,
-            dataType: 'jsonp',
-            success: function(data) {
-                C.Posts.loadFromManualInput(data);
-                V.Actions.setSubTitle(subName);
-                V.Subreddits.cleanSelected();
-                C.currentSelection.setSubreddit(subName);
-                V.Subreddits.insert(subName, true);
-            },
-            error: function() {
-                alert('Oh, the subreddit you entered is not valid...');
-            }
-        });
-    }
 
     function goToComments(id) {
         location.hash = '#comments:' + id;
@@ -803,9 +802,7 @@
 
     // Taps
     tappable("#btn-add-new-sub", {
-        onTap: function() {
-            addNewSubreddit();
-        }
+        onTap: C.Subreddits.addFromNewForm
     });
 
     tappable("#btn-add-new-channel", {
