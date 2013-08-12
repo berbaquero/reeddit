@@ -54,9 +54,7 @@
 
 .channel > div p { font-size: 11px; letter-spacing: 1px; line-height: 15px; margin: 4px 0; }
 
-/* Themes */
-
-/* Mnml -- .mnml */
+/* Mnml Theme */
 
 .mnml #main-menu::-webkit-scrollbar-track { border-radius: 10px; background-color: #262b30; }
 
