@@ -53,3 +53,15 @@
 #sub-title:hover { background-color: rgba(0, 0, 0, 0.2); }
 
 .channel > div p { font-size: 11px; letter-spacing: 1px; line-height: 15px; margin: 4px 0; }
+
+/* Themes */
+
+/* Mnml -- .mnml */
+
+.mnml #main-menu::-webkit-scrollbar-track { border-radius: 10px; background-color: #262b30; }
+
+.mnml #main-menu::-webkit-scrollbar-thumb { border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); }
+
+.mnml .button:hover { background-color: rgba(0, 0, 0, 0.1); box-shadow: none; background-image: none; border-radius: 0;}
+
+.mnml .button:active, .btn-general:active { background-image: none; box-shadow: none; }

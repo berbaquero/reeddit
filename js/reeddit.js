@@ -49,6 +49,7 @@
         currentThread, isWideScreen = checkWideScreen(),
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
+        mnml = false,
         // Pseudo-Enums
         move = {
             left: 1,
@@ -64,7 +65,8 @@
         },
         css = {
             showView: "show-view",
-            showMenu: "show-menu"
+            showMenu: "show-menu",
+            mnml: "mnml"
         };
 
     var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "technology", "science", "atheism", "reactiongifs", "books", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
@@ -391,6 +393,20 @@
                 setTimeout(function() {
                     modal.remove();
                 }, 301);
+            },
+            switchMnml: function(change) {
+                if (!change || change === false) mnml = false;
+                else if (change && change === true) mnml = true;
+                else mnml = !mnml;
+                var bntMnml = $id("mnml");
+                if (mnml) {
+                    body.classList.add(css.mnml);
+                    bntMnml.innerText = "Mnml: on";
+                } else {
+                    body.classList.remove(css.mnml);
+                    bntMnml.innerText = "Mnml: off";
+                }
+                store.setItem("mnml", mnml ? "on" : "off");
             }
         },
         Misc: {
@@ -801,6 +817,11 @@
     }
 
     // Taps
+    tappable("#mnml", {
+        onTap: V.Actions.switchMnml,
+        activeClass: "link-active"
+    });
+
     tappable("#btn-add-new-sub", {
         onTap: C.Subreddits.addFromNewForm
     });
@@ -917,7 +938,8 @@
             if (currentView === view.main && !editingSubs) {
                 refreshCurrentStream();
             }
-        }
+        },
+        activeClass: "corner-active"
     });
 
     tappable(".link", {
@@ -1279,6 +1301,10 @@
     });
 
     scrollTop();
+
+    var loadMnml = store.getItem("mnml"),
+        isMnml = loadMnml && loadMnml === "on";
+    V.Actions.switchMnml(isMnml);
 
     if (!isDesktop) {
         var touch = "touchmove";

@@ -878,7 +878,7 @@ header > div {
     background-color: rgba(0, 0, 0, 0.5);
     background-position: center;
     border-radius: 5px;
-    display: none; /*  only visible on full-view mode (through MQ, below) */
+    display: none;
 }
 
 .move-data h3, .move-data p { text-shadow: 0 1px 0 #fff; margin: 5px 0; }
@@ -934,6 +934,122 @@ header > div {
 @keyframes loading {
     0% { opacity: 1; transform: scale(1); }
     100% { opacity: 0; transform: scale(2); }
+}
+
+/* Mnml Theme */
+
+.mnml .comment-author p { font-weight: 500; }
+
+.mnml .comment-info a { font-weight: 400; }
+
+.mnml #link-summary { background-color: #262b30; }
+
+.mnml #link-summary:before { background-color: #262b30; }
+
+.mnml #summary-extra { background-color: rgba(0, 0, 0, 0.4); }
+
+.mnml #main-menu { box-shadow: none; }
+
+.mnml .channel-active { border-left: 3px solid #3d6fba; }
+
+.mnml #menu-container { background-color: #262b30; background-image: none; }
+
+.mnml .link-wrap { border-top: 0; }
+
+.mnml .link-thumb div { box-shadow: none; }
+
+.mnml .link-active, .mnml .link-selected {
+    background-image: -webkit-linear-gradient(top, #599ad2, #3d6fba);
+    background-image: -moz-linear-gradient(top, #599ad2, #3d6fba);
+    background-image: linear-gradient(top, #599ad2, #3d6fba);
+ }
+
+.mnml .list-button > span { background-color: transparent; }
+
+.mnml .top-buttons > div {
+    background-color: #ddd;
+    border: 1px solid #bbb;
+    box-shadow: 0 1px 0 #fff;
+}
+
+.mnml .comments-button,
+.mnml .top-buttons > div,
+.mnml .list-button > span,
+.mnml .btn-general {
+    background-color: #ddd;
+    border: 1px solid #bbb;
+    background-image: none;
+    box-shadow: none;
+}
+
+.mnml .btn-general {
+    border-radius: 4px;
+}
+
+.mnml .btn-general-active {
+    background-color: #ccc;
+    background-image: none;
+    box-shadow: none;
+}
+
+.mnml header {
+    border-bottom: 1px solid #ccc;
+    background-color: #D7D7D7;
+    border-top: 0;
+    background-image: none;
+    box-shadow: none;
+}
+
+.mnml .button {
+    height: 43px;
+    width: 100%;
+    margin: 0;
+    background-image: none;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.mnml #refresh-icon div { background-image: url('../img/refresh1.png'); }
+
+.mnml #back-arrow div { border-right: 14px solid #333; }
+
+.mnml .button-active { background-color: #ccc; }
+
+.mnml .replies-button-active, .mnml .list-button-active {
+    background-color: #ccc !important;
+    background-image: none !important;
+}
+
+.mnml #main-title { top: auto; }
+
+.mnml #sub-title {
+    margin: 0;
+    padding: 0 10px;
+    line-height: 44px;
+    text-shadow: none;
+    border-radius: 0;
+}
+
+.mnml .sub-title-active {
+    text-shadow: none !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.mnml .corner-active { background-color: rgba(0, 0, 0, 0.3); }
+
+.mnml .subreddit, .mnml .item-to-remove { border-top: 0; }
+
+.mnml .menu-desc {
+    color: #ccc;
+    text-shadow: none;
+    border-top: 0;
+    border-bottom: 0;
+    box-shadow: none;
+}
+
+.mnml #edit-subs {
+    box-shadow: none;
+    border-top: 0;
 }
 
 @media only screen and (min-width: 350px) and (min-height: 500px) {
