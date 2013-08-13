@@ -1211,7 +1211,7 @@ header > div {
 
     #share-tw { margin-bottom: 7px; }
 
-    .mnml .button { height: 34px; }
+    #title { line-height: 28px; }
 
-    .mnml #title { line-height: 28px; }
+    .mnml .button { height: 34px; }
 }
