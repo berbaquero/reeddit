@@ -774,7 +774,6 @@
 
     tappable("#share", {
         onTap: function(e, target) {
-            var url = $(target).attr("href");
             shareMenu.popup(e.x, e.y);
         },
         allowClick: false
