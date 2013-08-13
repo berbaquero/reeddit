@@ -767,6 +767,27 @@
         });
     }
 
+    var importExportData = function() {
+        var delay = 1;
+        if (!isLargeScreen) {
+            V.Actions.moveMenu(move.left);
+            delay = 301;
+        }
+        setTimeout(function() {
+            if (esModal) return;
+            // Mostrar modal
+            var modal = $('<div/>').attr('id', 'modal');
+            $('body').append(modal).append(T.moveData);
+            esModal = true;
+            setTimeout(function() {
+                modal.css('opacity', 1);
+            }, 1);
+            // Mostrar cadena a exportar.
+            var toExport = "{\"channels\": " + store.getItem("channels") + ", \"subreddits\": " + store.getItem("subreeddits") + "}";
+            $query(".export-data").innerText = toExport;
+        }, delay);
+    }
+
     // Taps
     tappable("#btn-add-new-sub", {
         onTap: C.Subreddits.addFromNewForm
@@ -1078,28 +1099,8 @@
     });
 
     tappable("#imp-exp", {
-        onTap: function() {
-            var delay = 1;
-            if (!isLargeScreen) {
-                V.Actions.moveMenu(move.left);
-                delay = 301;
-            }
-            setTimeout(function() {
-                if (esModal) return;
-                // Mostrar modal
-                var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(T.moveData);
-                esModal = true;
-                setTimeout(function() {
-                    modal.css('opacity', 1);
-                }, 1);
-                // Mostrar cadena a exportar.
-                var toExport = "{\"channels\": " + store.getItem("channels") + ", \"subreddits\": " + store.getItem("subreeddits") + "}";
-                $query(".export-data").innerText = toExport;
-            }, delay);
-        },
-        activeClass: 'link-active',
-        activeClassDelay: 100
+        onTap: importExportData,
+        activeClass: "link-active"
     });
 
     tappable("#btn-import-data", {
@@ -1257,6 +1258,13 @@
     submenu.append(new gui.MenuItem({
         label: 'Remove Subscriptions',
         click: V.Actions.loadForRemoving
+    }));
+    submenu.append(new gui.MenuItem({
+        type: 'separator'
+    }));
+    submenu.append(new gui.MenuItem({
+        label: 'Import & Export Data',
+        click: importExportData
     }));
     var menu = new gui.Menu({
         type: 'menubar'
