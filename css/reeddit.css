@@ -87,7 +87,7 @@ a { color: #999; }
 
 .comment-info { text-align: right; width: 50%; }
 
-.comment-info a { color: #aaa; font-weight: 700; text-decoration: none; }
+.comment-info a { color: #aaa; text-decoration: none; }
 
 .comment-body p { margin: 10px 0; color: #3D525E; }
 
@@ -179,7 +179,7 @@ a { color: #999; }
     position: fixed;
     bottom: 0;
     width: 140px;
-    background-color: #222;
+    background-color: #262b30;
     z-index: 1;
     height: 8%;
     border-top: 1px solid rgba(0, 0, 0, .5);
