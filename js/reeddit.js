@@ -394,10 +394,12 @@
                     modal.remove();
                 }, 301);
             },
-            switchMnml: function(change) {
-                if (!change || change === false) mnml = false;
-                else if (change && change === true) mnml = true;
-                else mnml = !mnml;
+            switchMnml: function(change) { // change: boolean
+                var save = false;
+                if (typeof change === 'undefined') {
+                    mnml = !mnml;
+                    save = true;
+                } else mnml = change;
                 var bntMnml = $id("mnml");
                 if (mnml) {
                     body.classList.add(css.mnml);
@@ -406,7 +408,7 @@
                     body.classList.remove(css.mnml);
                     bntMnml.innerText = "Mnml: off";
                 }
-                store.setItem("mnml", mnml ? "on" : "off");
+                if (save) store.setItem("mnml", mnml);
             }
         },
         Misc: {
@@ -818,7 +820,9 @@
 
     // Taps
     tappable("#mnml", {
-        onTap: V.Actions.switchMnml,
+        onTap: function() {
+            V.Actions.switchMnml();
+        },
         activeClass: "link-active"
     });
 
@@ -1303,7 +1307,7 @@
     scrollTop();
 
     var loadMnml = store.getItem("mnml"),
-        isMnml = loadMnml && loadMnml === "on";
+        isMnml = loadMnml ? JSON.parse(loadMnml) : false;
     V.Actions.switchMnml(isMnml);
 
     if (!isDesktop) {
