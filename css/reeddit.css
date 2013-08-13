@@ -1011,7 +1011,7 @@ header > div {
 
 .mnml #refresh-icon div { background-image: url('../img/refresh1.png'); }
 
-.mnml #back-arrow div { border-right: 14px solid #333; }
+.mnml #back-arrow div { border-right: 12px solid #333; }
 
 .mnml .button-active { background-color: #ccc; }
 
@@ -1020,7 +1020,7 @@ header > div {
     background-image: none !important;
 }
 
-.mnml #main-title { top: auto; }
+.mnml #main-title { top: 0px; }
 
 .mnml #sub-title {
     margin: 0;
