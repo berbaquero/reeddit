@@ -1,188 +1,84 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Reeddit - Minimalist, elastic and read-only web app client for Reddit</title>
+		<title>Reeddit - Minimal, elastic and read-only web app client for Reddit</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="Elastic, minimalist and read-only Reddit web-app client.">
+		<meta name="description" content="Elastic, minimal, mobile-first and read-only Reddit web-app client.">
 		<link rel="stylesheet" href="normalize.css" type="text/css" />
+		<link rel="stylesheet" href="about.css">
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:600,700,400' rel='stylesheet' type='text/css'>
-		<style>
-			* {
-				-moz-box-sizing: border-box;
-				-webkit-box-sizing: border-box;
-				box-sizing: border-box;
-				font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-			}
-
-			body {
-				background-color: whiteSmoke;
-				color: #131313;
-			}
-
-			a { color: #08C; text-decoration: none; }
-
-			a:hover { text-decoration: underline; }
-
-			#upBar { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background-color: orange; }
-
-			#mainWrapper {
-				margin: 0 auto;
-				padding: 40px 0 0 60px;
-			}
-
-			#screens { float: right; width: 50%; min-height: 820px; }
-
-			#description { float: left; width: 50%; }
-
-			#description > ul {
-				list-style-type: none;
-				padding: 0 0 0 10px;
-			}
-
-			#appDescription {
-				font-size: 20px;
-				font-weight: bold;
-				color: #555;
-			}
-
-			.button {
-				padding: 10px;
-				background-color: #777;
-				border-radius: 5px;
-				color: whiteSmoke;
-				letter-spacing: 1;
-				font-weight: bold;
-				-webkit-transition-duration: 100ms;
-				transition-duration: 100ms;
-				display: block;
-				text-align: center;
-				width: 50%;
-				margin: 0 auto;
-			}
-
-			.button:hover {
-				background-color: #333;
-				text-decoration: none;
-			}
-
-			.button:active {
-				-webkit-transform: translateY(3px);
-				transform: translateY(3px);
-			}
-
-			#title {
-				background-size: 60px;
-				font-size: 50px;
-				letter-spacing: 1;
-				background-image: url('alienIcon.png');
-				width: 60px;
-				height: 60px;
-				padding-left: 70px;
-				background-repeat: no-repeat;
-			}
-
-			.imagen {
-				max-width: 100%;
-				height: auto;
-			}
-
-			#more {
-				clear: both;
-				padding-top: 20px;
-			}
-
-			#iPad { padding: 20px 0; }
-
-			#iPad > img {
-				box-shadow: 0px 3px 30px #444;
-				border-radius: 5px;
-			}
-
-			#links { padding: 25px 10px; }
-
-			#share {
-				padding: 30px 0;
-				background-color: #eee;
-				margin-top: 15px;
-			}
-
-			#share iframe { margin-right: 10px; }
-
-			.foot-btn { margin: 50px auto; }
-
-	        #press {
-	            padding: 10px 10px 25px 10px;
-	            background-color: white;
-	            border-radius: 5px;
-	            box-shadow: 0 2px 3px #CCC;
-	            margin: 15px auto;
-	            width: 60%;
-	            text-align: center;
-	        }
-
-	        #press h3 { color: #555; margin-bottom: 0; }
-
-	        #press p { font-size: 14px; margin: 0; }
-
-			footer { text-align: center; }
-
-			footer p { color: #777; }
-
-			#FireFoxDiv > p { text-align: center; }
-
-			#me { background-color: #333; padding: 50px 0; }
-
-			#me a { color: #777; }
-
-			#me a:hover { text-decoration: none; color: #999; }
-
-			@media (max-width: 630px) {
-
-				#description, #screens { float: none; width: 100%; min-height: 0; }
-
-				#mainWrapper { padding: 10px; }
-
-				#description > ul { padding: 0; }
-
-	            #press { width: 80%; }
-			}
-		</style>
 	</head>
 	<body>
-		<div id="upBar"></div>
-		<div id="mainWrapper">
-			<div id="description">
-				<h2 id="title">Reeddit</h2>
-				<p id='appDescription'>A minimalist, elastic and read-only <a href="http://reddit.com/" target="_blank">Reddit</a> web-app client, that lets you create custom &#8216;Channels&#8217; to group different subreddits into one stream.</p>
 
-				<a class='button' href='http://reedditapp.com/' target="_blank">Launch Reeddit</a>
-				<div id="FireFoxDiv"></div>
-				<ul>
-					<li><h4 id="minimalist">Minimalist</h4>
-					<p>While aiming for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.</p></li>
+		<section class="part" id="presentation">
+			<div class="main-column col-1">
+				<div class="img"></div>
+				<h1>Reeddit</h1>
+				<p>Minimal, elastic and read-only <a href="http://reddit.com/" target="_blank">Reddit</a> web-app client, that lets you create &#8216;Channels&#8217;, to group different subreddits into one stream.</p>
 
-					<li><h4 id="elastic">Elastic</h4>
-					<p>Reeddit has 3 different elastic layouts - you can use it on any window size. So it&#8217;s comfortable to use on a smartphone, tablet or desktop.</p></li>
-
-					<li><h4 id="read-only">Read-only</h4>
-					<p>Reeddit can be used for browsing subreddits and viewing links and posts and its comments, but not for voting or commenting&#8230; for now.</p>
-					<p>However, the subreddits and channels you add are saved locally, so you don&#8217;t lose your customized data.</p>
-					<p>Reeddit is meant to <i>just read</i> Reddit.</p></li>
-
-					<li><h4 id="channels">Channels</h4>
-					<p>You can group as many subreddits as you want into a Channel, to browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.</p></li>
-				</ul>
+				<a class='button main-button' href='http://reedditapp.com/' target="_blank">Launch Reeddit</a>
+				<div id="firefox"></div>
 			</div>
-			<div id="screens">
-				<img class='imagen' src='screens/screenDesk.png'>
-			</div>
-			<div id="more">
-				<div id='iPad'><img class="imagen" src="screens/screeniPad1.png" alt="Reeddit on iPad" /></div>
-			</div>
-		</div>
+			<div class="main-column col-2 img hide"></div>
+		</section>
 
-        <div id="press">
+		<section class="part" id="mobile-screens">
+			<h2>Smooth reading experience on your web browser, from mobile to desktop screens.</h2>
+			<div class="img screen iphone screen1"></div>
+			<div class="img screen iphone screen2 hide"></div>
+			<div class="img ipad"></div>
+		</section>
+
+		<section class="part" id="description">
+			<ul>
+				<li>
+					<h4 id="minimalist">Minimal</h4>
+					<h5>Simple, clean interface.</h5>
+					<p>Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.</p>
+				</li>
+
+				<li>
+					<h4 id="elastic">Elastic</h4>
+					<h5>Use it on any window size.</h5>
+					<p>Reeddit has 3 different elastic layouts. So it&#8217;s comfortable to use on smartphones, tablets or desktops.</p>
+				</li>
+
+				<li>
+					<h4 id="read-only">Read-only</h4>
+					<h5>Meant for <i>just reading</i> Reddit.</h5>
+					<p>Reeddit is great for browsing subreddits and viewing links and posts and its comments, but is not enabled for voting or commenting&#8230; <a href="#support">for now</a>.</p>
+					<p>Subreddits and channels you add on Reeddit are saved locally, however. And you can export them, so you don&#8217;t lose your customized data.</p></li>
+
+				<li>
+					<h4 id="channels">Channels</h4>
+					<h5>Browse multiple subreddits in a single view.</h5>
+					<p>You can group as many subreddits as you want into a Channel. This is specially useful when you add subject-related subreddits.</p>
+				</li>
+			</ul>
+		</section>
+
+		<section class="part" id="mac-app">
+			<h2>Reeddit for Mac</h2>
+			<p>This is a special, yet experimental version of Reeddit for OS X.</p>
+			<div class="img mac-screen"></div>
+			<p>You can download and use Reeddit for Mac, completely <b>gratis</b>.</p>
+			<p>For further development, a donation is greatly appreciated.</p>
+			<div class="mac-buttons">
+				<a href="#" class="button btn-mac main-button">Download</a>
+				<a href="#" class="button btn-mac">Donate</a>
+			</div>
+		</section>
+
+		<section class="part" id="fx-os">
+			<h2>Reeddit for Firefox OS</h2>
+			<p>Enjoy the full-screen experience on mobile.</p>
+			<div class="img screen fx-os-screen screen1"></div>
+			<div class="img screen fx-os-screen screen2 hide"></div>
+			<a class="button ff-btn img" href="#">Get and rate Reeddit on Firefox OS</a>
+		</section>
+
+        <section class="part" id="press">
             <div>
                 <a href="http://mashable.com/2013/01/07/reeddit-reddit/" target='_blank'>
                     <h3>"Reeddit offers a fresh face for Reddit."</h3>
@@ -195,10 +91,16 @@
                 </a>
                 <p> - VentureBeat.com</p>
             </div>
-        </div>
+        </section>
+
+        <a class='button foot-btn main-button' href='http://reedditapp.com/' target="_blank">Launch Reeddit</a>
+
+        <section class="part" id="support">
+			<p>If you enjoy Reeddit, want to show your support and make sure of its further development, please consider donating.</p>
+			<a href="#" class="button">Donate</a>
+        </section>
 
 		<footer>
-			<a class='button foot-btn' href='http://reedditapp.com/' target="_blank">Launch Reeddit</a>
 			<div id='share'>
 				<div>
 					<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
@@ -213,33 +115,42 @@
 		</footer>
 
 		<script>
-			var d = document,
-				b =	d.body,
-				screens = ['screenDesk1.png', 'screenDesk3.png', 'screeniPhone.png', 'screenDesk2.png', 'screenDesk4.png',
-				 'screeniPhone1.png', 'screenDesk.png'],
-				i = 0;
-			setInterval(function() {
-				var img = d.querySelector('#screens > img');
-				img.setAttribute('src', 'screens/' + screens[i]);
-				if(i === screens.length - 1) { i = 0; } else { i++; }
-			}, 7000);
 			setTimeout(function() {
-				window.scrollTo(0, 1);
+				var hash = window.location.hash;
+				if (!hash) window.scrollTo(0, 1);
 			}, 100);
+			var w = window,
+				d = document,
+				iPhoneImages = d.querySelectorAll(".iphone"),
+				ffosImages = d.querySelectorAll(".fx-os-screen");
+				changeImage = function() {
+					if (w.innerWidth >= 700) return;
+					for (var i = 0, l = iPhoneImages.length; i < l; i++) {
+						iPhoneImages[i].classList.toggle("hide");
+						ffosImages[i].classList.toggle("hide");
+					}
+				};
+
+			setInterval(changeImage, 7000);
+
 		</script>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 		</script>
 		<script>
 		if (window.navigator.mozApps) {
-			(function(window){
-				var string = "<p>or</p><a class='button' id='FireFoxInstall' >Install on Firefox</a>"
-				var ffDiv = document.getElementById("FireFoxDiv");
-				ffDiv.innerHTML = string;
-				var foxButton = document.getElementById("FireFoxInstall");
-				foxButton.onclick = function(){
-					window.navigator.mozApps.install("http://berbaquero.github.io/reeddit/manifest.webapp");
+			(function(w){
+				var html = "<p>or</p><a class='button' id='FireFoxInstall' >Install on Firefox</a>"
+				var ff = document.getElementById("firefox");
+				ff.innerHTML = html;
+				var btn = document.getElementById("FireFoxInstall");
+				btn.onclick = function(){
+					w.navigator.mozApps.install("http://reedditapp.com/manifest.webapp");
 					false;
 				}
+				var innerLink = document.createElement("a");
+				innerLink.href = "#firefox";
+				innerLink.className = "button";
+				document.getElementById("fx-os").appendChild(innerLink);
 			})(window);
 		}
 		</script>

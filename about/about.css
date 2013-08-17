@@ -1,0 +1,397 @@
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+	background-color: #fbfbfb;
+	color: #333;
+	border-top: 5px solid #1460AC;
+	overflow-x: hidden;
+}
+
+a { color: #08C; text-decoration: none; }
+
+a:hover { text-decoration: underline; }
+
+.part {
+    padding: 10px;
+}
+
+.img {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.button {
+	padding: 10px;
+	border-radius: 5px;
+	font-weight: bold;
+	-webkit-transition-duration: 100ms;
+	transition-duration: 100ms;
+	display: block;
+	text-align: center;
+	width: 50%;
+	margin: 0 auto 10px;
+	border: 1px solid #999;
+	background-color: #d7d7d7;
+    color: #333;
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(#eee, #ccc);
+    background-image: -moz-linear-gradient(#eee, #ccc);
+    background-image: -o-linear-gradient(#eee, #ccc);
+    background-image: linear-gradient(#eee, #ccc);
+
+	box-shadow: inset 0 1px 0 #fff;
+	max-width: 300px;
+}
+
+.button:hover {
+	text-decoration: none;
+}
+
+.button:active {
+	-webkit-transform: translateY(3px);
+	transform: translateY(3px);
+}
+
+.main-button {
+	background-image: -webkit-linear-gradient(#4C9BEA, #1460AC);
+	background-image: -moz-linear-gradient(#4C9BEA, #1460AC);
+	background-image: -o-linear-gradient(#4C9BEA, #1460AC);
+	background-image: linear-gradient(#4C9BEA, #1460AC);
+	box-shadow: none;
+	border: 0;
+	color: #F5F5F5;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.9);
+	border: 1px solid #0F467F;
+}
+
+.screen {
+    border: 1px solid #555; border-radius: 4px;
+}
+
+.hide {
+	display: none;
+}
+
+h1, h2 {
+    text-shadow: 0 1px 0 #FFF;
+    text-align: center;
+}
+
+#presentation {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#presentation h1 { margin: 5px 0; }
+
+.main-column .img {
+    -webkit-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    -moz-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+}
+
+.col-1 .img {
+    background-size: 250px 166px;
+    background-image: url("icons/small-icon.png");
+    height: 166px;
+}
+
+#mobile-screens {
+    padding-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.iphone {
+    width: 320px;
+    height: 568px;
+    background-size: 320px 568px;
+    margin: 0 auto;
+    max-width: 320px;
+}
+
+.iphone.screen1 {
+    background-image: url('screens/iphone1.png');
+}
+
+.iphone.screen2 {
+    background-image: url('screens/iphone2.png');
+}
+
+.ipad {
+}
+
+#description > ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+#description h5 { color: #777; font-size: 15px; font-weight: 600;}
+
+#description h4, #description h5 { margin: 0; }
+
+#description li {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+#description li:last-child {
+    border-bottom: 0;
+}
+
+#mac-app {
+    background-image: -webkit-linear-gradient(#E5E5E5, #AFBCC8);
+    background-image: -moz-linear-gradient(#E5E5E5, #AFBCC8);
+    background-image: -o-linear-gradient(#E5E5E5, #AFBCC8);
+    background-image: linear-gradient(#E5E5E5, #AFBCC8);
+    border-top: 1px solid #777;
+    padding-right: 0;
+}
+
+#mac-app p {
+	padding-right: 10px;
+}
+
+.mac-buttons {
+    text-align: center;
+}
+
+.mac-buttons a {
+    display: inline-block;
+    width: 45%;
+}
+
+.fx-os-screen {
+    background-size: 320px 480px;
+    width: 320px;
+    height: 480px;
+    margin: 0 auto 20px;
+}
+
+.fx-os-screen.screen1 {
+    background-image: url('screens/ffos1.png');
+}
+
+.fx-os-screen.screen2 {
+    background-image: url('screens/ffos2.png');
+}
+
+.ff-btn {
+    background-image: url('icons/ffmarket.png');
+    background-size: 44px;
+    display: block;
+    width: 233px;
+    background-position-x: 5px;
+    margin: 40px auto 0;
+    text-align: left;
+    padding-left: 55px;
+}
+
+.ff-btn img {
+	width: 36px;
+}
+
+#fx-os {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+#fx-os h2, #fx-os p {
+    padding: 0 10px;
+    text-align: center;
+}
+
+.mac-screen {
+    background-image: url('screens/macbook-medium.png');
+    height: 250px;
+    background-position-x: 5%;
+}
+
+#support {
+	background-image: -webkit-linear-gradient(#d5d5d5, #EEE);
+	background-image: -moz-linear-gradient(#d5d5d5, #EEE);
+	background-image: -o-linear-gradient(#d5d5d5, #EEE);
+	background-image: linear-gradient(#d5d5d5, #EEE);
+	border-top: 1px solid #777;
+}
+
+#appDescription {
+	font-size: 20px;
+	font-weight: bold;
+	color: #555;
+}
+
+#iPad { padding: 20px 0; }
+
+#iPad > img {
+	box-shadow: 0px 3px 30px #444;
+	border-radius: 5px;
+}
+
+#share {
+	padding: 30px 0;
+	background-color: #eee;
+}
+
+#share iframe { margin-right: 10px; }
+
+.foot-btn { margin: 50px auto; }
+
+#press {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px #CCC;
+    text-align: center;
+    width: 80%;
+    margin: 40px auto 10px;
+}
+
+#press h3 { color: #555; margin-bottom: 0; }
+
+#press p { font-size: 14px; margin: 0; }
+
+footer { text-align: center;}
+
+footer p { color: #777; }
+
+#FireFoxDiv > p { text-align: center; }
+
+#me { background-color: #333; padding: 50px 0; }
+
+#me a { color: #777; text-transform: uppercase; font-weight: 600; letter-spacing: 2px; font-size: 14px;}
+
+#me a:hover { text-decoration: none; color: #999; }
+
+/* Big phone portrait to portrait tablet */
+@media (min-width: 480px) {
+    .part {
+        padding: 30px;
+    }
+
+    #mac-app {
+        padding-right: 30px;
+
+        text-align: center;
+}
+
+    .mac-screen {
+        background-position-x: 50%;
+    }
+
+    #share {
+        padding: 30px 10px;
+    }
+}
+
+@media (min-width: 700px) {
+	.hide {
+		display: block;
+	}
+
+	#mobile-screens, #fx-os {
+	    margin: 0 auto;
+	    text-align: center;
+	}
+
+	.iphone, .fx-os-screen {
+        display: inline-block;
+        margin: 10px;
+	}
+
+	#description {
+	    text-align: center;
+    }
+
+	#description li {
+        width: 45%;
+        display: inline-block;
+        vertical-align: text-top;
+        margin-bottom: 25px;
+        border-bottom: 0;
+        padding: 0 20px;
+        text-align: left;
+    }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 960px) {
+
+    body {
+        background-color: #f5f5f5;
+    }
+
+	.part {
+        width: 960px; margin: 0 auto;
+        background-image: -webkit-linear-gradient(#FBFBFB 50%, #EEE);
+        background-image: -moz-linear-gradient(#FBFBFB 50%, #EEE);
+        background-image: -o-linear-gradient(#FBFBFB 50%, #EEE);
+        background-image: linear-gradient(#FBFBFB 50%, #EEE);
+        border-left: 1px solid #DDD;
+        border-right: 1px solid #DDD;
+        border-bottom: 1px solid #DDD;
+    }
+
+    #presentation { padding-right: 0;}
+
+	.main-column {
+	    display: inline-block;
+	    vertical-align: text-top;
+    }
+
+    .col-1 {
+        width: 39%;
+        padding-top: 35px;
+    }
+
+	.col-1 .img {
+		background-image: url("icons/alienicon.png");
+		background-size: 144px;
+	}
+
+	.col-2 {
+	    background-image: url('screens/iphone.png'), url('screens/ipad1-medium.png');
+	    background-size: 150px, 610px;
+	    background-position: 5px 185px, 25px 40px;
+	    height: 500px;
+	    width: 60%;
+    }
+
+	#mac-app {
+        background-image: url('screens/galaxy.jpg');
+        background-repeat: no-repeat;
+        border-top: 0;
+
+        color: #f5f5f5;
+}
+
+    #mac-app h2 { text-shadow: none; }
+
+    .mac-buttons a { width: 20%; margin-bottom: 20px;}
+
+    .mac-screen {
+        background-image: url('screens/mac-big.png');
+        height: 617px;
+        width: 492px;
+        display: inline-block;
+        background-position-y: -35px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    #support {
+        width: auto;
+        text-align: center;
+    }
+
+    #press { width: 50%; }
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+}
