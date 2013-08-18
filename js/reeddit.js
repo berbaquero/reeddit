@@ -609,10 +609,7 @@
                         });
                     }
 
-                    if (!refresh) {
-                        if (isWideScreen) V.detailView.removeClass("fuera");
-                        else if (currentView !== view.comments) V.Anims.slideFromRight();
-                    }
+                    if (!refresh && currentView !== view.comments) V.Anims.slideFromRight();
 
                     if (isWideScreen) {
                         // Refresh active link indicator
@@ -1254,7 +1251,8 @@
                 V.detailWrap.html(T.noLink);
             } else {
                 setTimeout(function() {
-                    V.detailWrap.empty();
+                    if (isLargeScreen) V.Actions.backToMainView();
+                    else V.detailWrap.empty();
                 }, delay);
             }
         } else {
