@@ -19,7 +19,8 @@
         botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
         noLink: "<div id='no-link'><p>No Post Selected.</div>",
         about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>v1.6.1</p><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
-        moveData: "<div class='new-form move-data'><div class='close-form'>close</div><h3>Export Data</h3><p>Copy this to move your local subscriptions to any other instance of Reeddit, or just for backup.</p><textarea class='move-data-field export-data'></textarea><h3>Import Data</h3><textarea placeholder='Once you paste your data and press \"Import\", Reeddit will refresh with the imported data.' class='move-data-field import-data'></textarea><div class='btn-general' id='btn-import-data'>Import</div></div>"
+        exportData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-exp'><h3>Export Data</h3><p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p><div class='btn-general' id='btn-save-dbx'>Save to Dropbox</div></div></div>",
+        importData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-imp'><h3>Import Data</h3><p>Load the subscriptions from another Reeddit instance.</p><p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p><div class='btn-general' id='btn-dbx-imp'>Import from Dropbox</div></div></div>"
     };
 
     var doc = win.document,
@@ -50,6 +51,11 @@
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
         mnml = false,
+        subsChanged = false,
+        gists = {
+            url: "https://api.github.com/gists",
+            fileURL: ''
+        },
         // Pseudo-Enums
         move = {
             left: 1,
@@ -112,16 +118,19 @@
                 if (!M.Subreddits.listHasSub(sub)) {
                     M.Subreddits.list.push(sub);
                     store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+                    subsChanged = true;
                 }
             },
             setList: function(subs) {
                 M.Subreddits.list = subs;
                 store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+                subsChanged = true;
             },
             remove: function(sub) {
                 var idx = M.Subreddits.list.indexOf(sub);
                 M.Subreddits.list.splice(idx, 1);
                 store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+                subsChanged = true;
             },
             listHasSub: function(sub) {
                 if (M.Subreddits.list) {
@@ -154,6 +163,7 @@
             add: function(channel) {
                 M.Channels.list.push(channel);
                 store.setItem('channels', JSON.stringify(M.Channels.list));
+                subsChanged = true;
             },
             remove: function(name) {
                 for (var j = 0; j < M.Channels.list.length; j++) {
@@ -163,6 +173,7 @@
                     }
                 }
                 store.setItem('channels', JSON.stringify(M.Channels.list));
+                subsChanged = true;
             },
             getByName: function(name) {
                 var foundChannel;
@@ -217,23 +228,6 @@
             remove: function(name) {
                 $('.channel[data-title="' + name + '"]').parent().remove();
                 $('.channel-to-remove[data-title="' + name + '"]').remove();
-            },
-            showNewChannelForm: function() {
-                var delay = 1;
-                if (!isLargeScreen) {
-                    if (showingMenu) delay = 301;
-                    V.Actions.moveMenu(move.left);
-                }
-                setTimeout(function() {
-                    if (esModal) return;
-                    var modal = $('<div/>').attr('id', 'modal');
-                    $('body').append(modal).append(T.formAddNewChannel);
-                    esModal = true;
-                    setTimeout(function() {
-                        modal.css('opacity', 1);
-                        $id('txt-channel').focus();
-                    }, 1);
-                }, delay);
             }
         },
         Subreddits: {
@@ -256,23 +250,6 @@
             cleanSelected: function() {
                 $(".sub.sub-active").removeClass("sub-active");
                 $(".channel.channel-active").removeClass("channel-active");
-            },
-            showManualInput: function() {
-                var delay = 1;
-                if (!isLargeScreen) {
-                    if (showingMenu) delay = 301;
-                    V.Actions.moveMenu(move.left);
-                }
-                setTimeout(function() {
-                    if (esModal) return;
-                    var modal = $('<div/>').attr('id', 'modal');
-                    $('body').append(modal).append(T.formAgregarSubManual);
-                    esModal = true;
-                    setTimeout(function() {
-                        modal.css('opacity', 1);
-                        $id('txt-new-sub').focus();
-                    }, 1);
-                }, delay);
             }
         },
         Posts: {
@@ -383,6 +360,23 @@
                 }, isLargeScreen ? 1 : 301);
                 V.Actions.setSubTitle('- Subreddits');
                 setEditingSubs(true);
+            },
+            showModal: function(template, callback) {
+                var delay = 1;
+                if (!isLargeScreen) {
+                    V.Actions.moveMenu(move.left);
+                    delay = 301;
+                }
+                setTimeout(function() {
+                    if (esModal) return;
+                    var modal = $('<div/>').attr('id', 'modal');
+                    $('body').append(modal).append(template);
+                    esModal = true;
+                    setTimeout(function() {
+                        modal.css('opacity', 1);
+                    }, 1);
+                    if (callback) callback();
+                }, delay);
             },
             removeModal: function() {
                 var modal = $('#modal');
@@ -815,6 +809,76 @@
         });
     }
 
+    function createBackup() {
+        if (subsChanged || !gists.fileURL) {
+            V.Actions.showModal(T.exportData, function() {
+                var files = {},
+                    content = "{\"channels\": " + store.getItem("channels") + ", \"subreddits\": " + store.getItem("subreeddits") + "}";
+                files["reedditdata.json"] = {
+                    "content": content
+                };
+                $.ajax({
+                    url: gists.url,
+                    type: "POST",
+                    data: JSON.stringify({
+                        "description": "Reeddit User Data",
+                        "public": true,
+                        "files": files
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    },
+                    success: function(response) {
+                        var resp = JSON.parse(response);
+                        $id("btn-save-dbx").style.display = "block"; // Show "Save to Dropbox" button only when the gist's created
+                        gists.fileURL = resp.files["reedditdata.json"].raw_url;
+                        subsChanged = false;
+                        store.setItem("gist:url", gists.fileURL);
+                    },
+                    error: function(x, y, z) {
+                        console.log(x, y, z);
+                        alert("Error creating backup file - " + z);
+                        V.Actions.removeModal();
+                    }
+                });
+            });
+        } else if (gists.fileURL) {
+            V.Actions.showModal(T.exportData, function() {
+                $id("btn-save-dbx").style.display = "block";
+            });
+        }
+    }
+
+    function chooseFromDropbox() {
+        Dropbox.choose({
+            success: function(file) {
+                $.ajax({
+                    url: file[0].link,
+                    success: function(data) {
+                        var refresh = false;
+                        if (data.subreddits) {
+                            console.log(data.subreddits);
+                            refresh = true;
+                            store.setItem("subreeddits", JSON.stringify(data.subreddits));
+                        }
+                        if (data.channels) {
+                            refresh = true;
+                            console.log(data.channels);
+                            store.setItem("channels", JSON.stringify(data.channels));
+                        }
+                        // Clear any previous gist file URL
+                        gists.fileURL = '';
+                        store.setItem("gist:url", "");
+
+                        if (refresh) win.location.reload();
+                    }
+                });
+            },
+            linkType: "direct",
+            extensions: [".json"]
+        });
+    }
+
     // Taps
     tappable("#mnml", {
         onTap: function() {
@@ -1021,14 +1085,14 @@
 
     tappable("#btn-sub-man", {
         onTap: function() {
-            V.Subreddits.showManualInput();
+            V.Actions.showModal(T.formAgregarSubManual);
         },
         activeClass: 'list-button-active'
     });
 
     tappable("#btn-add-channel", {
         onTap: function() {
-            V.Channels.showNewChannelForm();
+            V.Actions.showModal(T.formAddNewChannel);
         },
         activeClass: 'list-button-active'
     });
@@ -1081,28 +1145,11 @@
         activeClass: 'button-active'
     });
 
-    tappable(".close-form", {
-        onTap: function() {
-            V.Actions.removeModal();
-        }
-    });
+    tappable(".close-form", V.Actions.removeModal);
 
     tappable("#about", {
         onTap: function() {
-            var delay = 1;
-            if (!isLargeScreen) {
-                V.Actions.moveMenu(move.left);
-                delay = 301;
-            }
-            setTimeout(function() {
-                if (esModal) return;
-                var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(T.about);
-                esModal = true;
-                setTimeout(function() {
-                    modal.css('opacity', 1);
-                }, 1);
-            }, delay);
+            V.Actions.showModal(T.about);
         },
         activeClass: 'link-active',
         activeClassDelay: 100
@@ -1122,52 +1169,39 @@
         activeClassDelay: 100
     });
 
-    tappable("#imp-exp", {
-        onTap: function() {
-            var delay = 1;
-            if (!isLargeScreen) {
-                V.Actions.moveMenu(move.left);
-                delay = 301;
-            }
-            setTimeout(function() {
-                if (esModal) return;
-                // Mostrar modal
-                var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(T.moveData);
-                esModal = true;
-                setTimeout(function() {
-                    modal.css('opacity', 1);
-                }, 1);
-                // Mostrar cadena a exportar.
-                var toExport = "{\"channels\": " + store.getItem("channels") + ", \"subreddits\": " + store.getItem("subreeddits") + "}";
-                $query(".export-data").innerText = toExport;
-                // Mostrar campo para importar, con botón para importar.
-                // Al importar, cargar data a store, y refrescar.
-            }, delay);
-        },
-        activeClass: 'link-active',
-        activeClassDelay: 100
+    tappable("#exp-data", {
+        onTap: createBackup,
+        activeClass: 'link-active'
     });
 
-    tappable("#btn-import-data", {
+    tappable("#imp-data", {
         onTap: function() {
-            var toImport = $query(".import-data").value;
-            if (toImport) {
-                var data = JSON.parse(toImport),
-                    refresh = false;
-                if (data.subreddits) {
-                    console.log(data.subreddits);
-                    refresh = true;
-                    store.setItem("subreeddits", JSON.stringify(data.subreddits));
-                }
-                if (data.channels) {
-                    refresh = true;
-                    console.log(data.channels);
-                    store.setItem("channels", JSON.stringify(data.channels));
-                }
-                if (refresh) win.location.reload();
+            V.Actions.showModal(T.importData);
+        },
+        activeClass: 'link-active'
+    });
+
+    tappable("#btn-save-dbx", {
+        onTap: function() {
+            if (!gists.fileURL) {
+                alert("Err. There's no backup file created...");
+                return;
             }
-        }
+            var options = {
+                files: [{
+                    url: gists.fileURL,
+                    filename: "reedditdata.json"
+                }],
+                success: V.Actions.removeModal
+            };
+            Dropbox.save(options);
+        },
+        activeClass: "btn-general-active"
+    });
+
+    tappable("#btn-dbx-imp", {
+        onTap: chooseFromDropbox,
+        activeClass: "btn-general-active"
     });
 
     // Swipes
@@ -1305,8 +1339,10 @@
     scrollTop();
 
     var loadMnml = store.getItem("mnml"),
+        gistURL = store.getItem("gist:url"),
         isMnml = loadMnml ? JSON.parse(loadMnml) : false;
     V.Actions.switchMnml(isMnml);
+    if (gistURL) gists.fileURL = gistURL;
 
     if (!isDesktop) {
         var touch = "touchmove";
