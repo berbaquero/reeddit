@@ -62,4 +62,4 @@
 
 .mnml .button:hover { background-color: rgba(0, 0, 0, 0.1); box-shadow: none; background-image: none; border-radius: 0;}
 
-.mnml .button:active, .btn-general:active { background-image: none; box-shadow: none; }
+.mnml .button:active, .mnml .btn-general:active { background-image: none; box-shadow: none; }
