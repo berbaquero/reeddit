@@ -345,7 +345,8 @@ a { color: #999; }
 .link-active .link-domain,
 .link-active .link-sub,
 .link-selected .link-domain,
-.link-selected .link-sub { color: #ADD0EB; }
+.link-selected .link-sub,
+#channels .link-active div p { color: #ADD0EB; }
 
 .link-nsfw {
     font-size: 11px;
