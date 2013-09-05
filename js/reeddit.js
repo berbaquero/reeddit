@@ -51,7 +51,7 @@
         isLargeScreen = checkLargeScreen(),
         isiPad, scrollFix, currentSortingChoice = 'hot',
         mnml = false,
-        subsChanged = false,
+        updateBackup = 1,
         gists = {
             url: "https://api.github.com/gists",
             fileURL: ''
@@ -118,19 +118,19 @@
                 if (!M.Subreddits.listHasSub(sub)) {
                     M.Subreddits.list.push(sub);
                     store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
-                    subsChanged = true;
+                    updateBackup = 1;
                 }
             },
             setList: function(subs) {
                 M.Subreddits.list = subs;
                 store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
-                subsChanged = true;
+                updateBackup = 1;
             },
             remove: function(sub) {
                 var idx = M.Subreddits.list.indexOf(sub);
                 M.Subreddits.list.splice(idx, 1);
                 store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
-                subsChanged = true;
+                updateBackup = 1;
             },
             listHasSub: function(sub) {
                 if (M.Subreddits.list) {
@@ -163,7 +163,7 @@
             add: function(channel) {
                 M.Channels.list.push(channel);
                 store.setItem('channels', JSON.stringify(M.Channels.list));
-                subsChanged = true;
+                updateBackup = 1;
             },
             remove: function(name) {
                 for (var j = 0; j < M.Channels.list.length; j++) {
@@ -173,7 +173,7 @@
                     }
                 }
                 store.setItem('channels', JSON.stringify(M.Channels.list));
-                subsChanged = true;
+                updateBackup = 1;
             },
             getByName: function(name) {
                 var foundChannel;
@@ -810,7 +810,7 @@
     }
 
     function createBackup() {
-        if (subsChanged || !gists.fileURL) {
+        if (updateBackup) {
             V.Actions.showModal(T.exportData, function() {
                 var files = {},
                     content = "{\"channels\": " + store.getItem("channels") + ", \"subreddits\": " + store.getItem("subreeddits") + "}";
@@ -832,12 +832,11 @@
                         var resp = JSON.parse(response);
                         $id("btn-save-dbx").style.display = "block"; // Show "Save to Dropbox" button only when the gist's created
                         gists.fileURL = resp.files["reedditdata.json"].raw_url;
-                        subsChanged = false;
-                        store.setItem("gist:url", gists.fileURL);
+                        updateBackup = 0;
                     },
-                    error: function(x, y, z) {
-                        console.log(x, y, z);
-                        alert("Error creating backup file - " + z);
+                    error: function() {
+                        $("#btn-save-dbx").remove();
+                        $(".move-data-exp").append("<p class='msg-error'>Oh oh. Error creating your backup file. Retry later.</p>");
                         V.Actions.removeModal();
                     }
                 });
@@ -866,10 +865,6 @@
                             console.log(data.channels);
                             store.setItem("channels", JSON.stringify(data.channels));
                         }
-                        // Clear any previous gist file URL
-                        gists.fileURL = '';
-                        store.setItem("gist:url", "");
-
                         if (refresh) win.location.reload();
                     }
                 });
@@ -1339,10 +1334,8 @@
     scrollTop();
 
     var loadMnml = store.getItem("mnml"),
-        gistURL = store.getItem("gist:url"),
         isMnml = loadMnml ? JSON.parse(loadMnml) : false;
     V.Actions.switchMnml(isMnml);
-    if (gistURL) gists.fileURL = gistURL;
 
     if (!isDesktop) {
         var touch = "touchmove";
@@ -1363,6 +1356,11 @@
             };
             scrollFix();
         }
+    }
+
+    if (!Dropbox.isBrowserSupported()) {
+        $("#imp-data").remove();
+        $("#exp-data").remove();
     }
 
 })(window);

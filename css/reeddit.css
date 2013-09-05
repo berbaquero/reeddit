@@ -899,6 +899,14 @@ header > div {
 
 #btn-save-dbx { display: none; }
 
+.msg-error {
+    background-color: #bbb;
+    padding: 5px;
+    border-radius: 4px;
+    text-shadow: none;
+    font-weight: bold;
+}
+
 /* Here be da smooths */
 @-webkit-keyframes reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 @-moz-keyframes reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
