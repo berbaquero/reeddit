@@ -192,6 +192,7 @@ h1, h2 {
     margin: 40px auto 0;
     text-align: left;
     padding-left: 55px;
+    background-position: 5px;
 }
 
 .ff-btn img {
