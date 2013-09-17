@@ -363,26 +363,7 @@ footer p { color: #777; }
 	    width: 60%;
     }
 
-	#mac-app {
-        background-image: url('screens/galaxy.jpg');
-        background-repeat: no-repeat;
-        border-top: 0;
-
-        color: #f5f5f5;
-}
-
-    #mac-app h2 { text-shadow: none; }
-
-    .mac-buttons a { width: 20%; margin-bottom: 20px;}
-
-    .mac-screen {
-        background-image: url('screens/mac-big.png');
-        height: 617px;
-        width: 492px;
-        display: inline-block;
-        background-position-y: -35px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-    }
+    .mac-buttons a { width: 20%; margin-bottom: 20px; }
 
     #support {
         width: auto;
