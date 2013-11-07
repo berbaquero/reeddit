@@ -1,0 +1,21 @@
+{
+  "name": "Reeddit",
+  "description": "Minimal, elastic and read-only client for Reddit.",
+  "launch_path": "/",
+  "icons": {
+    "128": "/img/icons/icon16.png",
+    "128": "/img/icons/icon30.png",
+    "128": "/img/icons/icon32.png",
+    "128": "/img/icons/icon48.png",
+    "128": "/img/icons/icon60.png",
+    "128": "/img/icons/icon64.png",
+    "128": "/img/icons/icon128.png",
+    "256": "/img/icons/icon256.png"
+  },
+  "version": "0.1.2",
+  "developer": {
+    "name": "Bernardo Baquero Stand",
+    "url": "http://berbaquero.com"
+  },
+  "default_locale": "en"
+}
