@@ -854,18 +854,21 @@
                 $.ajax({
                     url: file[0].link,
                     success: function(data) {
-                        var refresh = false;
-                        if (data.subreddits) {
-                            console.log(data.subreddits);
-                            refresh = true;
-                            store.setItem("subreeddits", JSON.stringify(data.subreddits));
+                        try {
+                            var refresh = false;
+                            if (typeof data === "string") data = JSON.parse(data);
+                            if (data.subreddits) {
+                                refresh = true;
+                                store.setItem("subreeddits", JSON.stringify(data.subreddits));
+                            }
+                            if (data.channels) {
+                                refresh = true;
+                                store.setItem("channels", JSON.stringify(data.channels));
+                            }
+                            if (refresh) win.location.reload();
+                        } catch (e) {
+                            alert("Oops! Wrong file, maybe? - Try choosing another one.")
                         }
-                        if (data.channels) {
-                            refresh = true;
-                            console.log(data.channels);
-                            store.setItem("channels", JSON.stringify(data.channels));
-                        }
-                        if (refresh) win.location.reload();
                     }
                 });
             },
