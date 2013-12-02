@@ -867,7 +867,7 @@
                             }
                             if (refresh) win.location.reload();
                         } catch (e) {
-                            alert("Oops! Wrong file, maybe? - Try choosing another one.")
+                            alert("Oops! Wrong file, maybe? - Try choosing another one.");
                         }
                     }
                 });
@@ -1359,11 +1359,6 @@
             };
             scrollFix();
         }
-    }
-
-    if (!Dropbox.isBrowserSupported()) {
-        $("#imp-data").remove();
-        $("#exp-data").remove();
     }
 
 })(window);
