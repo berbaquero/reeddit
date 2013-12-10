@@ -73,7 +73,7 @@
         </section>
 
         <script>
-            var isDesktop = !/iPhone|iPod|iPad|Android/.test(navigator.userAgent);
+            var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(navigator.userAgent);
             if (isDesktop) {
                 var deskLink = document.createElement("link");
                 deskLink.rel = "stylesheet";
