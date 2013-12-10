@@ -954,6 +954,8 @@ header > div {
 
 /* Mnml Theme */
 
+.mnml { font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
 .mnml .comment-author p { font-weight: 500; }
 
 .mnml .comment-info a { font-weight: 400; }
@@ -1009,12 +1011,16 @@ header > div {
 }
 
 .mnml header {
-    border-bottom: 1px solid #ccc;
-    background-color: #D7D7D7;
+    border-bottom: 1px solid #bbb;
+    background-color: #e6e6e8;
     border-top: 0;
     background-image: none;
     box-shadow: none;
 }
+
+.mnml #header-icon { opacity: .7; }
+
+.mnml .main-view, .mnml .detail-view { background-color: #f8f8f8; }
 
 .mnml .button {
     height: 43px;
