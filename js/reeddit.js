@@ -1341,14 +1341,15 @@
     V.Actions.switchMnml(isMnml);
 
     if (!isDesktop) {
-        var touch = "touchmove";
+        var touch = "touchmove",
+            UA = navigator.userAgent;
         $id("edit-subs").addEventListener(touch, function(e) {
             e.preventDefault();
         }, false);
         doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
             if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
         }, false);
-        isiPad = /iPad/.test(navigator.userAgent);
+        isiPad = /iPad/.test(UA);
         if (isiPad) {
             scrollFix = function() {
                 // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
@@ -1359,6 +1360,8 @@
             };
             scrollFix();
         }
+        // apply mnml theme on iOS 7
+        if (!isMnml && (/iPhone|iPod|iPad/.test(UA)) && UA.match(/ OS (\d+)_/i)[1] === "7") V.Actions.switchMnml();
     }
 
 })(window);
