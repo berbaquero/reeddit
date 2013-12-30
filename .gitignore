@@ -1,11 +1,5 @@
 .DS_Store
 
-js/.DS_Store
+node_modules
 
-js/.DS_Store
-
-img/.DS_Store
-
-*.espressostorage
-
-css/.DS_Store
+.sass-cache
