@@ -1,0 +1,216 @@
+.mnml { // Minimal Theme
+
+    $bars-bg-color: #d7d7d7;
+
+    font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    .comment-author p {
+        font-weight: 500;
+    }
+
+    .comment-info a {
+        font-weight: 400;
+    }
+
+    #link-summary {
+        background-color: #262b30;
+	}
+
+    #link-summary:before {
+		background-color: #262b30;
+	}
+
+    #summary-extra {
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+
+    .channel-active {
+		border-left: 3px solid #3d6fba;
+	}
+
+    #menu-container {
+		background-color: #262b30;
+        background-image: none;
+	}
+
+    .link-wrap {
+		border-top: 0;
+	}
+
+    .link-thumb div {
+		box-shadow: none;
+	}
+
+    .link-active,
+    .link-selected {
+        background-image: -webkit-linear-gradient(top, #599ad2, #3d6fba);
+        background-image: -moz-linear-gradient(top, #599ad2, #3d6fba);
+        background-image: linear-gradient(top, #599ad2, #3d6fba);
+     }
+
+    .list-button > span {
+		background-color: transparent;
+	}
+
+    .top-buttons > div {
+        background-color: #ddd;
+        border: 1px solid #bbb;
+        box-shadow: 0 1px 0 #fff;
+    }
+
+    .comments-button,
+    .top-buttons > div,
+    .list-button > span,
+    .btn-general {
+        background-color: #d5d5d8;
+        border: 1px solid #bbb;
+        background-image: none;
+        box-shadow: none;
+    }
+
+    .btn-general {
+        border-radius: 4px;
+    }
+
+    .btn-general-active {
+        background-color: #ccc;
+        background-image: none;
+        box-shadow: none;
+    }
+
+    header {
+        border-bottom: 1px solid #bbb;
+        background-color: $bars-bg-color;
+        border-top: 0;
+        background-image: none;
+        box-shadow: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+    }
+
+    #header-icon {
+		opacity: .7;
+	}
+
+    .main-view, .detail-view {
+		background-color: #f5f5f5;
+	}
+
+    .button {
+        height: 43px;
+        width: 100%;
+        margin: 0;
+        background-image: none;
+        border-top: 0;
+        border-bottom: 0;
+    }
+
+    #refresh-icon div {
+		background-image: url('../img/refresh1.png');
+	}
+
+    #back-arrow div {
+		border-right: 12px solid #333;
+	}
+
+    .comments-icon {
+        opacity: .8;
+    }
+
+    .button-active {
+		background-color: #ccc;
+	}
+
+    .replies-button-active,
+    .list-button-active {
+        background-color: #ccc !important;
+        background-image: none !important;
+    }
+
+    #main-title {
+		top: 0;
+	}
+
+    #sub-title {
+        margin: 0;
+        padding: 0 10px;
+        line-height: 44px;
+        text-shadow: none;
+        border-radius: 0;
+    }
+
+    .sub-title-active {
+        text-shadow: none !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .corner-active {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+
+    .subreddit,
+    .item-to-remove {
+		border-top: 0;
+	}
+
+    .menu-desc {
+        color: #ccc;
+        text-shadow: none;
+        border-top: 0;
+        border-bottom: 0;
+        box-shadow: none;
+    }
+
+    #edit-subs {
+        box-shadow: none;
+        border-top: 0;
+    }
+
+    .view-footer {
+        background-color: $bars-bg-color;
+        box-shadow: 0 -1px 4px rgba(0, 0, 0, .2);
+    }
+}
+
+.ios7 { // iOS 7 Theme - overrides some stuff from "mnml"
+
+    $bars-bg-color: #f8f8f8;
+
+    header {
+        background-color: $bars-bg-color;
+    }
+
+    #header-icon {
+        opacity: .5;
+    }
+
+    .main-view, .detail-view {
+        background-color: #fff;
+    }
+
+    #selftext {
+        background-color: #e4e5e6;
+    }
+
+    .comments-icon {
+        opacity: .6;
+    }
+
+    #menu-container,
+    #link-summary,
+    #link-summary::before {
+        background-color: #434;
+    }
+
+    #summary-domain {
+        color: #eb4d5c;
+    }
+
+    .channel > div p {
+        color: #b199ae;
+    }
+
+    .view-footer {
+        background-color: $bars-bg-color;
+        border-top: 1px solid #bbb;
+    }
+}

@@ -1,0 +1,44 @@
+.view-footer {
+    display: none;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: $footer-height;
+    background-color: #bbb;
+    border-top: 1px solid #aaa;
+    box-shadow: inset 0 1px 1px #eee;
+
+    p {
+        line-height: ($footer-height - 1px);
+        margin: 0 auto;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        width: 70%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        cursor: default;
+    }
+}
+
+.btn-footer {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    @include size(36px, 30px);
+    top: 0;
+}
+
+.footer-refresh {
+    background-image: url('../img/refresh1.png');
+    right: 0;
+    background-size: 12px 15px;
+}
+
+#detail-close {
+    background-image: url('../img/delete.png');
+    opacity: .7;
+    left: 0;
+    background-size: 18px;
+}

@@ -1,20 +1,21 @@
 <!doctype html>
-<html manifest="reeddit.appcache">
+<html manifest="dist/reeddit.appcache">
     <head>
         <meta charset="utf-8">
 
         <title>Reeddit</title>
 
         <meta name="description" content="Elastic, minimalist and read-only Reddit web-app client.">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, minimal-iu">
+        <meta name="mobile-web-app-capable" content="yes">
         <meta name="author" content="Bernardo Baquero Stand">
 
         <link rel="icon" type="image/png" href="img/icon.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icon144.png">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/icon144.png">
 
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/reeddit.css">
+        <link rel="stylesheet" href="dist/style.css">
+        <link rel="stylesheet" href="dist/reeddit.css">
 
         <script>var loc=location.hostname;if(loc==="berbaquero.github.io"||loc==="berbaquero.github.com"||loc==="reedditapp.com"||loc==="berbaquero.com"){var _gaq=[["_setAccount","UA-36097133-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"))}</script>
     </head>
@@ -65,11 +66,19 @@
         </nav>
 
         <section class="view main-view show-view">
-            <div class="refresh refresh-icon-FS"></div>
             <section class="wrapper" id="main-wrap"></section>
+            <div class="view-footer" id="main-footer">
+                <p id="footer-sub"></p>
+                <div class="btn-footer footer-refresh btn-refresh" data-origin="footer-main"></div>
+            </div>
         </section>
         <section class="view detail-view">
             <section class="wrapper" id="detail-wrap"></section>
+            <div class="view-footer" id="detail-footer">
+                <div class="btn-footer hide btn-to-main" id="detail-close"></div>
+                <p id="footer-post"></p>
+                <div class="btn-footer footer-refresh btn-refresh hide" data-origin="footer-detail"></div>
+            </div>
         </section>
 
         <script>
@@ -77,14 +86,13 @@
             if (isDesktop) {
                 var deskLink = document.createElement("link");
                 deskLink.rel = "stylesheet";
-                deskLink.href = "css/desk.css";
+                deskLink.href = "dist/desk.css";
                 document.head.appendChild(deskLink);
             }
         </script>
 
-        <script src="js/zepto.js"></script>
-        <script src="js/libs.js"></script>
-        <script src="js/reeddit.js"></script>
+        <script src="dist/libs.js"></script>
+        <script src="dist/reeddit.js"></script>
 
         <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="yiu8cok9mknii0n"></script>
     </body>

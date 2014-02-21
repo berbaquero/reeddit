@@ -1,0 +1,298 @@
+@media only screen and (min-width: 350px) and (min-height: 500px) {
+
+    header {
+        background-color: #e7e7e7;
+        border-bottom: 1px solid #333;
+        border-top: 0;
+        box-shadow: rgba(255, 255, 255, .5) 0 32px 20px -10px inset, 0 44px 0 rgba(0, 0, 0, .33) inset;
+    }
+
+    .button {
+		border: none;
+		background-image: none;
+	}
+
+    #back-arrow {
+    	&:active div {
+			border-right: 12px solid #fff;
+		}
+
+    	div {
+			border-bottom: 6px solid transparent;
+			border-right: 12px solid #333;
+			border-top: 6px solid transparent;
+		}
+	}
+
+    #refresh-icon {
+    	div {
+			background-image: url('../img/refresh1.png');
+		}
+
+	    &:active div {
+			background-image: url('../img/refresh.png');
+		}
+	}
+
+    .sub-title-active {
+		text-shadow: 0 -1px 1px whiteSmoke !important;
+	}
+
+    .main-view,
+	.detail-view {
+		background-color: #fafafa;
+	}
+
+    #main-menu {
+		height: calc(100% - $footer-height);
+	}
+
+    .sub {
+		padding: 9px 10px;
+	}
+
+    .link-wrap {
+		border-bottom: 1px solid #ddd;
+	}
+
+    #edit-subs {
+		height: $footer-height;
+	}
+
+    #subs-for-channel {
+		max-height: 250px;
+	}
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+
+    .comments-icon {
+        background-image: url('../img/comment_48.png');
+        opacity: .7;
+    }
+
+    .btn-add-sub > div {
+		background-image: url('../img/add@2.png');
+	}
+}
+
+/* Tablet Portrait / 'LargeScreen' */
+@media only screen and (min-width: 490px) and (min-height: 500px) {
+
+    .main-view {
+        -webkit-transform: none !important;
+        transform: none !important;
+    }
+}
+
+@media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {
+
+    #menu-container,
+	#edit-subs {
+		width: 28%;
+	}
+
+    .image-preview {
+    	width: 80%;
+    }
+
+    .main-view,
+    .detail-view {
+    	left: 28%;
+    	width: 72%;
+    }
+}
+
+@media only screen and (min-width: 760px) and (max-width: 999px) and (min-height: 500px) {
+
+    #menu-container,
+	#edit-subs {
+		width: 22%;
+	}
+
+    .image-preview {
+		width: 60%;
+	}
+
+    .main-view,
+	.detail-view {
+		left: 22%;
+		width: 78%;
+	}
+}
+
+/* Tablet Landscape / 'WideScreen' */
+@media only screen and (min-width: 1000px) and (min-height: 500px) {
+
+    #menu-container,
+	#edit-subs {
+		width: 16%;
+	}
+
+    .main-view {
+        width: 34%;
+        left: 16%;
+    }
+
+    .detail-view {
+        width: 50%;
+        right: 0;
+		left: auto;
+        border-left: 1px solid #555;
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    header,
+	.to-comments {
+		display: none;
+	}
+
+    .link {
+		width: 100%;
+	}
+
+    .view {
+		top: 0;
+	}
+
+    .image-preview {
+		width: 70%;
+	}
+
+    .comment-wrap,
+	#selftext p {
+		font-size: 14px;
+	}
+
+	.wrapper {
+        height: calc(100% - #{$footer-height}) !important;
+    }
+
+	.view-footer {
+        display: block;
+    }
+}
+
+/* Wide-ass stuff */
+@media only screen and (min-width: 1500px) {
+    .image-preview {
+		width: 50%;
+	}
+}
+
+/* Landscape phone */
+
+@media only screen and (max-height: 280px) {
+    header {
+		height: 32px;
+	}
+
+    .view {
+		top: 32px;
+	}
+
+    #title {
+		font-size: 16px;
+	}
+
+    #refresh-icon div {
+		width: 15px;
+		height: 20px;
+	}
+
+    .button {
+		width: 25px;
+		height: 25px;
+	}
+
+    #main-title {
+		top: 6px;
+	}
+
+    .btn-edit-sub {
+		margin: -10px 0;
+	}
+
+    #subs-for-channel {
+		max-height: 130px;
+	}
+}
+
+@-moz-document url-prefix() {
+	/* Firefox only - layout hacks (TODO: update to new flexbox) */
+
+    #remove-sub,
+	.item-to-remove > div,
+	.to-comments,
+	#share-tw {
+		float: right;
+	}
+
+    #add-new-sub,
+	.item-to-remove > p,
+	.corner, header > div,
+	#summary-author {
+		float: left;
+	}
+
+    .item-to-remove {
+		width: 100%;
+	}
+
+    .link-wrap,
+	#back-arrow,
+	#refresh-icon,
+	.item-to-remove,
+	#summary-footer {
+		display: block;
+	}
+
+    .to-comments {
+		padding-top: 30px;
+	}
+
+    header {
+		padding-top: 5px;
+	}
+
+    #refresh-icon > div {
+		position: relative;
+		top: 5px;
+	}
+
+    #back-arrow > div {
+		position: relative;
+		left: -2px;
+		 top: 8px;
+	}
+
+    .subreddit {
+		display: table;
+
+		> div:first-child {
+			display: table-cell;
+		}
+	}
+
+    .btn-add-sub {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+    .refresh-icon-FS {
+		right: 20px;
+	}
+
+    #share-tw {
+		margin-bottom: 7px;
+	}
+
+    #title {
+		line-height: 28px;
+	}
+
+    .mnml .button {
+		height: 34px;
+	}
+}

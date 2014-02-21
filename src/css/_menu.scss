@@ -1,0 +1,138 @@
+#subs,
+#channels {
+  padding: 0;
+  margin: 0;
+  cursor: default;
+}
+
+#edit-subs {
+    position: fixed;
+    bottom: 0;
+    width: 140px;
+    background-color: #222;
+    z-index: 1;
+    height: 32px;
+    border-top: 1px solid rgba(0, 0, 0, .5);
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
+    text-align: center;
+}
+
+.btn-edit-sub {
+    font-weight: 700;
+    text-align: center;
+    font-size: 25px;
+    color: #777;
+    display: inline-block;
+    margin: 0;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -16px;
+    height: 32px;
+}
+
+#add-new-sub { left: 0; }
+
+#remove-sub { right: 0; }
+
+.sub {
+    color: whiteSmoke;
+    margin: 0;
+    font-size: 14px;
+    padding: 10px 10px;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.channel {
+	margin: 0;
+	font-size: 14px;
+	padding: 5px 10px;
+
+    > p {
+        color: whiteSmoke;
+        margin: 0;
+    }
+
+    > div {
+        padding-left: 10px;
+    }
+
+    > div p {
+        font-size: 13px;
+        color: #BBB;
+        margin: 5px 0;
+        text-transform: capitalize;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.channel-active {
+	border-left: 3px solid #4286F5;
+
+    > p {
+        text-shadow: 0 0 10px #CCC;
+    }
+}
+
+.sub-active {
+	text-shadow: 0 0 10px #CCC;
+	border-left: 3px solid #4286F5;
+}
+
+#menu-container {
+    overflow-y: auto;
+	overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    width: 140px;
+    z-index: 0;
+    height: 100%;
+    background-color: #363636;
+    background-image: url('../img/darkdenim3.png');
+}
+
+.menu-desc {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 12px;
+    text-transform: uppercase;
+    text-shadow: rgba(0, 0, 0, 0.7) 0px 1px 0px;
+    margin: 0px;
+    width: 100%;
+    padding-left: 10px;
+    height: 35px;
+    line-height: 35px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.20);
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #111;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
+    cursor: default;
+}
+
+.option {
+
+    color: whiteSmoke;
+    padding: 10px;
+    letter-spacing: 1px;
+    font-size: 14px;
+
+    &:last-child {
+		margin-bottom: 15px;
+	}
+}
+
+#sorting p {
+    color: whiteSmoke;
+    margin: 0;
+    padding: 8px 10px;
+    text-transform: capitalize;
+}
+
+.sorting-choice {
+	border-left: 3px solid;
+}

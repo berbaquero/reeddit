@@ -1,0 +1,28 @@
+/* Scrolling bars style */
+::-webkit-scrollbar, #main-menu::-webkit-scrollbar {
+	width: 7px;
+}
+
+/* Track Principal */
+::-webkit-scrollbar-track {
+	border-radius: 10px;
+	background-color: whiteSmoke;
+}
+
+/* Handle Principal */
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background: rgb(200, 200, 200);
+}
+
+/* Track Menu */
+#main-menu::-webkit-scrollbar-track {
+	border-radius: 10px;
+	background-color: #333;
+}
+
+/* Handle Menu */
+#main-menu::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #444;
+}
