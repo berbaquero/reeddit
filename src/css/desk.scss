@@ -1,4 +1,9 @@
-.btn-edit-sub, .sub, .channel > p, #summary-title, .option, #sorting p {
+.btn-edit-sub,
+.sub,
+.channel > p,
+#summary-title,
+.option,
+#sorting p {
 	-webkit-transition-duration: 200ms;
 	transition-duration: 200ms;
 }
@@ -7,11 +12,28 @@
 	color: #4286F5;
 }
 
-.sub:hover, .channel:hover > p, .option:hover, #sorting p:hover {
+.sub:hover,
+.channel:hover > p,
+.option:hover,
+#sorting p:hover {
 	text-shadow: 0 0 10px #CCC;
 }
 
-.link, .sub, .channel, .list-button > span, .top-buttons > div, .comments-button, #add-new-sub, #remove-sub, .item-to-remove > div, .btn-add-sub, .close-form, #btn-add-new-channel, .option, #sorting p, .btn-general {
+.link,
+.sub,
+.channel,
+.list-button > span,
+.top-buttons > div,
+.comments-button,
+#add-new-sub,
+#remove-sub,
+.item-to-remove > div,
+.btn-add-sub,
+.close-form,
+#btn-add-new-channel,
+.option,
+#sorting p,
+.btn-general {
 	cursor: pointer;
 }
 
