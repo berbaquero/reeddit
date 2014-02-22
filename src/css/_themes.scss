@@ -148,8 +148,11 @@
         text-shadow: none !important;
     }
 
-    .corner-active {
-		@extend %btn-active;
+    .btn-to-main,
+    .btn-refresh {
+        &.tappable-active {
+            @extend %btn-active;
+        }
 	}
 
     .subreddit,

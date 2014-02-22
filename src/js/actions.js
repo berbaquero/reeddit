@@ -110,8 +110,7 @@ tappable(".sub", {
 tappable(".btn-to-main", {
     onTap: function() {
         location.hash = "#";
-    },
-    activeClass: "corner-active"
+    }
 });
 
 tappable(".btn-refresh", {
@@ -134,8 +133,7 @@ tappable(".btn-refresh", {
                     refreshCurrentStream();
                 }
         }
-    },
-    activeClass: "corner-active"
+    }
 });
 
 tappable(".link", {
