@@ -169,48 +169,49 @@
         background-color: $bars-bg-color;
         box-shadow: 0 -1px 4px rgba(0, 0, 0, .2);
     }
-}
 
-.ios7 { // iOS 7 Theme - overrides some stuff from "mnml"
+    &.ios7 {
 
-    $bars-bg-color: #f8f8f8;
+        $bars-bg-color: #f8f8f8;
 
-    header {
-        background-color: $bars-bg-color;
-    }
+        header {
+            background-color: $bars-bg-color;
+        }
 
-    #header-icon {
-        opacity: .5;
-    }
+        #header-icon {
+            opacity: .5;
+        }
 
-    .main-view, .detail-view {
-        background-color: #fff;
-    }
+        .main-view,
+        .detail-view {
+            background-color: #fff;
+        }
 
-    #selftext {
-        background-color: #e4e5e6;
-    }
+        #selftext {
+            background-color: #e4e5e6;
+        }
 
-    .comments-icon {
-        opacity: .6;
-    }
+        .comments-icon {
+            opacity: .6;
+        }
 
-    #menu-container,
-    #link-summary,
-    #link-summary::before {
-        background-color: #434;
-    }
+        #menu-container,
+        #link-summary,
+        #link-summary::before {
+            background-color: #434;
+        }
 
-    #summary-domain {
-        color: #eb4d5c;
-    }
+        #summary-domain {
+            color: #eb4d5c;
+        }
 
-    .channel > div p {
-        color: #b199ae;
-    }
+        .channel > div p {
+            color: #b199ae;
+        }
 
-    .view-footer {
-        background-color: $bars-bg-color;
-        border-top: 1px solid #bbb;
+        .view-footer {
+            background-color: $bars-bg-color;
+            border-top: 1px solid #bbb;
+        }
     }
 }
