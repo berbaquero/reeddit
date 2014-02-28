@@ -49,7 +49,8 @@
 	}
 
     .link-active,
-    .link-selected {
+    .link-selected,
+    .option.tappable-active {
         background-image: -webkit-linear-gradient(top, #599ad2, #3d6fba);
         background-image: -moz-linear-gradient(top, #599ad2, #3d6fba);
         background-image: linear-gradient(top, #599ad2, #3d6fba);

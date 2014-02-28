@@ -2,8 +2,7 @@
 tappable("#mnml", {
     onTap: function() {
         V.Actions.switchMnml(true);
-    },
-    activeClass: "link-active"
+    }
 });
 
 tappable("#btn-add-new-sub", {
@@ -76,8 +75,7 @@ tappable('.channel', {
         if (currentView === view.comments) V.Actions.backToMainView();
         C.Channels.loadPosts(M.Channels.getByName(channelName));
     },
-    activeClassDelay: 100,
-    activeClass: 'link-active'
+    activeClassDelay: 100
 });
 
 tappable(".replies-button", {
@@ -276,13 +274,11 @@ tappable(".channel-to-remove > div", {
 
 tappable(".close-form", V.Actions.removeModal);
 
-tappable(".show-about", {
+tappable("#about", {
     onTap: function() {
         V.Actions.showModal(T.about);
-    }
-    // ,
-    // activeClass: 'link-active',
-    // activeClassDelay: 100
+    },
+    activeClassDelay: 100
 });
 
 tappable('#sorting p', {
@@ -300,15 +296,13 @@ tappable('#sorting p', {
 });
 
 tappable("#exp-data", {
-    onTap: createBackup,
-    activeClass: 'link-active'
+    onTap: createBackup
 });
 
 tappable("#imp-data", {
     onTap: function() {
         V.Actions.showModal(T.importData);
-    },
-    activeClass: 'link-active'
+    }
 });
 
 tappable("#btn-save-dbx", {
