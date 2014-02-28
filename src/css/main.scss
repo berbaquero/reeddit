@@ -102,14 +102,35 @@ a {
 	}
 }
 
+$comments-red: #D43030;
+
 .comment-author p {
-	color: #D43030;
+	color: $comments-red;
 	font-weight: 700;
 }
 
-.comment-poster p {
-	color: #F75433;
-	font-weight: 700;
+.comment-poster {
+    position: relative;
+
+    &::before {
+        content: "OP";
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: $comments-red;
+        border: 1px solid $comments-red;
+        padding: 2px 3px;
+        border-radius: 2px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    p {
+        color: $comments-red;
+        font-weight: 700;
+        position: relative;
+        left: 28px;
+    }
 }
 
 .comment-info {

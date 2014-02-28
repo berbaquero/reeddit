@@ -8,8 +8,11 @@
 
     font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-    .comment-author p {
-        font-weight: 500;
+    .comment-author,
+    .comment-poster {
+        p {
+            font-weight: 500;
+        }
     }
 
     .comment-info a {
