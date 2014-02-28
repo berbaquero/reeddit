@@ -56,7 +56,8 @@ var C = { // "Controller"
                     permalink = "http://reddit.com" + M.Posts.list[currentThread].link + c.data.id,
                     commentLink = {
                         "href": permalink,
-                        "target": "_blank"
+                        "target": "_blank",
+                        "title": "See this comment on reddit.com"
                     };
 
                 var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
