@@ -75,7 +75,8 @@ tappable('.channel', {
         if (currentView === view.comments) V.Actions.backToMainView();
         C.Channels.loadPosts(M.Channels.getByName(channelName));
     },
-    activeClassDelay: 100
+    activeClassDelay: 100,
+    activeClass: "link-active"
 });
 
 tappable(".replies-button", {
