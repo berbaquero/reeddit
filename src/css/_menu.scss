@@ -18,20 +18,18 @@
 }
 
 .btn-edit-sub {
-    font-weight: 700;
-    text-align: center;
     font-size: 25px;
     color: #777;
-    display: inline-block;
     margin: 0;
     width: 50%;
     position: absolute;
-    top: 50%;
-    margin-top: -16px;
-    height: 32px;
+    height: 100%;
 }
 
-#add-new-sub { left: 0; }
+#add-new-sub {
+    left: 0;
+    font-weight: 500;
+}
 
 #remove-sub { right: 0; }
 
