@@ -339,7 +339,10 @@ footer p { color: #777; }
         border-bottom: 1px solid #DDD;
     }
 
-    #presentation { padding-right: 0;}
+    #presentation {
+        padding-right: 0;
+        height: 550px;
+    }
 
 	.main-column {
 	    display: inline-block;
@@ -357,11 +360,12 @@ footer p { color: #777; }
 	}
 
 	.col-2 {
-	    background-image: url('screens/iphone.png'), url('screens/ipad1-medium.png');
-	    background-size: 150px, 610px;
-	    background-position: 5px 185px, 25px 40px;
-	    height: 500px;
-	    width: 60%;
+        background-image: url('screens/iphone.png'), url('screens/ipad.png');
+        background-size: 207px, 650px;
+        background-position: 5px 105px, 120px 0px;
+        height: 510px;
+        width: 60%;
+        margin-right: -7px;
     }
 
     .mac-buttons a { width: 20%; margin-bottom: 20px; }
@@ -374,6 +378,8 @@ footer p { color: #777; }
     #press { width: 50%; }
 }
 
-/* Large desktop */
-@media (min-width: 1200px) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .col-2 {
+       background-image: url('screens/iphone@2x.png'), url('screens/ipad@2x.png');
+    }
 }
