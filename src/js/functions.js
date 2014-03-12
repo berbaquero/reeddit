@@ -6,6 +6,14 @@ function checkLargeScreen() {
     return win.matchMedia("(min-width: 490px)").matches;
 }
 
+function goToCommentFromHash() {
+    var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
+    if (match && match[2]) {
+        var id = match[2];
+        C.Comments.show(id);
+    }
+}
+
 function checkImageLink(url) {
     var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|www.quickmeme\.com\/meme|qkme\.me)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
     if (!matching) return '';
