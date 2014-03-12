@@ -26,7 +26,6 @@ win.addEventListener("resizeend", function() {
     if (isiPad) scrollFix();
 }, false);
 
-if (location.hash) location.hash = ''; // Clear hash at first app loading
 // Pseudo-hash-router
 win.addEventListener('hashchange', function() {
     if (location.hash === "") {
@@ -37,10 +36,6 @@ win.addEventListener('hashchange', function() {
             V.detailWrap.empty();
         }, isWideScreen ? 1 : 301);
     } else {
-        var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
-        if (match && match[2]) {
-            var id = match[2];
-            C.Comments.show(id);
-        }
+        goToCommentFromHash();
     }
 }, false);

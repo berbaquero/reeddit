@@ -7,6 +7,8 @@ M.currentSelection.loadSaved();
 C.Subreddits.loadSaved();
 C.Channels.loadSaved();
 
+if (location.hash) goToCommentFromHash();
+
 // Cargar links y marcar como activo al subreddit actual - la 1ra vez sera el 'frontPage'
 doByCurrentSelection(
     function() { // En caso de ser un subreddit

@@ -210,7 +210,41 @@ var V = { // View
             else btns.addClass(css.hide);
         }
     },
+    Comments: {
+        setRest: function(id, refresh) {
+            var postTitle = M.Posts.list[id].title;
+
+            if (!refresh) V.Actions.setDetailFooter(postTitle);
+
+            if (!refresh && currentView !== view.comments) V.Anims.slideFromRight();
+
+            if (isWideScreen) {
+                // Refresh active link indicator
+                $(".link.link-selected").removeClass("link-selected");
+                $('.link[data-id="' + id + '"]').addClass('link-selected');
+            }
+
+            V.headerSection.empty().append(V.title);
+            V.title.text(postTitle);
+            V.subtitle.addClass('invisible');
+        },
+        showLoadError: function(loader) {
+            loadingComments = false;
+            var error = 'Error loading comments. Refresh to try again.';
+            if (isWideScreen) loader.addClass("loader-error").html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
+            else loader.addClass("loader-error").text(error);
+            if (!isDesktop) {
+                V.detailWrap.append($("<section/>"));
+                V.Misc.scrollFixComments();
+            }
+        }
+    },
     Misc: {
+        addLoader: function(elem) {
+            var loader = $("<div/>").addClass("loader");
+            elem.append(loader);
+            return loader;
+        },
         scrollFixComments: function() {
             // Make comments section always scrollable
             var detailWrap = $query('#detail-wrap'),

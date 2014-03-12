@@ -79,75 +79,84 @@ var C = { // "Controller"
             if (!isDesktop) V.Misc.scrollFixComments();
         },
         show: function(id, refresh) {
-            var delay = 0;
-            if (showingMenu) {
-                V.Actions.moveMenu(move.left);
-                delay = 301;
-            }
-            if (!M.Posts.list[id]) return; // Quick fix for missing id
-            setTimeout(function() {
-
-                // Stop if it hasn't finished loading this comments for the first time before trying to load them again
-                if (loadingComments && currentThread && currentThread === id) return;
-
-                loadingComments = true;
+            if (!M.Posts.list[id]) {
                 currentThread = id;
 
-                V.btnNavBack.removeClass("invisible"); // Show
-                var detail = V.detailWrap;
-                detail.empty();
+                var loader = V.Misc.addLoader(V.detailWrap);
+                loadingComments = true;
 
-                V.detailWrap[0].scrollTop = 0;
+                $.ajax({
+                    dataType: 'jsonp',
+                    url: urlInit + "comments/" + id + "/" + urlEnd,
+                    success: function(result) {
+                        loader.remove();
+                        loadingComments = false;
 
-                if (loadedLinks[id] && !refresh) {
-                    detail.append(M.Posts.list[id].summary);
-                    detail.append(loadedLinks[id]);
-                    C.Misc.updatePostSummary(M.Posts.list[id], id);
-                    loadingComments = false;
-                } else {
-                    C.Misc.setPostSummary(M.Posts.list[id], id);
-                    var url = "http://www.reddit.com" + M.Posts.list[id].link + urlEnd;
-                    detail.append("<div class='loader'></div>");
-                    $.ajax({
-                        dataType: 'jsonp',
-                        url: url,
-                        success: function(result) {
-                            if (currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
-                            C.Misc.updatePostSummary(result[0].data.children[0].data, id);
-                            $(".loader").remove();
-                            var comments = result[1].data.children;
-                            C.Comments.load(comments, detail, id);
-                            loadingComments = false;
-                        },
-                        error: function() {
-                            loadingComments = false;
-                            var error = 'Error loading comments. Refresh to try again.';
-                            if (isWideScreen) $('.loader').addClass("loader-error").html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
-                            else $('.loader').addClass("loader-error").text(error);
-                            if (!isDesktop) {
-                                detail.append($("<section/>"));
-                                V.Misc.scrollFixComments();
+                        M.Posts.setList(result[0].data);
+                        C.Misc.setPostSummary(result[0].data.children[0].data, id);
+
+                        V.btnNavBack.removeClass("invisible"); // Show
+
+                        V.Comments.setRest(id, refresh);
+
+                        C.Comments.load(result[1].data.children, V.detailWrap, id);
+                    },
+                    error: function() {
+                        V.Comments.showLoadError(loader);
+                    }
+                });
+            } else {
+                var delay = 0;
+                if (showingMenu) {
+                    V.Actions.moveMenu(move.left);
+                    delay = 301;
+                }
+                setTimeout(function() {
+
+                    // Stop if it hasn't finished loading this comments for the first time before trying to load them again
+                    if (loadingComments && currentThread && currentThread === id) return;
+
+                    loadingComments = true;
+                    currentThread = id;
+
+                    V.btnNavBack.removeClass("invisible"); // Show
+
+                    var detail = V.detailWrap;
+                    detail.empty();
+
+                    V.detailWrap[0].scrollTop = 0;
+
+                    if (loadedLinks[id] && !refresh) {
+                        detail.append(M.Posts.list[id].summary);
+                        detail.append(loadedLinks[id]);
+                        C.Misc.updatePostSummary(M.Posts.list[id], id);
+                        loadingComments = false;
+                    } else {
+                        C.Misc.setPostSummary(M.Posts.list[id], id);
+                        var url = "http://www.reddit.com" + M.Posts.list[id].link + urlEnd;
+
+                        var loader = V.Misc.addLoader(detail);
+
+                        $.ajax({
+                            dataType: 'jsonp',
+                            url: url,
+                            success: function(result) {
+                                if (currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
+                                C.Misc.updatePostSummary(result[0].data.children[0].data, id);
+                                loader.remove();
+                                C.Comments.load(result[1].data.children, detail, id);
+                                loadingComments = false;
+                            },
+                            error: function() {
+                                V.Comments.showLoadError(loader);
                             }
-                        }
-                    });
-                }
+                        });
+                    }
 
-                var postTitle = M.Posts.list[id].title;
+                    V.Comments.setRest(id, refresh);
 
-                if (!refresh) V.Actions.setDetailFooter(postTitle);
-
-                if (!refresh && currentView !== view.comments) V.Anims.slideFromRight();
-
-                if (isWideScreen) {
-                    // Refresh active link indicator
-                    $(".link.link-selected").removeClass("link-selected");
-                    $('.link[data-id="' + id + '"]').addClass('link-selected');
-                }
-
-                V.headerSection.empty().append(V.title);
-                V.title.text(postTitle);
-                V.subtitle.addClass('invisible');
-            }, delay);
+                }, delay);
+            }
         }
     },
     Subreddits: {
