@@ -187,9 +187,12 @@ var C = { // "Controller"
                 subName = txtSub.value;
             if (!subName) {
                 txtSub.setAttribute("placeholder", "Enter a subreddit title!");
+                V.Anims.shakeForm();
                 return;
             }
-            V.Actions.removeModal();
+
+            V.Anims.bounceOut($(".new-form"), V.Actions.removeModal);
+
             $.ajax({
                 url: urlInit + "r/" + subName + "/" + C.Sorting.get() + urlLimitEnd,
                 dataType: 'jsonp',
