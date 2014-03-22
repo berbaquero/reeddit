@@ -83,7 +83,7 @@ var V = { // View
             // Remove 'More links' button if there are less than 30 links
             if (linksCount < 30) $('more-links').parent().remove();
             if (!isDesktop) V.Misc.scrollFixLinks();
-            if (!paging) V.Anims.reveal();
+            if (!paging) V.Anims.reveal(main);
         }
     },
     Actions: {
@@ -171,10 +171,12 @@ var V = { // View
             setTimeout(function() {
                 if (esModal) return;
                 var modal = $('<div/>').attr('id', 'modal');
-                $('body').append(modal).append(template);
+                modal.append(template);
+                $('body').append(modal);
                 esModal = true;
                 setTimeout(function() {
                     modal.css('opacity', 1);
+                    V.Anims.bounceInDown($(".new-form"));
                 }, 1);
                 if (callback) callback();
             }, delay);
@@ -182,8 +184,6 @@ var V = { // View
         removeModal: function() {
             var modal = $('#modal');
             modal.css('opacity', '');
-            $('.close-form').remove();
-            $('.new-form').remove();
             esModal = false;
             setTimeout(function() {
                 modal.remove();
@@ -293,23 +293,52 @@ var V = { // View
             V.detailView.removeClass(show);
             currentView = view.main;
         },
+
         slideFromRight: function() {
             var show = css.showView;
             V.mainView.removeClass(show);
             V.detailView.addClass(show);
             currentView = view.comments;
         },
-        reveal: function() {
+
+        reveal: function(el) {
+            var reveal = "anim-reveal";
             if (isDesktop) {
-                V.mainWrap.addClass("anim-reveal");
+                el.addClass(reveal);
                 setTimeout(function() {
-                    V.mainWrap.removeClass("anim-reveal");
+                    el.removeClass(reveal);
                 }, 700);
             } else {
                 setTimeout(function() {
-                    V.mainWrap.removeClass("invisible").addClass("anim-reveal");
+                    el.removeClass("invisible").addClass(reveal);
                 }, 0);
             }
+        },
+
+        shake: function(el) {
+            var shake = "anim-shake";
+            el.addClass(shake);
+            setTimeout(function() {
+                el.removeClass(shake);
+            }, 350);
+        },
+
+        shakeForm: function() {
+            V.Anims.shake($(".new-form"));
+        },
+
+        bounceOut: function(el, callback) {
+            var bounceOut = "anim-bounce-out";
+            el.addClass(bounceOut);
+            if (callback) setTimeout(callback, 1000);
+        },
+
+        bounceInDown: function(el) {
+            el.addClass("anim-bounceInDown");
+            setTimeout(function() {
+                el[0].style.opacity = 1;
+                el.removeClass("anim-bounceInDown");
+            }, 500);
         }
     }
 };

@@ -16,6 +16,7 @@ tappable("#btn-add-new-channel", {
         var channelName = txtChannelName.val();
         if (!channelName) {
             txtChannelName.attr("placeholder", "Enter a Channel name!");
+            V.Anims.shakeForm();
             return;
         }
 
@@ -28,6 +29,7 @@ tappable("#btn-add-new-channel", {
         }
         if (subreddits.length === 0) {
             subs[0].placeholder = "Enter at least one subreddit!";
+            V.Anims.shakeForm();
             return;
         }
 
@@ -36,6 +38,7 @@ tappable("#btn-add-new-channel", {
         if (savedChannel) { // If it's already saved
             txtChannelName.val('');
             txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
+            V.Anims.shakeForm();
             return;
         }
 
@@ -47,10 +50,8 @@ tappable("#btn-add-new-channel", {
         // confirmation feedback
         btn.remove();
         $(".form-left-corner").append("<p class='channel-added-msg'>'" + channel.name + "' added. Cool!</p>");
-        // remove modal after a moment
-        setTimeout(function() {
-            V.Actions.removeModal();
-        }, 1500);
+
+        V.Anims.bounceOut($(".new-form"), V.Actions.removeModal);
     },
     activeClass: "btn-general-active"
 });
