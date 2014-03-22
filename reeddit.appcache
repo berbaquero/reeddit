@@ -1,9 +1,11 @@
 CACHE MANIFEST
 
-#v1.8.1 12-03-2014
+#v1.8.2 22-03-2014
 
 # stylesheets
 dist/style.css
+dist/reeddit.css
+dist/desk.css
 
 # images
 /img/add.png
@@ -18,9 +20,7 @@ dist/style.css
 
 # javascript
 dist/libs.js
+dist/reeddit.js
 
 NETWORK:
 *
-dist/reeddit.js
-dist/reeddit.css
-dist/desk.css
