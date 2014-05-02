@@ -330,6 +330,18 @@ tappable("#btn-dbx-imp", {
     activeClass: "btn-general-active"
 });
 
+tappable("#btn-new-sub", {
+    onTap: function() {
+        V.Actions.showModal(T.formAgregarSubManual)
+    }
+});
+
+tappable("#btn-new-channel", {
+    onTap: function() {
+        V.Actions.showModal(T.formAddNewChannel)
+    }
+});
+
 // Swipes
 V.detailView.swipeRight(function() {
     if (isWideScreen) return;
