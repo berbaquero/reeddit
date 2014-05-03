@@ -21,8 +21,13 @@ var V = { // View
             V.Channels.menuContainer.html(Mustache.to_html(T.Channels.list, M.Channels.list));
         },
         remove: function(name) {
+            var deletedChannel = $('.channel-to-remove[data-title="' + name + '"]');
+            deletedChannel.addClass("anim-delete");
+            setTimeout(function() {
+                deletedChannel.remove();
+            }, 200);
+
             $('.channel[data-title="' + name + '"]').parent().remove();
-            $('.channel-to-remove[data-title="' + name + '"]').remove();
         },
         addToEditList: function(name) {
             $(".channel-edit-list").append(T.Channels.singleEditItem.replace(/\{\{name\}\}/g, name));
@@ -42,7 +47,12 @@ var V = { // View
             }
         },
         remove: function(sub) {
-            $(".sub-to-remove[data-name='" + sub + "']").remove();
+            var deletedSub = $(".sub-to-remove[data-name='" + sub + "']");
+            deletedSub.addClass("anim-delete");
+            setTimeout(function() {
+                deletedSub.remove();
+            }, 200);
+
             $("#subs > li[data-name='" + sub + "']").remove();
         },
         cleanSelected: function() {
