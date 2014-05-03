@@ -1,27 +1,28 @@
 /* Firefox only - layout hacks (TODO: update to new flexbox) */
 @-moz-document url-prefix() {
     #remove-sub,
-	.item-to-remove > div,
+	.item-to-edit > div,
 	.to-comments,
 	#share-tw {
 		float: right;
 	}
 
-    #add-new-sub,
-	.item-to-remove > p,
-	.corner, header > div,
+    #btn-add-subs,
+	.item-to-edit > p,
+	.corner,
+	header > div,
 	#summary-author {
 		float: left;
 	}
 
-    .item-to-remove {
+    .item-to-edit {
 		width: 100%;
 	}
 
     .link-wrap,
 	#back-arrow,
 	#refresh-icon,
-	.item-to-remove,
+	.item-to-edit,
 	#summary-footer {
 		display: block;
 	}
@@ -75,7 +76,7 @@
 	}
 
 	.comment-info {
-		flex-grow: 1;		
+		flex-grow: 1;
 	}
 
 	.comment-author,

@@ -88,8 +88,8 @@ a {
 .comment-wrap {
     @include user-select(text);
     padding: 10px 0 10px 10px;
-    border-bottom: 1px solid #DDD;
-    border-left: 1px solid #DDD;
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #eee;
 }
 
 .comment-data {
@@ -107,6 +107,7 @@ $comments-red: #D43030;
 .comment-author p {
 	color: $comments-red;
 	font-weight: 500;
+    margin: 0;
 }
 
 .comment-poster {
@@ -576,7 +577,7 @@ header {
 	height: 100%;
 }
 
-#remove-title {
+.edit-subs-title {
     padding: 10px;
     font-weight: 700;
     font-size: 19px;
@@ -592,7 +593,7 @@ header {
     padding: 0;
 }
 
-.item-to-remove {
+.item-to-edit {
     @extend %flexbox;
     @include box-align(center);
     border-bottom: 1px solid #DDD;
@@ -609,12 +610,24 @@ header {
 
 	> div {
         @include size(15%, 100%);
-	    background-image: url('../img/delete.png');
-	    background-size: 24px;
 	    background-repeat: no-repeat;
 	    background-position: center;
 	}
 
+    .channel-name {
+        width: 70%;
+    }
+
+    .btn-remove-channel,
+    .btn-remove-subreddit {
+        background-image: url('../img/delete.png');
+        background-size: 22px;
+    }
+
+    .btn-edit-channel {
+        background-image: url('../img/edit.png');
+        background-size: 16px;
+    }
 }
 
 .show-view {

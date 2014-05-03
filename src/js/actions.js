@@ -9,10 +9,10 @@ tappable("#btn-add-new-sub", {
     onTap: C.Subreddits.addFromNewForm
 });
 
-tappable("#btn-add-new-channel", {
+tappable("#btn-submit-channel", {
     onTap: function(e, target) {
-        var btn = $(target),
-            txtChannelName = $('#txt-channel');
+        var txtChannelName = $("#txt-channel"),
+            operation = target.getAttribute("data-op");
         var channelName = txtChannelName.val();
         if (!channelName) {
             txtChannelName.attr("placeholder", "Enter a Channel name!");
@@ -21,7 +21,7 @@ tappable("#btn-add-new-channel", {
         }
 
         var subreddits = [];
-        var subs = $('#subs-for-channel input');
+        var subs = $("#subs-for-channel input");
         for (var i = 0; i < subs.length; i++) {
             var sub = $(subs[i]).val();
             if (!sub) continue;
@@ -33,23 +33,32 @@ tappable("#btn-add-new-channel", {
             return;
         }
 
-        // Look for Channel name in the saved ones
-        var savedChannel = M.Channels.getByName(channelName);
-        if (savedChannel) { // If it's already saved
-            txtChannelName.val('');
-            txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
-            V.Anims.shakeForm();
-            return;
+        switch (operation) {
+            case "save":
+                // Look for Channel name in the saved ones
+                var savedChannel = M.Channels.getByName(channelName);
+                if (savedChannel) { // If it's already saved
+                    txtChannelName.val("");
+                    txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
+                    V.Anims.shakeForm();
+                    return;
+                }
+
+                C.Channels.add(channelName, subreddits);
+
+                break;
+
+            case "update":
+                // Remove current and add new
+                C.Channels.remove(M.Channels.editing);
+                C.Channels.add(channelName, subreddits);
+
+                break;
         }
 
-        var channel = {};
-        channel.name = channelName;
-        channel.subs = subreddits;
-        C.Channels.add(channel);
-
         // confirmation feedback
-        btn.remove();
-        $(".form-left-corner").append("<p class='channel-added-msg'>'" + channel.name + "' added. Cool!</p>");
+        $(target).remove();
+        $(".form-left-corner").append("<p class='channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</p>");
 
         V.Anims.bounceOut($(".new-form"), V.Actions.removeModal);
     },
@@ -185,15 +194,15 @@ tappable("#sub-title", {
     activeClass: 'sub-title-active'
 });
 
-tappable("#add-new-sub", {
+tappable("#btn-add-subs", {
     onTap: function() {
         V.Actions.loadForAdding();
     }
 });
 
-tappable("#remove-sub", {
+tappable("#btn-edit-subs", {
     onTap: function() {
-        V.Actions.loadForRemoving();
+        V.Actions.loadForEditing();
     }
 });
 
@@ -242,7 +251,7 @@ tappable('#more-subs', {
                 subreddits = subreddits + nuevosSubs;
             },
             error: function() {
-                $('.loader').addClass('loader-error').text('Error loading more subreddits. Refresh to try again.');
+                $('.loader').addClass('loader-error').text('Error loading more subreddits.');
             }
         });
     },
@@ -260,16 +269,23 @@ tappable('.btn-add-sub', {
     activeClass: 'button-active'
 });
 
-tappable(".sub-to-remove > div", {
+tappable(".btn-remove-subreddit", {
     onTap: function(e, target) {
         C.Subreddits.remove($(target).data('name'));
     },
     activeClass: 'button-active'
 });
 
-tappable(".channel-to-remove > div", {
+tappable(".btn-remove-channel", {
     onTap: function(e, target) {
         C.Channels.remove($(target).data('title'));
+    },
+    activeClass: 'button-active'
+});
+
+tappable(".btn-edit-channel", {
+    onTap: function(e, target) {
+        C.Channels.edit(target.getAttribute('data-title'));
     },
     activeClass: 'button-active'
 });

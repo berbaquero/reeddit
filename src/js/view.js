@@ -15,6 +15,7 @@ var V = { // View
         menuContainer: $("#channels"),
         add: function(channel) {
             V.Channels.menuContainer.append(Mustache.to_html(T.Channels.single, channel));
+            if (editingSubs) V.Channels.addToEditList(channel.name);
         },
         loadList: function() {
             V.Channels.menuContainer.html(Mustache.to_html(T.Channels.list, M.Channels.list));
@@ -22,6 +23,9 @@ var V = { // View
         remove: function(name) {
             $('.channel[data-title="' + name + '"]').parent().remove();
             $('.channel-to-remove[data-title="' + name + '"]').remove();
+        },
+        addToEditList: function(name) {
+            $(".channel-edit-list").append(T.Channels.singleEditItem.replace(/\{\{name\}\}/g, name));
         }
     },
     Subreddits: {
@@ -138,28 +142,29 @@ var V = { // View
                 loadingLinks = false;
             }, isLargeScreen ? 1 : 301);
             V.Subreddits.cleanSelected();
-            V.Actions.setSubTitle("+ Subreddits");
+            V.Actions.setSubTitle("Add Subs");
             setEditingSubs(true);
         },
-        loadForRemoving: function() {
+        loadForEditing: function() {
             if (!isLargeScreen) V.Actions.moveMenu(move.left);
             if (currentView === view.comments) V.Actions.backToMainView();
 
             setTimeout(function() {
                 V.mainWrap[0].scrollTop = 0; // Up to container top
-                var htmlSubs = Mustache.to_html(T.Subreddits.toRemoveList, M.Subreddits.list);
+                var htmlSubs = Mustache.to_html(T.Subreddits.toEditList, M.Subreddits.list);
                 var htmlChannels = '';
                 if (M.Channels.list && M.Channels.list.length > 0) {
-                    htmlChannels = Mustache.to_html(T.Channels.toRemoveList, M.Channels.list);
+                    htmlChannels = Mustache.to_html("<p class='edit-subs-title'>Channels</p><ul class='remove-list channel-edit-list'>{{#.}} " + T.Channels.singleEditItem + "{{/.}}</ul>", M.Channels.list);
+
                 }
-                var html = '<div id="remove-wrap">' + htmlSubs + htmlChannels + "</div>";
+                var html = '<div id="remove-wrap">' + htmlChannels + htmlSubs + "</div>";
                 setTimeout(function() { // Intentional delay / fix for iOS
                     V.mainWrap.html(html);
                 }, 10);
                 V.Subreddits.cleanSelected();
                 loadingLinks = false;
             }, isLargeScreen ? 1 : 301);
-            V.Actions.setSubTitle('- Subreddits');
+            V.Actions.setSubTitle('Edit Subs');
             setEditingSubs(true);
         },
         showModal: function(template, callback) {

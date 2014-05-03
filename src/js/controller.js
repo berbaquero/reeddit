@@ -210,7 +210,11 @@ var C = { // "Controller"
         }
     },
     Channels: {
-        add: function(channel) {
+        add: function(title, subreddits) {
+            var channel = {
+                name: title,
+                subs: subreddits
+            };
             M.Channels.add(channel);
             V.Channels.add(channel);
         },
@@ -230,6 +234,23 @@ var C = { // "Controller"
             V.Channels.remove(name);
             // If it was the current selection
             if (M.currentSelection.type === selection.channel && M.currentSelection.name === name) C.currentSelection.setSubreddit('frontPage');
+        },
+        edit: function(name) {
+            var channelToEdit = M.Channels.getByName(name);
+            V.Actions.showModal(T.formEditChannel, function() {
+                // Fill form with current values
+                $("#txt-channel").val(channelToEdit.name);
+
+                M.Channels.editing = channelToEdit.name;
+                var $inputsContainer = $("#subs-for-channel");
+
+                for (var i = 0, l = channelToEdit.subs.length; i < l; i++) {
+
+                    var inputTemplate = "<input class='field-edit-sub with-clear' type='text' value='{{subName}}'>";
+
+                    $inputsContainer.append(inputTemplate.replace("{{subName}}", channelToEdit.subs[i]));
+                }
+            });
         }
     },
     currentSelection: {

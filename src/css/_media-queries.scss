@@ -74,6 +74,11 @@
     .btn-add-sub > div {
 		background-image: url('../img/add@2.png');
 	}
+
+	.btn-remove-channel,
+    .btn-remove-subreddit {
+        background-image: url('../img/delete@2x.png');
+    }
 }
 
 /* Tablet Portrait / 'LargeScreen' */
