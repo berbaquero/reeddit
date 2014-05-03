@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-#v1.8.2 22-03-2014
+#v1.8.3 03-05-2014
 
 # stylesheets
 dist/style.css
@@ -14,6 +14,7 @@ dist/desk.css
 /img/comment_24.png
 /img/darkdenim3.png
 /img/delete.png
+/img/edit.png
 /img/refresh.png
 /img/refresh1.png
 /img/bg.png
