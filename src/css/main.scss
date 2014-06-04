@@ -373,19 +373,37 @@ $comments-red: #D43030;
 	color: #ADD0EB;
 }
 
-.link-nsfw {
+$nsfw: #D13;
+$stickied: #71B0D3;
+
+.link-label {
     font-size: 11px;
     margin-left: 5px;
-    color: #D13;
     font-weight: 700;
-    display: inline;
+
+    &.nsfw {
+        color: $nsfw;
+    }
+
+    &.stickied {
+        color: $stickied;
+        letter-spacing: .3px;
+    }
 }
 
-.summary-nsfw {
-    background-color: #D13;
-    color: white;
+.summary-label {
     border-radius: 5px;
     padding: 1px 3px;
+
+   &.nsfw {
+        background-color: $nsfw;
+        color: white;
+    }
+
+    &.stickied {
+        background-color: $stickied;
+        color: white;
+    }
 }
 
 .link-active:visited .link-info .link-title {

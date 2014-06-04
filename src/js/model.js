@@ -21,7 +21,8 @@ var M = { // Model
                         self: post.data.is_self,
                         link: post.data.permalink,
                         author: post.data.author,
-                        over_18: post.data.over_18
+                        over_18: post.data.over_18,
+                        stickied: post.data.stickied
                     };
                 }
             }
