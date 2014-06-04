@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-#v1.8.3 03-05-2014
+#v1.8.4 04-06-2014
 
 # stylesheets
 dist/style.css
@@ -11,6 +11,7 @@ dist/desk.css
 /img/add.png
 /img/alienHead.png
 /img/cancel.png
+/img/close.png
 /img/comment_24.png
 /img/darkdenim3.png
 /img/delete.png
