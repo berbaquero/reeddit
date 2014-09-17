@@ -64,8 +64,8 @@ if (!isDesktop) {
         };
         scrollFix();
     }
-    // apply iOS 7 theme
-    if (/iPhone|iPod|iPad/.test(UA) && UA.match(/ OS (\d+)_/i)[1] === "7") {
+    // apply iOS 7+ theme
+    if (/iPhone|iPod|iPad/.test(UA) && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7) {
         if (!isMnml) V.Actions.switchMnml(true, true);
         body.classList.add("ios7");
     }
