@@ -28,8 +28,15 @@ a {
 	color: #999;
 }
 
-.link:visited div .link-title {
+.link:visited .link-title {
 	color: #888;
+}
+
+.link-active,
+.link-selected {
+    &:visited .link-title {
+        color: whiteSmoke;
+    }
 }
 
 /*--------------------- Vistas ---------------------------*/
@@ -404,10 +411,6 @@ $stickied: #71B0D3;
         background-color: $stickied;
         color: white;
     }
-}
-
-.link-active:visited .link-info .link-title {
-	color: whiteSmoke;
 }
 
 /*---------------------------- Cabecera -----------------------------*/
