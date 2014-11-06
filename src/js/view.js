@@ -75,10 +75,10 @@ var V = { // View
             }
 
             if (linksCount === 0) {
-                var message = $query('.loader');
+                var message = $('.loader');
                 if (message) {
-                    message.innerText = 'No Links available.';
-                    message.classList.add('loader-error');
+                    message.text('No Links available.');
+                    message.addClass('loader-error');
                     main.append('<div id="#main-overflow"></div>');
                 } else main.prepend('<div class="loader loader-error">No Links available.</div><div id="main-overflow"></div>');
             } else {

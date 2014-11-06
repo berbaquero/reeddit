@@ -305,14 +305,14 @@ var C = { // "Controller"
             V.footerPost.text(data.title);
         },
         updatePostSummary: function(data, postID) {
-            $id("summary-comment-num").innerText = data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments');
+            $("#summary-comment-num").text(data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments'));
             // Time ago
             C.Misc.updatePostTime(data.created_utc);
             M.Posts.list[postID].num_comments = data.num_comments;
             M.Posts.list[postID].created_utc = data.created_utc;
         },
         updatePostTime: function(time) {
-            $id("summary-time").innerText = timeSince(new Date().getTime(), time);
+            $("#summary-time").text(timeSince(new Date().getTime(), time));
         }
     }
 };
