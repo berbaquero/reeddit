@@ -12,24 +12,20 @@
 		background-image: none;
 	}
 
-    #back-arrow {
-    	&:active div {
-			border-right: 12px solid #fff;
-		}
+    .back-arrow-icon {
+		border-bottom: 6px solid transparent;
+		border-right: 12px solid #333;
+		border-top: 6px solid transparent;
 
-    	div {
-			border-bottom: 6px solid transparent;
-			border-right: 12px solid #333;
-			border-top: 6px solid transparent;
+    	&:active {
+			border-right: 12px solid #fff;
 		}
 	}
 
-    #refresh-icon {
-    	div {
-			background-image: url('../img/refresh1.png');
-		}
+	#refresh-icon {
+		background-image: url('../img/refresh1.png');
 
-	    &:active div {
+		&:active {
 			background-image: url('../img/refresh.png');
 		}
 	}
@@ -85,7 +81,6 @@
 @media only screen and (min-width: 490px) and (min-height: 500px) {
 
     .main-view {
-        -webkit-transform: none !important;
         transform: none !important;
     }
 }
@@ -144,7 +139,6 @@
         right: 0;
 		left: auto;
         border-left: 1px solid #555;
-        -webkit-transform: none;
         transform: none;
     }
 

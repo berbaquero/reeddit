@@ -348,13 +348,13 @@ tappable("#btn-dbx-imp", {
 
 tappable("#btn-new-sub", {
     onTap: function() {
-        V.Actions.showModal(T.formAgregarSubManual)
+        V.Actions.showModal(T.formAgregarSubManual);
     }
 });
 
 tappable("#btn-new-channel", {
     onTap: function() {
-        V.Actions.showModal(T.formAddNewChannel)
+        V.Actions.showModal(T.formAddNewChannel);
     }
 });
 

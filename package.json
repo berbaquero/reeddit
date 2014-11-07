@@ -1,43 +1,30 @@
 {
-	"name": "Reeddit",
-	"version": "2.0.0",
-	"description": "Minimal, elastic Reddit web-app reader client",
-	"homepage": "http://reedditapp.com/about",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/berbaquero/reeddit.git"
-	},
-	"keywords": [
-		"html5",
-		"css",
-		"readability",
-		"responsive design",
-		"rwd",
-		"sass"
-	],
-	"author": "berbaquero",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/berbaquero/reeddit/issues",
-		"email": "baquerober@gmail.com"
-	},
-	"devDependencies": {
-		"browser-sync": "^1.1.1",
-		"gulp": "^3.8.5",
-		"gulp-autoprefixer": "0.0.8",
-		"gulp-imagemin": "^1.1.0",
-		"gulp-minify-css": "^0.3.5",
-		"gulp-rename": "^1.2.0",
-		"gulp-ruby-sass": "~0.5.0",
-		"gulp-size": "^0.4.0",
-		"gulp-util": "^2.2.18",
-		"gulp-uglify": "~0.3.1",
-		"gulp-concat": "~2.2.0",
-		"gulp-jshint": "~1.6.3",
-		"gulp-jade": "~0.6.1",
-		"gulp-watch": "^0.6.8"
-	},
-	"scripts": {
-		"start": "gulp dev"
-	}
+  "name": "Reeddit",
+  "version": "2.0.0",
+  "description": "Minimal, elastic Reddit web-app reader client",
+  "homepage": "http://reedditapp.com/about",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/berbaquero/reeddit.git"
+  },
+  "author": "berbaquero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/berbaquero/reeddit/issues",
+    "email": "baquerober@gmail.com"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.5",
+    "gulp-autoprefixer": "0.0.8",
+    "gulp-minify-css": "^0.3.5",
+    "gulp-rename": "^1.2.0",
+    "gulp-ruby-sass": "~0.5.0",
+    "gulp-uglify": "~0.3.1",
+    "gulp-jshint": "~1.6.3",
+    "gulp-watch": "^0.6.8",
+    "gulp-concat-util": "~0.5.1"
+  },
+  "scripts": {
+    "start": "gulp dev"
+  }
 }

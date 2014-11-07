@@ -1,2 +1,142 @@
-.btn-edit-sub,.sub,.channel>p,#summary-title,.option,#sorting p{-webkit-transition-duration:200ms;transition-duration:200ms}.btn-edit-sub:hover{color:#4286F5}.sub:hover,.channel:hover>p,.option:hover,#sorting p:hover{text-shadow:0 0 10px #CCC}.link,.sub,.channel,.list-button>span,.top-buttons>div,.comments-button,.btn-edit-sub,#remove-sub,.item-to-edit>div,.btn-add-sub,.close-form,#btn-add-new-channel,.option,#sorting p,.btn-general{cursor:pointer}#link-summary a:hover #summary-title{text-shadow:0 1px 7px whiteSmoke}::-webkit-scrollbar,#main-menu::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{border-radius:10px;background-color:whiteSmoke}::-webkit-scrollbar-thumb{border-radius:10px;background:#c8c8c8}#main-menu::-webkit-scrollbar-track{border-radius:10px;background-color:#333}#main-menu::-webkit-scrollbar-thumb{border-radius:10px;background-color:#444}.button:hover{box-shadow:rgba(255,255,255,0.4) 0 1px 0 inset,rgba(255,255,255,0.3) 0 25px 30px -12px inset,rgba(0,0,0,0.6) 0 1px 2px;background-image:-webkit-linear-gradient(#d1d1d1 50%, #a1a1a1 100%);background-image:-moz-linear-gradient(#d1d1d1 50%, #a1a1a1 100%);background-image:-o-linear-gradient(#d1d1d1 50%, #a1a1a1 100%);background-image:linear-gradient(#d1d1d1 50%, #a1a1a1 100%)}.button:active,.btn-general:active{background-image:-webkit-linear-gradient(#3f3f3f 50%, #4b4b4b 100%);background-image:-moz-linear-gradient(#3f3f3f 50%, #4b4b4b 100%);background-image:-o-linear-gradient(#3f3f3f 50%, #4b4b4b 100%);background-image:linear-gradient(#3f3f3f 50%, #4b4b4b 100%);box-shadow:0 2px 7px #000 inset,rgba(255,255,255,0.4) 0 1px 0}.btn-general:hover,.btn-general:visited{color:#555}.btn-general:active{color:#f5f5f5}#sub-title:hover{background-color:rgba(0,0,0,0.2)}.channel>div p{font-size:11px;letter-spacing:1px;line-height:15px;margin:4px 0}.mnml #main-menu::-webkit-scrollbar-track{border-radius:10px;background-color:#262b30}.mnml #main-menu::-webkit-scrollbar-thumb{border-radius:10px;background-color:rgba(0,0,0,0.4)}.mnml .button:hover{background-color:rgba(0,0,0,0.1);box-shadow:none;background-image:none;border-radius:0}.mnml .button:active,.mnml .btn-general:active{background-image:none;box-shadow:none}
-/*# sourceMappingURL=desk.css.map */
+/* line 1, desk.scss */
+.btn-edit-sub,
+.sub,
+.channel > p,
+#summary-title,
+.option,
+#sorting p {
+  transition-duration: 200ms;
+}
+
+/* line 10, desk.scss */
+.btn-edit-sub:hover {
+  color: #4286F5;
+}
+
+/* line 14, desk.scss */
+.sub:hover,
+.channel:hover > p,
+.option:hover,
+#sorting p:hover {
+  text-shadow: 0 0 10px #CCC;
+}
+
+/* line 21, desk.scss */
+.link,
+.sub,
+.channel,
+.list-button > span,
+.top-buttons > div,
+.comments-button,
+.btn-edit-sub,
+#remove-sub,
+.item-to-edit > div,
+.btn-add-sub,
+.close-form,
+#btn-add-new-channel,
+.option,
+#sorting p,
+.btn-general {
+  cursor: pointer;
+}
+
+/* line 39, desk.scss */
+#link-summary a:hover #summary-title {
+  text-shadow: 0 1px 7px whiteSmoke;
+}
+
+/* Scrolling bars style */
+/* line 2, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+::-webkit-scrollbar, #main-menu::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track Principal */
+/* line 7, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: whiteSmoke;
+}
+
+/* Handle Principal */
+/* line 13, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #c8c8c8;
+}
+
+/* Track Menu */
+/* line 19, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+#main-menu::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #333;
+}
+
+/* Handle Menu */
+/* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+#main-menu::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #444;
+}
+
+/* line 45, desk.scss */
+.button:hover {
+  box-shadow: rgba(255, 255, 255, 0.4) 0 1px 0 inset, rgba(255, 255, 255, 0.3) 0 25px 30px -12px inset, rgba(0, 0, 0, 0.6) 0 1px 2px;
+  background-image: linear-gradient(#d1d1d1 50%, #a1a1a1 100%);
+}
+
+/* line 53, desk.scss */
+.button:active,
+.btn-general:active {
+  background-image: linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
+  box-shadow: 0 2px 7px black inset, rgba(255, 255, 255, 0.4) 0 1px 0;
+}
+
+/* line 60, desk.scss */
+.btn-general:hover,
+.btn-general:visited {
+  color: #555;
+}
+
+/* line 65, desk.scss */
+.btn-general:active {
+  color: #f5f5f5;
+}
+
+/* line 69, desk.scss */
+#sub-title:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* line 73, desk.scss */
+.channel > div p {
+  font-size: 11px;
+  letter-spacing: 1px;
+  line-height: 15px;
+  margin: 4px 0;
+}
+
+/* Mnml Theme */
+/* line 5, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+.mnml #main-menu::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #262b30;
+}
+/* line 10, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+.mnml #main-menu::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+/* line 15, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+.mnml .button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: none;
+  background-image: none;
+  border-radius: 0;
+}
+/* line 22, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+.mnml .button:active,
+.mnml .btn-general:active {
+  background-image: none;
+  box-shadow: none;
+}

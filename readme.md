@@ -33,8 +33,6 @@ To build Reeddit, I used these awesome resources:
 
 For now, Reeddit works properly on recent versions of Webkit-based browsers (Chrome and Safari, desktop and mobile) - it's been tested on iOS 5+ (iPhone and iPad) and Android 4+.
 
-I used the Flexbox module (2009 spec) for layout, and Firefox's implementation is kinda wonky. Should be getting into upgrading to the latest flexbox module spec soon.
-
 My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
 
 On the Desktop, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710) on Google Chrome, or as a [Fluid](http://fluidapp.com/) app on Mac, and can be installed as an Installable Web-app on latest Firefox. :D

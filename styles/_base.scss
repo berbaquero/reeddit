@@ -1,0 +1,17 @@
+// vars
+$header-height: 44px;
+$footer-height: 32px;
+
+// mixins
+@mixin size($w, $h: $w) {
+	width: $w;
+	height: $h;
+}
+
+.invisible {
+	opacity: 0;
+}
+
+.hide {
+    display: none !important;
+}

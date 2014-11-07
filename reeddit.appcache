@@ -22,7 +22,7 @@ dist/desk.css
 
 # javascript
 dist/libs.js
-dist/reeddit.js
+dist/app.js
 
 NETWORK:
 *

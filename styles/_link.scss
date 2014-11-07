@@ -1,0 +1,123 @@
+.link {
+	display: flex;
+	text-decoration: none;
+	width: 85%;
+	padding: 10px;
+	cursor: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.link-wrap {
+	display: flex;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	width: 100%;
+
+	&:first-child {
+		border-top: 0;
+	}
+}
+
+.link-thumb {
+	width: 70px;
+	max-width: 70px;
+	min-width: 70px;
+
+	div {
+		@include size(60px);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 70px;
+		background-color: #333;
+		margin: 0;
+		border-radius: 5px;
+		box-shadow: inset 0 1px 3px #333;
+	}
+}
+
+.link-title {
+	font-weight: 600;
+	font-size: 15px;
+	margin: 0;
+	color: #3D525E;
+}
+
+.link-info {
+}
+
+.link-domain {
+	margin: 0;
+	color: #D43030;
+}
+
+.link-sub {
+	margin: 0;
+	color: #777;
+	display: inline;
+}
+
+.link-active,
+.link-selected,
+.option.tappable-active {
+	background-image: linear-gradient(#4286F5, #194FDB);
+}
+
+.link-active,
+.link-selected {
+	.link-title {
+		color: white;
+		text-shadow: 0 1px 0 #000;
+	}
+}
+
+.link-active .link-domain,
+.link-active .link-sub,
+.link-selected .link-domain,
+.link-selected .link-sub,
+#channels .link-active div p {
+	color: #ADD0EB;
+}
+
+$nsfw: #D13;
+$stickied: #71B0D3;
+
+.link-label {
+	font-size: 11px;
+	margin-left: 5px;
+	font-weight: 700;
+
+	&.nsfw {
+		color: $nsfw;
+	}
+
+	&.stickied {
+		color: $stickied;
+		letter-spacing: .3px;
+	}
+}
+
+.summary-label {
+	border-radius: 5px;
+	padding: 1px 3px;
+
+	&.nsfw {
+		background-color: $nsfw;
+		color: white;
+	}
+
+	&.stickied {
+		background-color: $stickied;
+		color: white;
+	}
+}
+
+.link:visited .link-title {
+	color: #888;
+}
+
+.link-active,
+.link-selected {
+	&:visited .link-title {
+		color: whiteSmoke;
+	}
+}

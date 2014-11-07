@@ -4,21 +4,25 @@ var gulp = require('gulp'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
-	concat = require('gulp-concat'),
-	jade = require('gulp-jade'),
+	concat = require('gulp-concat-util'),
 	prefix = require('gulp-autoprefixer');
 
 var paths = {
 	styles: 'styles/**/*.scss',
-	scripts: {
-		app: 'scripts/app/**/*.js',
-		libs: 'scripts/libs/**/*.js'
-	},
-	markup: ['markup/index.jade', '!markup/**/_*.jade'],
+	scripts: [
+		'scripts/globals.js',
+		'scripts/templates.js',
+		'scripts/model.js',
+		'scripts/view.js',
+		'scripts/controller.js',
+		'scripts/functions.js',
+		'scripts/actions.js',
+		'scripts/listeners.js',
+		'scripts/init.js'
+	],
 	watch: {
 		scripts: 'scripts/**/*.js',
-		styles: 'styles/**/*.scss',
-		markup: 'markup/**/*.jade'
+		styles: 'styles/**/*.scss'
 	},
 	root: './',
 	distribution: 'dist/'
@@ -31,52 +35,33 @@ gulp.task('styles', function() {
 			lineNumbers: true
 		}))
 		.pipe(prefix('> 2%'))
-		.pipe(gulp.dest(paths.distribution + 'css'))
+		.pipe(gulp.dest(paths.distribution))
 		.pipe(minifycss())
 		.pipe(rename(function(path) {
 			path.basename += '.min'
 		}))
-		.pipe(gulp.dest(paths.distribution + 'css'));
+		.pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('scripts-app', function() {
-	return gulp.src(paths.scripts.app)
+gulp.task('scripts', function() {
+	return gulp.src(paths.scripts)
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
 		.pipe(concat('app.js'))
-		.pipe(gulp.dest(paths.distribution + 'js'))
+		.pipe(concat.header('(function(win) {\n'))
+		.pipe(concat.footer('\n})(window);'))
+		.pipe(gulp.dest(paths.distribution))
 		.pipe(uglify({
 			mangle: false,
 			compress: false
 		}))
 		.pipe(rename('app.min.js'))
-		.pipe(gulp.dest(paths.distribution + 'js'));
+		.pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('scripts-libs', function() {
-	return gulp.src(paths.scripts.libs)
-		.pipe(concat('libs.js'))
-		.pipe(gulp.dest(paths.distribution + 'js'))
-		.pipe(uglify({
-			mangle: false,
-			compress: false
-		}))
-		.pipe(rename('libs.min.js'))
-		.pipe(gulp.dest(paths.distribution + 'js'));
-});
-
-gulp.task('scripts', ['scripts-app', 'scripts-libs']);
-
-gulp.task('markup', function() {
-	return gulp.src(paths.markup)
-		.pipe(jade())
-		.pipe(gulp.dest(paths.root));
-});
-
-gulp.task('default', ['styles', 'scripts', 'markup']);
+gulp.task('default', ['styles', 'scripts']);
 
 gulp.task('dev', function() {
 	gulp.watch(paths.watch.styles, ['styles']);
 	gulp.watch(paths.watch.scripts, ['scripts']);
-	gulp.watch(paths.watch.markup, ['markup']);
 });
