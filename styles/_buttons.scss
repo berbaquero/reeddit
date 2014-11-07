@@ -3,7 +3,7 @@
 }
 
 .corner {
-    display: box;
+    display: flex;
     width: 15%;
 }
 
@@ -163,14 +163,15 @@
 }
 
 .btn-add-sub {
+    display: flex;
     width: 15%;
 
 	> div {
-        @include size(24px);
+        @extend %full-width;
 	    background-image: url('../img/add.png');
 	    background-repeat: no-repeat;
 	    background-size: 24px;
-	    margin: 0 auto;
+        background-position: 50%;
 	}
 }
 

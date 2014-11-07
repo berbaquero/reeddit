@@ -84,7 +84,7 @@ a {
 /*--- Subreddits ---*/
 
 .subreddit {
-    display: box;
+    display: flex;
     padding-left: 10px;
     border-bottom: 1px solid #CCC;
     border-top: 1px solid white;
