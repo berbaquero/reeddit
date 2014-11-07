@@ -48,7 +48,7 @@ gulp.task('scripts', function() {
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
 		.pipe(concat('app.js'))
-		.pipe(concat.header('(function(win) {\n'))
+		.pipe(concat.header('(function(win) {\n\'use strict\';\n\n'))
 		.pipe(concat.footer('\n})(window);'))
 		.pipe(gulp.dest(paths.distribution))
 		.pipe(uglify({
