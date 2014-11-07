@@ -2,6 +2,10 @@
 $header-height: 44px;
 $footer-height: 32px;
 
+// Colors
+$white: #ffffff;
+$red-comments: #d43030;
+
 // mixins
 @mixin size($w, $h: $w) {
 	width: $w;

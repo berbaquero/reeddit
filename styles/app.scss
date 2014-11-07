@@ -88,10 +88,8 @@ a {
 	width: 100%;
 }
 
-$comments-red: #D43030;
-
 .comment-author p {
-	color: $comments-red;
+	color: $red-comments;
 	font-weight: 500;
     margin: 0;
 }
@@ -104,19 +102,21 @@ $comments-red: #D43030;
         position: absolute;
         top: 0;
         left: 0;
-        color: $comments-red;
-        border: 1px solid $comments-red;
+        color: $white;
+        background-color: $red-comments;
+        border: 1px solid $red-comments;
         padding: 2px 3px;
-        border-radius: 2px;
+        border-radius: 3px;
         font-size: 10px;
         font-weight: 700;
     }
 
     p {
-        color: $comments-red;
+        color: $red-comments;
         font-weight: 500;
         position: relative;
         left: 28px;
+        margin: 0;
     }
 }
 
