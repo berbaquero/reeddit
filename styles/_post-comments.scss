@@ -1,0 +1,206 @@
+#detail-wrap > section > .comment-wrap {
+
+	padding-right: 10px;
+
+	> div:first-child {
+		padding: 10px 10px 0 10px;
+		margin: -10px -10px 0;
+		border-top: 1px solid #eee;
+	}
+}
+
+.comment-wrap {
+	user-select: text;
+	padding: 10px 0 10px 10px;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+}
+
+.comment-data {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.comment-author p {
+	color: $red-comments;
+	font-weight: 500;
+	margin: 0;
+}
+
+.comment-poster {
+	position: relative;
+
+	&::before {
+		content: 'OP';
+		position: absolute;
+		top: 0;
+		left: 0;
+		color: $white;
+		background-color: $red-comments;
+		border: 1px solid $red-comments;
+		padding: 2px 3px;
+		border-radius: 3px;
+		font-size: 10px;
+		font-weight: 700;
+	}
+
+	p {
+		color: $red-comments;
+		font-weight: 500;
+		position: relative;
+		left: 28px;
+		margin: 0;
+	}
+}
+
+.comment-info {
+}
+
+.comment-info a {
+	color: #aaa;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.comment-body {
+
+	p {
+		margin: 10px 0;
+		color: #3D525E;
+	}
+
+	a {
+		color: $c_comments-link;
+	}
+}
+
+#link-summary {
+	background-color: #777;
+	padding: 10px 0 0;
+
+	&:before {
+		content: '';
+		position: absolute;
+		@include size(100%, 300px);
+		background-color: #777;
+		transform: translate3d(0, -300px, 0);
+		background-image: url('../img/alienHead.png');
+		background-repeat: no-repeat;
+		background-position-x: 50%;
+		background-position-y: 90%;
+		background-size: 25%;
+	}
+
+	p {
+		margin: 0;
+		padding-left: 10px;
+	}
+
+	a {
+		text-decoration: none;
+	}
+}
+
+#summary-title {
+	font-size: 16px;
+	color: #fafafa;
+	font-weight: 700;
+	padding-right: 10px;
+	padding-bottom: 2px;
+}
+
+#summary-time {
+	color: white;
+	text-align: center;
+}
+
+#summary-domain {
+	color: #F75433;
+	font-weight: 700;
+	font-size: 13px;
+	display: inline;
+}
+
+#summary-author {
+	color: #E2E2E0;
+	font-weight: 700;
+
+}
+
+#share-tw {
+	/* Share button position */
+	margin-right: 10px;
+}
+
+#summary-sub {
+	color: #FAFAFA;
+	text-align: left;
+}
+
+#summary-comment-num {
+	text-align: right;
+	text-decoration: none;
+	display: block;
+}
+
+#summary-extra {
+	display: flex;
+	justify-content: space-between;
+	background-color: #333;
+	font-weight: 700;
+	padding: 0 10px;
+	width: 100%;
+}
+
+#summary-extra p,
+#summary-comment-num {
+	color: #FAFAFA;
+
+	margin: 0;
+	padding: 5px 0;
+	width: 33%;
+}
+
+#summary-footer {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	padding-top: 2px;
+}
+
+#selftext {
+	user-select: text;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 5px;
+	background-color: #DDD;
+
+	p {
+		margin-top: 5px;
+
+		&:last-child {
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.preview-container {
+	@extend %block-spacing;
+}
+
+.image-preview {
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+	box-shadow: 0 1px 3px #333;
+	border-radius: 3px;
+	cursor: zoom-in;
+}
+
+.image-viewer {
+	@extend %completely-center--translate;
+	max-width: 100%;
+	max-height: 100%;
+	padding: 10px;
+}

@@ -92,10 +92,6 @@
 		width: 28%;
 	}
 
-    .image-preview {
-    	width: 80%;
-    }
-
     .main-view,
     .detail-view {
     	left: 28%;
@@ -108,10 +104,6 @@
     #menu-container,
 	#edit-subs {
 		width: 22%;
-	}
-
-    .image-preview {
-		width: 60%;
 	}
 
     .main-view,
@@ -155,10 +147,6 @@
 		top: 0;
 	}
 
-    .image-preview {
-		width: 70%;
-	}
-
     .comment-wrap,
 	#selftext p {
 		font-size: 14px;
@@ -171,13 +159,6 @@
 	.view-footer {
         display: block;
     }
-}
-
-/* Wide-ass stuff */
-@media only screen and (min-width: 1500px) {
-    .image-preview {
-		width: 50%;
-	}
 }
 
 /* Landscape phone */

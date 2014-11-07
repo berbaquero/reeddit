@@ -3,13 +3,28 @@ $header-height: 44px;
 $footer-height: 32px;
 
 // Colors
-$white: #ffffff;
-$red-comments: #d43030;
+$white:         #ffffff;
+$red-comments:  #d43030;
+$blue--grayish: #7a9abd;
 
-// mixins
+$c_comments-link: $blue--grayish;
+
+// Mixins
 @mixin size($w, $h: $w) {
 	width: $w;
 	height: $h;
+}
+
+// Intentions
+%completely-center--translate {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
+}
+
+%block-spacing {
+	padding: 10px;
 }
 
 .invisible {

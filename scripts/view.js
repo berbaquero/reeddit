@@ -177,21 +177,32 @@ var V = { // View
             V.Actions.setSubTitle('Edit Subs');
             setEditingSubs(true);
         },
-        showModal: function(template, callback) {
+        showModal: function(template, callback, config) {
             var delay = 1;
             if (!isLargeScreen && showingMenu) {
                 V.Actions.moveMenu(move.left);
                 delay = 301;
             }
             setTimeout(function() {
-                if (esModal) return;
-                var modal = $('<div/>').attr('id', 'modal');
+                if (isModal) return;
+                var modal = $('<div/>').attr('id', 'modal'),
+                    bounce = true;
+                if (config) {
+                    if(config.modalClass) {
+                        modal.addClass(config.modalClass);
+                    }
+                    if (config.noBounce) {
+                        bounce = false;
+                    }
+                }
                 modal.append(template);
                 $('body').append(modal);
-                esModal = true;
+                isModal = true;
                 setTimeout(function() {
                     modal.css('opacity', 1);
-                    V.Anims.bounceInDown($(".new-form"));
+                    if (bounce) {
+                        V.Anims.bounceInDown($(".new-form"));
+                    }
                 }, 1);
                 if (callback) callback();
             }, delay);
@@ -199,7 +210,7 @@ var V = { // View
         removeModal: function() {
             var modal = $('#modal');
             modal.css('opacity', '');
-            esModal = false;
+            isModal = false;
             setTimeout(function() {
                 modal.remove();
             }, 301);
@@ -223,6 +234,14 @@ var V = { // View
             var btns = $("#detail-footer .btn-footer");
             if (title) btns.removeClass(css.hide);
             else btns.addClass(css.hide);
+        },
+        showImageViewer: function(imageURL) {
+            var imageViewer = '<img class="image-viewer" src="' + imageURL + '">',
+                config = {
+                    modalClass: 'modal--closable',
+                    noBounce: true
+                };
+            V.Actions.showModal(imageViewer, false, config);
         }
     },
     Comments: {

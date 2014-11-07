@@ -45,7 +45,7 @@ var C = { // "Controller"
         load: function(data, baseElement, idParent) {
             var now = new Date().getTime(),
                 converter = new Markdown.Converter(),
-                com = $("<section/>");
+                com = $("<section/>").addClass('comments-container');
             for (var i = 0; i < data.length; i++) {
                 var c = data[i];
 
@@ -285,7 +285,7 @@ var C = { // "Controller"
             var summaryHTML = Mustache.to_html(T.linkSummary, data);
             var imageLink = checkImageLink(M.Posts.list[postID].url);
             if (imageLink) { // If it's an image link
-                summaryHTML += "<img class='image-preview' src='" + imageLink + "' />";
+                summaryHTML += '<section class="preview-container"><img class="image-preview" src="' + imageLink + '" /></section>';
             }
             if (data.selftext) { // If it has selftext
                 var selfText;

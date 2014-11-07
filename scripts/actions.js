@@ -358,6 +358,22 @@ tappable("#btn-new-channel", {
     }
 });
 
+tappable(".image-preview", {
+    onTap: function(e, target) {
+        V.Actions.showImageViewer(target.src);
+    }
+});
+
+tappable('.modal--closable', V.Actions.removeModal);
+
+V.detailWrap.on('click', '.comments-container a, #selftext a', function(ev) {
+    var isImage = checkImageLink(ev.target.href);
+    if(isImage) {
+        ev.preventDefault();
+        V.Actions.showImageViewer(ev.target.href);
+    }
+});
+
 // Swipes
 V.detailView.swipeRight(function() {
     if (isWideScreen) return;
