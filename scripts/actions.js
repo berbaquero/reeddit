@@ -366,10 +366,10 @@ tappable(".image-preview", {
 tappable('.modal--closable', V.Actions.removeModal);
 
 V.detailWrap.on('click', '.comments-container a, #selftext a', function(ev) {
-    var isImage = checkImageLink(ev.target.href);
-    if(isImage) {
+    var imageURL = checkImageLink(ev.target.href);
+    if(imageURL) {
         ev.preventDefault();
-        V.Actions.showImageViewer(ev.target.href);
+        V.Actions.showImageViewer(imageURL);
     }
 });
 
