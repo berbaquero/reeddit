@@ -1,20 +1,8 @@
-#nav-back {
-    transition-duration: 300ms;
+%btn-active {
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
-.corner {
-    display: flex;
-    width: 15%;
-}
-
-.button {
-    @include size(100%, $header-height);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#refresh-icon {
+.refresh-icon {
     @include size(100%, $header-height);
     background-image: url("../img/refresh.png");
     background-position: 50%;
@@ -23,12 +11,23 @@
     margin: 0 auto;
 }
 
-.back-arrow-icon {
-    @include size(0);
-    // Icon Shape
-    border-bottom: 7px solid transparent;
-    border-right: 14px solid white;
-    border-top: 7px solid transparent;
+.back-arrow {
+
+    &-btn {
+        @include size(100%, $header-height);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-icon {
+        $arrow-size: 12px;
+        @include size(0);
+        // Icon Shape
+        border-bottom: ($arrow-size / 2) solid transparent;
+        border-right: $arrow-size solid $black;
+        border-top: ($arrow-size / 2) solid transparent;
+    }
 }
 
 .to-comments {
@@ -188,4 +187,14 @@
     right: 0;
     font-size: 20px;
     line-height: 34px;
+}
+
+.btn-corner {
+    &:hover {
+        background-color: rgba(0, 0, 0, .1);
+    }
+
+    &:active {
+        background-color: rgba(0, 0, 0, .3);
+    }
 }

@@ -190,8 +190,7 @@ tappable("#sub-title", {
     onTap: function() {
         if ((!isDesktop && loadingLinks) || isLargeScreen) return;
         V.Actions.moveMenu(showingMenu ? move.left : move.right);
-    },
-    activeClass: 'sub-title-active'
+    }
 });
 
 tappable("#btn-add-subs", {

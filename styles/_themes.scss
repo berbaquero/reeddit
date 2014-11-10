@@ -2,10 +2,6 @@
 
     $bars-bg-color: #d7d7d7;
 
-    %btn-active {
-        background-color: rgba(0, 0, 0, 0.3) !important;
-    }
-
     font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
     #link-summary {
@@ -78,7 +74,6 @@
         background-color: $bars-bg-color;
         border-top: 0;
         background-image: none;
-        box-shadow: none;
         box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
     }
 
@@ -88,14 +83,6 @@
 
     .main-view, .detail-view {
 		background-color: #f5f5f5;
-	}
-
-    #refresh-icon {
-		background-image: url('../img/refresh1.png');
-	}
-
-    .back-arrow-icon {
-		border-right: 12px solid #333;
 	}
 
     .comments-icon {
@@ -116,25 +103,13 @@
 		top: 0;
 	}
 
-    #sub-title {
+    .sub-title {
         margin: 0;
         padding: 0 10px;
         line-height: $header-height;
         text-shadow: none;
         border-radius: 0;
     }
-
-    .sub-title-active {
-        @extend %btn-active;
-        text-shadow: none !important;
-    }
-
-    .btn-to-main,
-    .btn-refresh {
-        &.tappable-active {
-            @extend %btn-active;
-        }
-	}
 
     .subreddit,
     .item-to-edit {

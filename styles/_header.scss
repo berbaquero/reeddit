@@ -16,6 +16,12 @@ header {
 	}
 }
 
+.header-corner {
+	display: flex;
+	width: 15%;
+	transition-duration: 300ms;
+}
+
 #title {
 	color: #333;
 	text-shadow: 0 1px 1px white;
@@ -53,17 +59,20 @@ header {
 	overflow: hidden;
 }
 
-#sub-title {
+.sub-title {
 	margin: 0 0 0 5px;
 	padding: 0 5px;
 	color: #333;
 	text-shadow: 0 1px 1px whiteSmoke;
 	border-radius: 5px;
-}
 
-.sub-title-active {
-	text-shadow: 0 1px 7px whiteSmoke !important;
-	background-color: rgba(0, 0, 0, 0.2) !important;
+	&:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+
+	&:active {
+		background-color: rgba(0, 0, 0, .3);
+	}
 }
 
 #wide-refresh {
