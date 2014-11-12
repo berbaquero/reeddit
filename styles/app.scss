@@ -60,6 +60,10 @@ a {
 	overflow-y: auto;
     position: relative;
     -webkit-overflow-scrolling: touch;
+
+    &--detail {
+        -webkit-tap-highlight-color: transparent;
+    }
 }
 
 #main-menu {
