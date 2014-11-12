@@ -76,15 +76,16 @@
 }
 
 #link-summary {
-	background-color: #777;
+	$gray-dark: #4d4d4d;
+	background-color: $gray-dark;
 	padding: 10px 0 0;
 
-	&:before {
+	&::before {
 		content: '';
 		position: absolute;
 		@include size(100%, 300px);
-		background-color: #777;
-		transform: translate3d(0, -300px, 0);
+		background-color: inherit;
+		transform: translateY(-100%);
 		background-image: url('../img/alienHead.png');
 		background-repeat: no-repeat;
 		background-position-x: 50%;
@@ -138,19 +139,30 @@
 	text-align: left;
 }
 
-#summary-comment-num {
-	text-align: right;
-	text-decoration: none;
-	display: block;
+$gray-dark: #333;
+
+#summary-footer {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	padding-top: 2px;
+	border-bottom: 1px solid $gray-dark;
 }
 
 #summary-extra {
 	display: flex;
 	justify-content: space-between;
-	background-color: #333;
+	background-color: $gray-dark;
 	font-weight: 700;
 	padding: 0 10px;
 	width: 100%;
+	border-top: 1px solid #5d5d5d;
+}
+
+#summary-comment-num {
+	text-align: right;
+	text-decoration: none;
+	display: block;
 }
 
 #summary-extra p,
@@ -162,19 +174,16 @@
 	width: 33%;
 }
 
-#summary-footer {
-	display: flex;
-	justify-content: space-between;
-	padding-bottom: 10px;
-	padding-top: 2px;
-}
-
 #selftext {
+	$silver: #e6e6e6;
+	$gray: #b9b9b9;
 	user-select: text;
 	padding: 10px;
 	margin: 10px;
 	border-radius: 5px;
-	background-color: #DDD;
+	background-color: $silver;
+	box-shadow: inset 0 1px 1px #FFF, 0 0px 7px rgba(0, 0, 0, 0.3);
+	border: 1px solid $gray;
 
 	p {
 		margin-top: 5px;
@@ -182,6 +191,10 @@
 		&:last-child {
 			margin-bottom: 5px;
 		}
+	}
+
+	a {
+		color: $c_comments-link;
 	}
 }
 
