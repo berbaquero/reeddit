@@ -6,15 +6,21 @@
 
     #link-summary {
         background-color: #262b30;
-	}
-
-    #link-summary:before {
-		background-color: #262b30;
-	}
+    }
 
     #summary-extra {
 		background-color: rgba(0, 0, 0, 0.4);
+        border: 0;
 	}
+
+    #summary-footer {
+        border: 0;
+    }
+
+    #selftext {
+        border: 0;
+        box-shadow: none;
+    }
 
     .channel-active {
 		border-left: 3px solid #3d6fba;
