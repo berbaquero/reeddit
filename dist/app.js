@@ -639,7 +639,7 @@ var C = { // "Controller"
         load: function(data, baseElement, idParent) {
             var now = new Date().getTime(),
                 converter = new Markdown.Converter(),
-                com = $("<section/>").addClass('comments-container');
+                com = $("<div/>").addClass('comments-level');
             for (var i = 0; i < data.length; i++) {
                 var c = data[i];
 
@@ -693,7 +693,7 @@ var C = { // "Controller"
 
                         V.Comments.setRest(id, refresh);
 
-                        C.Comments.load(result[1].data.children, V.detailWrap, id);
+                        C.Comments.load(result[1].data.children, $('#comments-container'), id);
                     },
                     error: function() {
                         V.Comments.showLoadError(loader);
@@ -722,7 +722,7 @@ var C = { // "Controller"
 
                     if (loadedLinks[id] && !refresh) {
                         detail.append(M.Posts.list[id].summary);
-                        detail.append(loadedLinks[id]);
+                        $('#comments-container').append(loadedLinks[id]);
                         C.Misc.updatePostSummary(M.Posts.list[id], id);
                         loadingComments = false;
                     } else {
@@ -738,7 +738,7 @@ var C = { // "Controller"
                                 if (currentThread !== id) return; // In case of trying to load a different thread before this one loaded.
                                 C.Misc.updatePostSummary(result[0].data.children[0].data, id);
                                 loader.remove();
-                                C.Comments.load(result[1].data.children, detail, id);
+                                C.Comments.load(result[1].data.children, $('#comments-container'), id);
                                 loadingComments = false;
                             },
                             error: function() {
@@ -893,6 +893,7 @@ var C = { // "Controller"
                 }
                 summaryHTML += "<section id='selftext'>" + selfText + "</section>";
             }
+            summaryHTML += "<section id='comments-container'></section>";
             V.detailWrap.append(summaryHTML);
             C.Misc.updatePostTime(data.created_utc);
             M.Posts.list[postID].summary = summaryHTML;
@@ -1429,7 +1430,7 @@ tappable(".image-preview", {
 
 tappable('.modal--closable', V.Actions.removeModal);
 
-V.detailWrap.on('click', '.comments-container a, #selftext a', function(ev) {
+V.detailWrap.on('click', '#comments-container a, #selftext a', function(ev) {
     var imageURL = checkImageLink(ev.target.href);
     if(imageURL) {
         ev.preventDefault();
