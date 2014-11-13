@@ -1,4 +1,6 @@
 (function(win) {
+'use strict';
+
 var doc = win.document,
     body = doc.body;
 
@@ -20,7 +22,7 @@ var editingSubs = false,
     showingMenu = false,
     subreddits,
     store = win.fluid ? allCookies : win.localStorage,
-    esModal = false,
+    isModal = false,
     loadingComments = false,
     loadingLinks = false,
     currentThread,
@@ -62,6 +64,7 @@ var defaultChannel = {
     name: "Media",
     subs: ["movies", "television", "music", "games"]
 };
+
 var T = { // Templates
     Posts: "{{#children}}<article class='link-wrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='link-thumb'><div style='background-image: url({{data.thumbnail}})'></div></div><div class='link-info'><p class='link-title'>{{data.title}}</p><p class='link-domain'>{{data.domain}}</p><p class='link-sub'>{{data.subreddit}}</p>{{#data.over_18}}<span class='link-label nsfw'>NSFW</span>{{/data.over_18}}{{#data.stickied}}<span class='link-label stickied'>Stickied</span>{{/data.stickied}}</div></a><div class='to-comments' data-id='{{data.id}}'><div class='comments-icon'></div></div></article>{{/children}}<div class='list-button'><span id='more-links'>More</span></div><div id='main-overflow'></div>",
     Subreddits: {
@@ -81,10 +84,11 @@ var T = { // Templates
     formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="update">Update Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
     botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
     noLink: "No Post Selected",
-    about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p>v1.8.5</p><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
+    about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
     exportData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-exp'><h3>Export Data</h3><p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p><div class='btn-general' id='btn-save-dbx'>Save to Dropbox</div></div></div>",
     importData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-imp'><h3>Import Data</h3><p>Load the subscriptions from another Reeddit instance.</p><p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p><div class='btn-general' id='btn-dbx-imp'>Import from Dropbox</div></div></div>"
 };
+
 var M = { // Model
     Posts: {
         list: {},
@@ -388,21 +392,32 @@ var V = { // View
             V.Actions.setSubTitle('Edit Subs');
             setEditingSubs(true);
         },
-        showModal: function(template, callback) {
+        showModal: function(template, callback, config) {
             var delay = 1;
             if (!isLargeScreen && showingMenu) {
                 V.Actions.moveMenu(move.left);
                 delay = 301;
             }
             setTimeout(function() {
-                if (esModal) return;
-                var modal = $('<div/>').attr('id', 'modal');
+                if (isModal) return;
+                var modal = $('<div/>').attr('id', 'modal'),
+                    bounce = true;
+                if (config) {
+                    if(config.modalClass) {
+                        modal.addClass(config.modalClass);
+                    }
+                    if (config.noBounce) {
+                        bounce = false;
+                    }
+                }
                 modal.append(template);
                 $('body').append(modal);
-                esModal = true;
+                isModal = true;
                 setTimeout(function() {
                     modal.css('opacity', 1);
-                    V.Anims.bounceInDown($(".new-form"));
+                    if (bounce) {
+                        V.Anims.bounceInDown($(".new-form"));
+                    }
                 }, 1);
                 if (callback) callback();
             }, delay);
@@ -410,7 +425,7 @@ var V = { // View
         removeModal: function() {
             var modal = $('#modal');
             modal.css('opacity', '');
-            esModal = false;
+            isModal = false;
             setTimeout(function() {
                 modal.remove();
             }, 301);
@@ -434,6 +449,14 @@ var V = { // View
             var btns = $("#detail-footer .btn-footer");
             if (title) btns.removeClass(css.hide);
             else btns.addClass(css.hide);
+        },
+        showImageViewer: function(imageURL) {
+            var imageViewer = '<img class="image-viewer" src="' + imageURL + '">',
+                config = {
+                    modalClass: 'modal--closable',
+                    noBounce: true
+                };
+            V.Actions.showModal(imageViewer, false, config);
         }
     },
     Comments: {
@@ -616,7 +639,7 @@ var C = { // "Controller"
         load: function(data, baseElement, idParent) {
             var now = new Date().getTime(),
                 converter = new Markdown.Converter(),
-                com = $("<section/>");
+                com = $("<section/>").addClass('comments-container');
             for (var i = 0; i < data.length; i++) {
                 var c = data[i];
 
@@ -856,7 +879,7 @@ var C = { // "Controller"
             var summaryHTML = Mustache.to_html(T.linkSummary, data);
             var imageLink = checkImageLink(M.Posts.list[postID].url);
             if (imageLink) { // If it's an image link
-                summaryHTML += "<img class='image-preview' src='" + imageLink + "' />";
+                summaryHTML += '<section class="preview-container"><img class="image-preview" src="' + imageLink + '" /></section>';
             }
             if (data.selftext) { // If it has selftext
                 var selfText;
@@ -1231,8 +1254,7 @@ tappable("#sub-title", {
     onTap: function() {
         if ((!isDesktop && loadingLinks) || isLargeScreen) return;
         V.Actions.moveMenu(showingMenu ? move.left : move.right);
-    },
-    activeClass: 'sub-title-active'
+    }
 });
 
 tappable("#btn-add-subs", {
@@ -1399,6 +1421,22 @@ tappable("#btn-new-channel", {
     }
 });
 
+tappable(".image-preview", {
+    onTap: function(e, target) {
+        V.Actions.showImageViewer(target.src);
+    }
+});
+
+tappable('.modal--closable', V.Actions.removeModal);
+
+V.detailWrap.on('click', '.comments-container a, #selftext a', function(ev) {
+    var imageURL = checkImageLink(ev.target.href);
+    if(imageURL) {
+        ev.preventDefault();
+        V.Actions.showImageViewer(imageURL);
+    }
+});
+
 // Swipes
 V.detailView.swipeRight(function() {
     if (isWideScreen) return;
@@ -1536,4 +1574,5 @@ if (!isDesktop) {
         body.classList.add("ios7");
     }
 }
+
 })(window);
