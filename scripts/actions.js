@@ -365,7 +365,7 @@ tappable(".image-preview", {
 
 tappable('.modal--closable', V.Actions.removeModal);
 
-V.detailWrap.on('click', '.comments-container a, #selftext a', function(ev) {
+V.detailWrap.on('click', '#comments-container a, #selftext a', function(ev) {
     var imageURL = checkImageLink(ev.target.href);
     if(imageURL) {
         ev.preventDefault();

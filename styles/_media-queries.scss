@@ -161,3 +161,30 @@
 		max-height: 130px;
 	}
 }
+
+@media only screen and (min-width: 1430px) {
+
+	$menu-width:   230px;
+	$main-width:   487px;
+	$total: $menu-width + $main-width;
+	$detail-width: calc(100% - #{$total});
+
+	#menu-container,
+	#edit-subs {
+		width: $menu-width;
+	}
+
+	.main-view {
+		width: $main-width;
+		left: $menu-width;
+	}
+
+	.detail-view {
+		width: $detail-width;
+	}
+
+	#comments-container {
+		width: 700px;
+		margin: 0 auto;
+	}
+}
