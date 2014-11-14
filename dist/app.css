@@ -82,21 +82,22 @@ a {
           perspective: 1000;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
+  background-color: #ffffff;
 }
 
-/* line 48, app.scss */
+/* line 49, app.scss */
 .main-view {
   -webkit-transform: translate3d(-100%, 0, 0);
           transform: translate3d(-100%, 0, 0);
 }
 
-/* line 52, app.scss */
+/* line 53, app.scss */
 .detail-view {
   -webkit-transform: translate3d(100%, 0, 0);
           transform: translate3d(100%, 0, 0);
 }
 
-/* line 56, app.scss */
+/* line 57, app.scss */
 .wrapper {
   height: 100%;
   overflow-x: hidden;
@@ -104,24 +105,24 @@ a {
   position: relative;
   -webkit-overflow-scrolling: touch;
 }
-/* line 63, app.scss */
+/* line 64, app.scss */
 .wrapper--detail {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* line 68, app.scss */
+/* line 69, app.scss */
 #main-menu {
   box-shadow: inset -3px 0 10px black;
   height: calc(100% - 32px);
 }
 
-/* line 73, app.scss */
+/* line 74, app.scss */
 .main-view.show-menu {
   -webkit-transform: translate3d(140px, 0px, 0px);
           transform: translate3d(140px, 0px, 0px);
 }
 
-/* line 77, app.scss */
+/* line 78, app.scss */
 #main-overflow {
   width: 100%;
 }
@@ -974,7 +975,7 @@ header > div {
 }
 
 /*--- Subreddits ---*/
-/* line 89, app.scss */
+/* line 90, app.scss */
 .subreddit {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -984,18 +985,18 @@ header > div {
   border-top: 1px solid white;
   width: 100%;
 }
-/* line 96, app.scss */
+/* line 97, app.scss */
 .subreddit > div:first-child {
   width: 85%;
   padding: 10px 5px 10px 0;
 }
 
-/* line 102, app.scss */
+/* line 103, app.scss */
 .subreddit-desc {
   margin: 5px 0;
 }
 
-/* line 106, app.scss */
+/* line 107, app.scss */
 .subreddit-title {
   font-weight: 700;
   font-size: 15px;
@@ -1003,7 +1004,7 @@ header > div {
   color: #D43030;
 }
 
-/* line 113, app.scss */
+/* line 114, app.scss */
 .new-form {
   width: 300px;
   background-color: #ddd;
@@ -1016,12 +1017,12 @@ header > div {
   margin-left: -150px;
 }
 
-/* line 125, app.scss */
+/* line 126, app.scss */
 #form-new-channel {
   min-height: 160px;
   top: 55px;
 }
-/* line 130, app.scss */
+/* line 131, app.scss */
 #form-new-channel input {
   width: 100%;
   margin-top: 5px;
@@ -1029,7 +1030,7 @@ header > div {
   outline: none;
 }
 
-/* line 138, app.scss */
+/* line 139, app.scss */
 #subs-for-channel {
   border-radius: 5px 5px 0 0;
   border: 1px solid #aaa;
@@ -1040,26 +1041,26 @@ header > div {
   max-height: 160px;
   overflow-y: auto;
 }
-/* line 149, app.scss */
+/* line 150, app.scss */
 #subs-for-channel input {
   border: 0;
   border-bottom: 1px solid #CCC;
   padding: 5px;
 }
-/* line 154, app.scss */
+/* line 155, app.scss */
 #subs-for-channel input:last-child {
   border-bottom: 0;
   padding-bottom: 10px;
 }
 
-/* line 161, app.scss */
+/* line 162, app.scss */
 #txt-channel {
   border: 2px solid #AAA !important;
   border-radius: 5px;
   padding: 5px 10px;
 }
 
-/* line 167, app.scss */
+/* line 168, app.scss */
 .channel-added-msg {
   color: white;
   font-weight: 700;
@@ -1069,13 +1070,13 @@ header > div {
   border-radius: 5px;
 }
 
-/* line 176, app.scss */
+/* line 177, app.scss */
 #form-new-sub {
   height: 50px;
   top: 50%;
   margin-top: -100px;
 }
-/* line 181, app.scss */
+/* line 182, app.scss */
 #form-new-sub input {
   width: 100%;
   height: 40px;
@@ -1083,17 +1084,17 @@ header > div {
   outline: none;
 }
 
-/* line 188, app.scss */
+/* line 189, app.scss */
 #add-sub-manual {
   padding: 10px;
 }
 
-/* line 192, app.scss */
+/* line 193, app.scss */
 #remove-wrap {
   height: 100%;
 }
 
-/* line 196, app.scss */
+/* line 197, app.scss */
 .edit-subs-title {
   padding: 10px;
   font-weight: 700;
@@ -1105,13 +1106,13 @@ header > div {
   text-shadow: 0 1px 1px whiteSmoke;
 }
 
-/* line 207, app.scss */
+/* line 208, app.scss */
 .remove-list {
   margin: 0;
   padding: 0;
 }
 
-/* line 212, app.scss */
+/* line 213, app.scss */
 .item-to-edit {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1120,7 +1121,7 @@ header > div {
   border-top: 1px solid white;
   height: 60px;
 }
-/* line 218, app.scss */
+/* line 219, app.scss */
 .item-to-edit > p {
   width: 85%;
   text-transform: capitalize;
@@ -1128,36 +1129,36 @@ header > div {
   font-weight: 700;
   padding-left: 10px;
 }
-/* line 226, app.scss */
+/* line 227, app.scss */
 .item-to-edit > div {
   width: 15%;
   height: 100%;
   background-repeat: no-repeat;
   background-position: center;
 }
-/* line 232, app.scss */
+/* line 233, app.scss */
 .item-to-edit .channel-name {
   width: 70%;
 }
-/* line 236, app.scss */
+/* line 237, app.scss */
 .item-to-edit .btn-remove-channel,
 .item-to-edit .btn-remove-subreddit {
   background-image: url("../img/delete.png");
   background-size: 22px;
 }
-/* line 242, app.scss */
+/* line 243, app.scss */
 .item-to-edit .btn-edit-channel {
   background-image: url("../img/edit.png");
   background-size: 16px;
 }
 
-/* line 248, app.scss */
+/* line 249, app.scss */
 .show-view {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
 
-/* line 252, app.scss */
+/* line 253, app.scss */
 #modal {
   width: 100%;
   height: 100%;
@@ -1170,12 +1171,12 @@ header > div {
   z-index: 9999;
 }
 
-/* line 263, app.scss */
+/* line 264, app.scss */
 .modal--closable {
   cursor: zoom-out;
 }
 
-/* line 267, app.scss */
+/* line 268, app.scss */
 .close-form {
   position: absolute;
   top: -30px;
@@ -1190,7 +1191,7 @@ header > div {
   background-size: 18px;
 }
 
-/* line 281, app.scss */
+/* line 282, app.scss */
 .form-left-corner {
   position: absolute;
   top: -30px;
@@ -1198,23 +1199,23 @@ header > div {
   left: 0;
 }
 
-/* line 288, app.scss */
+/* line 289, app.scss */
 .about-reeddit,
 .move-data {
   top: 80px;
 }
 
-/* line 295, app.scss */
+/* line 296, app.scss */
 .about-reeddit ul {
   list-style: none;
   padding: 0;
 }
-/* line 300, app.scss */
+/* line 301, app.scss */
 .about-reeddit li {
   font-size: 18px;
   text-align: center;
 }
-/* line 304, app.scss */
+/* line 305, app.scss */
 .about-reeddit li a {
   text-decoration: none;
   letter-spacing: 1px;
@@ -1226,62 +1227,62 @@ header > div {
   border-bottom: 1px solid #999;
   color: #777;
 }
-/* line 316, app.scss */
+/* line 317, app.scss */
 .about-reeddit li a:hover {
   color: inherit;
 }
-/* line 320, app.scss */
+/* line 321, app.scss */
 .about-reeddit li:first-child a {
   border-top: 0;
 }
-/* line 324, app.scss */
+/* line 325, app.scss */
 .about-reeddit li:last-child a {
   border-bottom: 0;
 }
-/* line 329, app.scss */
+/* line 330, app.scss */
 .about-reeddit p {
   color: #777;
   text-shadow: 0 1px 1px white;
   font-size: 12px;
   text-align: center;
 }
-/* line 336, app.scss */
+/* line 337, app.scss */
 .about-reeddit p a {
   text-decoration: none;
   color: #777;
 }
 
-/* line 343, app.scss */
+/* line 344, app.scss */
 .move-data {
   padding: 20px;
 }
-/* line 347, app.scss */
+/* line 348, app.scss */
 .move-data .btn-general {
   line-height: 26px;
 }
-/* line 351, app.scss */
+/* line 352, app.scss */
 .move-data h3,
 .move-data p {
   text-shadow: 0 1px 0 #fff;
 }
-/* line 356, app.scss */
+/* line 357, app.scss */
 .move-data h3 {
   text-align: center;
   margin: 5px 0;
 }
-/* line 361, app.scss */
+/* line 362, app.scss */
 .move-data p {
   text-align: left;
   margin: 10px 0;
 }
 
-/* line 367, app.scss */
+/* line 368, app.scss */
 .move-data-field {
   width: 100%;
   height: 70px;
 }
 
-/* line 371, app.scss */
+/* line 372, app.scss */
 .msg-error {
   background-color: #bbb;
   padding: 5px;
@@ -1645,28 +1646,29 @@ header > div {
   opacity: .7;
 }
 /* line 90, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-.mnml .main-view, .mnml .detail-view {
+.mnml .main-view,
+.mnml .detail-view {
   background-color: #f5f5f5;
 }
-/* line 94, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 95, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml .comments-icon {
   opacity: .8;
 }
-/* line 98, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 99, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml .button-active {
   background-color: #ccc;
 }
-/* line 102, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 103, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml .replies-button-active,
 .mnml .list-button-active {
   background-color: #ccc !important;
   background-image: none !important;
 }
-/* line 108, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 109, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml #main-title {
   top: 0;
 }
-/* line 112, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 113, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml .sub-title {
   margin: 0;
   padding: 0 10px;
@@ -1674,43 +1676,43 @@ header > div {
   text-shadow: none;
   border-radius: 0;
 }
-/* line 120, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 121, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml .subreddit,
 .mnml .item-to-edit {
   border-top: 0;
 }
-/* line 125, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 126, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml #edit-subs {
   box-shadow: none;
   border-top: 0;
 }
-/* line 130, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 131, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml .view-footer {
   background-color: #d7d7d7;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.2);
 }
-/* line 139, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 140, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml.ios7 header {
   background-color: #f8f8f8;
 }
-/* line 143, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 144, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml.ios7 #header-icon {
   opacity: .5;
 }
-/* line 147, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 148, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml.ios7 .main-view,
 .mnml.ios7 .detail-view {
   background-color: #fff;
 }
-/* line 152, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 153, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml.ios7 .comments-icon {
   opacity: .6;
 }
-/* line 156, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 157, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml.ios7 #summary-domain {
   color: #eb4d5c;
 }
-/* line 160, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
+/* line 161, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
 .mnml.ios7 .view-footer {
   background-color: #f8f8f8;
   border-top: 1px solid #bbb;
