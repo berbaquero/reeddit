@@ -43,6 +43,7 @@ a {
 .detail-view {
     perspective: 1000;
     backface-visibility: hidden;
+    background-color: $white;
 }
 
 .main-view {
