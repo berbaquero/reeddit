@@ -33,9 +33,9 @@ function checkVideoLink(url) {
     if (!matching) return '';
     else {
         if (matching[0].slice(0, 5) === "youtu")
-            return '<section class="preview-container"><iframe id="ytplayer" type="text/html" src="' +
+            return '<iframe id="ytplayer" type="text/html" src="' +
               'http://www.youtube.com/embed/' + matching[1] +
-              '" width="100%" frameborder="0" />';
+              '" width="100%" frameborder="0"></iframe>';
         else return null;
     }
 }
