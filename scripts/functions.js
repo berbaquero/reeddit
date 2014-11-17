@@ -15,15 +15,28 @@ function goToCommentFromHash() {
 }
 
 function checkImageLink(url) {
-    var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|www.quickmeme\.com\/meme|qkme\.me)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
+    var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|www.quickmeme\.com\/meme|qkme\.me|livememe\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
     if (!matching) return '';
     if (matching[1]) { // normal image link
         return url;
     } else if (matching[2]) { // imgur or quickmeme link
         if (matching[0].slice(0, 5) === "imgur") return 'http://imgur.com/' + matching[2] + '.jpg';
+        else if (matching[0].indexOf("livememe.")>=0) return 'http://i.lvme.me/' + matching[2] + '.jpg';
         else return 'http://i.qkme.me/' + matching[2] + '.jpg';
     } else {
         return null;
+    }
+}
+
+function checkVideoLink(url) {
+    var matching = url.match(/\.(?:[?#].*)?$|(?:youtube\.com|youtu\.be)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
+    if (!matching) return '';
+    else {
+        if (matching[0].slice(0, 5) === "youtu")
+            return '<section class="preview-container"><iframe id="ytplayer" type="text/html" src="' +
+              'http://www.youtube.com/embed/' + matching[1] +
+              '" width="100%" frameborder="0" />';
+        else return null;
     }
 }
 

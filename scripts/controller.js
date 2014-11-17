@@ -284,8 +284,12 @@ var C = { // "Controller"
             // Main content
             var summaryHTML = Mustache.to_html(T.linkSummary, data);
             var imageLink = checkImageLink(M.Posts.list[postID].url);
+            var videoLink = checkVideoLink(M.Posts.list[postID].url);
             if (imageLink) { // If it's an image link
                 summaryHTML += '<section class="preview-container"><img class="image-preview" src="' + imageLink + '" /></section>';
+            }
+            if (videoLink) { // If it's a video link
+                summaryHTML += '<section class="preview-container">' + videoLink + '</section>';
             }
             if (data.selftext) { // If it has selftext
                 var selfText;
@@ -301,6 +305,10 @@ var C = { // "Controller"
             }
             summaryHTML += "<section id='comments-container'></section>";
             V.detailWrap.append(summaryHTML);
+            if (videoLink) {
+              var iframe = $('.preview-container > iframe');
+              iframe.height(iframe.width() * 3 / 4);
+            }
             C.Misc.updatePostTime(data.created_utc);
             M.Posts.list[postID].summary = summaryHTML;
             V.footerPost.text(data.title);
