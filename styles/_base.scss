@@ -10,6 +10,10 @@ $blue--grayish: #7a9abd;
 
 $c_comments-link: $blue--grayish;
 
+$gutter: 10px;
+
+$corner-radius: 3px;
+
 // Mixins
 @mixin size($w, $h: $w) {
 	width: $w;

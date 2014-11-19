@@ -51,6 +51,15 @@
     .main-view {
         transform: none !important;
     }
+
+	.preview-container,
+	.image-viewer {
+		padding: $gutter;
+	}
+
+	.image-preview {
+		border-radius: $corner-radius;
+	}
 }
 
 @media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {

@@ -40,7 +40,7 @@
 		background-color: $red-comments;
 		border: 1px solid $red-comments;
 		padding: 2px 3px;
-		border-radius: 3px;
+		border-radius: $corner-radius;
 		font-size: 10px;
 		font-weight: 700;
 	}
@@ -199,7 +199,7 @@ $gray-dark: #333;
 }
 
 .preview-container {
-	@extend %block-spacing;
+	padding: $gutter 0;
 }
 
 .image-preview {
@@ -207,7 +207,6 @@ $gray-dark: #333;
 	margin: 0 auto;
 	display: block;
 	box-shadow: 0 1px 3px #333;
-	border-radius: 3px;
 	cursor: zoom-in;
 }
 
@@ -215,5 +214,5 @@ $gray-dark: #333;
 	@extend %completely-center--translate;
 	max-width: 100%;
 	max-height: 100%;
-	padding: 10px;
+	padding: $gutter 0;
 }
