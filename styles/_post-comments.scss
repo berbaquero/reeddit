@@ -196,6 +196,7 @@ $gray-dark: #333;
 
 	a {
 		color: $c_comments-link;
+		-webkit-tap-highlight-color: rgba(darken($c_comments-link, 20%), .5);
 	}
 }
 
