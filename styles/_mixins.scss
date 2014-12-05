@@ -1,0 +1,15 @@
+@mixin size($w, $h: $w) {
+	width: $w;
+	height: $h;
+}
+
+@mixin full-width {
+	width: 100%;
+}
+
+@mixin break-point-min($width) {
+
+	@media only screen and (min-width: $width) {
+		@content;
+	}
+}

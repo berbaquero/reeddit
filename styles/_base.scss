@@ -16,11 +16,13 @@ $gutter: 10px;
 
 $corner-radius: 3px;
 
-// Mixins
-@mixin size($w, $h: $w) {
-	width: $w;
-	height: $h;
-}
+$bp-small:   350px;
+$bp-large:   490px;
+$bp-large-x: 760px;
+$bp-wide:    1000px;
+$bp-wide-x:  1430px;
+
+@import "mixins";
 
 // Intentions
 %completely-center--translate {
