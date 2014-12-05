@@ -14,6 +14,10 @@
 	padding: 10px 0 10px 10px;
 	border-bottom: 1px solid #eee;
 	border-left: 1px solid #eee;
+
+	@include break-point-min($bp-wide) {
+		font-size: 14px;
+	}
 }
 
 .comment-data {
@@ -195,6 +199,10 @@ $gray-dark: #333;
 
 		&:last-child {
 			margin-bottom: 5px;
+		}
+
+		@include break-point-min($bp-wide) {
+			font-size: 14px;
 		}
 	}
 

@@ -37,6 +37,10 @@ a {
     z-index: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+
+    @include break-point-min($bp-wide) {
+        top: 0;
+    }
 }
 
 .main-view,
@@ -48,10 +52,23 @@ a {
 
 .main-view {
     transform: translate3d(-100%, 0, 0);
+
+    @include break-point-min($bp-wide) {
+        width: 34%;
+        left: 16%;
+    }
 }
 
 .detail-view {
     transform: translate3d(100%, 0, 0);
+
+    @include break-point-min($bp-wide) {
+        width: 50%;
+        right: 0;
+        left: auto;
+        border-left: 1px solid #555;
+        transform: none;
+    }
 }
 
 .wrapper {
@@ -63,6 +80,10 @@ a {
 
     &--detail {
         -webkit-tap-highlight-color: transparent;
+    }
+
+    @include break-point-min($bp-wide) {
+        height: calc(100% - #{$footer-height}) !important;
     }
 }
 

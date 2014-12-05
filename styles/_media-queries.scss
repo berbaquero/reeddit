@@ -90,54 +90,6 @@
 	}
 }
 
-/* Tablet Landscape / 'WideScreen' */
-@media only screen and (min-width: 1000px) and (min-height: 500px) {
-
-    #menu-container,
-	#edit-subs {
-		width: 16%;
-	}
-
-    .main-view {
-        width: 34%;
-        left: 16%;
-    }
-
-    .detail-view {
-        width: 50%;
-        right: 0;
-		left: auto;
-        border-left: 1px solid #555;
-        transform: none;
-    }
-
-    header,
-	.to-comments {
-		display: none;
-	}
-
-    .link {
-		width: 100%;
-	}
-
-    .view {
-		top: 0;
-	}
-
-    .comment-wrap,
-	#selftext p {
-		font-size: 14px;
-	}
-
-	.wrapper {
-        height: calc(100% - #{$footer-height}) !important;
-    }
-
-	.view-footer {
-        display: block;
-    }
-}
-
 /* Landscape phone */
 
 @media only screen and (max-height: 280px) {

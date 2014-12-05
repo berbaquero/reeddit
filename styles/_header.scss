@@ -14,6 +14,10 @@ header {
 	> div {
 		width: 70%;
 	}
+
+	@include break-point-min($bp-wide) {
+		display: none;
+	}
 }
 
 .header-corner {

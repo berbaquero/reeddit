@@ -5,6 +5,10 @@
 	padding: 10px;
 	cursor: none;
 	-webkit-tap-highlight-color: transparent;
+
+	@include break-point-min($bp-wide) {
+		@include full-width;
+	}
 }
 
 .link-wrap {
