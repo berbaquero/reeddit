@@ -5,7 +5,8 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat-util'),
-	prefix = require('gulp-autoprefixer');
+	prefix = require('gulp-autoprefixer'),
+	groupMQ = require('gulp-group-css-media-queries');
 
 var paths = {
 	styles: 'styles/**/*.scss',
@@ -35,6 +36,7 @@ gulp.task('styles', function() {
 			lineNumbers: true
 		}))
 		.pipe(prefix('> 2%'))
+		.pipe(groupMQ())
 		.pipe(gulp.dest(paths.distribution))
 		.pipe(minifycss())
 		.pipe(rename(function(path) {
