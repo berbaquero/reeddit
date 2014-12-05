@@ -5,10 +5,12 @@ $footer-height: 32px;
 // Colors
 $white:         #ffffff;
 $black:         #333333;
-$red-comments:  #d43030;
+$red:           #d43030;
 $blue--grayish: #7a9abd;
 
-$c_comments-link: $blue--grayish;
+$red-comments:            $red;
+$c_comments-link:         $blue--grayish;
+$c_comments-link-visited: #a3adce;
 
 $gutter: 10px;
 
