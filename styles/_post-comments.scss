@@ -1,11 +1,19 @@
-#comments-container > .comments-level > .comment-wrap {
-	border-left: 0;
-	padding-right: 10px;
+#comments-container {
 
-	> div:first-child {
-		padding: 10px 10px 0 10px;
-		margin: -10px -10px 0;
-		border-top: 1px solid #eee;
+	@include break-point-min($bp-wide-x) {
+		width: 700px;
+		margin: 0 auto;
+	}
+
+	& > .comments-level > .comment-wrap {
+		border-left: 0;
+		padding-right: 10px;
+
+		> div:first-child {
+			padding: 10px 10px 0 10px;
+			margin: -10px -10px 0;
+			border-top: 1px solid #eee;
+		}
 	}
 }
 
@@ -218,6 +226,10 @@ $gray-dark: #333;
 
 .preview-container {
 	padding: $gutter 0;
+
+	@include break-point-min($bp-large) {
+		padding: $gutter;
+	}
 }
 
 .image-preview {
@@ -226,6 +238,10 @@ $gray-dark: #333;
 	display: block;
 	box-shadow: 0 1px 3px #333;
 	cursor: zoom-in;
+
+	@include break-point-min($bp-large) {
+		border-radius: $corner-radius;
+	}
 }
 
 .image-viewer {
@@ -233,4 +249,8 @@ $gray-dark: #333;
 	max-width: 100%;
 	max-height: 100%;
 	padding: $gutter 0;
+
+	@include break-point-min($bp-large) {
+		padding: $gutter;
+	}
 }

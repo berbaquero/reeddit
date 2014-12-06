@@ -11,14 +11,10 @@
     width: 140px;
     background-color: $black;
     z-index: 1;
-    height: 32px;
+    height: $footer-height;
     border-top: 1px solid rgba(0, 0, 0, .5);
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
     text-align: center;
-
-    @include break-point-min($bp-wide) {
-        width: 16%;
-    }
 }
 
 .btn-edit-sub {
@@ -96,9 +92,25 @@
     height: 100%;
     background-color: #363636;
     background-image: url('../img/darkdenim3.png');
+}
+
+#menu-container,
+#edit-subs {
+
+    @include break-point-min($bp-large) {
+        width: $menu-view-large;
+    }
+
+    @include break-point-min($bp-large-x) {
+        width: $menu-view-large-x;
+    }
 
     @include break-point-min($bp-wide) {
-        width: 16%;
+        width: $menu-view-wide;
+    }
+
+    @include break-point-min($bp-wide-x) {
+        width: $menu-view-wide-x;
     }
 }
 

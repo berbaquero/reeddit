@@ -16,11 +16,29 @@ $gutter: 10px;
 
 $corner-radius: 3px;
 
+// Media Query Break Points
 $bp-small:   350px;
 $bp-large:   490px;
 $bp-large-x: 760px;
 $bp-wide:    1000px;
 $bp-wide-x:  1430px;
+
+// Views width
+$main-view-large:     72%;
+$detail-view-large:   $main-view-large;
+$menu-view-large:     100% - $main-view-large;
+
+$main-view-large-x:   78%;
+$detail-view-large-x: $main-view-large-x;
+$menu-view-large-x:   100% - $main-view-large-x;
+
+$main-view-wide:      34%;
+$detail-view-wide:    50%;
+$menu-view-wide:      16%;
+
+$main-view-wide-x:    487px;
+$menu-view-wide-x:    230px;
+$detail-view-wide-x:  calc(100% - #{($menu-view-wide-x + $main-view-wide-x)});
 
 @import "mixins";
 

@@ -1,33 +1,3 @@
-@media only screen and (min-width: 350px) and (min-height: 500px) {
-
-    header {
-        background-color: #e7e7e7;
-        border-bottom: 1px solid #333;
-        border-top: 0;
-        box-shadow: rgba(255, 255, 255, .5) 0 32px 20px -10px inset, 0 44px 0 rgba(0, 0, 0, .33) inset;
-    }
-
-    #main-menu {
-		height: calc(100% - $footer-height);
-	}
-
-    .sub {
-		padding: 9px 10px;
-	}
-
-    .link-wrap {
-		border-bottom: 1px solid #ddd;
-	}
-
-    #edit-subs {
-		height: $footer-height;
-	}
-
-    #subs-for-channel {
-		max-height: 250px;
-	}
-}
-
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
 
     .comments-icon {
@@ -43,51 +13,6 @@
     .btn-remove-subreddit {
         background-image: url('../img/delete@2x.png');
     }
-}
-
-/* Tablet Portrait / 'LargeScreen' */
-@media only screen and (min-width: 490px) and (min-height: 500px) {
-
-    .main-view {
-        transform: none !important;
-    }
-
-	.preview-container,
-	.image-viewer {
-		padding: $gutter;
-	}
-
-	.image-preview {
-		border-radius: $corner-radius;
-	}
-}
-
-@media only screen and (min-width: 490px) and (max-width: 759px) and (min-height: 500px) {
-
-    #menu-container,
-	#edit-subs {
-		width: 28%;
-	}
-
-    .main-view,
-    .detail-view {
-    	left: 28%;
-    	width: 72%;
-    }
-}
-
-@media only screen and (min-width: 760px) and (max-width: 999px) and (min-height: 500px) {
-
-    #menu-container,
-	#edit-subs {
-		width: 22%;
-	}
-
-    .main-view,
-	.detail-view {
-		left: 22%;
-		width: 78%;
-	}
 }
 
 /* Landscape phone */
@@ -120,32 +45,5 @@
 
     #subs-for-channel {
 		max-height: 130px;
-	}
-}
-
-@media only screen and (min-width: 1430px) {
-
-	$menu-width:   230px;
-	$main-width:   487px;
-	$total: $menu-width + $main-width;
-	$detail-width: calc(100% - #{$total});
-
-	#menu-container,
-	#edit-subs {
-		width: $menu-width;
-	}
-
-	.main-view {
-		width: $main-width;
-		left: $menu-width;
-	}
-
-	.detail-view {
-		width: $detail-width;
-	}
-
-	#comments-container {
-		width: 700px;
-		margin: 0 auto;
 	}
 }
