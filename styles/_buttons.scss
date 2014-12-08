@@ -46,6 +46,11 @@
     background-repeat: no-repeat;
     background-size: 24px;
     margin: 0 auto;
+
+    @include break-point-hdpi {
+        background-image: url('../img/comment_48.png');
+        opacity: .7;
+    }
 }
 
 .button-active {
@@ -175,6 +180,10 @@
 	    background-repeat: no-repeat;
 	    background-size: 24px;
         background-position: 50%;
+
+        @include break-point-hdpi {
+            background-image: url('../img/add@2.png');
+        }
 	}
 }
 

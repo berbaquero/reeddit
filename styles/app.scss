@@ -187,6 +187,10 @@ a {
     .btn-remove-subreddit {
         background-image: url('../img/delete.png');
         background-size: 22px;
+
+		@include break-point-hdpi {
+			background-image: url('../img/delete@2x.png');
+		}
     }
 
     .btn-edit-channel {
@@ -329,4 +333,3 @@ a {
 @import 'animations';
 @import 'footer';
 @import 'themes';
-@import 'media-queries';

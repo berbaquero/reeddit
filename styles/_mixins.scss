@@ -7,9 +7,18 @@
 	width: 100%;
 }
 
+// Media Query Break Points
+
 @mixin break-point-min($width) {
 
 	@media only screen and (min-width: $width) {
+		@content;
+	}
+}
+
+@mixin break-point-hdpi {
+
+	@media only screen and (-webkit-min-device-pixel-ratio: 2) {
 		@content;
 	}
 }
