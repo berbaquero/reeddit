@@ -1,4 +1,5 @@
 /* line 1, desk.scss */
+
 .btn-edit-sub,
 .sub,
 .channel > p,
@@ -9,11 +10,13 @@
 }
 
 /* line 10, desk.scss */
+
 .btn-edit-sub:hover {
   color: #4286F5;
 }
 
 /* line 14, desk.scss */
+
 .sub:hover,
 .channel:hover > p,
 .option:hover,
@@ -22,6 +25,7 @@
 }
 
 /* line 21, desk.scss */
+
 .link,
 .sub,
 .channel,
@@ -42,62 +46,78 @@
 }
 
 /* line 40, desk.scss */
+
 #link-summary a:hover #summary-title {
   text-shadow: 0 1px 7px whiteSmoke;
 }
 
 /* Scrolling bars style */
+
 /* line 2, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
-::-webkit-scrollbar, #main-menu::-webkit-scrollbar {
+
+::-webkit-scrollbar,
+#main-menu::-webkit-scrollbar {
   width: 7px;
 }
 
 /* Track Principal */
+
 /* line 7, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+
 ::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: whiteSmoke;
 }
 
 /* Handle Principal */
+
 /* line 13, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: #c8c8c8;
 }
 
 /* Track Menu */
+
 /* line 19, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+
 #main-menu::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #333;
 }
 
 /* Handle Menu */
+
 /* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-webkit-bars.scss */
+
 #main-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #444;
 }
 
 /* line 46, desk.scss */
+
 .btn-general:active {
   background-image: linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
   box-shadow: 0 2px 7px black inset, rgba(255, 255, 255, 0.4) 0 1px 0;
 }
 
 /* line 52, desk.scss */
+
 .btn-general:hover,
 .btn-general:visited {
   color: #555;
 }
 
 /* line 57, desk.scss */
+
 .btn-general:active {
   color: #f5f5f5;
 }
 
 /* line 61, desk.scss */
+
 .channel > div p {
   font-size: 11px;
   letter-spacing: 1px;
@@ -106,17 +126,23 @@
 }
 
 /* Mnml Theme */
+
 /* line 5, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+
 .mnml #main-menu::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #262b30;
 }
+
 /* line 10, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+
 .mnml #main-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 /* line 15, ../../../../../../Users/bernardo/Projects/reeddit/styles/_desk-themes.scss */
+
 .mnml .btn-general:active {
   background-image: none;
   box-shadow: none;
