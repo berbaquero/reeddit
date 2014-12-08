@@ -14,36 +14,3 @@
         background-image: url('../img/delete@2x.png');
     }
 }
-
-/* Landscape phone */
-
-@media only screen and (max-height: 280px) {
-    header {
-		height: 32px;
-	}
-
-    .view {
-		top: 32px;
-	}
-
-    #title {
-		font-size: 16px;
-	}
-
-    .refresh-icon div {
-		width: 15px;
-		height: 20px;
-	}
-
-    #main-title {
-		top: 6px;
-	}
-
-    .btn-edit-sub {
-		margin: -10px 0;
-	}
-
-    #subs-for-channel {
-		max-height: 130px;
-	}
-}
