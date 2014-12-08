@@ -14,7 +14,7 @@ Being a personal side-project of mine, Reeddit can be used for browsing subreddi
 * #### Channels
 Channels let you group subreddits into one stream, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
 
-For screenshots and additional info, visit [Reeddit's Homepage](http://reedditapp.com/about).
+For additional info, visit [Reeddit's Homepage](http://reedditapp.com/about).
 
 Follow the updates and send quick feedback on Twitter: [@ReedditApp](https://twitter.com/reedditapp).
 
@@ -27,17 +27,12 @@ To build Reeddit, I used these awesome resources:
 *	[pagedown](http://code.google.com/p/pagedown/) -- Client-side Markdown-to-HTML conversion.
 *	[Mustache.js](https://github.com/janl/mustache.js/) -- Lightweigth client-side templating.
 *	[reziseend.js](https://github.com/porada/resizeend) -- Better 'resize' handler.
-* 	[Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
+* [Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
 
-### Compatibility
+### Reeddit is a Web-App.
+On Firefox — both Desktop and Mobile — Reeddit can be installed from the [homepage](http://reedditapp.com) as an Installable Open Web-app. On Chrome for Windows, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710), or as a [Fluid](http://fluidapp.com/) app on Mac.
 
-For now, Reeddit works properly on recent versions of Webkit-based browsers (Chrome and Safari, desktop and mobile) - it's been tested on iOS 5+ (iPhone and iPad) and Android 4+.
-
-My original intention was to create an iOS 5-optimized mobile webapp - I wanted to try the then-introduced `-webkit-overflow-scrolling: touch` property, that allows native touch scrolling for content with overflow.
-
-On the Desktop, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710) on Google Chrome, or as a [Fluid](http://fluidapp.com/) app on Mac, and can be installed as an Installable Web-app on latest Firefox. :D
-
-You can also use the especially made [Reeddit for Mac](http://mac.reedditapp.com), or install it on Firefox OS from the Marketplace, [here](https://marketplace.firefox.com/app/reeddit).
+You can also install the especially made [Reeddit for Mac](http://mac.reedditapp.com), or install it on Firefox OS from the Marketplace, [here](https://marketplace.firefox.com/app/reeddit).
 
 ### License
 
