@@ -23,7 +23,7 @@
     "gulp-jshint": "~1.6.3",
     "gulp-watch": "^0.6.8",
     "gulp-concat-util": "~0.5.1",
-    "gulp-group-css-media-queries": "~1.0.0"
+    "gulp-group-css-media-queries": "~1.0.1"
   },
   "scripts": {
     "start": "gulp dev"

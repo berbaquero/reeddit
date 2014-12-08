@@ -36,7 +36,7 @@ gulp.task('styles', function() {
 			lineNumbers: true
 		}))
 		.pipe(prefix('> 2%'))
-		//.pipe(groupMQ()) // uncomment if sorting is supported
+		.pipe(groupMQ())
 		.pipe(gulp.dest(paths.distribution))
 		.pipe(minifycss())
 		.pipe(rename(function(path) {
