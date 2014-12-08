@@ -40,7 +40,7 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest(paths.distribution))
 		.pipe(minifycss())
 		.pipe(rename(function(path) {
-			path.basename += '.min'
+			path.basename += '.min';
 		}))
 		.pipe(gulp.dest(paths.distribution));
 });
