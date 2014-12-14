@@ -2,7 +2,7 @@
   "name": "Reeddit",
   "version": "2.0.0",
   "description": "Minimal, elastic Reddit web-app reader client",
-  "homepage": "http://reedditapp.com/about",
+  "homepage": "http://reedditapp.com/about/",
   "repository": {
     "type": "git",
     "url": "https://github.com/berbaquero/reeddit.git"

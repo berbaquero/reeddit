@@ -14,7 +14,7 @@ Being a personal side-project of mine, Reeddit can be used for browsing subreddi
 * #### Channels
 Channels let you group subreddits into one stream, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
 
-For additional info, visit [Reeddit's Homepage](http://reedditapp.com/about).
+For additional info, visit [Reeddit's Homepage](http://reedditapp.com/about/).
 
 Follow the updates and send quick feedback on Twitter: [@ReedditApp](https://twitter.com/reedditapp).
 
