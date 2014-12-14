@@ -28,6 +28,20 @@ function checkImageLink(url) {
     }
 }
 
+function getYouTubeVideoIDfromURL(url) {
+    var matching = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+	if (!matching) {
+		return '';
+	}
+    else {
+		if (matching[2].length === 11) {
+			return matching[2];
+		} else {
+			return null;
+		}
+    }
+}
+
 function setEditingSubs(editing) { // editing: boolean
     editingSubs = editing;
     if (isWideScreen) {

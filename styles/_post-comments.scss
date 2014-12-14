@@ -237,11 +237,15 @@ $gray-dark: #333;
 	}
 }
 
-.image-preview {
+.image-preview,
+.video-preview {
 	max-width: 100%;
 	margin: 0 auto;
 	display: block;
 	box-shadow: 0 1px 3px #333;
+}
+
+.image-preview {
 	cursor: zoom-in;
 
 	@include break-point-min($bp-large) {

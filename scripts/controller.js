@@ -296,9 +296,20 @@ var C = { // "Controller"
                 }
                 summaryHTML += "<section id='selftext'>" + selfText + "</section>";
             } else { // if it's an image
-                var imageLink = checkImageLink(M.Posts.list[postID].url);
+                var linkURL = M.Posts.list[postID].url;
+                var imageLink = checkImageLink(linkURL);
                 if (imageLink) { // If it's an image link
-                    summaryHTML += '<section class="preview-container"><img class="image-preview" src="' + imageLink + '" /></section>';
+                    summaryHTML += '<section class="preview-container">' +
+                    '<img class="image-preview" src="' + imageLink + '" />' +
+                    '</section>';
+                } else { // if it's a YouTube video
+                    var youTubeID = getYouTubeVideoIDfromURL(linkURL);
+                    if (youTubeID) {
+                        summaryHTML += '<section class="preview-container">' +
+                        '<a href="' + linkURL + '" target="_blank">' +
+                        '<img class="video-preview" src="http://img.youtube.com/vi/' + youTubeID + '/hqdefault.jpg" />' +
+                        '</a></section>';
+                    }
                 }
             }
             summaryHTML += "<section id='comments-container'></section>";
