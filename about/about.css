@@ -43,7 +43,7 @@ a:hover { text-decoration: underline; }
     background-image: -moz-linear-gradient(#eee, #ccc);
     background-image: -o-linear-gradient(#eee, #ccc);
     background-image: linear-gradient(#eee, #ccc);
-
+    cursor: pointer;
 	box-shadow: inset 0 1px 0 #fff;
 	max-width: 300px;
 }
