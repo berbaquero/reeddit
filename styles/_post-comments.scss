@@ -76,10 +76,15 @@
 }
 
 .comment-body {
+	$color-body-text: $black-blueish;
 
 	p {
 		margin: 10px 0;
-		color: #3D525E;
+		color: $color-body-text;
+	}
+
+	ul {
+		color: $color-body-text;
 	}
 
 	a {
