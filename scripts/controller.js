@@ -30,6 +30,7 @@ var C = { // "Controller"
         },
         loadFromManualInput: function(loadedLinks) {
             C.Posts.show(loadedLinks);
+            V.mainWrap[0].scrollTop = 0;
             setEditingSubs(false);
         },
         show: function(result, paging) {
