@@ -192,6 +192,8 @@ var C = { // "Controller"
                 return;
             }
 
+            subName = subName.trim();
+
             V.Anims.bounceOut($(".new-form"), V.Actions.removeModal);
 
             $.ajax({
