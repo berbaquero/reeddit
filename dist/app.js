@@ -84,7 +84,7 @@ var T = { // Templates
     formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="update">Update Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
     botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
     noLink: "No Post Selected",
-    about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='http://reedditapp.com/about' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
+    about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
     exportData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-exp'><h3>Export Data</h3><p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p><div class='btn-general' id='btn-save-dbx'>Save to Dropbox</div></div></div>",
     importData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-imp'><h3>Import Data</h3><p>Load the subscriptions from another Reeddit instance.</p><p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p><div class='btn-general' id='btn-dbx-imp'>Import from Dropbox</div></div></div>"
 };
@@ -624,6 +624,7 @@ var C = { // "Controller"
         },
         loadFromManualInput: function(loadedLinks) {
             C.Posts.show(loadedLinks);
+            V.mainWrap[0].scrollTop = 0;
             setEditingSubs(false);
         },
         show: function(result, paging) {
@@ -784,6 +785,8 @@ var C = { // "Controller"
                 V.Anims.shakeForm();
                 return;
             }
+
+            subName = subName.trim();
 
             V.Anims.bounceOut($(".new-form"), V.Actions.removeModal);
 
