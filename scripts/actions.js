@@ -145,28 +145,27 @@ tappable(".btn-refresh", {
     }
 });
 
-tappable(".link", {
-    onTap: function(e, target) {
-        var comm = $(target);
-        var id = comm.attr("data-id");
-        var link = M.Posts.list[id];
-        if (link.self || isWideScreen) {
-            goToComments(id);
-        } else {
-            var url = comm.attr("href");
-            var a = doc.createElement('a');
-            a.setAttribute("href", url);
-            a.setAttribute("target", "_blank");
+tappable(".js-link", {
+	onTap: function(e, target) {
+		if (!isWideScreen) {
+			return;
+		}
+		var id = target.getAttribute('data-id');
+		goToComments(id);
+	},
+	allowClick: false,
+	activeClassDelay: 100,
+	inactiveClassDelay: 200,
+	activeClass: 'link-active'
+});
 
-            var dispatch = doc.createEvent("HTMLEvents");
-            dispatch.initEvent("click", true, true);
-            a.dispatchEvent(dispatch);
-        }
-    },
-    allowClick: false,
-    activeClassDelay: 100,
-    inactiveClassDelay: 200,
-    activeClass: 'link-active'
+tappable('.js-post-title', {
+	onTap: function(e) {
+		var id = e.target.getAttribute('data-id'),
+			url = e.target.href;
+		openPost(url, id);
+	},
+	allowClick: false
 });
 
 tappable(".to-comments", {

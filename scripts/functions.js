@@ -6,6 +6,33 @@ function checkLargeScreen() {
     return win.matchMedia("(min-width: 490px)").matches;
 }
 
+function triggerClick(url) {
+	var a = doc.createElement('a');
+	a.setAttribute("href", url);
+	a.setAttribute("target", "_blank");
+
+	//var dispatch = doc.createEvent("HTMLEvents");
+	//dispatch.initEvent("click", true, true);
+	//a.dispatchEvent(dispatch);
+
+	var clickEvent = new MouseEvent("click", {
+		"view": window,
+		"bubbles": true,
+		"cancelable": false
+	});
+
+	a.dispatchEvent(clickEvent);
+}
+
+function openPost(url, id) {
+	var link = M.Posts.list[id];
+	if (link.self || isWideScreen) {
+		goToComments(id);
+	} else {
+		triggerClick(url);
+	}
+}
+
 function goToCommentFromHash() {
     var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
     if (match && match[2]) {
