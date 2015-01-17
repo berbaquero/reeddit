@@ -66,7 +66,7 @@ var defaultChannel = {
 };
 
 var T = { // Templates
-    Posts: "{{#children}}<article class='link-wrap'><a class='link' href='{{data.url}}' data-id='{{data.id}}' target='_blank'><div class='link-thumb'><div style='background-image: url({{data.thumbnail}})'></div></div><div class='link-info'><p class='link-title'>{{data.title}}</p><p class='link-domain'>{{data.domain}}</p><p class='link-sub'>{{data.subreddit}}</p>{{#data.over_18}}<span class='link-label nsfw'>NSFW</span>{{/data.over_18}}{{#data.stickied}}<span class='link-label stickied'>Stickied</span>{{/data.stickied}}</div></a><div class='to-comments' data-id='{{data.id}}'><div class='comments-icon'></div></div></article>{{/children}}<div class='list-button'><span id='more-links'>More</span></div><div id='main-overflow'></div>",
+    Posts: "{{#children}}<article class='link-wrap'><div class='link js-link' data-id='{{data.id}}'><div class='link-thumb'><div style='background-image: url({{data.thumbnail}})'></div></div><div class='link-info'><a href='{{data.url}}' data-id='{{data.id}}' target='_blank' class='link-title js-post-title'>{{data.title}}</a><p class='link-domain'>{{data.domain}}</p><p class='link-sub'>{{data.subreddit}}</p>{{#data.over_18}}<span class='link-label nsfw'>NSFW</span>{{/data.over_18}}{{#data.stickied}}<span class='link-label stickied'>Stickied</span>{{/data.stickied}}</div></div><div class='to-comments' data-id='{{data.id}}'><div class='comments-icon'></div></div></article>{{/children}}<div class='list-button'><span id='more-links'>More</span></div><div id='main-overflow'></div>",
     Subreddits: {
         list: "{{#.}}<li data-name='{{.}}'><p class='sub'>{{.}}</p></li>{{/.}}",
         toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p>{{.}}</p><div class='btn-remove-subreddit' data-name='{{.}}'></div></div>{{/.}}</ul>",
@@ -936,6 +936,33 @@ function checkLargeScreen() {
     return win.matchMedia("(min-width: 490px)").matches;
 }
 
+function triggerClick(url) {
+	var a = doc.createElement('a');
+	a.setAttribute("href", url);
+	a.setAttribute("target", "_blank");
+
+	//var dispatch = doc.createEvent("HTMLEvents");
+	//dispatch.initEvent("click", true, true);
+	//a.dispatchEvent(dispatch);
+
+	var clickEvent = new MouseEvent("click", {
+		"view": window,
+		"bubbles": true,
+		"cancelable": false
+	});
+
+	a.dispatchEvent(clickEvent);
+}
+
+function openPost(url, id) {
+	var link = M.Posts.list[id];
+	if (link.self || isWideScreen) {
+		goToComments(id);
+	} else {
+		triggerClick(url);
+	}
+}
+
 function goToCommentFromHash() {
     var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
     if (match && match[2]) {
@@ -1241,28 +1268,27 @@ tappable(".btn-refresh", {
     }
 });
 
-tappable(".link", {
-    onTap: function(e, target) {
-        var comm = $(target);
-        var id = comm.attr("data-id");
-        var link = M.Posts.list[id];
-        if (link.self || isWideScreen) {
-            goToComments(id);
-        } else {
-            var url = comm.attr("href");
-            var a = doc.createElement('a');
-            a.setAttribute("href", url);
-            a.setAttribute("target", "_blank");
+tappable(".js-link", {
+	onTap: function(e, target) {
+		if (!isWideScreen) {
+			return;
+		}
+		var id = target.getAttribute('data-id');
+		goToComments(id);
+	},
+	allowClick: false,
+	activeClassDelay: 100,
+	inactiveClassDelay: 200,
+	activeClass: 'link-active'
+});
 
-            var dispatch = doc.createEvent("HTMLEvents");
-            dispatch.initEvent("click", true, true);
-            a.dispatchEvent(dispatch);
-        }
-    },
-    allowClick: false,
-    activeClassDelay: 100,
-    inactiveClassDelay: 200,
-    activeClass: 'link-active'
+tappable('.js-post-title', {
+	onTap: function(e) {
+		var id = e.target.getAttribute('data-id'),
+			url = e.target.href;
+		openPost(url, id);
+	},
+	allowClick: false
 });
 
 tappable(".to-comments", {
@@ -1534,6 +1560,7 @@ win.addEventListener('hashchange', function() {
         goToCommentFromHash();
     }
 }, false);
+
 V.title.remove();
 
 if (isWideScreen) V.footerPost.text(T.noLink);

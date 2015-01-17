@@ -385,13 +385,7 @@ a {
   line-height: 34px;
 }
 
-/* line 206, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
-
-.btn-corner:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-/* line 210, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 207, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-corner:active {
   background-color: rgba(0, 0, 0, 0.3);
@@ -631,6 +625,9 @@ a {
   font-size: 15px;
   margin: 0;
   color: #3d525e;
+  text-decoration: none;
+  outline: 0;
+  display: block;
 }
 
 /* line 51, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
@@ -718,14 +715,14 @@ a {
 
 /* line 117, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
-.link:visited .link-title {
+.link-title:visited {
   color: #888;
 }
 
 /* line 123, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
-.link-active:visited .link-title,
-.link-selected:visited .link-title {
+.link-active .link-title:visited,
+.link-selected .link-title:visited {
   color: whiteSmoke;
 }
 
@@ -822,17 +819,11 @@ header > div {
 
 /* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
-.sub-title:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-/* line 85, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
-
 .sub-title:active {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* line 90, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 86, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 #wide-refresh {
   padding: 5px 10px;
@@ -1579,7 +1570,7 @@ header > div {
 .loader {
   width: 15px;
   height: 15px;
-  margin: 15px auto;
+  margin: 26px auto;
   background-color: #333;
   color: #777;
   border-radius: 100%;
