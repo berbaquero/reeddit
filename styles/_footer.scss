@@ -51,8 +51,10 @@
 }
 
 #detail-close {
-    background-image: url('../img/close.png');
-    opacity: .7;
-    left: 0;
-    background-size: 18px;
+	left: 0;
+	font-size: 26px;
+	font-weight: bold;
+	line-height: 1em;
+	text-align: center;
+	color: #444;
 }
