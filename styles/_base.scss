@@ -56,7 +56,7 @@ $detail-view-wide-x:  calc(100% - #{($menu-view-wide-x + $main-view-wide-x)});
 }
 
 %block-spacing {
-	padding: 10px;
+	padding: $gutter;
 }
 
 %full-width {
