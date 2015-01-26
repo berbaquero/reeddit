@@ -44,10 +44,8 @@
 	position: relative;
 
 	&::before {
+		@include position(absolute, top-left);
 		content: 'OP';
-		position: absolute;
-		top: 0;
-		left: 0;
 		color: $white;
 		background-color: $red-comments;
 		border: 1px solid $red-comments;
