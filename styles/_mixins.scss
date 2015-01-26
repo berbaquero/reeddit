@@ -59,3 +59,28 @@
 		@content;
 	}
 }
+
+// Theme Breakpoints
+
+@mixin mnml-theme($type: null) {
+
+	@at-root {
+		@if ($type == null) {
+			.mnml & {
+				@content;
+			}
+		}
+
+		@if ($type == root) {
+			&.mnml {
+				@content;
+			}
+		}
+
+		@if ($type == iOS7) {
+			.mnml.ios7 & {
+				@content;
+			}
+		}
+	}
+}

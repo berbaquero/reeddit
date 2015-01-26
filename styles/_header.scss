@@ -15,6 +15,18 @@ header {
 		width: 70%;
 	}
 
+	@include mnml-theme {
+		border-bottom: 1px solid #bbb;
+		background-color: $mnml-bars-bg-color;
+		border-top: 0;
+		background-image: none;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+	}
+
+	@include mnml-theme(iOS7) {
+		background-color: $ios7-bars-bg-color;
+	}
+
 	@include break-point-min($bp-small) {
 		background-color: #e7e7e7;
 		border-bottom: 1px solid #333;
@@ -56,6 +68,14 @@ header {
 	background-repeat: no-repeat;
 	background-position: 50%;
 	margin: 0 auto;
+
+	@include mnml-theme {
+		opacity: .7;
+	}
+
+	@include mnml-theme(iOS7) {
+		opacity: .5;
+	}
 }
 
 #main-title {
@@ -69,6 +89,10 @@ header {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+
+	@include mnml-theme {
+		top: 0;
+	}
 }
 
 .sub-title {
@@ -80,6 +104,14 @@ header {
 
 	&:active {
 		background-color: rgba(0, 0, 0, .3);
+	}
+
+	@include mnml-theme {
+		margin: 0;
+		padding: 0 10px;
+		line-height: $header-height;
+		text-shadow: none;
+		border-radius: 0;
 	}
 }
 

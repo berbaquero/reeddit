@@ -18,6 +18,10 @@ body {
     text-size-adjust: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     position: relative;
+
+	@include mnml-theme(root) {
+		font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
 }
 
 a {
@@ -40,6 +44,10 @@ a {
     border-bottom: 1px solid #CCC;
     border-top: 1px solid white;
     width: 100%;
+
+	@include mnml-theme {
+		border-top: 0;
+	}
 
     > div:first-child {
 	    width: 85%;
@@ -165,6 +173,10 @@ a {
     border-bottom: 1px solid #DDD;
     border-top: 1px solid white;
     height: 60px;
+
+	@include mnml-theme {
+		border-top: 0;
+	}
 
     > p {
 	    width: 85%;
@@ -327,4 +339,3 @@ a {
 
 @import 'animations';
 @import 'footer';
-@import 'themes';

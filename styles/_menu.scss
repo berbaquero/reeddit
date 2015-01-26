@@ -15,6 +15,11 @@
     border-top: 1px solid rgba(0, 0, 0, .5);
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
     text-align: center;
+
+	@include mnml-theme {
+		box-shadow: none;
+		border-top: 0;
+	}
 }
 
 .btn-edit-sub {
@@ -72,6 +77,10 @@
 .channel-active {
 	border-left: 3px solid #4286F5;
 
+	@include mnml-theme {
+		border-left: 3px solid #3d6fba;
+	}
+
     > p {
         text-shadow: 0 0 10px #CCC;
     }
@@ -92,6 +101,11 @@
     height: 100%;
     background-color: #363636;
     background-image: url('../img/darkdenim3.png');
+
+	@include mnml-theme {
+		background-color: #262b30;
+		background-image: url("");
+	}
 }
 
 #menu-container,

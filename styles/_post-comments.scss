@@ -113,6 +113,10 @@
 		background-size: 25%;
 	}
 
+	@include mnml-theme {
+		background-color: #262b30;
+	}
+
 	p {
 		margin: 0;
 		padding-left: 10px;
@@ -141,6 +145,10 @@
 	font-weight: 700;
 	font-size: 13px;
 	display: inline;
+
+	@include mnml-theme(iOS7) {
+		color: #eb4d5c;
+	}
 }
 
 #summary-author {
@@ -167,6 +175,10 @@ $gray-dark: #333;
 	padding-bottom: 10px;
 	padding-top: 2px;
 	border-bottom: 1px solid $gray-dark;
+
+	@include mnml-theme {
+		border: 0;
+	}
 }
 
 #summary-extra {
@@ -177,6 +189,11 @@ $gray-dark: #333;
 	padding: 0 10px;
 	width: 100%;
 	border-top: 1px solid #5d5d5d;
+
+	@include mnml-theme {
+		background-color: rgba(0, 0, 0, 0.4);
+		border: 0;
+	}
 }
 
 #summary-comment-num {
@@ -204,6 +221,11 @@ $gray-dark: #333;
 	background-color: $silver;
 	box-shadow: inset 0 1px 1px #FFF, 0 0px 7px rgba(0, 0, 0, 0.3);
 	border: 1px solid $gray;
+
+	@include mnml-theme {
+		border: 0;
+		box-shadow: none;
+	}
 
 	p {
 		margin-top: 5px;
