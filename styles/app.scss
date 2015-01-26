@@ -200,10 +200,6 @@ a {
     }
 }
 
-.show-view {
-    transform: translate3d(0, 0, 0);
-}
-
 #modal {
     @include size(100%);
 	@include position(absolute, top-left);
