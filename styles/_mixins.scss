@@ -7,6 +7,37 @@
 	width: 100%;
 }
 
+@mixin position($position, $type, $margins: 0) {
+	position: $position;
+
+	@if $type == top-left {
+		top: $margins;
+		left: $margins;
+	}
+
+	@if $type == top-right {
+		top: $margins;
+		right: $margins;
+	}
+
+	@if $type == bottom-left {
+		bottom: $margins;
+		left: $margins;
+	}
+
+	@if $type == bottom-right {
+		bottom: $margins;
+		right: $margins;
+	}
+
+	@if $type == stretched {
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+}
+
 // Media Query Break Points
 
 @mixin break-point-min($width) {
