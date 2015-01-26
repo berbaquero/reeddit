@@ -222,10 +222,10 @@ var V = { // View
             var bntMnml = $("#mnml");
             if (mnml) {
                 body.classList.add(css.mnml);
-                bntMnml.text("Mnml: on");
+                bntMnml.text("Theme: mnml");
             } else {
                 body.classList.remove(css.mnml);
-                bntMnml.text("Mnml: off");
+                bntMnml.text("Theme: Classic");
             }
             if (save) store.setItem("mnml", mnml);
         },
