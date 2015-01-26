@@ -21,19 +21,20 @@
     @include break-point-min($bp-wide) {
         display: block;
     }
+}
 
-    p {
-        line-height: ($footer-height - 1px);
-        margin: 0 auto;
-        text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        width: 70%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        cursor: default;
-    }
+.footer-sub-title,
+.footer-post-title {
+	line-height: ($footer-height - 1px);
+	margin: 0 auto;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	width: 70%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	color: #444;
 }
 
 .btn-footer {
