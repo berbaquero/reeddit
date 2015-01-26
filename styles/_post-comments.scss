@@ -101,9 +101,9 @@
 	padding: 10px 0 0;
 
 	&::before {
+		@include size(100%, 300px);
 		content: '';
 		position: absolute;
-		@include size(100%, 300px);
 		background-color: inherit;
 		transform: translateY(-100%);
 		background-image: url('../img/alienHead.png');
