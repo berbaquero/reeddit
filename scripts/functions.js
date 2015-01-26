@@ -190,3 +190,24 @@ var supportOrientation = typeof win.orientation !== 'undefined',
             body.style.height = win.innerHeight + 'px';
         }, 1);
     };
+
+var el = {
+	sort: $('.js-sort'),
+	sorter: $('.js-sort-container')
+};
+
+var classes = {
+	sorter: {
+		hot: 'sorter--hot',
+		new: 'sorter--new'
+	}
+};
+
+el.sort.click(function() {
+	var type = $(this).data('type');
+	// View
+	el.sorter.addClass(type === 'hot' ? classes.sorter.hot : classes.sorter.new);
+	el.sorter.removeClass(type === 'hot' ? classes.sorter.new : classes.sorter.hot);
+	// Data
+	C.Sorting.change(type);
+});
