@@ -19,10 +19,15 @@ var paths = {
 		'scripts/functions.js',
 		'scripts/actions.js',
 		'scripts/listeners.js',
-		'scripts/init.js'
+		'scripts/init.js',
+		'scripts/modules.js'
 	],
+	scriptModules: {
+		root: 'scripts/modules/**/*.js',
+		dest: 'scripts'
+	},
 	watch: {
-		scripts: 'scripts/**/*.js',
+		scripts: ['scripts/**/*.js', '!scripts/modules.js'],
 		styles: 'styles/**/*.scss'
 	},
 	root: './',
@@ -45,7 +50,15 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts-modules', function() {
+	return gulp.src(paths.scriptModules.root)
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
+		.pipe(concat('modules.js'))
+		.pipe(gulp.dest(paths.scriptModules.dest));
+});
+
+gulp.task('scripts', ['scripts-modules'], function() {
 	return gulp.src(paths.scripts)
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
