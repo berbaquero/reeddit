@@ -5,8 +5,7 @@ $widget-height: 3em;
 $icon-size: 2em;
 
 $green: #56b666;
-$red: #dd483f;
-$white: #fff;
+$red:   #dd483f;
 
 $transition-duration: 200ms;
 
@@ -30,11 +29,9 @@ $transition-duration: 200ms;
 
 		border-radius: $corner-radius;
 		transition: all .2s ease;
+		cursor: pointer;
 
 		font-size: $main-size;
-
-		&:active {
-		}
 	}
 
 	&--hot {
@@ -51,7 +48,6 @@ $transition-duration: 200ms;
 		font-size: 1.5em;
 		font-weight: 600;
 		line-height: $widget-height;
-		cursor: pointer;
 	}
 
 	&--hot &-label--hot {
