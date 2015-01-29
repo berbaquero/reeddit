@@ -1,0 +1,13 @@
+script.
+	var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(navigator.userAgent);
+	if (isDesktop) {
+		var deskLink = document.createElement("link");
+		deskLink.rel = "stylesheet";
+		deskLink.href = "dist/desk.css";
+		document.head.appendChild(deskLink);
+	}
+
+script(src="dist/libs.js")
+script(src="dist/app.min.js")
+
+script(src="https://www.dropbox.com/static/api/1/dropins.js", id="dropboxjs", data-app-key="yiu8cok9mknii0n")
