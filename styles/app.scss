@@ -21,7 +21,10 @@ body {
 
 	@include mnml-theme(root) {
 		font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		-webkit-font-smoothing: antialiased; // [1]
+		-moz-osx-font-smoothing: grayscale; // [1]
 	}
+	// [1] Font-smoothing
 }
 
 a {

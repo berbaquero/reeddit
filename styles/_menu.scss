@@ -47,6 +47,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+	@include break-point-min($bp-wide) {
+
+		@include mnml-theme {
+			font-weight: 500;
+		}
+	}
 }
 
 .channel {
@@ -57,6 +64,13 @@
     > p {
         color: whiteSmoke;
         margin: 0;
+
+		@include break-point-min($bp-wide) {
+
+			@include mnml-theme {
+				font-weight: 500;
+			}
+		}
     }
 
     > div {
@@ -71,6 +85,13 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+
+		@include break-point-min($bp-wide) {
+
+			@include mnml-theme {
+				font-weight: 500;
+			}
+		}
     }
 }
 
@@ -144,6 +165,13 @@
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
     cursor: default;
     position: relative;
+
+	@include break-point-min($bp-wide) {
+
+		@include mnml-theme {
+			font-weight: 500;
+		}
+	}
 }
 
 .option {
@@ -156,7 +184,11 @@
     &:last-child {
 		margin-bottom: 15px;
 	}
-}
 
+	@include break-point-min($bp-wide) {
 
+		@include mnml-theme {
+			font-weight: 500;
+		}
+	}
 }
