@@ -5,26 +5,25 @@
 	/* global C */
 
 	var el = {
-		sorter: $('.js-sort-container')
+		main: $('.js-sort-switch-main'),
+		wrap: $('.js-sort-switch-wrap')
 	};
 
 	var classes = {
-		sorter: {
-			hot: 'sorter--hot',
-			new: 'sorter--new'
-		}
+		new: 'sort-switch--new'
 	};
 
+	// Initial State
 	var isHot = true;
 
-	// Listeners
-	el.sorter.click(function() {
+	el.main.click(function() {
 		isHot = !isHot;
-		// Update classnames accordingly
-		el.sorter.addClass(isHot ? classes.sorter.hot : classes.sorter.new);
-		el.sorter.removeClass(isHot ? classes.sorter.new : classes.sorter.hot);
-
 		C.Sorting.change(isHot ? 'hot' : 'new');
+		if (isHot) {
+			el.main.removeClass(classes.new);
+		} else {
+			el.main.addClass(classes.new);
+		}
 	});
 
 })();
