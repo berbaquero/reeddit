@@ -2,16 +2,15 @@
 $green: #7ab636;
 $red: #c6544f;
 $black: #444;
-$gray: #777;
 
-$width: 3.6em;
+$width: 3.2em;
 $height: 1.6em;
 
 .sorter-wrap {
 	position: absolute;
 	margin: {
 		top: 5px;
-		left: 7px;
+		left: $gutter;
 	}
 }
 
@@ -20,12 +19,10 @@ $height: 1.6em;
 	cursor: pointer;
 
 	&__overlay {
-		$border-color: $gray;
 		overflow: hidden;
 		width: $width;
 		height: $height;
 		border-radius: .25em;
-		border: 1px solid $border-color;
 	}
 
 	&__wrap {
@@ -48,7 +45,6 @@ $height: 1.6em;
 		font-weight: 600;
 		line-height: $height;
 		text-transform: capitalize;
-		padding-left: .35em;
 		position: relative;
 		background: {
 			repeat: no-repeat;
@@ -64,13 +60,13 @@ $height: 1.6em;
 		&--hot::after {
 			content: "\2022";
 			color: $red;
-			left: 1.2em;
+			left: 1em;
 		}
 
 		&--new::after {
 			content: "\2022";
 			color: $green;
-			left: 1.3em;
+			left: 1.2em;
 		}
 	}
 }
