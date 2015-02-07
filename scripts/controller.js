@@ -178,11 +178,21 @@ var C = { // "Controller"
             }
             V.Actions.setSubTitle(sub);
         },
-        remove: function(sub) {
-            M.Subreddits.remove(sub);
-            V.Subreddits.remove(sub);
-            if (M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
-        },
+		remove: function(sub) {
+			M.Subreddits.remove(sub);
+			V.Subreddits.remove(sub);
+			if (M.currentSelection.type === selection.sub &&
+				M.currentSelection.name === sub) { // If it was the current selection
+				C.currentSelection.setSubreddit('frontPage');
+			}
+		},
+		add: function(newSub) {
+			if (M.Subreddits.listHasSub(newSub)) {
+				return;
+			}
+			M.Subreddits.add(newSub);
+			V.Subreddits.insert(newSub);
+		},
         addFromNewForm: function() {
             var txtSub = $id("txt-new-sub"),
                 subName = txtSub.value;
@@ -191,6 +201,12 @@ var C = { // "Controller"
                 V.Anims.shakeForm();
                 return;
             }
+			if (M.Subreddits.listHasSub(subName)) {
+				txtSub.value = "";
+				txtSub.setAttribute("placeholder", subName + " already added!");
+				V.Anims.shakeForm();
+				return;
+			}
 
             subName = subName.trim();
 

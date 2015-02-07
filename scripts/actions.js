@@ -262,7 +262,7 @@ tappable('.btn-add-sub', {
             subTitle = $(".subreddit-title", parent);
         subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
         var newSub = subTitle.text();
-        V.Subreddits.insert(newSub);
+        C.Subreddits.add(newSub);
     },
     activeClass: 'button-active'
 });

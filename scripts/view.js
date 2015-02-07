@@ -40,10 +40,7 @@ var V = { // View
             if (subs instanceof Array) {
                 subsList.append(Mustache.to_html(T.Subreddits.list, subs));
             } else {
-                if (!M.Subreddits.listHasSub(subs)) {
-                    subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
-                    M.Subreddits.add(subs);
-                }
+				subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
             }
         },
         remove: function(sub) {
