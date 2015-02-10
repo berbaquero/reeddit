@@ -187,7 +187,7 @@ tappable("#wide-refresh", {
 
 tappable("#sub-title", {
     onTap: function() {
-        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if ((!isDesktop && loadingLinks)) return;
         V.Actions.moveMenu(showingMenu ? move.left : move.right);
     }
 });

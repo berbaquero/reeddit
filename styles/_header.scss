@@ -113,6 +113,10 @@ header {
 		text-shadow: none;
 		border-radius: 0;
 	}
+
+	@include break-point-min($bp-large) {
+		pointer-events: none;
+	}
 }
 
 #wide-refresh {
