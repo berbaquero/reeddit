@@ -23,8 +23,6 @@ var editingSubs = false,
     loadingComments = false,
     loadingLinks = false,
     currentThread,
-    isWideScreen = checkWideScreen(),
-    isLargeScreen = checkLargeScreen(),
     isiPad,
     scrollFix,
     currentSortingChoice = 'hot',
@@ -61,3 +59,9 @@ var defaultChannel = {
     name: "Media",
     subs: ["movies", "television", "music", "games"]
 };
+
+// Breakpoints
+var wideScreenBP = win.matchMedia("(min-width: 1000px)"),
+	largeScreenBP = win.matchMedia("(min-width: 490px)"),
+	isWideScreen = wideScreenBP.matches,
+	isLargeScreen = largeScreenBP.matches;

@@ -1,19 +1,7 @@
-function checkWideScreen() {
-    return win.matchMedia("(min-width: 1000px)").matches;
-}
-
-function checkLargeScreen() {
-    return win.matchMedia("(min-width: 490px)").matches;
-}
-
 function triggerClick(url) {
 	var a = doc.createElement('a');
 	a.setAttribute("href", url);
 	a.setAttribute("target", "_blank");
-
-	//var dispatch = doc.createEvent("HTMLEvents");
-	//dispatch.initEvent("click", true, true);
-	//a.dispatchEvent(dispatch);
 
 	var clickEvent = new MouseEvent("click", {
 		"view": window,

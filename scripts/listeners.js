@@ -19,8 +19,8 @@ if (win.applicationCache)
 
 // Do stuff after finishing resizing the windows
 win.addEventListener("resizeend", function() {
-    isWideScreen = checkWideScreen();
-    isLargeScreen = checkLargeScreen();
+	isWideScreen = wideScreenBP.matches;
+	isLargeScreen = largeScreenBP.matches;
     scrollTop();
     if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
     if (isiPad) scrollFix();
