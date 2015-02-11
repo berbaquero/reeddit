@@ -23,7 +23,7 @@ win.addEventListener("resizeend", function() {
 	isLargeScreen = largeScreenBP.matches;
     scrollTop();
     if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
-    if (isiPad) scrollFix();
+    if (isiPad) iPadScrollFix();
 }, false);
 
 // Pseudo-hash-router

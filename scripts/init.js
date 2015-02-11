@@ -54,14 +54,14 @@ if (!isDesktop) {
         if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
     }, false);
     if (isiPad) {
-        scrollFix = function() {
+        iPadScrollFix = function() {
             // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
             var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
             setTimeout(function() {
                 $('.menu-desc').css('height', nextHeight);
             }, 500);
         };
-        scrollFix();
+		iPadScrollFix();
     }
     if (isiOS7) {
 		// apply iOS 7+ theme
