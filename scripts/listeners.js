@@ -40,8 +40,6 @@ if (isiPhone && isiOS7) {
 
 // Pseudo-hash-router
 win.addEventListener('hashchange', function() {
-    if (location.hash === "") {
-        V.Actions.backToMainView();
 	if (isiPhone && isiOS7) {
 		// Switch `transition-duration` class,
 		// to stop animation when swiping
@@ -58,12 +56,15 @@ win.addEventListener('hashchange', function() {
 		}
 		hasSwiped = false;
 	}
+	// Handle Hash Changes
+    if (location.hash === "") { // To Main View
+		V.Actions.backToMainView();
         $('.link.link-selected').removeClass('link-selected');
         V.Actions.setDetailFooter("");
-        setTimeout(function() {
-            V.detailWrap.empty();
-        }, isWideScreen ? 1 : 301);
-    } else {
+		setTimeout(function() {
+			V.detailWrap.empty();
+		}, isWideScreen ? 1 : 301);
+    } else { // To Comment View
         goToCommentFromHash();
     }
 }, false);
