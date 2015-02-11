@@ -53,7 +53,6 @@ if (!isDesktop) {
     doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
         if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
     }, false);
-    isiPad = /iPad/.test(UA);
     if (isiPad) {
         scrollFix = function() {
             // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
@@ -64,8 +63,8 @@ if (!isDesktop) {
         };
         scrollFix();
     }
-    // apply iOS 7+ theme
-    if (/iPhone|iPod|iPad/.test(UA) && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7) {
+    if (isiOS7) {
+		// apply iOS 7+ theme
         if (!isMnml) V.Actions.switchMnml(true, true);
         body.classList.add("ios7");
     }

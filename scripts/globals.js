@@ -23,7 +23,6 @@ var editingSubs = false,
     loadingComments = false,
     loadingLinks = false,
     currentThread,
-    isiPad,
     scrollFix,
     currentSortingChoice = 'hot',
     mnml = false,
@@ -65,3 +64,11 @@ var wideScreenBP = win.matchMedia("(min-width: 1000px)"),
 	largeScreenBP = win.matchMedia("(min-width: 490px)"),
 	isWideScreen = wideScreenBP.matches,
 	isLargeScreen = largeScreenBP.matches;
+
+// Browser Detection
+var UA = win.navigator.userAgent,
+	isMobile = !isDesktop,
+	isiPhone = /iP(hone|od)/.test(UA),
+	isiPad = /iPad/.test(UA),
+	isiOS = isiPad || isiPhone,
+	isiOS7 = isiOS && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7;
