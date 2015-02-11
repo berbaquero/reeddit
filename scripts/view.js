@@ -109,6 +109,10 @@ var V = { // View
             V.Anims.slideFromLeft();
         },
         moveMenu: function(direction) {
+			if (isiPhone && isiOS7) {
+				V.mainView.removeClass(swipeClass);
+				V.detailView.removeClass(swipeClass);
+			}
             if (direction === move.left) {
                 V.mainView.removeClass(css.showMenu);
                 setTimeout(function() {

@@ -341,5 +341,9 @@ a {
     font-weight: bold;
 }
 
+.from-swipe { // for iPhone iOS 7+ "hack"
+	transition-duration: 0s !important;
+}
+
 @import 'animations';
 @import 'footer';

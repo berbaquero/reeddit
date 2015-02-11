@@ -26,10 +26,38 @@ win.addEventListener("resizeend", function() {
     if (isiPad) iPadScrollFix();
 }, false);
 
+if (isiPhone && isiOS7) {
+	var hasSwiped = false,
+		swipeClass = 'from-swipe';
+	document.addEventListener('touchstart', function(ev) {
+		var touchX = ev.targetTouches[0].clientX;
+		hasSwiped = (touchX < 10 || touchX > window.innerWidth - 10);
+	});
+	document.addEventListener('touchend', function() {
+		hasSwiped = false;
+	});
+}
+
 // Pseudo-hash-router
 win.addEventListener('hashchange', function() {
     if (location.hash === "") {
         V.Actions.backToMainView();
+	if (isiPhone && isiOS7) {
+		// Switch `transition-duration` class,
+		// to stop animation when swiping
+		if (hasSwiped) {
+			V.mainView.addClass(swipeClass);
+			V.detailView.addClass(swipeClass);
+			V.btnNavBack.addClass(swipeClass);
+			V.subtitle.addClass(swipeClass);
+		} else {
+			V.mainView.removeClass(swipeClass);
+			V.detailView.removeClass(swipeClass);
+			V.btnNavBack.removeClass(swipeClass);
+			V.subtitle.removeClass(swipeClass);
+		}
+		hasSwiped = false;
+	}
         $('.link.link-selected').removeClass('link-selected');
         V.Actions.setDetailFooter("");
         setTimeout(function() {
