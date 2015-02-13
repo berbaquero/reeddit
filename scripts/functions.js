@@ -21,12 +21,19 @@ function openPost(url, id) {
 	}
 }
 
+function getCommentHash() {
+	var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
+	if (match && match[2]) {
+		return match[2];
+	}
+}
+
 function goToCommentFromHash() {
-    var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
-    if (match && match[2]) {
-        var id = match[2];
-        C.Comments.show(id);
-    }
+	var id = getCommentHash();
+	C.Comments.show(id);
+	if (isWideScreen) {
+		V.Actions.setSelectedLink(id);
+	}
 }
 
 function checkImageLink(url) {

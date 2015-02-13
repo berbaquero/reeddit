@@ -59,7 +59,7 @@ win.addEventListener('hashchange', function() {
 	// Handle Hash Changes
     if (location.hash === "") { // To Main View
 		V.Actions.backToMainView();
-        $('.link.link-selected').removeClass('link-selected');
+		V.Actions.clearSelectedLink();
         V.Actions.setDetailFooter("");
 		setTimeout(function() {
 			V.detailWrap.empty();

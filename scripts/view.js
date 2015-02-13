@@ -243,7 +243,14 @@ var V = { // View
                     noBounce: true
                 };
             V.Actions.showModal(imageViewer, false, config);
-        }
+        },
+		setSelectedLink: function(id) {
+			$(".link.link-selected").removeClass("link-selected");
+			$('.link[data-id="' + id + '"]').addClass('link-selected');
+		},
+		clearSelectedLink: function() {
+			$('.link.link-selected').removeClass('link-selected');
+		}
     },
     Comments: {
         setRest: function(id, refresh) {
@@ -252,12 +259,6 @@ var V = { // View
             if (!refresh) V.Actions.setDetailFooter(postTitle);
 
             if (!refresh && currentView !== view.comments) V.Anims.slideFromRight();
-
-            if (isWideScreen) {
-                // Refresh active link indicator
-                $(".link.link-selected").removeClass("link-selected");
-                $('.link[data-id="' + id + '"]').addClass('link-selected');
-            }
 
             V.headerSection.empty().append(V.title);
             V.title.text(postTitle);

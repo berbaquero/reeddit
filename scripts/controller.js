@@ -40,6 +40,12 @@ var C = { // "Controller"
 
             V.Posts.show(links, paging);
             M.Posts.setList(links);
+			if (isWideScreen) {
+				var id = getCommentHash();
+				if (id) {
+					V.Actions.setSelectedLink(id);
+				}
+			}
         }
     },
     Comments: {
