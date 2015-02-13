@@ -61,10 +61,15 @@ var M = { // Model
 			return false;
 		},
         getAllString: function() {
-            var allSubs = '';
+            var allSubs = '',
+				frontPage = 'frontpage',
+				all = 'all';
             for (var i = 0; i < M.Subreddits.list.length; i++) {
-                var sub = M.Subreddits.list[i];
-                if (sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
+                var sub = M.Subreddits.list[i].toLowerCase();
+                if (sub === frontPage ||
+					sub === all) {
+					continue;
+				}
                 allSubs += sub + '+';
             }
             return allSubs.substring(0, allSubs.length - 1);
