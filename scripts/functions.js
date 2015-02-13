@@ -89,8 +89,11 @@ function goToComments(id) {
 function refreshCurrentStream() {
     if (editingSubs) return;
     doByCurrentSelection(function() { // if it's subreddit
-        if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
-        else C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+        if (M.currentSelection.name.toLowerCase() === 'frontpage') {
+			C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
+		} else {
+			C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+		}
     }, function() { // if it's channel
         C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
     });

@@ -208,8 +208,11 @@ tappable("#more-links", {
     onTap: function() {
         doByCurrentSelection(function() {
             var url;
-            if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
-            else url = urlInit + "r/" + M.currentSelection.name + "/";
+            if (M.currentSelection.name.toLowerCase() === 'frontpage') {
+				url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
+			} else {
+				url = urlInit + "r/" + M.currentSelection.name + "/";
+			}
             C.Posts.load(url, '&after=' + M.Posts.idLast);
         }, function() {
             var channel = M.Channels.getByName(M.currentSelection.name);

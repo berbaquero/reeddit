@@ -171,8 +171,11 @@ var C = { // "Controller"
         loadPosts: function(sub) {
             if (sub !== M.currentSelection.name || editingSubs) {
                 var url;
-                if (sub.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
-                else url = urlInit + "r/" + sub + "/";
+                if (sub.toLowerCase() === 'frontpage') {
+					url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
+				} else {
+					url = urlInit + "r/" + sub + "/";
+				}
                 C.Posts.load(url);
                 C.currentSelection.setSubreddit(sub);
             }

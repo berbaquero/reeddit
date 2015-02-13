@@ -20,7 +20,7 @@ doByCurrentSelection(
         // Load links
         if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
             C.currentSelection.setSubreddit('frontPage');
-            C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
+            C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
         } else {
             C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
         }

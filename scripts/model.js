@@ -60,7 +60,7 @@ var M = { // Model
 			}
 			return false;
 		},
-        getAllString: function() {
+        getAllSubsString: function() {
             var allSubs = '',
 				frontPage = 'frontpage',
 				all = 'all';
