@@ -26,10 +26,7 @@ var editingSubs = false,
     loadingComments = false,
     loadingLinks = false,
     currentThread,
-    isWideScreen = checkWideScreen(),
-    isLargeScreen = checkLargeScreen(),
-    isiPad,
-    scrollFix,
+    iPadScrollFix,
     currentSortingChoice = 'hot',
     mnml = false,
     updateBackup = 1,
@@ -58,12 +55,26 @@ var editingSubs = false,
     },
     currentView = view.main;
 
-var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "tech", "science", "reactiongifs", "books", "explainLikeImFive", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
+var defaultSubs = ["frontPage", "all", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "tech", "science", "reactiongifs", "books", "explainLikeImFive", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
 
 var defaultChannel = {
     name: "Media",
     subs: ["movies", "television", "music", "games"]
 };
+
+// Breakpoints
+var wideScreenBP = win.matchMedia("(min-width: 1000px)"),
+	largeScreenBP = win.matchMedia("(min-width: 490px)"),
+	isWideScreen = wideScreenBP.matches,
+	isLargeScreen = largeScreenBP.matches;
+
+// Browser Detection
+var UA = win.navigator.userAgent,
+	isMobile = !isDesktop,
+	isiPhone = /iP(hone|od)/.test(UA),
+	isiPad = /iPad/.test(UA),
+	isiOS = isiPad || isiPhone,
+	isiOS7 = isiOS && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7;
 
 var T = { // Templates
     Posts: "{{#children}}<article class='link-wrap'><div class='link js-link' data-id='{{data.id}}'><div class='link-thumb'><div style='background-image: url({{data.thumbnail}})'></div></div><div class='link-info'><a href='{{data.url}}' data-id='{{data.id}}' target='_blank' class='link-title js-post-title'>{{data.title}}</a><p class='link-domain'>{{data.domain}}</p><p class='link-sub'>{{data.subreddit}}</p>{{#data.over_18}}<span class='link-label nsfw'>NSFW</span>{{/data.over_18}}{{#data.stickied}}<span class='link-label stickied'>Stickied</span>{{/data.stickied}}</div></div><div class='to-comments' data-id='{{data.id}}'><div class='comments-icon'></div></div></article>{{/children}}<div class='list-button'><span id='more-links'>More</span></div><div id='main-overflow'></div>",
@@ -79,14 +90,14 @@ var T = { // Templates
     },
     linkSummary: "<section id='link-summary'><a href='{{url}}' target='_blank'><p id='summary-title'>{{title}}</p><p id='summary-domain'>{{domain}}</p>{{#over_18}}<span class='link-label summary-label nsfw'>NSFW</span>{{/over_18}}{{#stickied}}<span class='link-label summary-label stickied'>Stickied</span>{{/stickied}}</a><div id='summary-footer'><p id='summary-author'>by {{author}}</p><a class='btn-general' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a></div><div id='summary-extra'><p id='summary-sub'>{{subreddit}}</p><p id='summary-time'></p><a id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a></section>",
     botonAgregarSubManual: "<div class='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>",
-    formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-sub">Add Subreddit</div></div><div class="close-form">close</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-    formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="save">Add Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
-    formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="update">Update Channel</div></div><div class="close-form">close</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
+    formAgregarSubManual: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-sub">Add Subreddit</div></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
+    formAddNewChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="save">Add Channel</div></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
+    formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="update">Update Channel</div></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
     botonCargarMasSubs: "<div class='list-button'><span id='more-subs'>More</span></div>",
     noLink: "No Post Selected",
-    about: "<div class='new-form about-reeddit'><div class='close-form'>close</div><ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
-    exportData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-exp'><h3>Export Data</h3><p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p><div class='btn-general' id='btn-save-dbx'>Save to Dropbox</div></div></div>",
-    importData: "<div class='new-form move-data'><div class='close-form'>close</div><div class='move-data-imp'><h3>Import Data</h3><p>Load the subscriptions from another Reeddit instance.</p><p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p><div class='btn-general' id='btn-dbx-imp'>Import from Dropbox</div></div></div>"
+    about: "<div class='new-form about-reeddit'><div class='close-form'>&times;</div><ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>",
+    exportData: "<div class='new-form move-data'><div class='close-form'>&times;</div><div class='move-data-exp'><h3>Export Data</h3><p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p><div class='btn-general' id='btn-save-dbx'>Save to Dropbox</div></div></div>",
+    importData: "<div class='new-form move-data'><div class='close-form'>&times;</div><div class='move-data-imp'><h3>Import Data</h3><p>Load the subscriptions from another Reeddit instance.</p><p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p><div class='btn-general' id='btn-dbx-imp'>Import from Dropbox</div></div></div>"
 };
 
 var M = { // Model
@@ -122,13 +133,11 @@ var M = { // Model
     },
     Subreddits: {
         list: [],
-        add: function(sub) {
-            if (!M.Subreddits.listHasSub(sub)) {
-                M.Subreddits.list.push(sub);
-                store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
-                updateBackup = 1;
-            }
-        },
+		add: function(sub) {
+			M.Subreddits.list.push(sub);
+			store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+			updateBackup = 1;
+		},
         setList: function(subs) {
             M.Subreddits.list = subs;
             store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
@@ -140,18 +149,29 @@ var M = { // Model
             store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
             updateBackup = 1;
         },
-        listHasSub: function(sub) {
-            if (M.Subreddits.list) {
-                var i = M.Subreddits.list.indexOf(sub);
-                return i > -1;
-            }
-            return false;
-        },
-        getAllString: function() {
-            var allSubs = '';
+		listHasSub: function(newSub) {
+			if (M.Subreddits.list) {
+				newSub = newSub.toLowerCase();
+				for(var i = M.Subreddits.list.length; --i;) {
+					var sub = M.Subreddits.list[i];
+					if (sub.toLowerCase() === newSub) {
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
+		},
+        getAllSubsString: function() {
+            var allSubs = '',
+				frontPage = 'frontpage',
+				all = 'all';
             for (var i = 0; i < M.Subreddits.list.length; i++) {
-                var sub = M.Subreddits.list[i];
-                if (sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
+                var sub = M.Subreddits.list[i].toLowerCase();
+                if (sub === frontPage ||
+					sub === all) {
+					continue;
+				}
                 allSubs += sub + '+';
             }
             return allSubs.substring(0, allSubs.length - 1);
@@ -213,6 +233,7 @@ var M = { // Model
         }
     }
 };
+
 var V = { // View
     mainWrap: $("#main-wrap"),
     detailWrap: $("#detail-wrap"),
@@ -255,10 +276,7 @@ var V = { // View
             if (subs instanceof Array) {
                 subsList.append(Mustache.to_html(T.Subreddits.list, subs));
             } else {
-                if (!M.Subreddits.listHasSub(subs)) {
-                    subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
-                    M.Subreddits.add(subs);
-                }
+				subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
             }
         },
         remove: function(sub) {
@@ -327,6 +345,10 @@ var V = { // View
             V.Anims.slideFromLeft();
         },
         moveMenu: function(direction) {
+			if (isiPhone && isiOS7) {
+				V.mainView.removeClass(swipeClass);
+				V.detailView.removeClass(swipeClass);
+			}
             if (direction === move.left) {
                 V.mainView.removeClass(css.showMenu);
                 setTimeout(function() {
@@ -437,10 +459,10 @@ var V = { // View
             var bntMnml = $("#mnml");
             if (mnml) {
                 body.classList.add(css.mnml);
-                bntMnml.text("Mnml: on");
+                bntMnml.text("Theme: mnml");
             } else {
                 body.classList.remove(css.mnml);
-                bntMnml.text("Mnml: off");
+                bntMnml.text("Theme: Classic");
             }
             if (save) store.setItem("mnml", mnml);
         },
@@ -457,7 +479,14 @@ var V = { // View
                     noBounce: true
                 };
             V.Actions.showModal(imageViewer, false, config);
-        }
+        },
+		setSelectedLink: function(id) {
+			$(".link.link-selected").removeClass("link-selected");
+			$('.link[data-id="' + id + '"]').addClass('link-selected');
+		},
+		clearSelectedLink: function() {
+			$('.link.link-selected').removeClass('link-selected');
+		}
     },
     Comments: {
         setRest: function(id, refresh) {
@@ -466,12 +495,6 @@ var V = { // View
             if (!refresh) V.Actions.setDetailFooter(postTitle);
 
             if (!refresh && currentView !== view.comments) V.Anims.slideFromRight();
-
-            if (isWideScreen) {
-                // Refresh active link indicator
-                $(".link.link-selected").removeClass("link-selected");
-                $('.link[data-id="' + id + '"]').addClass('link-selected');
-            }
 
             V.headerSection.empty().append(V.title);
             V.title.text(postTitle);
@@ -634,6 +657,12 @@ var C = { // "Controller"
 
             V.Posts.show(links, paging);
             M.Posts.setList(links);
+			if (isWideScreen) {
+				var id = getCommentHash();
+				if (id) {
+					V.Actions.setSelectedLink(id);
+				}
+			}
         }
     },
     Comments: {
@@ -765,18 +794,31 @@ var C = { // "Controller"
         loadPosts: function(sub) {
             if (sub !== M.currentSelection.name || editingSubs) {
                 var url;
-                if (sub.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
-                else url = urlInit + "r/" + sub + "/";
+                if (sub.toLowerCase() === 'frontpage') {
+					url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
+				} else {
+					url = urlInit + "r/" + sub + "/";
+				}
                 C.Posts.load(url);
                 C.currentSelection.setSubreddit(sub);
             }
             V.Actions.setSubTitle(sub);
         },
-        remove: function(sub) {
-            M.Subreddits.remove(sub);
-            V.Subreddits.remove(sub);
-            if (M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
-        },
+		remove: function(sub) {
+			M.Subreddits.remove(sub);
+			V.Subreddits.remove(sub);
+			if (M.currentSelection.type === selection.sub &&
+				M.currentSelection.name === sub) { // If it was the current selection
+				C.currentSelection.setSubreddit('frontPage');
+			}
+		},
+		add: function(newSub) {
+			if (M.Subreddits.listHasSub(newSub)) {
+				return;
+			}
+			M.Subreddits.add(newSub);
+			V.Subreddits.insert(newSub);
+		},
         addFromNewForm: function() {
             var txtSub = $id("txt-new-sub"),
                 subName = txtSub.value;
@@ -785,6 +827,12 @@ var C = { // "Controller"
                 V.Anims.shakeForm();
                 return;
             }
+			if (M.Subreddits.listHasSub(subName)) {
+				txtSub.value = "";
+				txtSub.setAttribute("placeholder", subName + " already added!");
+				V.Anims.shakeForm();
+				return;
+			}
 
             subName = subName.trim();
 
@@ -928,22 +976,10 @@ var C = { // "Controller"
     }
 };
 
-function checkWideScreen() {
-    return win.matchMedia("(min-width: 1000px)").matches;
-}
-
-function checkLargeScreen() {
-    return win.matchMedia("(min-width: 490px)").matches;
-}
-
 function triggerClick(url) {
 	var a = doc.createElement('a');
 	a.setAttribute("href", url);
 	a.setAttribute("target", "_blank");
-
-	//var dispatch = doc.createEvent("HTMLEvents");
-	//dispatch.initEvent("click", true, true);
-	//a.dispatchEvent(dispatch);
 
 	var clickEvent = new MouseEvent("click", {
 		"view": window,
@@ -963,12 +999,19 @@ function openPost(url, id) {
 	}
 }
 
+function getCommentHash() {
+	var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
+	if (match && match[2]) {
+		return match[2];
+	}
+}
+
 function goToCommentFromHash() {
-    var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
-    if (match && match[2]) {
-        var id = match[2];
-        C.Comments.show(id);
-    }
+	var id = getCommentHash();
+	C.Comments.show(id);
+	if (isWideScreen) {
+		V.Actions.setSelectedLink(id);
+	}
 }
 
 function checkImageLink(url) {
@@ -1031,8 +1074,11 @@ function goToComments(id) {
 function refreshCurrentStream() {
     if (editingSubs) return;
     doByCurrentSelection(function() { // if it's subreddit
-        if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
-        else C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+        if (M.currentSelection.name.toLowerCase() === 'frontpage') {
+			C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
+		} else {
+			C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+		}
     }, function() { // if it's channel
         C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
     });
@@ -1310,7 +1356,7 @@ tappable("#wide-refresh", {
 
 tappable("#sub-title", {
     onTap: function() {
-        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if ((!isDesktop && loadingLinks)) return;
         V.Actions.moveMenu(showingMenu ? move.left : move.right);
     }
 });
@@ -1331,8 +1377,11 @@ tappable("#more-links", {
     onTap: function() {
         doByCurrentSelection(function() {
             var url;
-            if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
-            else url = urlInit + "r/" + M.currentSelection.name + "/";
+            if (M.currentSelection.name.toLowerCase() === 'frontpage') {
+				url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
+			} else {
+				url = urlInit + "r/" + M.currentSelection.name + "/";
+			}
             C.Posts.load(url, '&after=' + M.Posts.idLast);
         }, function() {
             var channel = M.Channels.getByName(M.currentSelection.name);
@@ -1385,7 +1434,7 @@ tappable('.btn-add-sub', {
             subTitle = $(".subreddit-title", parent);
         subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
         var newSub = subTitle.text();
-        V.Subreddits.insert(newSub);
+        C.Subreddits.add(newSub);
     },
     activeClass: 'button-active'
 });
@@ -1496,28 +1545,32 @@ V.detailWrap.on('click', '#comments-container a, #selftext a', function(ev) {
 });
 
 // Swipes
-V.detailView.swipeRight(function() {
-    if (isWideScreen) return;
-    location.hash = "#";
-});
+if (isMobile) {
+	if (!(isiPhone && isiOS7)) {
+		V.detailView.swipeRight(function() {
+			if (isWideScreen) return;
+			location.hash = "#";
+		});
+	}
 
-V.mainView.swipeRight(function() {
-    if ((!isDesktop && loadingLinks) || isLargeScreen) return;
-    if (currentView === view.main) V.Actions.moveMenu(move.right);
-});
+	V.mainView.swipeRight(function() {
+		if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+		if (currentView === view.main) V.Actions.moveMenu(move.right);
+	});
 
-V.mainView.swipeLeft(function() {
-    if ((!isDesktop && loadingLinks) || isLargeScreen) return;
-    if (showingMenu) V.Actions.moveMenu(move.left);
-});
+	V.mainView.swipeLeft(function() {
+		if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+		if (showingMenu) V.Actions.moveMenu(move.left);
+	});
 
-V.mainView.on("swipeLeft", ".link", function() {
-    if (isWideScreen) return;
-    if (!showingMenu) {
-        var id = $(this).data("id");
-        goToComments(id);
-    }
-});
+	V.mainView.on("swipeLeft", ".link", function() {
+		if (isWideScreen) return;
+		if (!showingMenu) {
+			var id = $(this).data("id");
+			goToComments(id);
+		}
+	});
+}
 
 // Show option to reload app after update
 if (win.applicationCache)
@@ -1540,23 +1593,52 @@ if (win.applicationCache)
 
 // Do stuff after finishing resizing the windows
 win.addEventListener("resizeend", function() {
-    isWideScreen = checkWideScreen();
-    isLargeScreen = checkLargeScreen();
+	isWideScreen = wideScreenBP.matches;
+	isLargeScreen = largeScreenBP.matches;
     scrollTop();
     if (isLargeScreen && showingMenu) V.Actions.moveMenu(move.left);
-    if (isiPad) scrollFix();
+    if (isiPad) iPadScrollFix();
 }, false);
+
+if (isiPhone && isiOS7) {
+	var hasSwiped = false,
+		swipeClass = 'from-swipe';
+	document.addEventListener('touchstart', function(ev) {
+		var touchX = ev.targetTouches[0].clientX;
+		hasSwiped = (touchX < 10 || touchX > window.innerWidth - 10);
+	});
+	document.addEventListener('touchend', function() {
+		hasSwiped = false;
+	});
+}
 
 // Pseudo-hash-router
 win.addEventListener('hashchange', function() {
-    if (location.hash === "") {
-        V.Actions.backToMainView();
-        $('.link.link-selected').removeClass('link-selected');
+	if (isiPhone && isiOS7) {
+		// Switch `transition-duration` class,
+		// to stop animation when swiping
+		if (hasSwiped) {
+			V.mainView.addClass(swipeClass);
+			V.detailView.addClass(swipeClass);
+			V.btnNavBack.addClass(swipeClass);
+			V.subtitle.addClass(swipeClass);
+		} else {
+			V.mainView.removeClass(swipeClass);
+			V.detailView.removeClass(swipeClass);
+			V.btnNavBack.removeClass(swipeClass);
+			V.subtitle.removeClass(swipeClass);
+		}
+		hasSwiped = false;
+	}
+	// Handle Hash Changes
+    if (location.hash === "") { // To Main View
+		V.Actions.backToMainView();
+		V.Actions.clearSelectedLink();
         V.Actions.setDetailFooter("");
-        setTimeout(function() {
-            V.detailWrap.empty();
-        }, isWideScreen ? 1 : 301);
-    } else {
+		setTimeout(function() {
+			V.detailWrap.empty();
+		}, isWideScreen ? 1 : 301);
+    } else { // To Comment View
         goToCommentFromHash();
     }
 }, false);
@@ -1583,7 +1665,7 @@ doByCurrentSelection(
         // Load links
         if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
             C.currentSelection.setSubreddit('frontPage');
-            C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
+            C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
         } else {
             C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
         }
@@ -1616,22 +1698,51 @@ if (!isDesktop) {
     doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
         if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
     }, false);
-    isiPad = /iPad/.test(UA);
     if (isiPad) {
-        scrollFix = function() {
+        iPadScrollFix = function() {
             // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
             var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
             setTimeout(function() {
                 $('.menu-desc').css('height', nextHeight);
             }, 500);
         };
-        scrollFix();
+		iPadScrollFix();
     }
-    // apply iOS 7+ theme
-    if (/iPhone|iPod|iPad/.test(UA) && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7) {
+    if (isiOS7) {
+		// apply iOS 7+ theme
         if (!isMnml) V.Actions.switchMnml(true, true);
         body.classList.add("ios7");
     }
 }
+
+(function() {
+	'use strict';
+
+	// Imports
+	/* global C */
+
+	var el = {
+		main: $('.js-sort-switch-main'),
+		wrap: $('.js-sort-switch-wrap')
+	};
+
+	var classes = {
+		new: 'sort-switch--new'
+	};
+
+	// Initial State
+	var isHot = true;
+
+	el.main.click(function() {
+		isHot = !isHot;
+		C.Sorting.change(isHot ? 'hot' : 'new');
+		if (isHot) {
+			el.main.removeClass(classes.new);
+		} else {
+			el.main.addClass(classes.new);
+		}
+	});
+
+})();
 
 })(window);

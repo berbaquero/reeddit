@@ -1,109 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 <html manifest="reeddit.appcache">
-    <head>
-        <meta charset="utf-8">
-
-        <title>Reeddit</title>
-
-        <meta name="description" content="Elastic, minimalist and read-only Reddit web-app client.">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="author" content="Bernardo Baquero Stand">
-
-        <link rel="icon" type="image/png" href="img/favicon.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icon144.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/icon144.png">
-
-        <link rel="stylesheet" href="dist/libs.css">
-        <link rel="stylesheet" href="dist/app.min.css">
-
-        <script>var loc=location.hostname;if(loc==="berbaquero.github.io"||loc==="berbaquero.github.com"||loc==="reedditapp.com"||loc==="berbaquero.com"){var _gaq=[["_setAccount","UA-36097133-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"))}</script>
-    </head>
-
-    <body>
-
-        <header>
-            <div id="main-title">
-                <p class="sub-title" id="sub-title"></p>
+  <head>
+    <meta charset="utf-8">
+    <title>Reeddit</title>
+    <meta name="description" content="Elastic, minimal Reddit web-app reader client.">
+    <meta name="author" content="Bernardo Baquero Stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/icon144.png">
+    <link rel="stylesheet" href="dist/libs.css">
+    <link rel="stylesheet" href="dist/app.min.css">
+    <script>var loc=location.hostname;if(loc==="berbaquero.github.io"||loc==="berbaquero.github.com"||loc==="reedditapp.com"||loc==="berbaquero.com"){var _gaq=[["_setAccount","UA-36097133-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"))}</script>
+  </head>
+  <body>
+    <header>
+      <div id="main-title">
+        <p id="sub-title" class="sub-title"></p>
+      </div>
+      <div id="nav-back" class="header-corner invisible">
+        <div class="btn-to-main btn-corner back-arrow-btn"><span class="back-arrow-icon"></span></div>
+      </div>
+      <div id="title-head">
+        <div id="header-icon"></div>
+        <p id="title"></p>
+      </div>
+      <div class="header-corner">
+        <div class="btn-refresh btn-corner refresh-icon"></div>
+      </div>
+    </header>
+    <nav id="menu-container">
+      <div class="view">
+        <div id="edit-subs"><span id="btn-add-subs" class="btn-edit-sub">+</span><span id="btn-edit-subs" class="btn-edit-sub">•••</span></div>
+        <div id="main-menu" class="wrapper">
+          <div class="menu-desc">Subreddits<span id="btn-new-sub" class="btn-side-menu-add">+</span></div>
+          <ul id="subs"></ul>
+          <div class="menu-desc">Channels<span id="btn-new-channel" class="btn-side-menu-add">+</span></div>
+          <ul id="channels"></ul>
+          <div class="menu-desc">Options</div>
+          <div id="about" class="option">About</div>
+          <div id="exp-data" class="option">Export Data</div>
+          <div id="imp-data" class="option">Import Data</div>
+          <div id="mnml" class="option">Theme</div>
+        </div>
+      </div>
+    </nav>
+    <section class="view main-view show-view">
+      <section id="main-wrap" class="wrapper"></section>
+      <div id="main-footer" class="view-footer">
+        <div class="sorter-wrap">
+          <div class="sort-switch js-sort-switch-main">
+            <div class="sort-switch__overlay">
+              <div class="sort-switch__wrap js-sort-switch-wrap"><span class="sort-switch__label sort-switch__label--hot">hot</span><span class="sort-switch__label sort-switch__label--new">new</span></div>
             </div>
-            <section id="nav-back" class="header-corner invisible">
-                <div class="btn-to-main btn-corner back-arrow-btn">
-                    <span class="back-arrow-icon"></span>
-                </div>
-            </section>
-            <div id="title-head">
-                <div id="header-icon"></div>
-                <p id="title"></p>
-            </div>
-            <section class="header-corner">
-                <div class="btn-refresh btn-corner refresh-icon"></div>
-            </section>
-        </header>
-
-        <nav id="menu-container">
-            <div class="view">
-                <div id="edit-subs">
-                    <span class="btn-edit-sub" id="btn-add-subs">+</span>
-                    <span class="btn-edit-sub" id="btn-edit-subs">•••</span>
-                </div>
-                <div class="wrapper" id="main-menu">
-                    <div class="menu-desc">
-                        Subreddits
-                        <span id="btn-new-sub" class="btn-side-menu-add">+</span>
-                    </div>
-                    <ul id="subs"></ul>
-
-                    <div class="menu-desc">
-                        Channels
-                        <span id="btn-new-channel" class="btn-side-menu-add">+</span>
-                    </div>
-                    <ul id="channels"></ul>
-                    <div class="menu-desc">Options</div>
-                    <div class="option" id="about">About</div>
-                    <div class="option" id="exp-data">Export Data</div>
-                    <div class="option" id="imp-data">Import Data</div>
-                    <div class="option" id="mnml">Theme</div>
-                </div>
-            </div>
-        </nav>
-
-        <section class="view main-view show-view">
-            <section class="wrapper" id="main-wrap"></section>
-            <div class="view-footer" id="main-footer">
-				<div class="sorter-wrap">
-					<div class="sorter-container js-sort-container sorter--hot">
-						<span class="sorter-label sorter-label--hot">Hot</span>
-						<span class="sorter-icon"></span>
-						<span class="sorter-label sorter-label--new">New</span>
-					</div>
-				</div>
-				<p id="footer-sub" class="footer-sub-title"></p>
-                <div class="btn-footer footer-refresh btn-refresh" data-origin="footer-main"></div>
-            </div>
-        </section>
-
-        <section class="view detail-view">
-            <section class="wrapper wrapper--detail" id="detail-wrap"></section>
-            <div class="view-footer" id="detail-footer">
-                <div class="btn-footer hide btn-to-main" id="detail-close">&times;</div>
-                <p id="footer-post" class="footer-post-title"></p>
-                <div class="btn-footer footer-refresh btn-refresh hide" data-origin="footer-detail"></div>
-            </div>
-        </section>
-
-        <script>
-            var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(navigator.userAgent);
-            if (isDesktop) {
-                var deskLink = document.createElement("link");
-                deskLink.rel = "stylesheet";
-                deskLink.href = "dist/desk.css";
-                document.head.appendChild(deskLink);
-            }
-        </script>
-
-        <script src="dist/libs.js"></script>
-        <script src="dist/app.min.js"></script>
-
-        <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="yiu8cok9mknii0n"></script>
-    </body>
+          </div>
+        </div>
+        <p id="footer-sub" class="footer-sub-title"></p>
+        <div data-origin="footer-main" class="btn-footer footer-refresh btn-refresh"></div>
+      </div>
+    </section>
+    <section class="view detail-view">
+      <section id="detail-wrap" class="wrapper wrapper--detail"></section>
+      <div id="detail-footer" class="view-footer">
+        <div id="detail-close" class="btn-footer btn-to-main hide">&times;</div>
+        <p id="footer-post" class="footer-post-title"></p>
+        <div data-origin="footer-detail" class="btn-footer footer-refresh btn-refresh hide"></div>
+      </div>
+    </section>
+    <script>
+      var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(navigator.userAgent);
+      if (isDesktop) {
+      	var deskLink = document.createElement("link");
+      	deskLink.rel = "stylesheet";
+      	deskLink.href = "dist/desk.css";
+      	document.head.appendChild(deskLink);
+      }
+      
+    </script>
+    <script src="dist/libs.js"></script>
+    <script src="dist/app.min.js"></script>
+    <script src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="yiu8cok9mknii0n"></script>
+  </body>
 </html>

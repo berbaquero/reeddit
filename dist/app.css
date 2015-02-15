@@ -1,4 +1,4 @@
-/* line 47, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
+/* line 53, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
 
 .image-viewer {
   position: absolute;
@@ -9,19 +9,19 @@
   transform: translateY(-50%) translateX(-50%);
 }
 
-/* line 58, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
+/* line 64, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
 
 .btn-add-sub > div {
   width: 100%;
 }
 
-/* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
+/* line 68, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
 
 .invisible {
   opacity: 0;
 }
 
-/* line 66, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
+/* line 72, ../../../../../../Users/bernardo/Projects/reeddit/styles/_base.scss */
 
 .hide {
   display: none !important;
@@ -58,7 +58,15 @@ body {
   position: relative;
 }
 
-/* line 23, app.scss */
+/* line 75, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+body.mnml {
+  font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 30, app.scss */
 
 a {
   color: #999;
@@ -67,9 +75,9 @@ a {
 /* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 .view {
+  width: 100%;
   transition-duration: 300ms;
   position: absolute;
-  width: 100%;
   top: 44px;
   bottom: 0;
   left: 0;
@@ -90,21 +98,44 @@ a {
   background-color: #ffffff;
 }
 
-/* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .main-view,
+.mnml
+.detail-view {
+  background-color: #f5f5f5;
+}
+
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml.ios7 .main-view,
+.mnml.ios7
+.detail-view {
+  background-color: #fff;
+}
+
+/* line 33, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 .main-view {
   -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
 
-/* line 50, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+/* line 36, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+
+.main-view.show-menu {
+  -webkit-transform: translate3d(140px, 0px, 0px);
+  transform: translate3d(140px, 0px, 0px);
+}
+
+/* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 .detail-view {
   -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 
-/* line 76, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+/* line 88, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 .wrapper {
   height: 100%;
@@ -114,27 +145,27 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 
-/* line 83, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+/* line 95, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 .wrapper--detail {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* line 92, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+/* line 104, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+
+.show-view {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* line 108, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 #main-menu {
   box-shadow: inset -3px 0 10px black;
   height: calc(100% - 32px);
 }
 
-/* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
-
-.main-view.show-menu {
-  -webkit-transform: translate3d(140px, 0px, 0px);
-  transform: translate3d(140px, 0px, 0px);
-}
-
-/* line 101, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+/* line 114, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 #main-overflow {
   width: 100%;
@@ -201,13 +232,31 @@ a {
   margin: 0 auto;
 }
 
-/* line 56, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .comments-icon {
+  opacity: .8;
+}
+
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml.ios7 .comments-icon {
+  opacity: .6;
+}
+
+/* line 64, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .button-active {
   background-color: #ddd;
 }
 
-/* line 60, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .button-active {
+  background-color: #ccc;
+}
+
+/* line 72, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .comments-button {
   padding: 3px 10px;
@@ -220,7 +269,7 @@ a {
   margin: 0 auto;
 }
 
-/* line 71, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 83, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .replies-button-active,
 .list-button-active {
@@ -228,13 +277,22 @@ a {
   color: white !important;
 }
 
-/* line 77, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .replies-button-active,
+.mnml
+.list-button-active {
+  background-color: #ccc !important;
+  background-image: none !important;
+}
+
+/* line 94, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .list-button {
   padding: 20px;
 }
 
-/* line 80, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .list-button > span {
   padding: 5px 10px;
@@ -247,14 +305,20 @@ a {
   margin: 0 auto;
 }
 
-/* line 92, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .list-button > span {
+  background-color: transparent;
+}
+
+/* line 113, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .top-buttons {
   padding: 10px 20px;
   border-bottom: 1px solid #CCC;
 }
 
-/* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 118, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .top-buttons > div {
   padding: 3px 10px;
@@ -265,28 +329,36 @@ a {
   display: inline-block;
 }
 
-/* line 106, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .top-buttons > div {
+  background-color: #ddd;
+  border: 1px solid #bbb;
+  box-shadow: 0 1px 0 #fff;
+}
+
+/* line 133, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .top-buttons div:first-child {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
 
-/* line 111, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 138, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .top-buttons div:last-child {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
 
-/* line 117, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 144, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-update {
   display: block;
   width: 100%;
 }
 
-/* line 122, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 149, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .comments-button,
 .top-buttons > div,
@@ -297,7 +369,22 @@ a {
   box-shadow: rgba(255, 255, 255, 0.4) 0 1px 0 inset, rgba(255, 255, 255, 0.3) 0 25px 30px -12px inset, rgba(0, 0, 0, 0.6) 0 1px 2px;
 }
 
-/* line 133, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .comments-button,
+.mnml
+.top-buttons > div,
+.mnml
+.list-button > span,
+.mnml
+.btn-general {
+  background-color: #d5d5d8;
+  border: 1px solid #bbb;
+  background-image: none;
+  box-shadow: none;
+}
+
+/* line 167, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-general {
   background-color: #BBB;
@@ -307,7 +394,13 @@ a {
   text-align: center;
 }
 
-/* line 141, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .btn-general {
+  border-radius: 4px;
+}
+
+/* line 179, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-general-active {
   background-image: linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
@@ -315,13 +408,21 @@ a {
   color: #f5f5f5;
 }
 
-/* line 148, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .btn-general-active {
+  background-color: #ccc;
+  background-image: none;
+  box-shadow: none;
+}
+
+/* line 192, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-add-new-channel {
   padding: 5px 10px;
 }
 
-/* line 152, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 196, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-add-another-sub {
   background-color: #CCC;
@@ -334,7 +435,7 @@ a {
   border-top: 0;
 }
 
-/* line 163, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 207, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-import-data {
   width: 70%;
@@ -342,13 +443,13 @@ a {
   margin: 5px auto;
 }
 
-/* line 169, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 213, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-save-dbx {
   display: none;
 }
 
-/* line 173, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 217, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-add-sub {
   display: -webkit-flex;
@@ -357,7 +458,7 @@ a {
   width: 15%;
 }
 
-/* line 177, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 221, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-add-sub > div {
   background-image: url("../img/add.png");
@@ -366,7 +467,7 @@ a {
   background-position: 50%;
 }
 
-/* line 190, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 234, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-side-menu-add {
   position: absolute;
@@ -377,7 +478,7 @@ a {
   line-height: 30px;
 }
 
-/* line 199, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 243, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-edit-subs {
   right: 0;
@@ -385,7 +486,7 @@ a {
   line-height: 34px;
 }
 
-/* line 207, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 251, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-corner:active {
   background-color: rgba(0, 0, 0, 0.3);
@@ -414,7 +515,14 @@ a {
   text-align: center;
 }
 
-/* line 20, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #edit-subs {
+  box-shadow: none;
+  border-top: 0;
+}
+
+/* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .btn-edit-sub {
   font-size: 25px;
@@ -425,20 +533,20 @@ a {
   height: 100%;
 }
 
-/* line 29, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 34, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 #btn-add-subs {
   left: 0;
   font-weight: 500;
 }
 
-/* line 34, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 39, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 #remove-sub {
   right: 0;
 }
 
-/* line 36, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 41, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .sub {
   color: whiteSmoke;
@@ -451,7 +559,7 @@ a {
   text-overflow: ellipsis;
 }
 
-/* line 47, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 59, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .channel {
   margin: 0;
@@ -459,20 +567,20 @@ a {
   padding: 5px 10px;
 }
 
-/* line 52, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 64, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .channel > p {
   color: whiteSmoke;
   margin: 0;
 }
 
-/* line 57, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 76, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .channel > div {
   padding-left: 10px;
 }
 
-/* line 61, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 80, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .channel > div p {
   font-size: 13px;
@@ -484,26 +592,32 @@ a {
   white-space: nowrap;
 }
 
-/* line 72, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 98, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .channel-active {
   border-left: 3px solid #4286F5;
 }
 
-/* line 75, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .channel-active {
+  border-left: 3px solid #3d6fba;
+}
+
+/* line 105, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .channel-active > p {
-  text-shadow: 0 0 10px #CCC;
+  text-shadow: 0 0 10px #ccc;
 }
 
-/* line 80, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 110, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .sub-active {
-  text-shadow: 0 0 10px #CCC;
-  border-left: 3px solid #4286F5;
+  text-shadow: 0 0 10px #ccc;
+  border-left: 3px solid #4286f5;
 }
 
-/* line 85, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 115, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 #menu-container {
   overflow-y: auto;
@@ -517,7 +631,14 @@ a {
   background-image: url("../img/darkdenim3.png");
 }
 
-/* line 117, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #menu-container {
+  background-color: #262b30;
+  background-image: url("");
+}
+
+/* line 152, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .menu-desc {
   color: rgba(255, 255, 255, 0.82);
@@ -537,7 +658,7 @@ a {
   position: relative;
 }
 
-/* line 135, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 177, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .option {
   color: whiteSmoke;
@@ -546,25 +667,10 @@ a {
   font-size: 14px;
 }
 
-/* line 142, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+/* line 184, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
 .option:last-child {
   margin-bottom: 15px;
-}
-
-/* line 147, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
-
-#sorting p {
-  color: whiteSmoke;
-  margin: 0;
-  padding: 8px 10px;
-  text-transform: capitalize;
-}
-
-/* line 154, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
-
-.sorting-choice {
-  border-left: 3px solid;
 }
 
 /* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
@@ -590,13 +696,19 @@ a {
   width: 100%;
 }
 
-/* line 19, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .link-wrap {
+  border-top: 0;
+}
+
+/* line 23, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-wrap:first-child {
   border-top: 0;
 }
 
-/* line 24, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 28, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-thumb {
   width: 70px;
@@ -604,7 +716,7 @@ a {
   min-width: 70px;
 }
 
-/* line 29, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 33, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-thumb div {
   width: 60px;
@@ -618,7 +730,13 @@ a {
   box-shadow: inset 0 1px 3px #333;
 }
 
-/* line 41, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .link-thumb div {
+  box-shadow: none;
+}
+
+/* line 49, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-title {
   font-weight: 600;
@@ -630,14 +748,14 @@ a {
   display: block;
 }
 
-/* line 51, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 59, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-domain {
   margin: 0;
-  color: #d43030;
+  color: #c6544f;
 }
 
-/* line 56, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 64, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-sub {
   margin: 0;
@@ -645,7 +763,7 @@ a {
   display: inline;
 }
 
-/* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 70, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-active,
 .link-selected,
@@ -653,7 +771,17 @@ a {
   background-image: linear-gradient(#4286F5, #194FDB);
 }
 
-/* line 70, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .link-active,
+.mnml
+.link-selected,
+.mnml
+.option.tappable-active {
+  background-image: linear-gradient(#599ad2, #3d6fba);
+}
+
+/* line 82, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-active .link-title,
 .link-selected .link-title {
@@ -661,7 +789,7 @@ a {
   text-shadow: 0 1px 0 #333333;
 }
 
-/* line 76, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 88, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-active .link-domain,
 .link-active .link-sub,
@@ -671,7 +799,7 @@ a {
   color: #ADD0EB;
 }
 
-/* line 87, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 99, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-label {
   font-size: 11px;
@@ -679,47 +807,47 @@ a {
   font-weight: 700;
 }
 
-/* line 92, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 104, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-label.nsfw {
   color: #d13;
 }
 
-/* line 96, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 108, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-label.stickied {
   color: #71b0d3;
   letter-spacing: .3px;
 }
 
-/* line 102, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 114, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .summary-label {
   border-radius: 5px;
   padding: 1px 3px;
 }
 
-/* line 106, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 118, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .summary-label.nsfw {
   background-color: #d13;
   color: white;
 }
 
-/* line 111, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 123, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .summary-label.stickied {
   background-color: #71b0d3;
   color: white;
 }
 
-/* line 117, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 129, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-title:visited {
   color: #888;
 }
 
-/* line 123, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
+/* line 135, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
 
 .link-active .link-title:visited,
 .link-selected .link-title:visited {
@@ -753,7 +881,23 @@ header > div {
   width: 70%;
 }
 
-/* line 31, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml header {
+  border-bottom: 1px solid #bbb;
+  background-color: #d7d7d7;
+  border-top: 0;
+  background-image: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml.ios7 header {
+  background-color: #f8f8f8;
+}
+
+/* line 43, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 .header-corner {
   display: -webkit-flex;
@@ -763,7 +907,7 @@ header > div {
   transition-duration: 300ms;
 }
 
-/* line 37, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 49, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 #title {
   color: #333;
@@ -780,7 +924,7 @@ header > div {
   cursor: default;
 }
 
-/* line 52, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 64, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 #header-icon {
   width: 36px;
@@ -792,7 +936,19 @@ header > div {
   margin: 0 auto;
 }
 
-/* line 61, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #header-icon {
+  opacity: .7;
+}
+
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml.ios7 #header-icon {
+  opacity: .5;
+}
+
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 #main-title {
   transition-duration: 300ms;
@@ -807,7 +963,13 @@ header > div {
   overflow: hidden;
 }
 
-/* line 74, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #main-title {
+  top: 0;
+}
+
+/* line 98, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 .sub-title {
   margin: 0 0 0 5px;
@@ -817,13 +979,23 @@ header > div {
   border-radius: 5px;
 }
 
-/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 105, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 .sub-title:active {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* line 86, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .sub-title {
+  margin: 0;
+  padding: 0 10px;
+  line-height: 44px;
+  text-shadow: none;
+  border-radius: 0;
+}
+
+/* line 122, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
 
 #wide-refresh {
   padding: 5px 10px;
@@ -872,7 +1044,7 @@ header > div {
 /* line 37, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-author p {
-  color: #d43030;
+  color: #c6544f;
   font-weight: 500;
   margin: 0;
 }
@@ -886,30 +1058,30 @@ header > div {
 /* line 46, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-poster::before {
-  content: 'OP';
   position: absolute;
   top: 0;
   left: 0;
+  content: 'OP';
   color: #ffffff;
-  background-color: #d43030;
-  border: 1px solid #d43030;
+  background-color: #c6544f;
+  border: 1px solid #c6544f;
   padding: 2px 3px;
   border-radius: 3px;
   font-size: 10px;
   font-weight: 700;
 }
 
-/* line 60, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 58, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-poster p {
-  color: #d43030;
+  color: #c6544f;
   font-weight: 500;
   position: relative;
   left: 28px;
   margin: 0;
 }
 
-/* line 72, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 70, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-info a {
   color: #aaa;
@@ -917,46 +1089,46 @@ header > div {
   text-decoration: none;
 }
 
-/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 79, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-body p {
   margin: 10px 0;
   color: #3d525e;
 }
 
-/* line 86, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 84, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-body ul {
   color: #3d525e;
 }
 
-/* line 90, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 88, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-body a {
   color: #7a9abd;
   -webkit-tap-highlight-color: rgba(69, 103, 140, 0.5);
 }
 
-/* line 94, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 92, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .comment-body a:visited {
   color: #a3adce;
 }
 
-/* line 100, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 98, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #link-summary {
   background-color: #4d4d4d;
   padding: 10px 0 0;
 }
 
-/* line 105, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 103, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #link-summary::before {
-  content: '';
-  position: absolute;
   width: 100%;
   height: 300px;
+  content: '';
+  position: absolute;
   background-color: inherit;
   -webkit-transform: translateY(-100%);
   -ms-transform: translateY(-100%);
@@ -968,20 +1140,26 @@ header > div {
   background-size: 25%;
 }
 
-/* line 118, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #link-summary {
+  background-color: #262b30;
+}
+
+/* line 120, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #link-summary p {
   margin: 0;
   padding-left: 10px;
 }
 
-/* line 123, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 125, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #link-summary a {
   text-decoration: none;
 }
 
-/* line 128, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 130, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-title {
   font-size: 16px;
@@ -991,14 +1169,14 @@ header > div {
   padding-bottom: 2px;
 }
 
-/* line 136, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 138, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-time {
   color: white;
   text-align: center;
 }
 
-/* line 141, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 143, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-domain {
   color: #F75433;
@@ -1007,28 +1185,34 @@ header > div {
   display: inline;
 }
 
-/* line 148, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml.ios7 #summary-domain {
+  color: #eb4d5c;
+}
+
+/* line 154, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-author {
   color: #E2E2E0;
   font-weight: 700;
 }
 
-/* line 154, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 160, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #share-tw {
   /* Share button position */
   margin-right: 10px;
 }
 
-/* line 159, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 165, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-sub {
   color: #FAFAFA;
   text-align: left;
 }
 
-/* line 166, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 172, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-footer {
   display: -webkit-flex;
@@ -1042,7 +1226,13 @@ header > div {
   border-bottom: 1px solid #333;
 }
 
-/* line 174, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #summary-footer {
+  border: 0;
+}
+
+/* line 184, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-extra {
   display: -webkit-flex;
@@ -1058,7 +1248,14 @@ header > div {
   border-top: 1px solid #5d5d5d;
 }
 
-/* line 184, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #summary-extra {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 0;
+}
+
+/* line 199, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-comment-num {
   text-align: right;
@@ -1066,7 +1263,7 @@ header > div {
   display: block;
 }
 
-/* line 190, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 205, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #summary-extra p,
 #summary-comment-num {
@@ -1076,7 +1273,7 @@ header > div {
   width: 33%;
 }
 
-/* line 199, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 214, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #selftext {
   -webkit-user-select: text;
@@ -1091,38 +1288,45 @@ header > div {
   border: 1px solid #b9b9b9;
 }
 
-/* line 210, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml #selftext {
+  border: 0;
+  box-shadow: none;
+}
+
+/* line 230, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #selftext p {
   margin-top: 5px;
 }
 
-/* line 213, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 233, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #selftext p:last-child {
   margin-bottom: 5px;
 }
 
-/* line 222, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 242, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #selftext a {
   color: #7a9abd;
   -webkit-tap-highlight-color: rgba(69, 103, 140, 0.5);
 }
 
-/* line 226, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 246, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 #selftext a:visited {
   color: #a3adce;
 }
 
-/* line 232, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 252, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .preview-container {
   padding: 10px 0;
 }
 
-/* line 240, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 260, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .image-preview,
 .video-preview {
@@ -1132,13 +1336,13 @@ header > div {
   box-shadow: 0 1px 3px #333;
 }
 
-/* line 248, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 268, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .image-preview {
   cursor: zoom-in;
 }
 
-/* line 256, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+/* line 276, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
 .image-viewer {
   max-width: 100%;
@@ -1146,9 +1350,116 @@ header > div {
   padding: 10px 0;
 }
 
+/* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_options-menu.scss */
+
+.options-menu {
+  width: 100%;
+  height: 44px;
+  -webkit-transform: translateY(calc(-100% - 44px));
+  -ms-transform: translateY(calc(-100% - 44px));
+  transform: translateY(calc(-100% - 44px));
+  background-color: #333333;
+  transition: -webkit-transform 200ms;
+  transition: transform 200ms;
+  z-index: 2;
+  color: #ffffff;
+  position: absolute;
+}
+
+/* line 10, ../../../../../../Users/bernardo/Projects/reeddit/styles/_options-menu.scss */
+
+.options-menu--shown {
+  -webkit-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  transform: translateY(0%);
+}
+
+/* line 9, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sorter-wrap {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+/* line 17, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch {
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* line 21, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch__overlay {
+  overflow: hidden;
+  width: 3.2em;
+  height: 1.6em;
+  border-radius: .25em;
+}
+
+/* line 28, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch__wrap {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 6.4em;
+  transition: all 250ms ease;
+  -webkit-transform: translateX(0%);
+  -ms-transform: translateX(0%);
+  transform: translateX(0%);
+}
+
+/* line 36, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch--new .sort-switch__wrap {
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+/* line 40, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch__label {
+  width: 3.2em;
+  height: height-label;
+  color: #444;
+  font-weight: 600;
+  line-height: 1.6em;
+  text-transform: capitalize;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 85% center;
+  background-size: 1em;
+}
+
+/* line 55, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch__label::after {
+  position: absolute;
+  font-size: 2em;
+}
+
+/* line 60, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch__label--hot::after {
+  content: "\2022";
+  color: #c6544f;
+  left: 1em;
+}
+
+/* line 66, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+
+.sort-switch__label--new::after {
+  content: "\2022";
+  color: #7ab636;
+  left: 1.2em;
+}
+
 /*--- Subreddits ---*/
 
-/* line 36, app.scss */
+/* line 45, app.scss */
 
 .subreddit {
   display: -webkit-flex;
@@ -1160,29 +1471,35 @@ header > div {
   width: 100%;
 }
 
-/* line 43, app.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .subreddit {
+  border-top: 0;
+}
+
+/* line 56, app.scss */
 
 .subreddit > div:first-child {
   width: 85%;
   padding: 10px 5px 10px 0;
 }
 
-/* line 49, app.scss */
+/* line 62, app.scss */
 
 .subreddit-desc {
   margin: 5px 0;
 }
 
-/* line 53, app.scss */
+/* line 66, app.scss */
 
 .subreddit-title {
   font-weight: 700;
   font-size: 15px;
   margin: 5px 0;
-  color: #d43030;
+  color: #c6544f;
 }
 
-/* line 60, app.scss */
+/* line 73, app.scss */
 
 .new-form {
   width: 300px;
@@ -1196,14 +1513,14 @@ header > div {
   margin-left: -150px;
 }
 
-/* line 72, app.scss */
+/* line 85, app.scss */
 
 #form-new-channel {
   min-height: 160px;
   top: 55px;
 }
 
-/* line 77, app.scss */
+/* line 90, app.scss */
 
 #form-new-channel input {
   width: 100%;
@@ -1212,7 +1529,7 @@ header > div {
   outline: none;
 }
 
-/* line 85, app.scss */
+/* line 98, app.scss */
 
 #subs-for-channel {
   border-radius: 5px 5px 0 0;
@@ -1225,7 +1542,7 @@ header > div {
   overflow-y: auto;
 }
 
-/* line 99, app.scss */
+/* line 112, app.scss */
 
 #subs-for-channel input {
   border: 0;
@@ -1233,14 +1550,14 @@ header > div {
   padding: 5px;
 }
 
-/* line 104, app.scss */
+/* line 117, app.scss */
 
 #subs-for-channel input:last-child {
   border-bottom: 0;
   padding-bottom: 10px;
 }
 
-/* line 111, app.scss */
+/* line 124, app.scss */
 
 #txt-channel {
   border: 2px solid #AAA !important;
@@ -1248,7 +1565,7 @@ header > div {
   padding: 5px 10px;
 }
 
-/* line 117, app.scss */
+/* line 130, app.scss */
 
 .channel-added-msg {
   color: white;
@@ -1259,7 +1576,7 @@ header > div {
   border-radius: 5px;
 }
 
-/* line 126, app.scss */
+/* line 139, app.scss */
 
 #form-new-sub {
   height: 50px;
@@ -1267,7 +1584,7 @@ header > div {
   margin-top: -100px;
 }
 
-/* line 131, app.scss */
+/* line 144, app.scss */
 
 #form-new-sub input {
   width: 100%;
@@ -1276,19 +1593,19 @@ header > div {
   outline: none;
 }
 
-/* line 138, app.scss */
+/* line 151, app.scss */
 
 #add-sub-manual {
   padding: 10px;
 }
 
-/* line 142, app.scss */
+/* line 155, app.scss */
 
 #remove-wrap {
   height: 100%;
 }
 
-/* line 146, app.scss */
+/* line 159, app.scss */
 
 .edit-subs-title {
   padding: 10px;
@@ -1301,14 +1618,14 @@ header > div {
   text-shadow: 0 1px 1px whiteSmoke;
 }
 
-/* line 157, app.scss */
+/* line 170, app.scss */
 
 .remove-list {
   margin: 0;
   padding: 0;
 }
 
-/* line 162, app.scss */
+/* line 175, app.scss */
 
 .item-to-edit {
   display: -webkit-flex;
@@ -1319,7 +1636,13 @@ header > div {
   height: 60px;
 }
 
-/* line 168, app.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml .item-to-edit {
+  border-top: 0;
+}
+
+/* line 185, app.scss */
 
 .item-to-edit > p {
   width: 85%;
@@ -1329,7 +1652,7 @@ header > div {
   padding-left: 10px;
 }
 
-/* line 176, app.scss */
+/* line 193, app.scss */
 
 .item-to-edit > div {
   width: 15%;
@@ -1338,13 +1661,13 @@ header > div {
   background-position: center;
 }
 
-/* line 182, app.scss */
+/* line 199, app.scss */
 
 .item-to-edit .channel-name {
   width: 70%;
 }
 
-/* line 186, app.scss */
+/* line 203, app.scss */
 
 .item-to-edit .btn-remove-channel,
 .item-to-edit .btn-remove-subreddit {
@@ -1352,57 +1675,50 @@ header > div {
   background-size: 22px;
 }
 
-/* line 196, app.scss */
+/* line 213, app.scss */
 
 .item-to-edit .btn-edit-channel {
   background-image: url("../img/edit.png");
   background-size: 16px;
 }
 
-/* line 202, app.scss */
-
-.show-view {
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
-/* line 206, app.scss */
+/* line 219, app.scss */
 
 #modal {
   width: 100%;
   height: 100%;
-  transition-duration: 300ms;
   position: absolute;
   top: 0;
   left: 0;
+  transition-duration: 300ms;
   background-color: rgba(0, 0, 0, 0.7);
   opacity: 0;
   z-index: 9999;
 }
 
-/* line 217, app.scss */
+/* line 228, app.scss */
 
 .modal--closable {
   cursor: zoom-out;
 }
 
-/* line 221, app.scss */
+/* line 232, app.scss */
 
 .close-form {
+  width: 35px;
+  height: 35px;
   position: absolute;
-  top: -30px;
-  z-index: 10001;
+  top: -35px;
   right: 0;
-  color: whiteSmoke;
-  background-image: url("../img/cancel.png");
-  width: 60px;
-  background-repeat: no-repeat;
-  padding-left: 20px;
+  z-index: 10001;
+  color: #F5F5F5;
   font-weight: 700;
-  background-size: 18px;
+  font-size: 30px;
+  line-height: 28px;
+  text-align: center;
 }
 
-/* line 235, app.scss */
+/* line 246, app.scss */
 
 .form-left-corner {
   position: absolute;
@@ -1411,28 +1727,28 @@ header > div {
   left: 0;
 }
 
-/* line 242, app.scss */
+/* line 253, app.scss */
 
 .about-reeddit,
 .move-data {
   top: 80px;
 }
 
-/* line 249, app.scss */
+/* line 260, app.scss */
 
 .about-reeddit ul {
   list-style: none;
   padding: 0;
 }
 
-/* line 254, app.scss */
+/* line 265, app.scss */
 
 .about-reeddit li {
   font-size: 18px;
   text-align: center;
 }
 
-/* line 258, app.scss */
+/* line 269, app.scss */
 
 .about-reeddit li a {
   text-decoration: none;
@@ -1446,25 +1762,25 @@ header > div {
   color: #777;
 }
 
-/* line 270, app.scss */
+/* line 281, app.scss */
 
 .about-reeddit li a:hover {
   color: inherit;
 }
 
-/* line 274, app.scss */
+/* line 285, app.scss */
 
 .about-reeddit li:first-child a {
   border-top: 0;
 }
 
-/* line 278, app.scss */
+/* line 289, app.scss */
 
 .about-reeddit li:last-child a {
   border-bottom: 0;
 }
 
-/* line 283, app.scss */
+/* line 294, app.scss */
 
 .about-reeddit p {
   color: #777;
@@ -1473,54 +1789,54 @@ header > div {
   text-align: center;
 }
 
-/* line 290, app.scss */
+/* line 301, app.scss */
 
 .about-reeddit p a {
   text-decoration: none;
   color: #777;
 }
 
-/* line 297, app.scss */
+/* line 308, app.scss */
 
 .move-data {
   padding: 20px;
 }
 
-/* line 301, app.scss */
+/* line 312, app.scss */
 
 .move-data .btn-general {
   line-height: 26px;
 }
 
-/* line 305, app.scss */
+/* line 316, app.scss */
 
 .move-data h3,
 .move-data p {
   text-shadow: 0 1px 0 #fff;
 }
 
-/* line 310, app.scss */
+/* line 321, app.scss */
 
 .move-data h3 {
   text-align: center;
   margin: 5px 0;
 }
 
-/* line 315, app.scss */
+/* line 326, app.scss */
 
 .move-data p {
   text-align: left;
   margin: 10px 0;
 }
 
-/* line 321, app.scss */
+/* line 332, app.scss */
 
 .move-data-field {
   width: 100%;
   height: 70px;
 }
 
-/* line 325, app.scss */
+/* line 336, app.scss */
 
 .msg-error {
   background-color: #bbb;
@@ -1528,6 +1844,12 @@ header > div {
   border-radius: 4px;
   text-shadow: none;
   font-weight: bold;
+}
+
+/* line 344, app.scss */
+
+.from-swipe {
+  transition-duration: 0s !important;
 }
 
 @-webkit-keyframes reveal {
@@ -1795,9 +2117,24 @@ header > div {
   background-image: linear-gradient(#d5d5d5, #b3b3b3);
 }
 
-/* line 15, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
+/* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
 
-.view-footer p {
+.mnml .view-footer {
+  background-color: #d7d7d7;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* line 81, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+.mnml.ios7 .view-footer {
+  background-color: #f8f8f8;
+  border-top: 1px solid #bbb;
+}
+
+/* line 26, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
+
+.footer-sub-title,
+.footer-post-title {
   line-height: 31px;
   margin: 0 auto;
   text-align: center;
@@ -1807,10 +2144,10 @@ header > div {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  cursor: default;
+  color: #444;
 }
 
-/* line 29, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
+/* line 40, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
 
 .btn-footer {
   position: absolute;
@@ -1821,7 +2158,7 @@ header > div {
   top: 0;
 }
 
-/* line 37, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
+/* line 48, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
 
 .footer-refresh {
   background-image: url("../img/refresh.png");
@@ -1829,236 +2166,15 @@ header > div {
   background-size: 12px 15px;
 }
 
-/* line 43, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
+/* line 54, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
 
 #detail-close {
-  background-image: url("../img/close.png");
-  opacity: .7;
   left: 0;
-  background-size: 18px;
-}
-
-/* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml {
-  font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-/* line 7, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #link-summary {
-  background-color: #262b30;
-}
-
-/* line 11, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #summary-extra {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 0;
-}
-
-/* line 16, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #summary-footer {
-  border: 0;
-}
-
-/* line 20, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #selftext {
-  border: 0;
-  box-shadow: none;
-}
-
-/* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .channel-active {
-  border-left: 3px solid #3d6fba;
-}
-
-/* line 29, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #menu-container {
-  background-color: #262b30;
-  background-image: url("");
-}
-
-/* line 34, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .link-wrap {
-  border-top: 0;
-}
-
-/* line 38, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .link-thumb div {
-  box-shadow: none;
-}
-
-/* line 42, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .link-active,
-.mnml .link-selected,
-.mnml .option.tappable-active {
-  background-image: linear-gradient(#599ad2, #3d6fba);
-}
-
-/* line 48, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .list-button > span {
-  background-color: transparent;
-}
-
-/* line 52, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .top-buttons > div {
-  background-color: #ddd;
-  border: 1px solid #bbb;
-  box-shadow: 0 1px 0 #fff;
-}
-
-/* line 58, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .comments-button,
-.mnml .top-buttons > div,
-.mnml .list-button > span,
-.mnml .btn-general {
-  background-color: #d5d5d8;
-  border: 1px solid #bbb;
-  background-image: none;
-  box-shadow: none;
-}
-
-/* line 68, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .btn-general {
-  border-radius: 4px;
-}
-
-/* line 72, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .btn-general-active {
-  background-color: #ccc;
-  background-image: none;
-  box-shadow: none;
-}
-
-/* line 78, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml header {
-  border-bottom: 1px solid #bbb;
-  background-color: #d7d7d7;
-  border-top: 0;
-  background-image: none;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* line 86, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #header-icon {
-  opacity: .7;
-}
-
-/* line 90, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .main-view,
-.mnml .detail-view {
-  background-color: #f5f5f5;
-}
-
-/* line 95, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .comments-icon {
-  opacity: .8;
-}
-
-/* line 99, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .button-active {
-  background-color: #ccc;
-}
-
-/* line 103, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .replies-button-active,
-.mnml .list-button-active {
-  background-color: #ccc !important;
-  background-image: none !important;
-}
-
-/* line 109, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #main-title {
-  top: 0;
-}
-
-/* line 113, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .sub-title {
-  margin: 0;
-  padding: 0 10px;
-  line-height: 44px;
-  text-shadow: none;
-  border-radius: 0;
-}
-
-/* line 121, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .subreddit,
-.mnml .item-to-edit {
-  border-top: 0;
-}
-
-/* line 126, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml #edit-subs {
-  box-shadow: none;
-  border-top: 0;
-}
-
-/* line 131, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml .view-footer {
-  background-color: #d7d7d7;
-  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* line 140, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml.ios7 header {
-  background-color: #f8f8f8;
-}
-
-/* line 144, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml.ios7 #header-icon {
-  opacity: .5;
-}
-
-/* line 148, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml.ios7 .main-view,
-.mnml.ios7 .detail-view {
-  background-color: #fff;
-}
-
-/* line 153, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml.ios7 .comments-icon {
-  opacity: .6;
-}
-
-/* line 157, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml.ios7 #summary-domain {
-  color: #eb4d5c;
-}
-
-/* line 161, ../../../../../../Users/bernardo/Projects/reeddit/styles/_themes.scss */
-
-.mnml.ios7 .view-footer {
-  background-color: #f8f8f8;
-  border-top: 1px solid #bbb;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1em;
+  text-align: center;
+  color: #444;
 }
 
 @media only screen and (min-width: 350px) {
@@ -2071,7 +2187,7 @@ header > div {
     box-shadow: rgba(255, 255, 255, 0.5) 0 32px 20px -10px inset, 0 44px 0 rgba(0, 0, 0, 0.33) inset;
   }
 
-  /* line 85, app.scss */
+  /* line 98, app.scss */
 
   #subs-for-channel {
     max-height: 250px;
@@ -2079,7 +2195,7 @@ header > div {
 }
 
 @media only screen and (min-width: 490px) {
-  /* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 33, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .main-view {
     width: 72%;
@@ -2089,55 +2205,67 @@ header > div {
     transform: none !important;
   }
 
-  /* line 50, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .detail-view {
     width: 72%;
     left: 28%;
   }
 
-  /* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+  /* line 132, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
     width: 28%;
   }
 
-  /* line 232, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+  /* line 98, ../../../../../../Users/bernardo/Projects/reeddit/styles/_header.scss */
+
+  .sub-title {
+    pointer-events: none;
+  }
+
+  /* line 252, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
   .preview-container {
     padding: 10px;
   }
 
-  /* line 248, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+  /* line 268, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
   .image-preview {
     border-radius: 3px;
   }
 
-  /* line 256, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+  /* line 276, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
   .image-viewer {
     padding: 10px;
   }
+
+  /* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_options-menu.scss */
+
+  .options-menu {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 760px) {
-  /* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 33, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .main-view {
     width: 78%;
     left: 22%;
   }
 
-  /* line 50, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .detail-view {
     width: 78%;
     left: 22%;
   }
 
-  /* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+  /* line 132, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
@@ -2152,14 +2280,14 @@ header > div {
     top: 0;
   }
 
-  /* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 33, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .main-view {
     width: 34%;
     left: 16%;
   }
 
-  /* line 50, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .detail-view {
     width: 50%;
@@ -2171,7 +2299,7 @@ header > div {
     transform: none;
   }
 
-  /* line 76, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 88, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .wrapper {
     height: calc(100% - 32px) !important;
@@ -2183,11 +2311,41 @@ header > div {
     display: none;
   }
 
-  /* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+  /* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+  .mnml .sub {
+    font-weight: 500;
+  }
+
+  /* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+  .mnml .channel > p {
+    font-weight: 500;
+  }
+
+  /* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+  .mnml .channel > div p {
+    font-weight: 500;
+  }
+
+  /* line 132, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
     width: 16%;
+  }
+
+  /* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+  .mnml .menu-desc {
+    font-weight: 500;
+  }
+
+  /* line 69, ../../../../../../Users/bernardo/Projects/reeddit/styles/_mixins.scss */
+
+  .mnml .option {
+    font-weight: 500;
   }
 
   /* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_link.scss */
@@ -2208,7 +2366,7 @@ header > div {
     font-size: 14px;
   }
 
-  /* line 210, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
+  /* line 230, ../../../../../../Users/bernardo/Projects/reeddit/styles/_post-comments.scss */
 
   #selftext p {
     font-size: 14px;
@@ -2222,20 +2380,20 @@ header > div {
 }
 
 @media only screen and (min-width: 1430px) {
-  /* line 25, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 33, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .main-view {
     width: 487px;
     left: 230px;
   }
 
-  /* line 50, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
+  /* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
   .detail-view {
     width: calc(100% - 717px);
   }
 
-  /* line 97, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
+  /* line 132, ../../../../../../Users/bernardo/Projects/reeddit/styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
@@ -2258,13 +2416,13 @@ header > div {
     opacity: .7;
   }
 
-  /* line 177, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+  /* line 221, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
   .btn-add-sub > div {
     background-image: url("../img/add@2.png");
   }
 
-  /* line 186, app.scss */
+  /* line 203, app.scss */
 
   .item-to-edit .btn-remove-channel,
   .item-to-edit .btn-remove-subreddit {
