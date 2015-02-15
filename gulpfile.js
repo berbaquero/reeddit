@@ -6,7 +6,8 @@ var gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat-util'),
 	prefix = require('gulp-autoprefixer'),
-	groupMQ = require('gulp-group-css-media-queries');
+	groupMQ = require('gulp-group-css-media-queries'),
+	jade = require('gulp-jade');
 
 var paths = {
 	styles: 'styles/**/*.scss',
@@ -19,11 +20,20 @@ var paths = {
 		'scripts/functions.js',
 		'scripts/actions.js',
 		'scripts/listeners.js',
-		'scripts/init.js'
+		'scripts/init.js',
+		'scripts/modules.js'
 	],
+	scriptModules: {
+		root: 'scripts/modules/**/*.js',
+		dest: 'scripts'
+	},
+	templates: {
+		root: 'templates/index.jade'
+	},
 	watch: {
-		scripts: 'scripts/**/*.js',
-		styles: 'styles/**/*.scss'
+		scripts: ['scripts/**/*.js', '!scripts/modules.js'],
+		styles: 'styles/**/*.scss',
+		templates: 'templates/**/*.jade'
 	},
 	root: './',
 	distribution: 'dist/'
@@ -45,7 +55,15 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts-modules', function() {
+	return gulp.src(paths.scriptModules.root)
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
+		.pipe(concat('modules.js'))
+		.pipe(gulp.dest(paths.scriptModules.dest));
+});
+
+gulp.task('scripts', ['scripts-modules'], function() {
 	return gulp.src(paths.scripts)
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
@@ -61,9 +79,18 @@ gulp.task('scripts', function() {
 		.pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('default', ['styles', 'scripts']);
+gulp.task('templates', function() {
+	return gulp.src(paths.templates.root)
+		.pipe(jade({
+			pretty: true
+		}))
+		.pipe(gulp.dest(paths.root));
+});
+
+gulp.task('default', ['styles', 'scripts', 'templates']);
 
 gulp.task('dev', function() {
 	gulp.watch(paths.watch.styles, ['styles']);
 	gulp.watch(paths.watch.scripts, ['scripts']);
+	gulp.watch(paths.watch.templates, ['templates']);
 });

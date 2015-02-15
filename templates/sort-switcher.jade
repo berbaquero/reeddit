@@ -1,0 +1,7 @@
+mixin sortSwitch(origin)
+  div(class='sorter-container sorter--hot js-sort-container', data-origin=origin)
+    span(class='sorter-label sorter-label--hot', data-type='hot') Hot
+    span.sorter-icon
+    span(class='sorter-label sorter-label--new', data-type='new') New
+
+  include sorter

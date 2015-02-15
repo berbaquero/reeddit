@@ -1,0 +1,17 @@
+.options-menu {
+	@include size(100%, $header-height);
+	transform: translateY(calc(-100% - #{$header-height}));
+	background-color: $black;
+	transition: transform 200ms;
+	z-index: $z-options;
+	color: $white;
+	position: absolute;
+
+	&--shown {
+		transform: translateY(0%);
+	}
+
+	@include break-point-min($bp-large) {
+		display: none;
+	}
+}

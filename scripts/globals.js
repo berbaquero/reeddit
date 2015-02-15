@@ -23,10 +23,7 @@ var editingSubs = false,
     loadingComments = false,
     loadingLinks = false,
     currentThread,
-    isWideScreen = checkWideScreen(),
-    isLargeScreen = checkLargeScreen(),
-    isiPad,
-    scrollFix,
+    iPadScrollFix,
     currentSortingChoice = 'hot',
     mnml = false,
     updateBackup = 1,
@@ -55,9 +52,23 @@ var editingSubs = false,
     },
     currentView = view.main;
 
-var defaultSubs = ["frontPage", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "tech", "science", "reactiongifs", "books", "explainLikeImFive", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
+var defaultSubs = ["frontPage", "all", "pics", "IAmA", "AskReddit", "worldNews", "todayilearned", "tech", "science", "reactiongifs", "books", "explainLikeImFive", "videos", "AdviceAnimals", "funny", "aww", "earthporn"];
 
 var defaultChannel = {
     name: "Media",
     subs: ["movies", "television", "music", "games"]
 };
+
+// Breakpoints
+var wideScreenBP = win.matchMedia("(min-width: 1000px)"),
+	largeScreenBP = win.matchMedia("(min-width: 490px)"),
+	isWideScreen = wideScreenBP.matches,
+	isLargeScreen = largeScreenBP.matches;
+
+// Browser Detection
+var UA = win.navigator.userAgent,
+	isMobile = !isDesktop,
+	isiPhone = /iP(hone|od)/.test(UA),
+	isiPad = /iPad/.test(UA),
+	isiOS = isiPad || isiPhone,
+	isiOS7 = isiOS && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7;

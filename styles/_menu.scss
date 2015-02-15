@@ -15,6 +15,11 @@
     border-top: 1px solid rgba(0, 0, 0, .5);
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
     text-align: center;
+
+	@include mnml-theme {
+		box-shadow: none;
+		border-top: 0;
+	}
 }
 
 .btn-edit-sub {
@@ -42,6 +47,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+	@include break-point-min($bp-wide) {
+
+		@include mnml-theme {
+			font-weight: 500;
+		}
+	}
 }
 
 .channel {
@@ -52,6 +64,13 @@
     > p {
         color: whiteSmoke;
         margin: 0;
+
+		@include break-point-min($bp-wide) {
+
+			@include mnml-theme {
+				font-weight: 500;
+			}
+		}
     }
 
     > div {
@@ -66,20 +85,31 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+
+		@include break-point-min($bp-wide) {
+
+			@include mnml-theme {
+				font-weight: 500;
+			}
+		}
     }
 }
 
 .channel-active {
 	border-left: 3px solid #4286F5;
 
+	@include mnml-theme {
+		border-left: 3px solid #3d6fba;
+	}
+
     > p {
-        text-shadow: 0 0 10px #CCC;
+        text-shadow: 0 0 10px #ccc;
     }
 }
 
 .sub-active {
-	text-shadow: 0 0 10px #CCC;
-	border-left: 3px solid #4286F5;
+	text-shadow: 0 0 10px #ccc;
+	border-left: 3px solid #4286f5;
 }
 
 #menu-container {
@@ -92,6 +122,11 @@
     height: 100%;
     background-color: #363636;
     background-image: url('../img/darkdenim3.png');
+
+	@include mnml-theme {
+		background-color: #262b30;
+		background-image: url("");
+	}
 }
 
 #menu-container,
@@ -130,6 +165,13 @@
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
     cursor: default;
     position: relative;
+
+	@include break-point-min($bp-wide) {
+
+		@include mnml-theme {
+			font-weight: 500;
+		}
+	}
 }
 
 .option {
@@ -142,15 +184,11 @@
     &:last-child {
 		margin-bottom: 15px;
 	}
-}
 
-#sorting p {
-    color: whiteSmoke;
-    margin: 0;
-    padding: 8px 10px;
-    text-transform: capitalize;
-}
+	@include break-point-min($bp-wide) {
 
-.sorting-choice {
-	border-left: 3px solid;
+		@include mnml-theme {
+			font-weight: 500;
+		}
+	}
 }

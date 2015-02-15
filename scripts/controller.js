@@ -40,6 +40,12 @@ var C = { // "Controller"
 
             V.Posts.show(links, paging);
             M.Posts.setList(links);
+			if (isWideScreen) {
+				var id = getCommentHash();
+				if (id) {
+					V.Actions.setSelectedLink(id);
+				}
+			}
         }
     },
     Comments: {
@@ -171,18 +177,31 @@ var C = { // "Controller"
         loadPosts: function(sub) {
             if (sub !== M.currentSelection.name || editingSubs) {
                 var url;
-                if (sub.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
-                else url = urlInit + "r/" + sub + "/";
+                if (sub.toLowerCase() === 'frontpage') {
+					url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
+				} else {
+					url = urlInit + "r/" + sub + "/";
+				}
                 C.Posts.load(url);
                 C.currentSelection.setSubreddit(sub);
             }
             V.Actions.setSubTitle(sub);
         },
-        remove: function(sub) {
-            M.Subreddits.remove(sub);
-            V.Subreddits.remove(sub);
-            if (M.currentSelection.type === selection.sub && M.currentSelection.name === sub) C.currentSelection.setSubreddit('frontPage'); // If it was the current selection
-        },
+		remove: function(sub) {
+			M.Subreddits.remove(sub);
+			V.Subreddits.remove(sub);
+			if (M.currentSelection.type === selection.sub &&
+				M.currentSelection.name === sub) { // If it was the current selection
+				C.currentSelection.setSubreddit('frontPage');
+			}
+		},
+		add: function(newSub) {
+			if (M.Subreddits.listHasSub(newSub)) {
+				return;
+			}
+			M.Subreddits.add(newSub);
+			V.Subreddits.insert(newSub);
+		},
         addFromNewForm: function() {
             var txtSub = $id("txt-new-sub"),
                 subName = txtSub.value;
@@ -191,6 +210,12 @@ var C = { // "Controller"
                 V.Anims.shakeForm();
                 return;
             }
+			if (M.Subreddits.listHasSub(subName)) {
+				txtSub.value = "";
+				txtSub.setAttribute("placeholder", subName + " already added!");
+				V.Anims.shakeForm();
+				return;
+			}
 
             subName = subName.trim();
 

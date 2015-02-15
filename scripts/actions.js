@@ -187,7 +187,7 @@ tappable("#wide-refresh", {
 
 tappable("#sub-title", {
     onTap: function() {
-        if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+        if ((!isDesktop && loadingLinks)) return;
         V.Actions.moveMenu(showingMenu ? move.left : move.right);
     }
 });
@@ -208,8 +208,11 @@ tappable("#more-links", {
     onTap: function() {
         doByCurrentSelection(function() {
             var url;
-            if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) url = urlInit + "r/" + M.Subreddits.getAllString() + "/";
-            else url = urlInit + "r/" + M.currentSelection.name + "/";
+            if (M.currentSelection.name.toLowerCase() === 'frontpage') {
+				url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
+			} else {
+				url = urlInit + "r/" + M.currentSelection.name + "/";
+			}
             C.Posts.load(url, '&after=' + M.Posts.idLast);
         }, function() {
             var channel = M.Channels.getByName(M.currentSelection.name);
@@ -262,7 +265,7 @@ tappable('.btn-add-sub', {
             subTitle = $(".subreddit-title", parent);
         subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
         var newSub = subTitle.text();
-        V.Subreddits.insert(newSub);
+        C.Subreddits.add(newSub);
     },
     activeClass: 'button-active'
 });
@@ -373,25 +376,29 @@ V.detailWrap.on('click', '#comments-container a, #selftext a', function(ev) {
 });
 
 // Swipes
-V.detailView.swipeRight(function() {
-    if (isWideScreen) return;
-    location.hash = "#";
-});
+if (isMobile) {
+	if (!(isiPhone && isiOS7)) {
+		V.detailView.swipeRight(function() {
+			if (isWideScreen) return;
+			location.hash = "#";
+		});
+	}
 
-V.mainView.swipeRight(function() {
-    if ((!isDesktop && loadingLinks) || isLargeScreen) return;
-    if (currentView === view.main) V.Actions.moveMenu(move.right);
-});
+	V.mainView.swipeRight(function() {
+		if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+		if (currentView === view.main) V.Actions.moveMenu(move.right);
+	});
 
-V.mainView.swipeLeft(function() {
-    if ((!isDesktop && loadingLinks) || isLargeScreen) return;
-    if (showingMenu) V.Actions.moveMenu(move.left);
-});
+	V.mainView.swipeLeft(function() {
+		if ((!isDesktop && loadingLinks) || isLargeScreen) return;
+		if (showingMenu) V.Actions.moveMenu(move.left);
+	});
 
-V.mainView.on("swipeLeft", ".link", function() {
-    if (isWideScreen) return;
-    if (!showingMenu) {
-        var id = $(this).data("id");
-        goToComments(id);
-    }
-});
+	V.mainView.on("swipeLeft", ".link", function() {
+		if (isWideScreen) return;
+		if (!showingMenu) {
+			var id = $(this).data("id");
+			goToComments(id);
+		}
+	});
+}

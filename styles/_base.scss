@@ -5,17 +5,23 @@ $footer-height: 32px;
 // Colors
 $white:         #ffffff;
 $black:         #333333;
-$red:           #d43030;
+$red:           #c6544f;
 $blue-grayish:  #7a9abd;
 $black-blueish: #3d525e;
 
 $red-comments:            $red;
 $c_comments-link:         $blue-grayish;
 $c_comments-link-visited: #a3adce;
+$mnml-bars-bg-color:      #d7d7d7;
+$ios7-bars-bg-color:      #f8f8f8;
 
 $gutter: 10px;
 
 $corner-radius: 3px;
+
+// Z-Indexes
+$z-view:    1;
+$z-options: 2;
 
 // Media Query Break Points
 $bp-small:   350px;
@@ -52,7 +58,7 @@ $detail-view-wide-x:  calc(100% - #{($menu-view-wide-x + $main-view-wide-x)});
 }
 
 %block-spacing {
-	padding: 10px;
+	padding: $gutter;
 }
 
 %full-width {

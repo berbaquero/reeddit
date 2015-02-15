@@ -1,19 +1,7 @@
-function checkWideScreen() {
-    return win.matchMedia("(min-width: 1000px)").matches;
-}
-
-function checkLargeScreen() {
-    return win.matchMedia("(min-width: 490px)").matches;
-}
-
 function triggerClick(url) {
 	var a = doc.createElement('a');
 	a.setAttribute("href", url);
 	a.setAttribute("target", "_blank");
-
-	//var dispatch = doc.createEvent("HTMLEvents");
-	//dispatch.initEvent("click", true, true);
-	//a.dispatchEvent(dispatch);
 
 	var clickEvent = new MouseEvent("click", {
 		"view": window,
@@ -33,12 +21,19 @@ function openPost(url, id) {
 	}
 }
 
+function getCommentHash() {
+	var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
+	if (match && match[2]) {
+		return match[2];
+	}
+}
+
 function goToCommentFromHash() {
-    var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
-    if (match && match[2]) {
-        var id = match[2];
-        C.Comments.show(id);
-    }
+	var id = getCommentHash();
+	C.Comments.show(id);
+	if (isWideScreen) {
+		V.Actions.setSelectedLink(id);
+	}
 }
 
 function checkImageLink(url) {
@@ -101,8 +96,11 @@ function goToComments(id) {
 function refreshCurrentStream() {
     if (editingSubs) return;
     doByCurrentSelection(function() { // if it's subreddit
-        if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) C.Posts.load(urlInit + "r/" + M.Subreddits.getAllString() + "/");
-        else C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+        if (M.currentSelection.name.toLowerCase() === 'frontpage') {
+			C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
+		} else {
+			C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+		}
     }, function() { // if it's channel
         C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));
     });

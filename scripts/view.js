@@ -40,10 +40,7 @@ var V = { // View
             if (subs instanceof Array) {
                 subsList.append(Mustache.to_html(T.Subreddits.list, subs));
             } else {
-                if (!M.Subreddits.listHasSub(subs)) {
-                    subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
-                    M.Subreddits.add(subs);
-                }
+				subsList.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass((active ? "sub-active" : "")).text(subs)));
             }
         },
         remove: function(sub) {
@@ -112,6 +109,10 @@ var V = { // View
             V.Anims.slideFromLeft();
         },
         moveMenu: function(direction) {
+			if (isiPhone && isiOS7) {
+				V.mainView.removeClass(swipeClass);
+				V.detailView.removeClass(swipeClass);
+			}
             if (direction === move.left) {
                 V.mainView.removeClass(css.showMenu);
                 setTimeout(function() {
@@ -222,10 +223,10 @@ var V = { // View
             var bntMnml = $("#mnml");
             if (mnml) {
                 body.classList.add(css.mnml);
-                bntMnml.text("Mnml: on");
+                bntMnml.text("Theme: mnml");
             } else {
                 body.classList.remove(css.mnml);
-                bntMnml.text("Mnml: off");
+                bntMnml.text("Theme: Classic");
             }
             if (save) store.setItem("mnml", mnml);
         },
@@ -242,7 +243,14 @@ var V = { // View
                     noBounce: true
                 };
             V.Actions.showModal(imageViewer, false, config);
-        }
+        },
+		setSelectedLink: function(id) {
+			$(".link.link-selected").removeClass("link-selected");
+			$('.link[data-id="' + id + '"]').addClass('link-selected');
+		},
+		clearSelectedLink: function() {
+			$('.link.link-selected').removeClass('link-selected');
+		}
     },
     Comments: {
         setRest: function(id, refresh) {
@@ -251,12 +259,6 @@ var V = { // View
             if (!refresh) V.Actions.setDetailFooter(postTitle);
 
             if (!refresh && currentView !== view.comments) V.Anims.slideFromRight();
-
-            if (isWideScreen) {
-                // Refresh active link indicator
-                $(".link.link-selected").removeClass("link-selected");
-                $('.link[data-id="' + id + '"]').addClass('link-selected');
-            }
 
             V.headerSection.empty().append(V.title);
             V.title.text(postTitle);

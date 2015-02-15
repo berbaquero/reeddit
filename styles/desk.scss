@@ -37,6 +37,12 @@
 	cursor: pointer;
 }
 
+#detail-close,
+.footer-sub-title,
+.footer-post-title {
+	cursor: default;
+}
+
 #link-summary a:hover #summary-title {
 	text-shadow: 0 1px 7px whiteSmoke;
 }

@@ -1,12 +1,12 @@
 .view {
+	@include full-width;
 	transition-duration: 300ms;
 	position: absolute;
-	width: 100%;
 	top: $header-height;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	z-index: 1;
+	z-index: $z-view;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 
@@ -20,10 +20,22 @@
 	perspective: 1000;
 	backface-visibility: hidden;
 	background-color: $white;
+
+	@include mnml-theme {
+		background-color: #f5f5f5;
+	}
+
+	@include mnml-theme(iOS7) {
+		background-color: #fff;
+	}
 }
 
 .main-view {
 	transform: translate3d(-100%, 0, 0);
+
+	&.show-menu {
+		transform: translate3d(140px, 0px, 0px);
+	}
 
 	@include break-point-min($bp-large) {
 		width: $main-view-large;
@@ -89,14 +101,15 @@
 	}
 }
 
-#main-menu {
-	box-shadow: inset -3px 0 10px black;
-	height: calc(100% - 32px);
+.show-view {
+	transform: translate3d(0, 0, 0);
 }
 
-.main-view.show-menu {
-	transform: translate3d(140px, 0px, 0px);
+#main-menu {
+	box-shadow: inset -3px 0 10px black;
+	height: calc(100% - #{$footer-height});
 }
+
 
 #main-overflow {
 	width: 100%;

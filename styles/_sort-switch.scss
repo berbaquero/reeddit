@@ -1,0 +1,72 @@
+// Widget
+$green: #7ab636;
+$red: #c6544f;
+$black: #444;
+
+$width: 3.2em;
+$height: 1.6em;
+
+.sorter-wrap {
+	position: absolute;
+	margin: {
+		top: 5px;
+		left: $gutter;
+	}
+}
+
+.sort-switch {
+	font-size: 13px; // main size
+	cursor: pointer;
+
+	&__overlay {
+		overflow: hidden;
+		width: $width;
+		height: $height;
+		border-radius: .25em;
+	}
+
+	&__wrap {
+		display: flex;
+		width: $width * 2;
+		transition: all 250ms ease;
+		// default - hot
+		transform: translateX(0%);
+	}
+
+	&--new &__wrap {
+		transform: translateX(-50%);
+	}
+
+	&__label {
+		$label-color: $black;
+		$height-label: $height - .1em;
+		@include size($width, height-label);
+		color: $label-color;
+		font-weight: 600;
+		line-height: $height;
+		text-transform: capitalize;
+		position: relative;
+		background: {
+			repeat: no-repeat;
+			position: 85% center;
+			size: 1em;
+		}
+
+		&::after {
+			position: absolute;
+			font-size: 2em;
+		}
+
+		&--hot::after {
+			content: "\2022";
+			color: $red;
+			left: 1em;
+		}
+
+		&--new::after {
+			content: "\2022";
+			color: $green;
+			left: 1.2em;
+		}
+	}
+}

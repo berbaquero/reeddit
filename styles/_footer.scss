@@ -8,22 +8,33 @@
     box-shadow: inset 0 1px 1px #eee;
     background-image: linear-gradient(#d5d5d5, #b3b3b3);
 
+	@include mnml-theme {
+		background-color: $mnml-bars-bg-color;
+		box-shadow: 0 -1px 4px rgba(0, 0, 0, .2);
+	}
+
+	@include mnml-theme(iOS7) {
+		background-color: $ios7-bars-bg-color;
+		border-top: 1px solid #bbb;
+	}
+
     @include break-point-min($bp-wide) {
         display: block;
     }
+}
 
-    p {
-        line-height: ($footer-height - 1px);
-        margin: 0 auto;
-        text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        width: 70%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        cursor: default;
-    }
+.footer-sub-title,
+.footer-post-title {
+	line-height: ($footer-height - 1px);
+	margin: 0 auto;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	width: 70%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	color: #444;
 }
 
 .btn-footer {
@@ -41,8 +52,10 @@
 }
 
 #detail-close {
-    background-image: url('../img/close.png');
-    opacity: .7;
-    left: 0;
-    background-size: 18px;
+	left: 0;
+	font-size: 26px;
+	font-weight: bold;
+	line-height: 1em;
+	text-align: center;
+	color: #444;
 }

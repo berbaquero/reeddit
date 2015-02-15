@@ -31,13 +31,11 @@ var M = { // Model
     },
     Subreddits: {
         list: [],
-        add: function(sub) {
-            if (!M.Subreddits.listHasSub(sub)) {
-                M.Subreddits.list.push(sub);
-                store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
-                updateBackup = 1;
-            }
-        },
+		add: function(sub) {
+			M.Subreddits.list.push(sub);
+			store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
+			updateBackup = 1;
+		},
         setList: function(subs) {
             M.Subreddits.list = subs;
             store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
@@ -49,18 +47,29 @@ var M = { // Model
             store.setItem("subreeddits", JSON.stringify(M.Subreddits.list));
             updateBackup = 1;
         },
-        listHasSub: function(sub) {
-            if (M.Subreddits.list) {
-                var i = M.Subreddits.list.indexOf(sub);
-                return i > -1;
-            }
-            return false;
-        },
-        getAllString: function() {
-            var allSubs = '';
+		listHasSub: function(newSub) {
+			if (M.Subreddits.list) {
+				newSub = newSub.toLowerCase();
+				for(var i = M.Subreddits.list.length; --i;) {
+					var sub = M.Subreddits.list[i];
+					if (sub.toLowerCase() === newSub) {
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
+		},
+        getAllSubsString: function() {
+            var allSubs = '',
+				frontPage = 'frontpage',
+				all = 'all';
             for (var i = 0; i < M.Subreddits.list.length; i++) {
-                var sub = M.Subreddits.list[i];
-                if (sub.toUpperCase() === 'frontPage'.toUpperCase()) continue;
+                var sub = M.Subreddits.list[i].toLowerCase();
+                if (sub === frontPage ||
+					sub === all) {
+					continue;
+				}
                 allSubs += sub + '+';
             }
             return allSubs.substring(0, allSubs.length - 1);
