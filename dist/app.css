@@ -1459,27 +1459,24 @@ header > div {
   background-size: 1em;
 }
 
-/* line 56, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 57, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
-.sort-switch__label::after {
-  position: absolute;
-  font-size: 2em;
+.sort-switch__icon {
+  content: "\2022";
+  position: relative;
+  left: 3px;
 }
 
-/* line 61, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 62, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
-.sort-switch__label--hot::after {
-  content: "\2022";
+.sort-switch__icon--hot {
   color: #c6544f;
-  left: 1em;
 }
 
-/* line 67, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 66, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
-.sort-switch__label--new::after {
-  content: "\2022";
+.sort-switch__icon--new {
   color: #7ab636;
-  left: 1.2em;
 }
 
 /*--- Subreddits ---*/
