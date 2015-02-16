@@ -72,6 +72,32 @@ a {
   color: #999;
 }
 
+/* line 3, ../../../../../../Users/bernardo/Projects/reeddit/styles/_icons.scss */
+
+.refresh-icon,
+.footer-refresh {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMjMuNSAxOGMwIDQuNDE4LTMuNTgyIDgtOCA4cy04LTMuNTgyLTgtOGMwLTQuMDg1IDMuOTE3LTYuNTk1IDgtNi45NVYxNmwxMC03VjhsLTEwLTh2NS4wNDJjLTcuMzQ3LjQzMi0xNCA1LjU2LTE0IDEyLjk1OCAwIDcuNzMyIDYuMjY4IDE0IDE0IDE0czE0LTYuMjY4IDE0LTE0aC02eiIgZmlsbD0iIzQ0NCIvPjwvc3ZnPg0KDQo=");
+}
+
+/* line 9, ../../../../../../Users/bernardo/Projects/reeddit/styles/_icons.scss */
+
+.btn-add-sub > div {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgdmlld0JveD0iMCAwIDI4IDI4Ij48cGF0aCBkPSJNMTkgMTV2LTJxMC0uNDA2LS4yOTctLjcwM1QxOCAxMmgtNFY4cTAtLjQwNi0uMjk3LS43MDNUMTMgN2gtMnEtLjQwNiAwLS43MDMuMjk3VDEwIDh2NEg2cS0uNDA2IDAtLjcwMy4yOTdUNSAxM3YycTAgLjQwNi4yOTcuNzAzVDYgMTZoNHY0cTAgLjQwNi4yOTcuNzAzVDExIDIxaDJxLjQwNiAwIC43MDMtLjI5N1QxNCAyMHYtNGg0cS40MDYgMCAuNzAzLS4yOTdUMTkgMTV6bTUtMXEwIDMuMjY2LTEuNjEgNi4wMjN0LTQuMzY2IDQuMzY3VDEyIDI2dC02LjAyLTEuNjEtNC4zNy00LjM2N1QuMDAzIDE0dDEuNjEtNi4wMjNUNS45NzcgMy42MSAxMiAydDYuMDI0IDEuNjEgNC4zNjcgNC4zNjdUMjQgMTR6IiBmaWxsPSIjN2FiNjM2Ii8+PC9zdmc+");
+}
+
+/* line 15, ../../../../../../Users/bernardo/Projects/reeddit/styles/_icons.scss */
+
+.item-to-edit .btn-edit-channel {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMjcgMGMyLjc2IDAgNSAyLjI0IDUgNSAwIDEuMTI2LS4zNzIgMi4xNjQtMSAzbC0yIDItNy03IDItMmMuODM2LS42MjggMS44NzQtMSAzLTF6TTIgMjNsLTIgOSA5LTIgMTguNS0xOC41LTctN0wyIDIzem0yMC4zNjItMTEuNjM4bC0xNCAxNC0xLjcyNC0xLjcyNCAxNC0xNCAxLjcyNCAxLjcyNHoiIGZpbGw9IiM0NDQiLz48L3N2Zz4=");
+}
+
+/* line 21, ../../../../../../Users/bernardo/Projects/reeddit/styles/_icons.scss */
+
+.item-to-edit .btn-remove-channel,
+.item-to-edit .btn-remove-subreddit {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNOCAyNmMwIDEuNjU2IDEuMzQzIDMgMyAzaDEwYzEuNjU2IDAgMy0xLjM0NCAzLTNsMi0xNkg2bDIgMTZ6bTExLTEzaDJ2MTNoLTJWMTN6bS00IDBoMnYxM2gtMlYxM3ptLTQgMGgydjEzaC0yVjEzem0xNC41LTdIMTlzLS40NDgtMi0xLTJoLTRjLS41NTMgMC0xIDItMSAySDYuNUM1LjY3IDYgNSA2LjY3IDUgNy41VjloMjJWNy41UzI2LjMyOCA2IDI1LjUgNnoiIGZpbGw9IiM0NDQiLz48L3N2Zz4=");
+}
+
 /* line 1, ../../../../../../Users/bernardo/Projects/reeddit/styles/_view.scss */
 
 .view {
@@ -176,10 +202,9 @@ a {
 .refresh-icon {
   width: 100%;
   height: 44px;
-  background-image: url("../img/refresh.png");
   background-position: 50%;
   background-repeat: no-repeat;
-  background-size: 14px;
+  background-size: 16px;
   margin: 0 auto;
 }
 
@@ -461,13 +486,12 @@ a {
 /* line 221, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-add-sub > div {
-  background-image: url("../img/add.png");
   background-repeat: no-repeat;
   background-size: 24px;
   background-position: 50%;
 }
 
-/* line 234, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 230, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-side-menu-add {
   position: absolute;
@@ -478,7 +502,7 @@ a {
   line-height: 30px;
 }
 
-/* line 243, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 239, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-edit-subs {
   right: 0;
@@ -486,7 +510,7 @@ a {
   line-height: 34px;
 }
 
-/* line 251, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 247, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-corner:active {
   background-color: rgba(0, 0, 0, 0.3);
@@ -1460,7 +1484,7 @@ header > div {
 
 /*--- Subreddits ---*/
 
-/* line 45, app.scss */
+/* line 46, app.scss */
 
 .subreddit {
   display: -webkit-flex;
@@ -1478,20 +1502,20 @@ header > div {
   border-top: 0;
 }
 
-/* line 56, app.scss */
+/* line 57, app.scss */
 
 .subreddit > div:first-child {
   width: 85%;
   padding: 10px 5px 10px 0;
 }
 
-/* line 62, app.scss */
+/* line 63, app.scss */
 
 .subreddit-desc {
   margin: 5px 0;
 }
 
-/* line 66, app.scss */
+/* line 67, app.scss */
 
 .subreddit-title {
   font-weight: 700;
@@ -1500,7 +1524,7 @@ header > div {
   color: #c6544f;
 }
 
-/* line 73, app.scss */
+/* line 74, app.scss */
 
 .new-form {
   width: 300px;
@@ -1514,14 +1538,14 @@ header > div {
   margin-left: -150px;
 }
 
-/* line 85, app.scss */
+/* line 86, app.scss */
 
 #form-new-channel {
   min-height: 160px;
   top: 55px;
 }
 
-/* line 90, app.scss */
+/* line 91, app.scss */
 
 #form-new-channel input {
   width: 100%;
@@ -1530,7 +1554,7 @@ header > div {
   outline: none;
 }
 
-/* line 98, app.scss */
+/* line 99, app.scss */
 
 #subs-for-channel {
   border-radius: 5px 5px 0 0;
@@ -1543,7 +1567,7 @@ header > div {
   overflow-y: auto;
 }
 
-/* line 112, app.scss */
+/* line 113, app.scss */
 
 #subs-for-channel input {
   border: 0;
@@ -1551,14 +1575,14 @@ header > div {
   padding: 5px;
 }
 
-/* line 117, app.scss */
+/* line 118, app.scss */
 
 #subs-for-channel input:last-child {
   border-bottom: 0;
   padding-bottom: 10px;
 }
 
-/* line 124, app.scss */
+/* line 125, app.scss */
 
 #txt-channel {
   border: 2px solid #AAA !important;
@@ -1566,7 +1590,7 @@ header > div {
   padding: 5px 10px;
 }
 
-/* line 130, app.scss */
+/* line 131, app.scss */
 
 .channel-added-msg {
   color: white;
@@ -1577,7 +1601,7 @@ header > div {
   border-radius: 5px;
 }
 
-/* line 139, app.scss */
+/* line 140, app.scss */
 
 #form-new-sub {
   height: 50px;
@@ -1585,7 +1609,7 @@ header > div {
   margin-top: -100px;
 }
 
-/* line 144, app.scss */
+/* line 145, app.scss */
 
 #form-new-sub input {
   width: 100%;
@@ -1594,19 +1618,19 @@ header > div {
   outline: none;
 }
 
-/* line 151, app.scss */
+/* line 152, app.scss */
 
 #add-sub-manual {
   padding: 10px;
 }
 
-/* line 155, app.scss */
+/* line 156, app.scss */
 
 #remove-wrap {
   height: 100%;
 }
 
-/* line 159, app.scss */
+/* line 160, app.scss */
 
 .edit-subs-title {
   padding: 10px;
@@ -1619,14 +1643,14 @@ header > div {
   text-shadow: 0 1px 1px whiteSmoke;
 }
 
-/* line 170, app.scss */
+/* line 171, app.scss */
 
 .remove-list {
   margin: 0;
   padding: 0;
 }
 
-/* line 175, app.scss */
+/* line 176, app.scss */
 
 .item-to-edit {
   display: -webkit-flex;
@@ -1643,7 +1667,7 @@ header > div {
   border-top: 0;
 }
 
-/* line 185, app.scss */
+/* line 186, app.scss */
 
 .item-to-edit > p {
   width: 85%;
@@ -1653,7 +1677,7 @@ header > div {
   padding-left: 10px;
 }
 
-/* line 193, app.scss */
+/* line 194, app.scss */
 
 .item-to-edit > div {
   width: 15%;
@@ -1662,28 +1686,26 @@ header > div {
   background-position: center;
 }
 
-/* line 199, app.scss */
+/* line 200, app.scss */
 
 .item-to-edit .channel-name {
   width: 70%;
 }
 
-/* line 203, app.scss */
+/* line 204, app.scss */
 
 .item-to-edit .btn-remove-channel,
 .item-to-edit .btn-remove-subreddit {
-  background-image: url("../img/delete.png");
   background-size: 22px;
 }
 
-/* line 213, app.scss */
+/* line 210, app.scss */
 
 .item-to-edit .btn-edit-channel {
-  background-image: url("../img/edit.png");
   background-size: 16px;
 }
 
-/* line 219, app.scss */
+/* line 216, app.scss */
 
 #modal {
   width: 100%;
@@ -1697,13 +1719,13 @@ header > div {
   z-index: 9999;
 }
 
-/* line 228, app.scss */
+/* line 225, app.scss */
 
 .modal--closable {
   cursor: zoom-out;
 }
 
-/* line 232, app.scss */
+/* line 229, app.scss */
 
 .close-form {
   width: 35px;
@@ -1719,7 +1741,7 @@ header > div {
   text-align: center;
 }
 
-/* line 246, app.scss */
+/* line 243, app.scss */
 
 .form-left-corner {
   position: absolute;
@@ -1728,28 +1750,28 @@ header > div {
   left: 0;
 }
 
-/* line 253, app.scss */
+/* line 250, app.scss */
 
 .about-reeddit,
 .move-data {
   top: 80px;
 }
 
-/* line 260, app.scss */
+/* line 257, app.scss */
 
 .about-reeddit ul {
   list-style: none;
   padding: 0;
 }
 
-/* line 265, app.scss */
+/* line 262, app.scss */
 
 .about-reeddit li {
   font-size: 18px;
   text-align: center;
 }
 
-/* line 269, app.scss */
+/* line 266, app.scss */
 
 .about-reeddit li a {
   text-decoration: none;
@@ -1763,25 +1785,25 @@ header > div {
   color: #777;
 }
 
-/* line 281, app.scss */
+/* line 278, app.scss */
 
 .about-reeddit li a:hover {
   color: inherit;
 }
 
-/* line 285, app.scss */
+/* line 282, app.scss */
 
 .about-reeddit li:first-child a {
   border-top: 0;
 }
 
-/* line 289, app.scss */
+/* line 286, app.scss */
 
 .about-reeddit li:last-child a {
   border-bottom: 0;
 }
 
-/* line 294, app.scss */
+/* line 291, app.scss */
 
 .about-reeddit p {
   color: #777;
@@ -1790,54 +1812,54 @@ header > div {
   text-align: center;
 }
 
-/* line 301, app.scss */
+/* line 298, app.scss */
 
 .about-reeddit p a {
   text-decoration: none;
   color: #777;
 }
 
-/* line 308, app.scss */
+/* line 305, app.scss */
 
 .move-data {
   padding: 20px;
 }
 
-/* line 312, app.scss */
+/* line 309, app.scss */
 
 .move-data .btn-general {
   line-height: 26px;
 }
 
-/* line 316, app.scss */
+/* line 313, app.scss */
 
 .move-data h3,
 .move-data p {
   text-shadow: 0 1px 0 #fff;
 }
 
-/* line 321, app.scss */
+/* line 318, app.scss */
 
 .move-data h3 {
   text-align: center;
   margin: 5px 0;
 }
 
-/* line 326, app.scss */
+/* line 323, app.scss */
 
 .move-data p {
   text-align: left;
   margin: 10px 0;
 }
 
-/* line 332, app.scss */
+/* line 329, app.scss */
 
 .move-data-field {
   width: 100%;
   height: 70px;
 }
 
-/* line 336, app.scss */
+/* line 333, app.scss */
 
 .msg-error {
   background-color: #bbb;
@@ -1847,7 +1869,7 @@ header > div {
   font-weight: bold;
 }
 
-/* line 344, app.scss */
+/* line 341, app.scss */
 
 .from-swipe {
   transition-duration: 0s !important;
@@ -2162,9 +2184,8 @@ header > div {
 /* line 48, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
 
 .footer-refresh {
-  background-image: url("../img/refresh.png");
   right: 0;
-  background-size: 12px 15px;
+  background-size: 15px;
 }
 
 /* line 54, ../../../../../../Users/bernardo/Projects/reeddit/styles/_footer.scss */
@@ -2188,7 +2209,7 @@ header > div {
     box-shadow: rgba(255, 255, 255, 0.5) 0 32px 20px -10px inset, 0 44px 0 rgba(0, 0, 0, 0.33) inset;
   }
 
-  /* line 98, app.scss */
+  /* line 99, app.scss */
 
   #subs-for-channel {
     max-height: 250px;
@@ -2415,18 +2436,5 @@ header > div {
   .comments-icon {
     background-image: url("../img/comment_48.png");
     opacity: .7;
-  }
-
-  /* line 221, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
-
-  .btn-add-sub > div {
-    background-image: url("../img/add@2.png");
-  }
-
-  /* line 203, app.scss */
-
-  .item-to-edit .btn-remove-channel,
-  .item-to-edit .btn-remove-subreddit {
-    background-image: url("../img/delete@2x.png");
   }
 }
