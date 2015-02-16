@@ -1387,9 +1387,10 @@ header > div {
 .sort-switch {
   font-size: 13px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* line 21, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 22, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch__overlay {
   overflow: hidden;
@@ -1398,7 +1399,7 @@ header > div {
   border-radius: .25em;
 }
 
-/* line 28, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 29, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch__wrap {
   display: -webkit-flex;
@@ -1411,7 +1412,7 @@ header > div {
   transform: translateX(0%);
 }
 
-/* line 36, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 37, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch--new .sort-switch__wrap {
   -webkit-transform: translateX(-50%);
@@ -1419,7 +1420,7 @@ header > div {
   transform: translateX(-50%);
 }
 
-/* line 40, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 41, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch__label {
   width: 3.2em;
@@ -1434,14 +1435,14 @@ header > div {
   background-size: 1em;
 }
 
-/* line 55, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 56, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch__label::after {
   position: absolute;
   font-size: 2em;
 }
 
-/* line 60, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 61, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch__label--hot::after {
   content: "\2022";
@@ -1449,7 +1450,7 @@ header > div {
   left: 1em;
 }
 
-/* line 66, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
+/* line 67, ../../../../../../Users/bernardo/Projects/reeddit/styles/_sort-switch.scss */
 
 .sort-switch__label--new::after {
   content: "\2022";
