@@ -229,7 +229,7 @@ var C = { // "Controller"
                     V.Actions.setSubTitle(subName);
                     V.Subreddits.cleanSelected();
                     C.currentSelection.setSubreddit(subName);
-                    V.Subreddits.insert(subName, true);
+                    C.Subreddits.add(subName);
                 },
                 error: function() {
                     alert('Oh, the subreddit you entered is not valid...');
