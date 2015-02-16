@@ -17,6 +17,7 @@ $height: 1.6em;
 .sort-switch {
 	font-size: 13px; // main size
 	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 
 	&__overlay {
 		overflow: hidden;
