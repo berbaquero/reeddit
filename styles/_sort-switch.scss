@@ -54,18 +54,17 @@ $height: 1.6em;
 		}
 
 		&::after {
+			content: "\2022";
 			position: absolute;
 			font-size: 2em;
 		}
 
 		&--hot::after {
-			content: "\2022";
 			color: $red;
 			left: 1em;
 		}
 
 		&--new::after {
-			content: "\2022";
 			color: $green;
 			left: 1.2em;
 		}
