@@ -52,21 +52,19 @@ $height: 1.6em;
 			position: 85% center;
 			size: 1em;
 		}
+	}
 
-		&::after {
-			content: "\2022";
-			position: absolute;
-			font-size: 2em;
-		}
+	&__icon {
+		content: "\2022";
+		position: relative;
+		left: 3px;
 
-		&--hot::after {
+		&--hot {
 			color: $red;
-			left: 1em;
 		}
 
-		&--new::after {
+		&--new {
 			color: $green;
-			left: 1.2em;
 		}
 	}
 }
