@@ -8,13 +8,9 @@ dist/desk.min.css
 dist/app.min.css
 
 # images
-/img/add.png
 /img/alienHead.png
 /img/comment_24.png
 /img/darkdenim3.png
-/img/delete.png
-/img/edit.png
-/img/refresh.png
 /img/bg.png
 
 # javascript

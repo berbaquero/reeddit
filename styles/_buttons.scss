@@ -3,11 +3,11 @@
 }
 
 .refresh-icon {
+	@extend %icon-refresh;
     @include size(100%, $header-height);
-    background-image: url("../img/refresh.png");
     background-position: 50%;
     background-repeat: no-repeat;
-    background-size: 14px;
+    background-size: 16px;
     margin: 0 auto;
 }
 
@@ -220,14 +220,10 @@
 
 	> div {
         @extend %full-width;
-	    background-image: url('../img/add.png');
+		@extend %icon-add;
 	    background-repeat: no-repeat;
 	    background-size: 24px;
         background-position: 50%;
-
-        @include break-point-hdpi {
-            background-image: url('../img/add@2.png');
-        }
 	}
 }
 

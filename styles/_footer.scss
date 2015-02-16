@@ -46,9 +46,9 @@
 }
 
 .footer-refresh {
-    background-image: url('../img/refresh.png');
+	@extend %icon-refresh;
     right: 0;
-    background-size: 12px 15px;
+    background-size: 15px;
 }
 
 #detail-close {

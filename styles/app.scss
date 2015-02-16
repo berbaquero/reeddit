@@ -31,6 +31,7 @@ a {
 	color: #999;
 }
 
+@import 'icons';
 @import 'view';
 @import 'buttons';
 @import 'menu';
@@ -202,16 +203,12 @@ a {
 
     .btn-remove-channel,
     .btn-remove-subreddit {
-        background-image: url('../img/delete.png');
+		@extend %icon-delete;
         background-size: 22px;
-
-		@include break-point-hdpi {
-			background-image: url('../img/delete@2x.png');
-		}
     }
 
     .btn-edit-channel {
-        background-image: url('../img/edit.png');
+		@extend %icon-edit;
         background-size: 16px;
     }
 }
