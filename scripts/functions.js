@@ -1,3 +1,7 @@
+/* global
+	M, V, C, win, doc, body,
+	SortSwitch, isWideScreen */
+
 function triggerClick(url) {
 	var a = doc.createElement('a');
 	a.setAttribute("href", url);
@@ -38,13 +42,19 @@ function goToCommentFromHash() {
 
 function checkImageLink(url) {
     var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|livememe\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
-    if (!matching) return '';
+    if (!matching) {
+		return '';
+	}
     if (matching[1]) { // normal image link
         return url;
     } else if (matching[2]) { // imgur or livememe link
-        if (matching[0].slice(0, 5) === "imgur") return 'http://imgur.com/' + matching[2] + '.jpg';
-        else if (matching[0].indexOf("livememe.") >= 0) return 'http://i.lvme.me/' + matching[2] + '.jpg';
-        else return null;
+		if (matching[0].slice(0, 5) === "imgur") {
+			return 'http://imgur.com/' + matching[2] + '.jpg';
+		} else if (matching[0].indexOf("livememe.") >= 0) {
+			return 'http://i.lvme.me/' + matching[2] + '.jpg';
+		} else {
+			return null;
+		}
     } else {
         return null;
     }
@@ -64,7 +74,10 @@ function getYouTubeVideoIDfromURL(url) {
     }
 }
 
-function setEditingSubs(editing) { // editing: boolean
+function setEditingSubs(/* boolean */ editing) {
+	if (editing === editingSubs) {
+		return;
+	}
     editingSubs = editing;
     if (isWideScreen) {
 		V.Actions.switchDisplay(Footer.getRefreshButton(), editing);
