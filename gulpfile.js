@@ -20,8 +20,8 @@ var paths = {
 		'scripts/functions.js',
 		'scripts/actions.js',
 		'scripts/listeners.js',
-		'scripts/init.js',
-		'scripts/modules.js'
+		'scripts/modules.js',
+		'scripts/init.js'
 	],
 	scriptModules: {
 		root: 'scripts/modules/**/*.js',
