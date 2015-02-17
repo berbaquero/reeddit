@@ -166,7 +166,6 @@ var V = { // View
                 var htmlChannels = '';
                 if (M.Channels.list && M.Channels.list.length > 0) {
                     htmlChannels = Mustache.to_html("<p class='edit-subs-title'>Channels</p><ul class='remove-list channel-edit-list'>{{#.}} " + T.Channels.singleEditItem + "{{/.}}</ul>", M.Channels.list);
-
                 }
                 var html = '<div id="remove-wrap">' + htmlChannels + htmlSubs + "</div>";
                 setTimeout(function() { // Intentional delay / fix for iOS
@@ -250,6 +249,13 @@ var V = { // View
 		},
 		clearSelectedLink: function() {
 			$('.link.link-selected').removeClass('link-selected');
+		},
+		switchDisplay: function(el, visible) {
+			if (visible) {
+				el.classList.add(css.hide);
+			} else {
+				el.classList.remove(css.hide);
+			}
 		}
     },
     Comments: {
