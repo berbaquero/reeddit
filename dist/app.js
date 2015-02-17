@@ -402,7 +402,6 @@ var V = { // View
                 var htmlChannels = '';
                 if (M.Channels.list && M.Channels.list.length > 0) {
                     htmlChannels = Mustache.to_html("<p class='edit-subs-title'>Channels</p><ul class='remove-list channel-edit-list'>{{#.}} " + T.Channels.singleEditItem + "{{/.}}</ul>", M.Channels.list);
-
                 }
                 var html = '<div id="remove-wrap">' + htmlChannels + htmlSubs + "</div>";
                 setTimeout(function() { // Intentional delay / fix for iOS
@@ -486,6 +485,13 @@ var V = { // View
 		},
 		clearSelectedLink: function() {
 			$('.link.link-selected').removeClass('link-selected');
+		},
+		switchDisplay: function(el, visible) {
+			if (visible) {
+				el.classList.add(css.hide);
+			} else {
+				el.classList.remove(css.hide);
+			}
 		}
     },
     Comments: {
@@ -976,6 +982,10 @@ var C = { // "Controller"
     }
 };
 
+/* global
+	M, V, C, win, doc, body,
+	SortSwitch, isWideScreen */
+
 function triggerClick(url) {
 	var a = doc.createElement('a');
 	a.setAttribute("href", url);
@@ -1016,13 +1026,19 @@ function goToCommentFromHash() {
 
 function checkImageLink(url) {
     var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|livememe\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
-    if (!matching) return '';
+    if (!matching) {
+		return '';
+	}
     if (matching[1]) { // normal image link
         return url;
     } else if (matching[2]) { // imgur or livememe link
-        if (matching[0].slice(0, 5) === "imgur") return 'http://imgur.com/' + matching[2] + '.jpg';
-        else if (matching[0].indexOf("livememe.") >= 0) return 'http://i.lvme.me/' + matching[2] + '.jpg';
-        else return null;
+		if (matching[0].slice(0, 5) === "imgur") {
+			return 'http://imgur.com/' + matching[2] + '.jpg';
+		} else if (matching[0].indexOf("livememe.") >= 0) {
+			return 'http://i.lvme.me/' + matching[2] + '.jpg';
+		} else {
+			return null;
+		}
     } else {
         return null;
     }
@@ -1042,12 +1058,14 @@ function getYouTubeVideoIDfromURL(url) {
     }
 }
 
-function setEditingSubs(editing) { // editing: boolean
+function setEditingSubs(/* boolean */ editing) {
+	if (editing === editingSubs) {
+		return;
+	}
     editingSubs = editing;
     if (isWideScreen) {
-        // If it's showing the add or remove subreddits/channels panel, hide the refresh button
-        var refreshBtn = $('#main-footer .footer-refresh');
-        refreshBtn.css('display', editing ? 'none' : '');
+		V.Actions.switchDisplay(Footer.getRefreshButton(), editing);
+		V.Actions.switchDisplay(SortSwitch.getWrap(), editing);
     }
 }
 
@@ -1643,6 +1661,54 @@ win.addEventListener('hashchange', function() {
     }
 }, false);
 
+var Footer = {
+
+	refreshButton: '',
+
+	getRefreshButton: function() {
+		if (!this.refreshButton) {
+			this.refreshButton = document.querySelector('#main-footer .footer-refresh');
+		}
+		return this.refreshButton;
+	}
+};
+
+/* global C, tappable, loadingLinks */
+
+var SortSwitch = {
+
+	// Initial State
+	isHot: true,
+
+	classes: {
+		new: 'sort-switch--new'
+	},
+
+	wrap: '',
+
+	getWrap: function() {
+		if (!this.wrap) {
+			this.wrap = document.getElementsByClassName('sorter-wrap')[0];
+		}
+		return this.wrap;
+	}
+};
+
+tappable('.js-sort-switch-main', {
+	onTap: function(ev, target) {
+		if (loadingLinks) {
+			return;
+		}
+		SortSwitch.isHot = !SortSwitch.isHot;
+		C.Sorting.change(SortSwitch.isHot ? 'hot' : 'new');
+		if (SortSwitch.isHot) {
+			target.classList.remove(SortSwitch.classes.new);
+		} else {
+			target.classList.add(SortSwitch.classes.new);
+		}
+	}
+});
+
 V.title.remove();
 
 if (isWideScreen) V.footerPost.text(T.noLink);
@@ -1714,35 +1780,5 @@ if (!isDesktop) {
         body.classList.add("ios7");
     }
 }
-
-(function() {
-	'use strict';
-
-	// Imports
-	/* global C, tappable, loadingLinks */
-
-	var classes = {
-		new: 'sort-switch--new'
-	};
-
-	// Initial State
-	var isHot = true;
-
-	tappable('.js-sort-switch-main', {
-		onTap: function(ev, target) {
-			if (loadingLinks) {
-				return;
-			}
-			isHot = !isHot;
-			C.Sorting.change(isHot ? 'hot' : 'new');
-			if (isHot) {
-				target.classList.remove(classes.new);
-			} else {
-				target.classList.add(classes.new);
-			}
-		}
-	});
-
-})();
 
 })(window);
