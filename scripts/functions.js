@@ -68,6 +68,7 @@ function setEditingSubs(editing) { // editing: boolean
     editingSubs = editing;
     if (isWideScreen) {
 		V.Actions.switchDisplay(Footer.getRefreshButton(), editing);
+		V.Actions.switchDisplay(SortSwitch.getWrap(), editing);
     }
 }
 
