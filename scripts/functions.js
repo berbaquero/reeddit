@@ -67,9 +67,7 @@ function getYouTubeVideoIDfromURL(url) {
 function setEditingSubs(editing) { // editing: boolean
     editingSubs = editing;
     if (isWideScreen) {
-        // If it's showing the add or remove subreddits/channels panel, hide the refresh button
-        var refreshBtn = $('#main-footer .footer-refresh');
-        refreshBtn.css('display', editing ? 'none' : '');
+		V.Actions.switchDisplay(Footer.getRefreshButton(), editing);
     }
 }
 
