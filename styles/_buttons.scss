@@ -1,3 +1,7 @@
+button {
+	-webkit-tap-highlight-color: transparent;
+}
+
 %btn-active {
     background-color: rgba(0, 0, 0, 0.3) !important;
 }
@@ -247,4 +251,14 @@
     &:active {
         background-color: rgba(0, 0, 0, .3);
     }
+}
+
+.btn-block {
+	margin: 20px auto;
+	width: 80%;
+	display: block;
+	padding: 5px 10px;
+	font-size: 14px;
+	font-weight: 700;
+	border: none;
 }
