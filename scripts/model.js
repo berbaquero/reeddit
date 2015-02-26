@@ -1,34 +1,4 @@
 var M = { // Model
-    Posts: {
-        list: {},
-        setList: function(posts) {
-            for (var i = 0; i < posts.children.length; i++) {
-                var post = posts.children[i];
-                if (M.Posts.list[post.data.id]) { // Si ya se ha cargado este link localmente
-                    // Se actualizan los datos dinamicos
-                    M.Posts.list[post.data.id].num_comments = post.data.num_comments;
-                    M.Posts.list[post.data.id].created_utc = post.data.created_utc;
-                } else { // Si no se han cargado los links localmente
-                    M.Posts.list[post.data.id] = {
-                        title: post.data.title,
-                        encodedTitle: encodeURI(post.data.title),
-                        selftext: post.data.selftext,
-                        created_utc: post.data.created_utc,
-                        domain: post.data.domain,
-                        subreddit: post.data.subreddit,
-                        num_comments: post.data.num_comments,
-                        url: post.data.url,
-                        self: post.data.is_self,
-                        link: post.data.permalink,
-                        author: post.data.author,
-                        over_18: post.data.over_18,
-                        stickied: post.data.stickied
-                    };
-                }
-            }
-        },
-        idLast: ''
-    },
     Subreddits: {
         list: [],
 		add: function(sub) {

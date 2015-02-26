@@ -57,46 +57,6 @@ var V = { // View
             $(".channel.channel-active").removeClass("channel-active");
         }
     },
-    Posts: {
-        show: function(links, paging) { // links: API raw data
-            var linksCount = links.children.length,
-                main = V.mainWrap;
-
-            if (paging) $(".loader").remove();
-            else {
-                if (isDesktop) {
-                    main.empty();
-                } else {
-                    main.empty().removeClass("anim-reveal").addClass("invisible");
-                }
-            }
-
-            if (linksCount === 0) {
-                var message = $('.loader');
-                if (message) {
-                    message.text('No Links available.');
-                    message.addClass('loader-error');
-                    main.append('<div id="#main-overflow"></div>');
-                } else main.prepend('<div class="loader loader-error">No Links available.</div><div id="main-overflow"></div>');
-            } else {
-                // Add new links to the list
-                main.append(Mustache.to_html(T.Posts, links));
-
-                // Remove thumbnail space for those links with invalid backgrounds.
-                var thumbs = $('.link-thumb > div'),
-                    bgImg = 'background-image: ';
-                for (var i = 0; i < thumbs.length; i++) {
-                    var thumb = $(thumbs[i]),
-                        bg = thumb.attr('style');
-                    if (bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') thumb.parent().remove();
-                }
-            }
-            // Remove 'More links' button if there are less than 30 links
-            if (linksCount < 30) $('more-links').parent().remove();
-            if (!isDesktop) V.Misc.scrollFixLinks();
-            if (!paging) V.Anims.reveal(main);
-        }
-    },
     Actions: {
         setSubTitle: function(title) {
             V.subtitleText.text(title);
@@ -260,7 +220,7 @@ var V = { // View
     },
     Comments: {
         setRest: function(id, refresh) {
-            var postTitle = M.Posts.list[id].title;
+            var postTitle = Posts.list[id].title;
 
             if (!refresh) V.Actions.setDetailFooter(postTitle);
 

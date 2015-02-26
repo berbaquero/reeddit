@@ -145,38 +145,6 @@ tappable(".btn-refresh", {
     }
 });
 
-tappable(".js-link", {
-	onTap: function(e, target) {
-		if (!isWideScreen) {
-			return;
-		}
-		var id = target.getAttribute('data-id');
-		goToComments(id);
-	},
-	allowClick: false,
-	activeClassDelay: 100,
-	inactiveClassDelay: 200,
-	activeClass: 'link-active'
-});
-
-tappable('.js-post-title', {
-	onTap: function(e) {
-		var id = e.target.getAttribute('data-id'),
-			url = e.target.href;
-		openPost(url, id);
-	},
-	allowClick: false
-});
-
-tappable(".to-comments", {
-    onTap: function(e, target) {
-        var id = $(target).attr('data-id');
-        goToComments(id);
-    },
-    activeClass: 'button-active',
-    activeClassDelay: 100
-});
-
 tappable("#wide-refresh", {
     onTap: function() {
         if (!currentThread) return;
@@ -202,24 +170,6 @@ tappable("#btn-edit-subs", {
     onTap: function() {
         V.Actions.loadForEditing();
     }
-});
-
-tappable("#more-links", {
-    onTap: function() {
-        doByCurrentSelection(function() {
-            var url;
-            if (M.currentSelection.name.toLowerCase() === 'frontpage') {
-				url = urlInit + "r/" + M.Subreddits.getAllSubsString() + "/";
-			} else {
-				url = urlInit + "r/" + M.currentSelection.name + "/";
-			}
-            C.Posts.load(url, '&after=' + M.Posts.idLast);
-        }, function() {
-            var channel = M.Channels.getByName(M.currentSelection.name);
-            C.Posts.load(urlInit + M.Channels.getURL(channel) + '/', '&after=' + M.Posts.idLast);
-        });
-    },
-    activeClass: 'list-button-active'
 });
 
 tappable("#btn-sub-man", {

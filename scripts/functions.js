@@ -17,7 +17,7 @@ function triggerClick(url) {
 }
 
 function openPost(url, id) {
-	var link = M.Posts.list[id];
+	var link = Posts.list[id];
 	if (link.self || isWideScreen) {
 		goToComments(id);
 	} else {
@@ -109,9 +109,9 @@ function refreshCurrentStream() {
     if (editingSubs) return;
     doByCurrentSelection(function() { // if it's subreddit
         if (M.currentSelection.name.toLowerCase() === 'frontpage') {
-			C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
+			Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
 		} else {
-			C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+			Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
 		}
     }, function() { // if it's channel
         C.Channels.loadPosts(M.Channels.getByName(M.currentSelection.name));

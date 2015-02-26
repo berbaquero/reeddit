@@ -1,53 +1,4 @@
 var C = { // "Controller"
-    Posts: {
-        load: function(baseUrl, paging) {
-            if (loadingLinks) return;
-            loadingLinks = true;
-            loadingComments = false;
-            setEditingSubs(false);
-            var main = V.mainWrap;
-            if (paging) {
-                $("#more-links").parent().remove(); // Se quita el boton de 'More' actual
-                main.append("<div class='loader'></div>");
-            } else {
-                V.mainWrap[0].scrollTop = 0; // Sube al top del contenedor
-                setTimeout(function() {
-                    main.prepend("<div class='loader'></div>");
-                }, showingMenu ? 301 : 1);
-                paging = ''; //// Si no hay paginacion, se pasa una cadena vacia, para no paginar
-            }
-            $.ajax({
-                dataType: 'jsonp',
-                url: baseUrl + C.Sorting.get() + urlLimitEnd + paging,
-                success: function(result) {
-                    C.Posts.show(result, paging);
-                },
-                error: function() {
-                    loadingLinks = false;
-                    $('.loader').addClass("loader-error").text('Error loading links. Refresh to try again.');
-                }
-            });
-        },
-        loadFromManualInput: function(loadedLinks) {
-            C.Posts.show(loadedLinks);
-            V.mainWrap[0].scrollTop = 0;
-            setEditingSubs(false);
-        },
-        show: function(result, paging) {
-            var links = result.data;
-            loadingLinks = false;
-            M.Posts.idLast = links.after;
-
-            V.Posts.show(links, paging);
-            M.Posts.setList(links);
-			if (isWideScreen) {
-				var id = getCommentHash();
-				if (id) {
-					V.Actions.setSelectedLink(id);
-				}
-			}
-        }
-    },
     Comments: {
         load: function(data, baseElement, idParent) {
             var now = new Date().getTime(),
@@ -59,8 +10,8 @@ var C = { // "Controller"
                 if (c.kind !== "t1") continue;
 
                 var html = converter.makeHtml(c.data.body),
-                    isPoster = M.Posts.list[currentThread].author === c.data.author,
-                    permalink = "http://reddit.com" + M.Posts.list[currentThread].link + c.data.id,
+                    isPoster = Posts.list[currentThread].author === c.data.author,
+                    permalink = "http://reddit.com" + Posts.list[currentThread].link + c.data.id,
                     commentLink = {
                         "href": permalink,
                         "target": "_blank",
@@ -86,7 +37,7 @@ var C = { // "Controller"
             if (!isDesktop) V.Misc.scrollFixComments();
         },
         show: function(id, refresh) {
-            if (!M.Posts.list[id]) {
+            if (!Posts.list[id]) {
                 currentThread = id;
 
                 var loader = V.Misc.addLoader(V.detailWrap);
@@ -99,7 +50,7 @@ var C = { // "Controller"
                         loader.remove();
                         loadingComments = false;
 
-                        M.Posts.setList(result[0].data);
+                        Posts.setList(result[0].data);
                         C.Misc.setPostSummary(result[0].data.children[0].data, id);
 
                         V.btnNavBack.removeClass("invisible"); // Show
@@ -134,13 +85,13 @@ var C = { // "Controller"
                     V.detailWrap[0].scrollTop = 0;
 
                     if (loadedLinks[id] && !refresh) {
-                        detail.append(M.Posts.list[id].summary);
+                        detail.append(Posts.list[id].summary);
                         $('#comments-container').append(loadedLinks[id]);
-                        C.Misc.updatePostSummary(M.Posts.list[id], id);
+                        C.Misc.updatePostSummary(Posts.list[id], id);
                         loadingComments = false;
                     } else {
-                        C.Misc.setPostSummary(M.Posts.list[id], id);
-                        var url = "http://www.reddit.com" + M.Posts.list[id].link + urlEnd;
+                        C.Misc.setPostSummary(Posts.list[id], id);
+                        var url = "http://www.reddit.com" + Posts.list[id].link + urlEnd;
 
                         var loader = V.Misc.addLoader(detail);
 
@@ -182,7 +133,7 @@ var C = { // "Controller"
 				} else {
 					url = urlInit + "r/" + sub + "/";
 				}
-                C.Posts.load(url);
+                Posts.load(url);
                 C.currentSelection.setSubreddit(sub);
             }
             V.Actions.setSubTitle(sub);
@@ -225,7 +176,7 @@ var C = { // "Controller"
                 url: urlInit + "r/" + subName + "/" + C.Sorting.get() + urlLimitEnd,
                 dataType: 'jsonp',
                 success: function(data) {
-                    C.Posts.loadFromManualInput(data);
+                    Posts.loadFromManualInput(data);
                     V.Actions.setSubTitle(subName);
                     V.Subreddits.cleanSelected();
                     C.currentSelection.setSubreddit(subName);
@@ -253,7 +204,7 @@ var C = { // "Controller"
             V.Channels.loadList();
         },
         loadPosts: function(channel) {
-            C.Posts.load(urlInit + M.Channels.getURL(channel) + '/');
+            Posts.load(urlInit + M.Channels.getURL(channel) + '/');
             V.Actions.setSubTitle(channel.name);
             C.currentSelection.setChannel(channel);
         },
@@ -314,17 +265,17 @@ var C = { // "Controller"
             // Check for type of post
             if (data.selftext) { // If it's a self-post
                 var selfText;
-                if (M.Posts.list[postID].selftextParsed) {
-                    selfText = M.Posts.list[postID].selftext;
+                if (Posts.list[postID].selftextParsed) {
+                    selfText = Posts.list[postID].selftext;
                 } else {
                     var summaryConverter1 = new Markdown.Converter();
                     selfText = summaryConverter1.makeHtml(data.selftext);
-                    M.Posts.list[postID].selftext = selfText;
-                    M.Posts.list[postID].selftextParsed = true;
+                    Posts.list[postID].selftext = selfText;
+                    Posts.list[postID].selftextParsed = true;
                 }
                 summaryHTML += "<section id='selftext'>" + selfText + "</section>";
             } else { // if it's an image
-                var linkURL = M.Posts.list[postID].url;
+                var linkURL = Posts.list[postID].url;
                 var imageLink = checkImageLink(linkURL);
                 if (imageLink) { // If it's an image link
                     summaryHTML += '<section class="preview-container">' +
@@ -343,15 +294,15 @@ var C = { // "Controller"
             summaryHTML += "<section id='comments-container'></section>";
             V.detailWrap.append(summaryHTML);
             C.Misc.updatePostTime(data.created_utc);
-            M.Posts.list[postID].summary = summaryHTML;
+            Posts.list[postID].summary = summaryHTML;
             V.footerPost.text(data.title);
         },
         updatePostSummary: function(data, postID) {
             $("#summary-comment-num").text(data.num_comments + (data.num_comments === 1 ? ' comment' : ' comments'));
             // Time ago
             C.Misc.updatePostTime(data.created_utc);
-            M.Posts.list[postID].num_comments = data.num_comments;
-            M.Posts.list[postID].created_utc = data.created_utc;
+            Posts.list[postID].num_comments = data.num_comments;
+            Posts.list[postID].created_utc = data.created_utc;
         },
         updatePostTime: function(time) {
             $("#summary-time").text(timeSince(new Date().getTime(), time));

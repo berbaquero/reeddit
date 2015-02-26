@@ -20,9 +20,9 @@ doByCurrentSelection(
         // Load links
         if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
             C.currentSelection.setSubreddit('frontPage');
-            C.Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
+            Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
         } else {
-            C.Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
+            Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
         }
         V.Actions.setSubTitle(M.currentSelection.name);
     }, function() { // If it's a channel
