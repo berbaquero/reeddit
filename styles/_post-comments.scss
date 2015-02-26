@@ -114,7 +114,7 @@
 	}
 
 	@include mnml-theme {
-		background-color: #262b30;
+		background-color: #454d56;
 	}
 
 	p {
@@ -145,6 +145,10 @@
 	font-weight: 700;
 	font-size: 13px;
 	display: inline;
+
+	@include mnml-theme {
+		color: #f85b5d;
+	}
 
 	@include mnml-theme(iOS7) {
 		color: #eb4d5c;
