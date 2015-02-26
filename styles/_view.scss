@@ -20,14 +20,6 @@
 	perspective: 1000;
 	backface-visibility: hidden;
 	background-color: $white;
-
-	@include mnml-theme {
-		background-color: #f5f5f5;
-	}
-
-	@include mnml-theme(iOS7) {
-		background-color: #fff;
-	}
 }
 
 .main-view {
