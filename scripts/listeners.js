@@ -31,7 +31,7 @@ if (isiPhone && isiOS7) {
 		swipeClass = 'from-swipe';
 	document.addEventListener('touchstart', function(ev) {
 		var touchX = ev.targetTouches[0].clientX;
-		hasSwiped = (touchX < 10 || touchX > window.innerWidth - 10);
+		hasSwiped = (touchX < 20 || touchX > window.innerWidth - 20);
 	});
 	document.addEventListener('touchend', function() {
 		hasSwiped = false;
