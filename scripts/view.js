@@ -136,7 +136,7 @@ var V = { // View
                 if (subreddits) {
                     main.empty().append(T.botonAgregarSubManual).append(subreddits).append(T.botonCargarMasSubs);
                 } else {
-                    main.prepend("<div class='loader'></div>").prepend(T.botonAgregarSubManual);
+                    main.prepend(T.loader).prepend(T.botonAgregarSubManual);
                     $.ajax({
                         url: urlInit + "reddits/.json?limit=50&jsonp=?",
                         dataType: 'jsonp',

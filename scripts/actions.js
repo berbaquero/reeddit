@@ -240,7 +240,7 @@ tappable('#more-subs', {
     onTap: function(e, target) {
         $(target).parent().remove();
         var main = V.mainWrap;
-        main.append("<div class='loader'></div>");
+        main.append(T.loader);
         $.ajax({
             url: urlInit + 'reddits/' + urlEnd + '&after=' + M.Subreddits.idLast,
             dataType: 'jsonp',
