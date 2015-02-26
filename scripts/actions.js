@@ -89,15 +89,14 @@ tappable('.channel', {
     activeClass: "link-active"
 });
 
-tappable(".replies-button", {
+tappable(".js-reply-button", {
     onTap: function(e, target) {
         var parent = $(target);
         var commentID = parent.attr('comment-id');
         var comments = replies[commentID];
         C.Comments.load(comments, parent.parent());
         parent.remove();
-    },
-    activeClass: 'replies-button-active'
+    }
 });
 
 tappable(".sub", {
@@ -143,14 +142,6 @@ tappable(".btn-refresh", {
                 }
         }
     }
-});
-
-tappable("#wide-refresh", {
-    onTap: function() {
-        if (!currentThread) return;
-        C.Comments.show(currentThread, true);
-    },
-    activeClass: 'replies-button-active'
 });
 
 tappable("#sub-title", {

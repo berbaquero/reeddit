@@ -21,7 +21,7 @@ var C = { // "Controller"
                 var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
 
                 if (c.data.replies && c.data.replies.data.children[0].kind !== "more") {
-                    comment.append($("<span/>").addClass("comments-button replies-button").attr("comment-id", c.data.id).text("See replies"));
+                    comment.append($("<button/>").addClass("btn-simple btn-block--small comments-button js-reply-button").attr("comment-id", c.data.id).text("See replies"));
                     replies[c.data.id] = c.data.replies.data.children;
                 }
 

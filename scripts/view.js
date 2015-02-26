@@ -233,8 +233,12 @@ var V = { // View
         showLoadError: function(loader) {
             loadingComments = false;
             var error = 'Error loading comments. Refresh to try again.';
-            if (isWideScreen) loader.addClass("loader-error").html(error + '<div class="comments-button" id="wide-refresh">Refresh</div>');
-            else loader.addClass("loader-error").text(error);
+            if (isWideScreen) {
+				loader.addClass("loader-error").html(error + '<div class="btn-simple btn-block btn-refresh">Refresh</div>');
+			}
+            else {
+				loader.addClass("loader-error").text(error);
+			}
             if (!isDesktop) {
                 V.detailWrap.append($("<section/>"));
                 V.Misc.scrollFixComments();

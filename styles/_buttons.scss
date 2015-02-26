@@ -2,6 +2,11 @@ button {
 	-webkit-tap-highlight-color: transparent;
 }
 
+$black:      #444444;
+$gray:       #888888;
+$gray-light: #bbbbbb;
+$whitetish:  #eeeeee;
+
 %btn-active {
     background-color: rgba(0, 0, 0, 0.3) !important;
 }
@@ -73,18 +78,6 @@ button {
 	}
 }
 
-.comments-button {
-    padding: 3px 10px;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: 700;
-    display: block;
-    text-align: center;
-    width: 90px;
-    margin: 0 auto;
-}
-
-.replies-button-active,
 .list-button-active {
     background-image: linear-gradient(#ccc 0%, #777 100%) !important;
     color: white !important;
@@ -150,7 +143,6 @@ button {
     width: 100%;
 }
 
-.comments-button,
 .top-buttons > div,
 .list-button > span,
 .btn-general {
@@ -253,12 +245,65 @@ button {
     }
 }
 
-.btn-block {
+.btn-simple {
+	text-decoration: none;
+	padding: .5em 1em;
+	border: 1px solid $gray-light;
+	color: $black;
+	background-image: linear-gradient(0deg, $gray-light, $whitetish);
+	border-radius: 4px;
+	box-shadow: inset 0px 1px 0px white,
+	inset 0px -1px 0 $gray;
+
+	&:hover,
+	&:focus {
+		background-image: linear-gradient(0deg, lighten($gray-light, 2%), lighten($whitetish, 2%));
+	}
+
+	&:active {
+		background-color: $gray-light;
+		background-image: none;
+		box-shadow: inset 0px 1px 0 $gray;
+	}
+
+	@include mnml-theme {
+		background-image: none;
+		background-color: $whitetish;
+		box-shadow: none;
+
+		&:hover,
+		&:focus {
+			background-color: darken($whitetish, 5%);
+		}
+
+		&:active {
+			background-color: darken($whitetish, 15%);
+		}
+	}
+}
+
+.btn-block,
+%btn-block {
 	margin: 20px auto;
-	width: 80%;
 	display: block;
 	padding: 5px 10px;
-	font-size: 14px;
 	font-weight: 700;
-	border: none;
+	width: 50%; // [1]
+
+	&--small {
+		@extend %btn-block;
+		padding: 3px 10px;
+		margin: 0 auto;
+	}
+	// [1] defaults
+}
+
+.comments-button {
+	font-size: 11px;
+	width: 90px;
+}
+
+#btn-load-more-posts {
+	font-size: 14px;
+	width: 80%;
 }

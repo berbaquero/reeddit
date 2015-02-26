@@ -24,7 +24,7 @@ var Posts = {
 	"</div>" +
 	"</article>" +
 	"{{/children}}" +
-	"<button id='btn-load-more-posts' class='btn-block btn-general'>More</button>" +
+	"<button id='btn-load-more-posts' class='btn-block btn-simple'>More</button>" +
 	"<div id='main-overflow'></div>",
 
 	el: {
