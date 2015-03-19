@@ -1,38 +1,42 @@
 # Reeddit
 
-A minimalist, elastic and read-only [Reddit](http://reddit.com/) web app client, that lets you create "Channels", which groups as many subreddits as you want into one stream.
+A minimal, elastic [Reddit](http://reddit.com/) web app reader client, that lets you create "Channels" to group as many subreddits as you want into one stream.
 
 * #### Minimalist
-While aiming for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No upvotes or points.
+While aiming for simplicity, Reeddit cares to show you only the most important information from the posts and comments. No up-votes or points shown.
 
 * #### Elastic
-Reeddit has 3 different elastic layouts - you can use it on any window size. So it's comfortable to use on a smartphone, tablet or desktop.
+Reeddit has 3 different elastic layouts - you can use it on any window size. So it's comfortable to use on smartphones, tablets and desktops.
 
 * #### Read-only
-Being a personal side-project of mine, Reeddit can be used for browsing subreddits and viewing links/post and its comments, but not for voting or commenting... for now ;) -- However, the subreddits and channels you add are saved locally, so you don't lose any of that data.
+Reeddit can be used for browsing subreddits and viewing links/post and its comments, but not for voting or commenting... for now ;) -- The subreddits and channels you add are saved locally, however, so you don't lose your data.
 
 * #### Channels
-Channels let you group subreddits into one stream, so you can browse their links in a single view, instead of having to browse each one separately. This is specially useful when you add subject-related subreddits.
+Channels let you group subreddits into one stream, so you can browse their links in a single view, instead of having to browse each one separately. This is specially nice when you add subject-related subreddits.
 
-For additional info, visit [Reeddit's Homepage](http://reedditapp.com/about/).
+For more info, and screenshots, visit [Reeddit's homepage](http://reedditapp.com/about/).
 
-Follow the updates and send quick feedback on Twitter: [@ReedditApp](https://twitter.com/reedditapp).
+Follow updates and send feedback on Twitter: [@ReedditApp](https://twitter.com/reedditapp).
 
-## Tools
+### Reeddit is a [Native Web App](https://blog.andyet.com/2015/01/22/native-web-apps).
+
+On Firefox — both Desktop and Mobile — Reeddit can be installed from the [homepage](http://reedditapp.com) as an Open Web-app. Also, install it (and rate it!) on **Firefox OS** from the [Firefox Marketplace](https://marketplace.firefox.com/app/reeddit).
+
+On Chrome for Windows and Linux, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710).
+
+On OSX, Reeddit can be installed as a [Fluid](http://fluidapp.com/) app.
+
+You can also install the especially built [Reeddit for Mac](http://mac.reedditapp.com).
+
+### Tools
 
 To build Reeddit, I used these awesome resources:
 
-*	[Zepto.js](http://zeptojs.com/) -- basically, jQuery for modern browsers. Lighter, and with various useful tools for mobile sites and apps.
 *	[Tappable](https://github.com/cheeaun/tappable) -- Great 'tap' events handler.
-*	[pagedown](http://code.google.com/p/pagedown/) -- Client-side Markdown-to-HTML conversion.
-*	[Mustache.js](https://github.com/janl/mustache.js/) -- Lightweigth client-side templating.
+*	[pagedown](http://code.google.com/p/pagedown/) -- for Markdown parsing.
+*	[Mustache.js](https://github.com/janl/mustache.js/) -- Lightweight client-side templating.
 *	[reziseend.js](https://github.com/porada/resizeend) -- Better 'resize' handler.
-* [Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
-
-### Reeddit is a Web-App.
-On Firefox — both Desktop and Mobile — Reeddit can be installed from the [homepage](http://reedditapp.com) as an Installable Open Web-app. On Chrome for Windows, Reeddit is great as an [Application Shortcut](http://support.google.com/chrome/bin/answer.py?hl=en-GB&answer=95710), or as a [Fluid](http://fluidapp.com/) app on Mac.
-
-You can also install the especially made [Reeddit for Mac](http://mac.reedditapp.com), or install it on Firefox OS from the Marketplace, [here](https://marketplace.firefox.com/app/reeddit).
+*	[Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
 
 ### License
 
