@@ -7,26 +7,15 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat-util'),
 	prefix = require('gulp-autoprefixer'),
 	groupMQ = require('gulp-group-css-media-queries'),
-	jade = require('gulp-jade');
+	jade = require('gulp-jade'),
+	babel = require('gulp-babel');
 
 var paths = {
 	styles: 'styles/**/*.scss',
 	scripts: [
-		'scripts/globals.js',
-		'scripts/templates.js',
-		'scripts/model.js',
-		'scripts/view.js',
-		'scripts/controller.js',
-		'scripts/functions.js',
-		'scripts/actions.js',
-		'scripts/listeners.js',
-		'scripts/modules.js',
+		'scripts/modules/**/*.js',
 		'scripts/init.js'
 	],
-	scriptModules: {
-		root: 'scripts/modules/**/*.js',
-		dest: 'scripts'
-	},
 	templates: {
 		root: 'templates/index.jade'
 	},
@@ -55,21 +44,14 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('scripts-modules', function() {
-	return gulp.src(paths.scriptModules.root)
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'))
-		.pipe(concat('modules.js'))
-		.pipe(gulp.dest(paths.scriptModules.dest));
-});
-
-gulp.task('scripts', ['scripts-modules'], function() {
+gulp.task('scripts', function() {
 	return gulp.src(paths.scripts)
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
-		.pipe(concat('app.js'))
-		.pipe(concat.header('(function(win) {\n\'use strict\';\n\n'))
-		.pipe(concat.footer('\n})(window);'))
+		.pipe(babel())
+		.pipe(concat('app.js', {process: function(src) { return (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1'); }}))
+		.pipe(concat.header('(function() {\n\'use strict\';\n'))
+		.pipe(concat.footer('\n})();'))
 		.pipe(gulp.dest(paths.distribution))
 		.pipe(uglify({
 			mangle: false,
