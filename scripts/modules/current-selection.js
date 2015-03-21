@@ -32,7 +32,7 @@ var CurrentSelection = (function() {
 		}
 
 		name = loadedSelection ? loadedSelection.name : 'frontPage';
-		type = loadedSelection ? loadedSelection.type : type.sub;
+		type = loadedSelection ? loadedSelection.type : Types.SUB;
 	};
 
 	var setSubreddit = function(sub) {
