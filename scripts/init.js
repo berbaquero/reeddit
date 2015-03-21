@@ -1,71 +1,98 @@
-V.title.remove();
+/* global
+ $$,
+ Store,
+ El,
+ is,
+ Comments,
+ Subreddits,
+ Channels,
+ Posts,
+ Footer,
+ Header,
+ Menu,
+ Modal,
+ SortSwitch,
+ CurrentSelection,
+ UI,
+ Backup,
+ URLs
+ */
 
-if (isWideScreen) V.footerPost.text(T.noLink);
+// Init all modules listeners
+UI.initListeners();
+Posts.initListeners();
+Comments.initListeners();
+Subreddits.initListeners();
+Channels.initListeners();
+Menu.initListeners();
+Header.initListeners();
+Modal.initListeners();
+SortSwitch.initListeners();
+Backup.initListeners();
 
-M.currentSelection.loadSaved();
+Header.el.postTitle.remove();
 
-C.Subreddits.loadSaved();
-C.Channels.loadSaved();
+if (is.wideScreen) {
+	Footer.el.postTitle.text('');
+}
 
-if (location.hash) goToCommentFromHash();
+CurrentSelection.loadSaved();
 
-// Cargar links y marcar como activo al subreddit actual - la 1ra vez sera el 'frontPage'
-doByCurrentSelection(
-    function() { // En caso de ser un subreddit
-        var i = M.Subreddits.list.indexOf(M.currentSelection.name);
-        if (i > -1) {
-            var activeSub = doc.getElementsByClassName('sub')[i];
-            $(activeSub).addClass('sub-active');
-        }
-        // Load links
-        if (M.currentSelection.name.toUpperCase() === 'frontPage'.toUpperCase()) {
-            C.currentSelection.setSubreddit('frontPage');
-            Posts.load(urlInit + "r/" + M.Subreddits.getAllSubsString() + "/");
-        } else {
-            Posts.load(urlInit + "r/" + M.currentSelection.name + "/");
-        }
-        V.Actions.setSubTitle(M.currentSelection.name);
-    }, function() { // If it's a channel
-        var channel;
-        for (var i = 0; i < M.Channels.list.length; i++) {
-            channel = M.Channels.list[i];
-            if (channel.name === M.currentSelection.name) {
-                var active = doc.getElementsByClassName('channel')[i];
-                $(active).addClass('channel-active');
-                break;
-            }
-        }
-        C.Channels.loadPosts(channel);
-    });
+Subreddits.loadSaved();
+Channels.loadSaved();
 
-scrollTop();
+if (location.hash) {
+	Comments.navigateFromHash();
+}
 
-var loadMnml = store.getItem("mnml"),
-    isMnml = loadMnml ? JSON.parse(loadMnml) : false;
-V.Actions.switchMnml(false, isMnml);
+CurrentSelection.execute(
+	function() { // If it's a subreddit
+		var currentSubName = CurrentSelection.getName();
+		Menu.markSelected({name: currentSubName});
+		// Load links
+		if (currentSubName.toUpperCase() === 'frontPage'.toUpperCase()) {
+			CurrentSelection.setSubreddit('frontPage');
+			Posts.load(URLs.init + "r/" + Subreddits.getAllSubsString() + "/");
+		} else {
+			Posts.load(URLs.init + "r/" + currentSubName + "/");
+		}
+		UI.setSubTitle(currentSubName);
+	}, function() { // If it's a channel
+		var channel = Channels.getByName(CurrentSelection.getName());
+		Menu.markSelected({type: 'channel', name: channel.name});
+		Channels.loadPosts(channel);
+	});
 
-if (!isDesktop) {
-    var touch = "touchmove",
-        UA = navigator.userAgent;
-    $id("edit-subs").addEventListener(touch, function(e) {
-        e.preventDefault();
-    }, false);
-    doc.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
-        if (showingMenu) e.preventDefault(); // Cheat temporal, para evitar que las vistas hagan overflow
-    }, false);
-    if (isiPad) {
-        iPadScrollFix = function() {
-            // This slight height change makes the menu container 'overflowy', to allow scrolling again on iPad - weird bug
-            var nextHeight = '36px' === $('.menu-desc').css('height') ? '35px' : '36px';
-            setTimeout(function() {
-                $('.menu-desc').css('height', nextHeight);
-            }, 500);
-        };
-		iPadScrollFix();
-    }
-    if (isiOS7) {
+var loadMnml = Store.getItem('mnml'),
+	isMnml = loadMnml ? JSON.parse(loadMnml) : false;
+
+UI.switchMnml(false, isMnml);
+
+if (is.mobile) {
+
+	UI.scrollTop();
+
+	var touch = 'touchmove';
+
+	$$.id("edit-subs").addEventListener(touch, function(e) {
+		e.preventDefault();
+	}, false);
+
+	document.getElementsByTagName('header')[0].addEventListener(touch, function(e) {
+		if (Menu.isShowing()) {
+			e.preventDefault();
+		}
+	}, false);
+
+	if (is.iPad) {
+		UI.iPadScrollFix();
+	}
+
+	if (is.iOS7) {
 		// apply iOS 7+ theme
-        if (!isMnml) V.Actions.switchMnml(true, true);
-        body.classList.add("ios7");
-    }
+		if (!isMnml) {
+			UI.switchMnml(true, true);
+		}
+		document.body.classList.add("ios7");
+	}
 }

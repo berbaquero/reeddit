@@ -1,0 +1,251 @@
+/* global
+ $,
+ El,
+ Posts,
+ Markdown,
+ tappable,
+ UI,
+ LinkSummary,
+ Footer,
+ Header,
+ Anim,
+ Menu,
+ Modal,
+ is,
+ timeSince,
+ URLs
+ */
+
+var Comments = (function() {
+
+	var loading = false,
+		replies = {},
+		currentThread;
+
+	var setLoading = function(areLoading) {
+		loading = areLoading;
+	};
+
+	var getCurrentThread = () => currentThread;
+
+	var updateHash = function(id) {
+		location.hash = '#comments:' + id;
+	};
+
+	var getIdFromHash = function() {
+		var match = location.hash.match(/(#comments:)((?:[a-zA-Z0-9]*))/);
+		if (match && match[2]) {
+			return match[2];
+		}
+	};
+
+	var navigateFromHash = function() {
+		var id = getIdFromHash();
+		show(id);
+		if (is.wideScreen) {
+			Posts.markSelected(id);
+		}
+	};
+
+	var showLoadError = function(loader) {
+		loading = false;
+		var error = 'Error loading comments. Refresh to try again.';
+		if (is.wideScreen) {
+			loader.addClass("loader-error").html(error + '<button class="btn-simple btn-block btn-refresh">Refresh</button>');
+		}
+		else {
+			loader.addClass("loader-error").text(error);
+		}
+		if (!is.desktop) {
+			UI.el.detailWrap.append($("<section/>"));
+			UI.scrollFixComments();
+		}
+	};
+
+	var load = function(data, baseElement, idParent) {
+		var now = new Date().getTime(),
+			converter = new Markdown.Converter(),
+			com = $("<div/>").addClass('comments-level');
+		for(var i = 0; i < data.length; i++) {
+			var c = data[i];
+
+			if (c.kind !== "t1") {
+				continue;
+			}
+
+			var html = converter.makeHtml(c.data.body),
+				isPoster = Posts.getList()[currentThread].author === c.data.author,
+				permalink = "http://reddit.com" + Posts.getList()[currentThread].link + c.data.id,
+				commentLink = {
+					"href": permalink,
+					"target": "_blank",
+					"title": "See this comment on reddit.com"
+				};
+
+			var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
+
+			if (c.data.replies && c.data.replies.data.children[0].kind !== "more") {
+				comment.append($("<button/>").addClass("btn-simple btn-block--small comments-button js-reply-button").attr("data-comment-id", c.data.id).text("See replies"));
+				replies[c.data.id] = c.data.replies.data.children;
+			}
+
+			com.append(comment);
+		}
+
+		baseElement.append(com);
+
+		if (idParent) {
+			Posts.getLoaded()[idParent] = com;
+		}
+
+		UI.el.detailWrap.find('a').attr('target', '_blank');
+		//$("#detail-wrap a").attr("target", "_blank");
+
+		if (!is.desktop) {
+			UI.scrollFixComments();
+		}
+	};
+
+	var show = function(id, refresh) {
+		if (!Posts.getList()[id]) {
+			currentThread = id;
+
+			var loader = UI.addLoader(UI.el.detailWrap);
+			loading = true;
+
+			$.ajax({
+				dataType: 'jsonp',
+				url: URLs.init + "comments/" + id + "/" + URLs.end,
+				success: function(result) {
+					loader.remove();
+					loading = false;
+
+					Posts.setList(result[0].data);
+					LinkSummary.setPostSummary(result[0].data.children[0].data, id);
+
+					Header.el.btnNavBack.removeClass("invisible"); // Show
+
+					setRest(id, refresh);
+
+					load(result[1].data.children, $('#comments-container'), id);
+				},
+				error: function() {
+					showLoadError(loader);
+				}
+			});
+		} else {
+			var delay = 0;
+			if (Menu.isShowing()) {
+				Menu.move(UI.Move.LEFT);
+				delay = 301;
+			}
+			setTimeout(function() {
+
+				if (loading &&
+					currentThread &&
+					currentThread === id) {
+					return;
+				}
+
+				loading = true;
+				currentThread = id;
+
+				Header.el.btnNavBack.removeClass("invisible"); // Show
+
+				var detail = UI.el.detailWrap;
+				detail.empty();
+
+				UI.el.detailWrap[0].scrollTop = 0;
+
+				if (Posts.getLoaded()[id] && !refresh) {
+					detail.append(Posts.getList()[id].summary);
+					$('#comments-container').append(Posts.getLoaded()[id]);
+					LinkSummary.updatePostSummary(Posts.getList()[id], id);
+					loading = false;
+				} else {
+					LinkSummary.setPostSummary(Posts.getList()[id], id);
+					var url = "http://www.reddit.com" + Posts.getList()[id].link + URLs.end;
+
+					var loader = UI.addLoader(detail);
+
+					$.ajax({
+						dataType: 'jsonp',
+						url: url,
+						success: function(result) {
+							if (currentThread !== id) {
+								// In case of trying to load a different thread before this one loaded.
+								// TODO: handle this better
+								return;
+							}
+							LinkSummary.updatePostSummary(result[0].data.children[0].data, id);
+							loader.remove();
+							load(result[1].data.children, $('#comments-container'), id);
+							loading = false;
+						},
+						error: function() {
+							showLoadError(loader);
+						}
+					});
+				}
+
+				setRest(id, refresh);
+
+			}, delay);
+		}
+	};
+
+	var setRest = function(id, refresh) {
+		var postTitle = Posts.getList()[id].title;
+
+		if (!refresh) {
+			Footer.setPostTitle(postTitle);
+		}
+
+		if (!refresh && UI.getCurrentView() !== UI.View.COMMENTS) {
+			Anim.slideFromRight();
+		}
+
+		Header.el.centerSection.empty().append(Header.el.postTitle);
+		Header.el.postTitle.text(postTitle);
+		Header.el.subtitle.addClass('invisible');
+	};
+
+	var initListeners = function() {
+
+		UI.el.detailWrap.on('click', '#comments-container a, #selftext a', function(ev) {
+			var imageURL = LinkSummary.checkImageLink(ev.target.href);
+			if (imageURL) {
+				ev.preventDefault();
+				Modal.showImageViewer(imageURL);
+			}
+		});
+
+		tappable(".js-reply-button", {
+			onTap: function(e, target) {
+				var parent = $(target),
+					commentID = parent.attr('data-comment-id'),
+					comments = replies[commentID];
+				load(comments, parent.parent());
+				parent.remove();
+			}
+		});
+
+		tappable(".image-preview", {
+			onTap: function(e, target) {
+				Modal.showImageViewer(target.src);
+			}
+		});
+	};
+
+	// Exports
+	return {
+		initListeners: initListeners,
+		navigateFromHash: navigateFromHash,
+		getCurrentThread: getCurrentThread,
+		show: show,
+		updateHash: updateHash,
+		setLoading: setLoading,
+		getIdFromHash: getIdFromHash
+	};
+
+})();
