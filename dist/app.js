@@ -2103,11 +2103,11 @@ var Subreddits = (function () {
 		Backup.shouldUpdate();
 	};
 
-	var append = function append(subs, active) {
+	var append = function append(subs) {
 		if (subs instanceof Array) {
 			el.list.append(Mustache.to_html(template.list, subs));
 		} else {
-			el.list.append($("<li/>").attr("data-name", subs).append($("<p/>").addClass("sub").addClass(active ? "sub-active" : "").text(subs)));
+			el.list.append($("<li/>").attr("data-name", subs).addClass("sub").text(subs));
 		}
 	};
 
@@ -2226,11 +2226,11 @@ var Subreddits = (function () {
 				Posts.loadFromManualInput(data);
 				UI.setSubTitle(subName);
 				CurrentSelection.setSubreddit(subName);
-				Menu.markSelectedSub({
+				add(subName);
+				Menu.markSelected({
 					name: subName,
 					update: true
 				});
-				add(subName);
 			},
 			error: function error() {
 				alert("Oh, the subreddit you entered is not valid...");
