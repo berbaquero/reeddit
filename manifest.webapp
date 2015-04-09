@@ -1,6 +1,6 @@
 {
   "name": "Reeddit",
-  "description": "Minimal, elastic and read-only client for Reddit.",
+  "description": "Minimal, elastic and reader client for Reddit.",
   "launch_path": "/reeddit/",
   "icons": {
     "128": "/reeddit/img/icons/icon16.png",
