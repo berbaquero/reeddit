@@ -3,14 +3,15 @@
   "description": "Minimal, elastic and reader client for Reddit.",
   "launch_path": "/reeddit/",
   "icons": {
-    "128": "/reeddit/img/icons/icon16.png",
-    "128": "/reeddit/img/icons/icon30.png",
-    "128": "/reeddit/img/icons/icon32.png",
-    "128": "/reeddit/img/icons/icon48.png",
-    "128": "/reeddit/img/icons/icon60.png",
-    "128": "/reeddit/img/icons/icon64.png",
+    "16": "/reeddit/img/icons/icon16.png",
+    "32": "/reeddit/img/icons/icon32.png",
+    "48": "/reeddit/img/icons/icon48.png",
+    "60": "/reeddit/img/icons/icon60.png",
+    "64": "/reeddit/img/icons/icon64.png",
+    "90": "/reeddit/img/icons/icon90.png",
     "128": "/reeddit/img/icons/icon128.png",
-    "256": "/reeddit/img/icons/icon256.png"
+    "256": "/reeddit/img/icons/icon256.png",
+    "512": "/reeddit/img/icons/icon512.png"
   },
   "version": "0.1.2",
   "developer": {

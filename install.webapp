@@ -3,14 +3,15 @@
   "description": "Minimal, elastic reader client for Reddit",
   "launch_path": "/",
   "icons": {
-    "128": "/img/icons/icon16.png",
-    "128": "/img/icons/icon30.png",
-    "128": "/img/icons/icon32.png",
-    "128": "/img/icons/icon48.png",
-    "128": "/img/icons/icon60.png",
-    "128": "/img/icons/icon64.png",
+    "16": "/img/icons/icon16.png",
+    "32": "/img/icons/icon32.png",
+    "48": "/img/icons/icon48.png",
+    "60": "/img/icons/icon60.png",
+    "64": "/img/icons/icon64.png",
+    "90": "/img/icons/icon90.png",
     "128": "/img/icons/icon128.png",
-    "256": "/img/icons/icon256.png"
+    "256": "/img/icons/icon256.png",
+    "512": "/img/icons/icon512.png"
   },
   "version": "0.1.2",
   "developer": {
