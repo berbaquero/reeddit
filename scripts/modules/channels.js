@@ -17,7 +17,7 @@ var Channels = (function() {
 
 	const defaults = {
 		name: "Media",
-		subs: ["movies", "television", "music", "games"]
+		subs: ["movies", "television", "music", "games", "books"]
 	};
 
 	const template = {
