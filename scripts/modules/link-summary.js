@@ -88,11 +88,14 @@ var LinkSummary = (function() {
 	};
 
 	var checkImageLink = function(url) {
-		var matching = url.match(/\.(svg|jpe?g|png|gif)(?:[?#].*)?$|(?:imgur\.com|livememe\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
+		var matching = url.match(/\.(svg|jpe?g|png|gifv?)(?:[?#].*)?$|(?:imgur\.com|livememe\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
 		if (!matching) {
 			return '';
 		}
 		if (matching[1]) { // normal image link
+			if (url.indexOf('.gifv') > 0) {
+				url = url.replace('.gifv', '.gif');
+			}
 			return url;
 		} else if (matching[2]) { // imgur or livememe link
 			if (matching[0].slice(0, 5) === "imgur") {
