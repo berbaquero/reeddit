@@ -441,12 +441,6 @@ button {
 
 /* line 209, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
-#btn-save-dbx {
-  display: none;
-}
-
-/* line 213, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
-
 .btn-add-sub {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -454,7 +448,7 @@ button {
   width: 15%;
 }
 
-/* line 217, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 213, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-add-sub > div {
   background-repeat: no-repeat;
@@ -462,7 +456,7 @@ button {
   background-position: 50%;
 }
 
-/* line 226, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 222, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-side-menu-add {
   position: absolute;
@@ -473,7 +467,7 @@ button {
   line-height: 30px;
 }
 
-/* line 235, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 231, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-edit-subs {
   right: 0;
@@ -481,32 +475,33 @@ button {
   line-height: 34px;
 }
 
-/* line 243, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 239, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-corner:active {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* line 248, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 244, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-simple {
   text-decoration: none;
+  text-align: center;
   padding: .5em 1em;
   border: 1px solid #bbbbbb;
   color: #444444;
   background-image: linear-gradient(0deg, #bbbbbb, #eeeeee);
   border-radius: 4px;
-  box-shadow: inset 0px 1px 0px white, inset 0px -1px 0 #aaa;
+  box-shadow: inset 0 1px 0 white, inset 0px -1px 0 #aaa;
 }
 
-/* line 258, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 255, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-simple:hover,
 .btn-simple:focus {
   background-image: linear-gradient(0deg, silver, #f3f3f3);
 }
 
-/* line 263, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 260, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-simple:active {
   background-color: #bbbbbb;
@@ -522,23 +517,24 @@ button {
   box-shadow: none;
 }
 
-/* line 274, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 271, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .mnml .btn-simple:hover,
 .mnml .btn-simple:focus {
   background-color: #e1e1e1;
 }
 
-/* line 279, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 276, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .mnml .btn-simple:active {
   background-color: #c8c8c8;
 }
 
-/* line 285, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 282, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-block,
-.btn-block--small {
+.btn-block--small,
+.btn-block--full {
   margin: 20px auto;
   display: block;
   padding: 5px 10px;
@@ -546,21 +542,27 @@ button {
   width: 50%;
 }
 
-/* line 293, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 290, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .btn-block--small {
   padding: 3px 10px;
   margin: 0 auto;
 }
 
-/* line 301, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 296, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+
+.btn-block--full {
+  width: 100%;
+}
+
+/* line 303, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 .comments-button {
   font-size: 11px;
   width: 90px;
 }
 
-/* line 306, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
+/* line 308, ../../../../../../Users/bernardo/Projects/reeddit/styles/_buttons.scss */
 
 #btn-load-more-posts {
   font-size: 14px;
