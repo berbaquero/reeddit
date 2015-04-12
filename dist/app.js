@@ -127,58 +127,68 @@ var Backup = (function () {
 
 	var template = {
 		exportData: "\n\t\t<div class='new-form move-data'>\n\t\t\t<div class='close-form'>&times;</div>\n\t\t\t<div class='move-data-exp'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<button class='btn-simple btn-block--full hide' id='btn-save-dbx'>Save to Dropbox</button>\n\t\t\t\t<a class=\"btn-simple btn-block--full hide\" id=\"btn-download-data\" download=\"reedditdata.json\">Download Data</a>\n\t\t\t</div>\n\t\t</div>",
-		importData: "\n\t\t<div class='new-form move-data'>\n\t\t\t<div class='close-form'>&times;</div>\n\t\t\t<div class='move-data-imp'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class='btn-simple btn-block--full hide' id='btn-dbx-imp'>Import from Dropbox</button>\n\t\t\t\t<button class='btn-simple btn-block--full hide' id='btn-trigger-file'>Choose Backup file</button>\n\t\t\t\t<input id='file-chooser' type=\"file\" accept=\"application/json\" style=\"display: none\"/>\n\t\t\t</div>\n\t\t</div>"
+		importData: "\n\t\t<div class='new-form move-data'>\n\t\t\t<div class='close-form'>&times;</div>\n\t\t\t<div class='move-data-imp'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class='btn-simple btn-block--full' id='btn-dbx-imp'>Import from Dropbox</button>\n\t\t\t\t<button class='btn-simple btn-block--full hide' id='btn-trigger-file'>Choose Backup file</button>\n\t\t\t\t<input id='file-chooser' type=\"file\" accept=\"application/json\" style=\"display: none\"/>\n\t\t\t</div>\n\t\t</div>"
 	};
 
 	var shouldUpdate = function shouldUpdate() {
 		update = 1;
 	};
 
+	var getBackupData = function () {
+		return "{\"channels\": " + Store.getItem("channels") + ", \"subreddits\": " + Store.getItem("subreeddits") + "}";
+	};
+
+	var prepareDownloadButton = function (data) {
+		var buttonDownload = $$.id("btn-download-data");
+		buttonDownload.href = "data:text/json;charset=utf-8," + encodeURIComponent(data);
+		UI.switchDisplay(buttonDownload, false);
+	};
+
 	var createBackup = function createBackup() {
 		if (update) {
 			Modal.show(template.exportData, function () {
 				var files = {},
-				    content = "{\"channels\": " + Store.getItem("channels") + ", \"subreddits\": " + Store.getItem("subreeddits") + "}";
+				    content = getBackupData();
 
 				files["reedditdata.json"] = {
 					content: content
 				};
 
 				if (is.linkDownloadable) {
-					var buttonDownload = $$.id("btn-download-data");
-					buttonDownload.href = "data:text/json;charset=utf-8," + encodeURIComponent(content);
-					UI.switchDisplay(buttonDownload, false);
+					prepareDownloadButton(content);
 				}
 
-				if (is.mobile || !is.mozStandalone) {
-					$.ajax({
-						url: gists.url,
-						type: "POST",
-						data: JSON.stringify({
-							description: "Reeddit User Data",
-							"public": true,
-							files: files
-						}),
-						headers: {
-							"Content-Type": "application/json; charset=UTF-8"
-						},
-						success: function success(response) {
-							var resp = JSON.parse(response);
-							UI.switchDisplay($$.id("btn-save-dbx"), false);
-							gists.fileURL = resp.files["reedditdata.json"].raw_url;
-							update = 0;
-						},
-						error: function error() {
-							$("#btn-save-dbx").remove();
-							$(".move-data-exp").append("<p class='msg-error'>Oh oh. Error creating your backup file. Retry later.</p>");
-							Modal.remove();
-						}
-					});
-				}
+				$.ajax({
+					url: gists.url,
+					type: "POST",
+					data: JSON.stringify({
+						description: "Reeddit User Data",
+						"public": true,
+						files: files
+					}),
+					headers: {
+						"Content-Type": "application/json; charset=UTF-8"
+					},
+					success: function success(response) {
+						var resp = JSON.parse(response);
+						UI.switchDisplay($$.id("btn-save-dbx"), false);
+						gists.fileURL = resp.files["reedditdata.json"].raw_url;
+						update = 0;
+					},
+					error: function error() {
+						$("#btn-save-dbx").remove();
+						$(".move-data-exp").append("<p class='msg-error'>Oh oh. Error creating your backup file. Retry later.</p>");
+						Modal.remove();
+					}
+				});
 			});
 		} else if (gists.fileURL) {
 			Modal.show(template.exportData, function () {
 				UI.switchDisplay($$.id("btn-save-dbx"), false);
+
+				if (is.linkDownloadable) {
+					prepareDownloadButton(getBackupData());
+				}
 			});
 		}
 	};
@@ -243,39 +253,33 @@ var Backup = (function () {
 					if (!is.iOS) {
 						UI.switchDisplay($$.id("btn-trigger-file"), false);
 					}
-
-					if (is.mobile || !is.mozStandalone) {
-						UI.switchDisplay($$.id("btn-dbx-imp"), false);
-					}
 				});
 			}
 		});
 
 		// Forms
-		if (is.mobile || !is.mozStandalone) {
-			tappable("#btn-save-dbx", {
-				onTap: function onTap() {
-					if (!gists.fileURL) {
-						alert("Err. There's no backup file created...");
-						return;
-					}
-					var options = {
-						files: [{
-							url: gists.fileURL,
-							filename: "reedditdata.json"
-						}],
-						success: Modal.remove
-					};
-					Dropbox.save(options);
-				},
-				activeClass: "btn-general-active"
-			});
+		tappable("#btn-save-dbx", {
+			onTap: function onTap() {
+				if (!gists.fileURL) {
+					alert("Err. There's no backup file created...");
+					return;
+				}
+				var options = {
+					files: [{
+						url: gists.fileURL,
+						filename: "reedditdata.json"
+					}],
+					success: Modal.remove
+				};
+				Dropbox.save(options);
+			},
+			activeClass: "btn-general-active"
+		});
 
-			tappable("#btn-dbx-imp", {
-				onTap: chooseFromDropbox,
-				activeClass: "btn-general-active"
-			});
-		}
+		tappable("#btn-dbx-imp", {
+			onTap: chooseFromDropbox,
+			activeClass: "btn-general-active"
+		});
 
 		if (!is.iOS) {
 			UI.el.body.on("change", "#file-chooser", function () {
@@ -324,22 +328,6 @@ var is = (function () {
 		return link.download !== undefined;
 	})();
 
-	var isMozStandalone = false;
-
-	var testMozStandalone = function () {
-		if (!window.navigator.mozApps) {
-			isMozStandalone = false;
-			return;
-		}
-
-		var request = window.navigator.mozApps.getSelf();
-		request.onsuccess = function () {
-			isMozStandalone = !!request.result;
-		};
-	};
-
-	testMozStandalone();
-
 	return {
 
 		wideScreen: wideScreenBP.matches,
@@ -358,9 +346,7 @@ var is = (function () {
 
 		iOS7: isiOS && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7,
 
-		linkDownloadable: isLinkDownloadable,
-
-		mozStandalone: isMozStandalone
+		linkDownloadable: isLinkDownloadable
 	};
 })();
 
@@ -2574,15 +2560,6 @@ if (is.mobile) {
 		}
 		document.body.classList.add("ios7");
 	}
-}
-
-if (is.mobile || !is.mozStandalone) {
-	// Insert Dropbox Drop-ins
-	var dropboxScript = document.createElement("script");
-	dropboxScript.src = "https://www.dropbox.com/static/api/1/dropins.js";
-	dropboxScript.id = "dropboxjs";
-	dropboxScript.setAttribute("data-app-key", "yiu8cok9mknii0n");
-	document.body.appendChild(dropboxScript);
 }
 
 })();
