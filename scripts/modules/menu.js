@@ -6,8 +6,7 @@
  Modal,
  UI,
  is,
- CurrentSelection,
- Backup
+ CurrentSelection
  */
 
 var Menu = (function() {
@@ -120,16 +119,6 @@ var Menu = (function() {
 
 		tappable("#btn-edit-subs", {
 			onTap: Subreddits.loadForEditing
-		});
-
-		tappable("#exp-data", {
-			onTap: Backup.createBackup
-		});
-
-		tappable("#imp-data", {
-			onTap: function() {
-				Modal.show(Backup.templateImportData);
-			}
 		});
 
 		tappable("#about", {
