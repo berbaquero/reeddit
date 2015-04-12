@@ -96,12 +96,3 @@ if (is.mobile) {
 		document.body.classList.add("ios7");
 	}
 }
-
-if (is.mobile || !is.mozStandalone) {
-	// Insert Dropbox Drop-ins
-	let dropboxScript = document.createElement('script');
-	dropboxScript.src = 'https://www.dropbox.com/static/api/1/dropins.js';
-	dropboxScript.id = 'dropboxjs';
-	dropboxScript.setAttribute('data-app-key', 'yiu8cok9mknii0n');
-	document.body.appendChild(dropboxScript);
-}
