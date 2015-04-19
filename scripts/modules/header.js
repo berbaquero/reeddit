@@ -10,17 +10,11 @@
 var Header = (function() {
 
 	let el = {
-
 		subtitle: $('#main-title'),
-
 		subtitleText: $('#sub-title'),
-
 		centerSection: $('#title-head'),
-
 		postTitle: $('#title'),
-
 		icon: $('#header-icon'),
-
 		btnNavBack: $('#nav-back')
 	};
 
