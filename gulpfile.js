@@ -29,11 +29,10 @@ var paths = {
 };
 
 gulp.task('styles', function() {
-	return gulp.src(paths.styles)
-		.pipe(sass({
-			style: 'expanded',
-			lineNumbers: true
-		}))
+	return sass('styles/', { lineNumbers: true, style: 'expanded' })
+		.on('error', function (err) {
+			console.error('Error', err.message);
+		})
 		.pipe(prefix('> 2%'))
 		.pipe(groupMQ())
 		.pipe(gulp.dest(paths.distribution))
