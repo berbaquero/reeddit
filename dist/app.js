@@ -22,17 +22,7 @@ var Anim = (function () {
 		UI.setCurrentView(UI.View.COMMENTS);
 	};
 
-	var reveal = (function (_reveal) {
-		var _revealWrapper = function reveal(_x) {
-			return _reveal.apply(this, arguments);
-		};
-
-		_revealWrapper.toString = function () {
-			return _reveal.toString();
-		};
-
-		return _revealWrapper;
-	})(function (el) {
+	var reveal = function reveal(el) {
 		var reveal = "anim-reveal";
 		if (is.desktop) {
 			el.addClass(reveal);
@@ -44,47 +34,27 @@ var Anim = (function () {
 				el.removeClass("invisible").addClass(reveal);
 			}, 0);
 		}
-	});
+	};
 
-	var shake = (function (_shake) {
-		var _shakeWrapper = function shake(_x) {
-			return _shake.apply(this, arguments);
-		};
-
-		_shakeWrapper.toString = function () {
-			return _shake.toString();
-		};
-
-		return _shakeWrapper;
-	})(function (el) {
+	var shake = function shake(el) {
 		var shake = "anim-shake";
 		el.addClass(shake);
 		setTimeout(function () {
 			el.removeClass(shake);
 		}, 350);
-	});
+	};
 
 	var shakeForm = function shakeForm() {
 		shake($(".new-form"));
 	};
 
-	var bounceOut = (function (_bounceOut) {
-		var _bounceOutWrapper = function bounceOut(_x, _x2) {
-			return _bounceOut.apply(this, arguments);
-		};
-
-		_bounceOutWrapper.toString = function () {
-			return _bounceOut.toString();
-		};
-
-		return _bounceOutWrapper;
-	})(function (el, callback) {
+	var bounceOut = function bounceOut(el, callback) {
 		var bounceOut = "anim-bounce-out";
 		el.addClass(bounceOut);
 		if (callback) {
 			setTimeout(callback, 1000);
 		}
-	});
+	};
 
 	var bounceInDown = function bounceInDown(el) {
 		el.addClass("anim-bounceInDown");
@@ -134,11 +104,11 @@ var Backup = (function () {
 		update = 1;
 	};
 
-	var getBackupData = function () {
+	var getBackupData = function getBackupData() {
 		return "{\"channels\": " + Store.getItem("channels") + ", \"subreddits\": " + Store.getItem("subreeddits") + "}";
 	};
 
-	var prepareDownloadButton = function (data) {
+	var prepareDownloadButton = function prepareDownloadButton(data) {
 		var buttonDownload = $$.id("btn-download-data");
 		buttonDownload.href = "data:text/json;charset=utf-8," + encodeURIComponent(data);
 		UI.switchDisplay(buttonDownload, false);
@@ -212,7 +182,7 @@ var Backup = (function () {
 		});
 	};
 
-	var loadData = function (data) {
+	var loadData = function loadData(data) {
 		var refresh = false;
 
 		if (typeof data === "string") {
@@ -232,7 +202,7 @@ var Backup = (function () {
 		}
 	};
 
-	var readFile = function (file) {
+	var readFile = function readFile(file) {
 		var reader = new FileReader();
 		reader.onload = function () {
 			loadData(reader.result);
@@ -406,7 +376,7 @@ var UI = (function () {
 	var mnmlTheme = false,
 	    currentView = View.MAIN;
 
-	var getCurrentView = function () {
+	var getCurrentView = function getCurrentView() {
 		return currentView;
 	};
 
@@ -709,9 +679,9 @@ var UI = (function () {
 })();
 
 var URLs = {
-	init: "http://www.reddit.com/",
-	end: ".json?jsonp=?",
-	limitEnd: ".json?limit=30&jsonp=?"
+	init: 'http://www.reddit.com/',
+	end: '.json?jsonp=?',
+	limitEnd: '.json?limit=30&jsonp=?'
 };
 
 /* global
@@ -751,7 +721,7 @@ var Channels = (function () {
 		menu: $("#channels")
 	};
 
-	var getList = function () {
+	var getList = function getList() {
 		return list;
 	};
 
@@ -998,12 +968,12 @@ var Comments = (function () {
 		loading = areLoading;
 	};
 
-	var getCurrentThread = function () {
+	var getCurrentThread = function getCurrentThread() {
 		return currentThread;
 	};
 
 	var updateHash = function updateHash(id) {
-		location.hash = "#comments:" + id;
+		location.hash = '#comments:' + id;
 	};
 
 	var getIdFromHash = function getIdFromHash() {
@@ -1023,14 +993,14 @@ var Comments = (function () {
 
 	var showLoadError = function showLoadError(loader) {
 		loading = false;
-		var error = "Error loading comments. Refresh to try again.";
+		var error = 'Error loading comments. Refresh to try again.';
 		if (is.wideScreen) {
-			loader.addClass("loader-error").html(error + "<button class=\"btn-simple btn-block btn-refresh\">Refresh</button>");
+			loader.addClass('loader-error').html(error + '<button class="btn-simple btn-block btn-refresh">Refresh</button>');
 		} else {
-			loader.addClass("loader-error").text(error);
+			loader.addClass('loader-error').text(error);
 		}
 		if (!is.desktop) {
-			UI.el.detailWrap.append($("<section/>"));
+			UI.el.detailWrap.append($('<section/>'));
 			UI.scrollFixComments();
 		}
 	};
@@ -1038,27 +1008,27 @@ var Comments = (function () {
 	var load = function load(data, baseElement, idParent) {
 		var now = new Date().getTime(),
 		    converter = new Markdown.Converter(),
-		    com = $("<div/>").addClass("comments-level");
+		    com = $('<div/>').addClass('comments-level');
 		for (var i = 0; i < data.length; i++) {
 			var c = data[i];
 
-			if (c.kind !== "t1") {
+			if (c.kind !== 't1') {
 				continue;
 			}
 
 			var html = converter.makeHtml(c.data.body),
 			    isPoster = Posts.getList()[currentThread].author === c.data.author,
-			    permalink = "http://reddit.com" + Posts.getList()[currentThread].link + c.data.id,
+			    permalink = 'http://reddit.com' + Posts.getList()[currentThread].link + c.data.id,
 			    commentLink = {
 				href: permalink,
-				target: "_blank",
-				title: "See this comment on reddit.com"
+				target: '_blank',
+				title: 'See this comment on reddit.com'
 			};
 
-			var comment = $("<div/>").addClass("comment-wrap").append($("<div/>").append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
+			var comment = $('<div/>').addClass('comment-wrap').append($('<div/>').append($('<div/>').addClass('comment-data').append($('<div/>').addClass(isPoster ? 'comment-poster' : 'comment-author').append($('<p/>').text(c.data.author))).append($('<div/>').addClass('comment-info').append($('<a/>').attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($('<div/>').addClass('comment-body').html(html)));
 
-			if (c.data.replies && c.data.replies.data.children[0].kind !== "more") {
-				comment.append($("<button/>").addClass("btn-simple btn-block--small comments-button js-reply-button").attr("data-comment-id", c.data.id).text("See replies"));
+			if (c.data.replies && c.data.replies.data.children[0].kind !== 'more') {
+				comment.append($('<button/>').addClass('btn-simple btn-block--small comments-button js-reply-button').attr('data-comment-id', c.data.id).text('See replies'));
 				replies[c.data.id] = c.data.replies.data.children;
 			}
 
@@ -1071,7 +1041,7 @@ var Comments = (function () {
 			Posts.getLoaded()[idParent] = com;
 		}
 
-		UI.el.detailWrap.find("a").attr("target", "_blank");
+		UI.el.detailWrap.find('a').attr('target', '_blank');
 		//$("#detail-wrap a").attr("target", "_blank");
 
 		if (!is.desktop) {
@@ -1087,8 +1057,8 @@ var Comments = (function () {
 			loading = true;
 
 			$.ajax({
-				dataType: "jsonp",
-				url: URLs.init + "comments/" + id + "/" + URLs.end,
+				dataType: 'jsonp',
+				url: URLs.init + 'comments/' + id + '/' + URLs.end,
 				success: function success(result) {
 					loader.remove();
 					loading = false;
@@ -1096,11 +1066,11 @@ var Comments = (function () {
 					Posts.setList(result[0].data);
 					LinkSummary.setPostSummary(result[0].data.children[0].data, id);
 
-					Header.el.btnNavBack.removeClass("invisible"); // Show
+					Header.el.btnNavBack.removeClass('invisible'); // Show
 
 					setRest(id, refresh);
 
-					load(result[1].data.children, $("#comments-container"), id);
+					load(result[1].data.children, $('#comments-container'), id);
 				},
 				error: function error() {
 					showLoadError(loader);
@@ -1121,7 +1091,7 @@ var Comments = (function () {
 				loading = true;
 				currentThread = id;
 
-				Header.el.btnNavBack.removeClass("invisible"); // Show
+				Header.el.btnNavBack.removeClass('invisible'); // Show
 
 				var detail = UI.el.detailWrap;
 				detail.empty();
@@ -1130,17 +1100,17 @@ var Comments = (function () {
 
 				if (Posts.getLoaded()[id] && !refresh) {
 					detail.append(Posts.getList()[id].summary);
-					$("#comments-container").append(Posts.getLoaded()[id]);
+					$('#comments-container').append(Posts.getLoaded()[id]);
 					LinkSummary.updatePostSummary(Posts.getList()[id], id);
 					loading = false;
 				} else {
 					LinkSummary.setPostSummary(Posts.getList()[id], id);
-					var url = "http://www.reddit.com" + Posts.getList()[id].link + URLs.end;
+					var url = 'http://www.reddit.com' + Posts.getList()[id].link + URLs.end;
 
 					var loader = UI.addLoader(detail);
 
 					$.ajax({
-						dataType: "jsonp",
+						dataType: 'jsonp',
 						url: url,
 						success: function success(result) {
 							if (currentThread !== id) {
@@ -1150,7 +1120,7 @@ var Comments = (function () {
 							}
 							LinkSummary.updatePostSummary(result[0].data.children[0].data, id);
 							loader.remove();
-							load(result[1].data.children, $("#comments-container"), id);
+							load(result[1].data.children, $('#comments-container'), id);
 							loading = false;
 						},
 						error: function error() {
@@ -1177,12 +1147,12 @@ var Comments = (function () {
 
 		Header.el.centerSection.empty().append(Header.el.postTitle);
 		Header.el.postTitle.text(postTitle);
-		Header.el.subtitle.addClass("invisible");
+		Header.el.subtitle.addClass('invisible');
 	};
 
 	var initListeners = function initListeners() {
 
-		UI.el.detailWrap.on("click", "#comments-container a, #selftext a", function (ev) {
+		UI.el.detailWrap.on('click', '#comments-container a, #selftext a', function (ev) {
 			var imageURL = LinkSummary.checkImageLink(ev.target.href);
 			if (imageURL) {
 				ev.preventDefault();
@@ -1190,17 +1160,17 @@ var Comments = (function () {
 			}
 		});
 
-		tappable(".js-reply-button", {
+		tappable('.js-reply-button', {
 			onTap: function onTap(e, target) {
 				var parent = $(target),
-				    commentID = parent.attr("data-comment-id"),
+				    commentID = parent.attr('data-comment-id'),
 				    comments = replies[commentID];
 				load(comments, parent.parent());
 				parent.remove();
 			}
 		});
 
-		tappable(".image-preview", {
+		tappable('.image-preview', {
 			onTap: function onTap(e, target) {
 				Modal.showImageViewer(target.src);
 			}
@@ -1225,21 +1195,21 @@ var Comments = (function () {
 
 var CurrentSelection = (function () {
 
-	var name = "",
-	    type = "";
+	var name = '',
+	    type = '';
 
 	var Types = {
 		SUB: 1,
 		CHANNEL: 2
 	};
 
-	var storeKey = "currentSelection";
+	var storeKey = 'currentSelection';
 
-	var getName = function () {
+	var getName = function getName() {
 		return name;
 	};
 
-	var getType = function () {
+	var getType = function getType() {
 		return type;
 	};
 
@@ -1256,7 +1226,7 @@ var CurrentSelection = (function () {
 			loadedSelection = JSON.parse(loadedSelection);
 		}
 
-		name = loadedSelection ? loadedSelection.name : "frontPage";
+		name = loadedSelection ? loadedSelection.name : 'frontPage';
 		type = loadedSelection ? loadedSelection.type : Types.SUB;
 	};
 
@@ -1298,18 +1268,18 @@ var CurrentSelection = (function () {
 
 var Footer = (function () {
 
-	var refreshButton = "";
+	var refreshButton = '';
 
-	var noLink = "No Post Selected";
+	var noLink = 'No Post Selected';
 
 	var el = {
-		detail: $("#detail-footer"),
-		postTitle: $("#footer-post"),
-		subTitle: $("#footer-sub"),
+		detail: $('#detail-footer'),
+		postTitle: $('#footer-post'),
+		subTitle: $('#footer-sub'),
 
 		getRefreshButton: function getRefreshButton() {
 			if (!refreshButton) {
-				refreshButton = document.querySelector("#main-footer .footer-refresh");
+				refreshButton = document.querySelector('#main-footer .footer-refresh');
 			}
 			return refreshButton;
 		}
@@ -1317,7 +1287,7 @@ var Footer = (function () {
 
 	var setPostTitle = function setPostTitle(title) {
 		el.postTitle.text(title ? title : noLink);
-		var buttons = el.detail.find(".btn-footer");
+		var buttons = el.detail.find('.btn-footer');
 		if (title) {
 			buttons.removeClass(UI.classes.hide);
 		} else {
@@ -1344,29 +1314,23 @@ var Footer = (function () {
 var Header = (function () {
 
 	var el = {
-
-		subtitle: $("#main-title"),
-
-		subtitleText: $("#sub-title"),
-
-		centerSection: $("#title-head"),
-
-		postTitle: $("#title"),
-
-		icon: $("#header-icon"),
-
-		btnNavBack: $("#nav-back")
+		subtitle: $('#main-title'),
+		subtitleText: $('#sub-title'),
+		centerSection: $('#title-head'),
+		postTitle: $('#title'),
+		icon: $('#header-icon'),
+		btnNavBack: $('#nav-back')
 	};
 
 	var initListeners = function initListeners() {
 
-		tappable(".btn-to-main", {
+		tappable('.btn-to-main', {
 			onTap: function onTap() {
-				location.hash = "#";
+				location.hash = '#';
 			}
 		});
 
-		tappable("#sub-title", {
+		tappable('#sub-title', {
 			onTap: function onTap() {
 				if (is.mobile && Posts.areLoading()) {
 					return;
@@ -1511,12 +1475,12 @@ var Menu = (function () {
 
 	var showing = false;
 
-	var isShowing = function () {
+	var isShowing = function isShowing() {
 		return showing;
 	};
 
 	var template = {
-		about: "<div class='new-form about-reeddit'><div class='close-form'>&times;</div><ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>"
+		about: '<div class=\'new-form about-reeddit\'><div class=\'close-form\'>&times;</div><ul><li><a href=\'/about/\' target=\'_blank\'>Reeddit Homepage</a></li><li><a href=\'https://github.com/berbaquero/reeddit\' target=\'_blank\'>GitHub Project</a></li></ul><p><a href=\'https://twitter.com/reedditapp\'>@ReedditApp</a></p><p>Built by <a href=\'http://berbaquero.com\' target=\'_blank\'>Bernardo Baquero Stand</a></p></div>'
 	};
 
 	var move = function move(direction) {
@@ -1548,46 +1512,46 @@ var Menu = (function () {
 			cleanSelected();
 		}
 
-		var isChannel = type && type === "channel";
+		var isChannel = type && type === 'channel';
 
 		if (el) {
-			el.classList.add(isChannel ? "channel-active" : "sub-active");
+			el.classList.add(isChannel ? 'channel-active' : 'sub-active');
 			return;
 		}
 
 		if (name) {
-			var selector = isChannel ? ".channel[data-title=\"" + name + "\"]" : ".sub[data-name=\"" + name + "\"]";
+			var selector = isChannel ? '.channel[data-title="' + name + '"]' : '.sub[data-name="' + name + '"]';
 
 			var activeSub = document.querySelector(selector);
-			activeSub.classList.add(isChannel ? "channel-active" : "sub-active");
+			activeSub.classList.add(isChannel ? 'channel-active' : 'sub-active');
 		}
 	};
 
 	var cleanSelected = function cleanSelected() {
-		$(".sub.sub-active").removeClass("sub-active");
-		$(".channel.channel-active").removeClass("channel-active");
+		$('.sub.sub-active').removeClass('sub-active');
+		$('.channel.channel-active').removeClass('channel-active');
 	};
 
 	var initListeners = function initListeners() {
 
-		tappable(".channel", {
+		tappable('.channel', {
 			onTap: function onTap(e, target) {
-				var channelName = target.getAttribute("data-title");
+				var channelName = target.getAttribute('data-title');
 				Menu.move(UI.Move.LEFT);
 				if (channelName === CurrentSelection.getName() && !Subreddits.isEditing()) {
 					return;
 				}
-				Menu.markSelected({ type: "channel", el: target, update: true });
+				Menu.markSelected({ type: 'channel', el: target, update: true });
 				if (UI.getCurrentView() === UI.View.COMMENTS) {
 					UI.backToMainView();
 				}
 				Channels.loadPosts(Channels.getByName(channelName));
 			},
 			activeClassDelay: 100,
-			activeClass: "link-active"
+			activeClass: 'link-active'
 		});
 
-		tappable(".sub", {
+		tappable('.sub', {
 			onTap: function onTap(e, target) {
 				var subredditName = $(target).first().text();
 				Menu.move(UI.Move.LEFT);
@@ -1599,30 +1563,30 @@ var Menu = (function () {
 			},
 			allowClick: false,
 			activeClassDelay: 100,
-			activeClass: "link-active"
+			activeClass: 'link-active'
 		});
 
-		tappable("#btn-new-sub", {
+		tappable('#btn-new-sub', {
 			onTap: function onTap() {
 				Modal.show(Subreddits.template.formInsert);
 			}
 		});
 
-		tappable("#btn-new-channel", {
+		tappable('#btn-new-channel', {
 			onTap: function onTap() {
 				Modal.show(Channels.template.formAddNew);
 			}
 		});
 
-		tappable("#btn-add-subs", {
+		tappable('#btn-add-subs', {
 			onTap: Subreddits.loadForAdding
 		});
 
-		tappable("#btn-edit-subs", {
+		tappable('#btn-edit-subs', {
 			onTap: Subreddits.loadForEditing
 		});
 
-		tappable("#about", {
+		tappable('#about', {
 			onTap: function onTap() {
 				Modal.show(template.about);
 			},
@@ -1663,7 +1627,7 @@ var Modal = (function () {
 			if (isShown) {
 				return;
 			}
-			var modal = $("<div/>").attr("id", "modal"),
+			var modal = $('<div/>').attr('id', 'modal'),
 			    bounce = true;
 			if (config) {
 				if (config.modalClass) {
@@ -1677,9 +1641,9 @@ var Modal = (function () {
 			UI.el.body.append(modal);
 			isShown = true;
 			setTimeout(function () {
-				modal.css("opacity", 1);
+				modal.css('opacity', 1);
 				if (bounce) {
-					Anim.bounceInDown($(".new-form"));
+					Anim.bounceInDown($('.new-form'));
 				}
 			}, 1);
 			if (callback) {
@@ -1689,8 +1653,8 @@ var Modal = (function () {
 	};
 
 	var remove = function remove() {
-		var modal = $("#modal");
-		modal.css("opacity", "");
+		var modal = $('#modal');
+		modal.css('opacity', '');
 		isShown = false;
 		setTimeout(function () {
 			modal.remove();
@@ -1698,9 +1662,9 @@ var Modal = (function () {
 	};
 
 	var showImageViewer = function showImageViewer(imageURL) {
-		var imageViewer = "<img class=\"image-viewer\" src=\"" + imageURL + "\">",
+		var imageViewer = '<img class="image-viewer" src="' + imageURL + '">',
 		    config = {
-			modalClass: "modal--closable",
+			modalClass: 'modal--closable',
 			noBounce: true
 		};
 		Modal.show(imageViewer, false, config);
@@ -1708,7 +1672,7 @@ var Modal = (function () {
 
 	var initListeners = function initListeners() {
 
-		tappable(".modal--closable", Modal.remove);
+		tappable('.modal--closable', Modal.remove);
 	};
 
 	// Exports
@@ -1739,24 +1703,24 @@ var Modal = (function () {
 
 var Posts = (function () {
 
-	var template = "\n\t\t{{#children}}\n\t\t\t<article class='link-wrap'>\n\t\t\t\t<div class='link js-link' data-id='{{data.id}}'>\n\t\t\t\t\t<div class='link-thumb'>\n\t\t\t\t\t\t<div style='background-image: url({{data.thumbnail}})'></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='link-info'>\n\t\t\t\t\t\t<a href='{{data.url}}' data-id='{{data.id}}' target='_blank' class='link-title js-post-title'>\n\t\t\t\t\t\t{{data.title}}\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<p class='link-domain'>{{data.domain}}</p>\n\t\t\t\t\t\t<p class='link-sub'>{{data.subreddit}}</p>\n\t\t\t\t\t\t{{#data.over_18}}\n\t\t\t\t\t\t<span class='link-label nsfw'>NSFW</span>\n\t\t\t\t\t\t{{/data.over_18}}\n\t\t\t\t\t\t{{#data.stickied}}\n\t\t\t\t\t\t<span class='link-label stickied'>Stickied</span>\n\t\t\t\t\t\t{{/data.stickied}}\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class='to-comments' data-id='{{data.id}}'>\n\t\t\t\t\t<div class='comments-icon'></div>\n\t\t\t\t</div>\n\t\t\t</article>\n\t\t{{/children}}\n\t\t<button id='btn-load-more-posts' class='btn-block btn-simple'>More</button>\n\t\t<div id='main-overflow'></div>";
+	var template = '\n\t\t{{#children}}\n\t\t\t<article class=\'link-wrap\'>\n\t\t\t\t<div class=\'link js-link\' data-id=\'{{data.id}}\'>\n\t\t\t\t\t<div class=\'link-thumb\'>\n\t\t\t\t\t\t<div style=\'background-image: url({{data.thumbnail}})\'></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\'link-info\'>\n\t\t\t\t\t\t<a href=\'{{data.url}}\' data-id=\'{{data.id}}\' target=\'_blank\' class=\'link-title js-post-title\'>\n\t\t\t\t\t\t{{data.title}}\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<p class=\'link-domain\'>{{data.domain}}</p>\n\t\t\t\t\t\t<p class=\'link-sub\'>{{data.subreddit}}</p>\n\t\t\t\t\t\t{{#data.over_18}}\n\t\t\t\t\t\t<span class=\'link-label nsfw\'>NSFW</span>\n\t\t\t\t\t\t{{/data.over_18}}\n\t\t\t\t\t\t{{#data.stickied}}\n\t\t\t\t\t\t<span class=\'link-label stickied\'>Stickied</span>\n\t\t\t\t\t\t{{/data.stickied}}\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\'to-comments\' data-id=\'{{data.id}}\'>\n\t\t\t\t\t<div class=\'comments-icon\'></div>\n\t\t\t\t</div>\n\t\t\t</article>\n\t\t{{/children}}\n\t\t<button id=\'btn-load-more-posts\' class=\'btn-block btn-simple\'>More</button>\n\t\t<div id=\'main-overflow\'></div>';
 
 	var loading = false,
 	    list = {},
 	    loaded = {},
-	    idLast = "";
+	    idLast = '';
 
 	var el = {
 		moreButton: function moreButton() {
-			return $("#btn-load-more-posts");
+			return $('#btn-load-more-posts');
 		}
 	};
 
-	var getList = function () {
+	var getList = function getList() {
 		return list;
 	};
 
-	var getLoaded = function () {
+	var getLoaded = function getLoaded() {
 		return loaded;
 	};
 
@@ -1764,7 +1728,7 @@ var Posts = (function () {
 		loading = newLoading;
 	};
 
-	var areLoading = function () {
+	var areLoading = function areLoading() {
 		return loading;
 	};
 
@@ -1793,17 +1757,17 @@ var Posts = (function () {
 			setTimeout(function () {
 				main.prepend(UI.template.loader);
 			}, Menu.isShowing() ? 301 : 1);
-			paging = ""; // empty string, to avoid pagination
+			paging = ''; // empty string, to avoid pagination
 		}
 		$.ajax({
-			dataType: "jsonp",
+			dataType: 'jsonp',
 			url: baseUrl + Sorting.get() + URLs.limitEnd + paging,
 			success: function success(result) {
 				show(result, paging);
 			},
 			error: function error() {
 				loading = false;
-				$(".loader").addClass("loader-error").text("Error loading links. Refresh to try again.");
+				$('.loader').addClass('loader-error').text('Error loading links. Refresh to try again.');
 			}
 		});
 	};
@@ -1820,35 +1784,35 @@ var Posts = (function () {
 		    main = UI.el.mainWrap;
 
 		if (paging) {
-			$(".loader").remove();
+			$('.loader').remove();
 		} else {
 			if (is.desktop) {
 				main.empty();
 			} else {
-				main.empty().removeClass("anim-reveal").addClass("invisible");
+				main.empty().removeClass('anim-reveal').addClass('invisible');
 			}
 		}
 
 		if (linksCount === 0) {
-			var message = $(".loader");
+			var message = $('.loader');
 			if (message) {
-				message.text("No Links available.");
-				message.addClass("loader-error");
-				main.append("<div id=\"#main-overflow\"></div>");
+				message.text('No Links available.');
+				message.addClass('loader-error');
+				main.append('<div id="#main-overflow"></div>');
 			} else {
-				main.prepend("<div class=\"loader loader-error\">No Links available.</div><div id=\"main-overflow\"></div>");
+				main.prepend('<div class="loader loader-error">No Links available.</div><div id="main-overflow"></div>');
 			}
 		} else {
 			// Add new links to the list
 			main.append(Mustache.to_html(template, links));
 
 			// Remove thumbnail space for those links with invalid backgrounds.
-			var thumbs = $(".link-thumb > div"),
-			    bgImg = "background-image: ";
+			var thumbs = $('.link-thumb > div'),
+			    bgImg = 'background-image: ';
 			for (var i = 0; i < thumbs.length; i++) {
 				var thumb = $(thumbs[i]),
-				    bg = thumb.attr("style");
-				if (bg === bgImg + "url()" || bg === bgImg + "url(default)" || bg === bgImg + "url(nsfw)" || bg === bgImg + "url(self)") {
+				    bg = thumb.attr('style');
+				if (bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') {
 					thumb.parent().remove();
 				}
 			}
@@ -1914,10 +1878,10 @@ var Posts = (function () {
 		}
 		CurrentSelection.execute(function () {
 			// if it's subreddit
-			if (CurrentSelection.getName().toLowerCase() === "frontpage") {
-				load(URLs.init + "r/" + Subreddits.getAllSubsString() + "/");
+			if (CurrentSelection.getName().toLowerCase() === 'frontpage') {
+				load(URLs.init + 'r/' + Subreddits.getAllSubsString() + '/');
 			} else {
-				load(URLs.init + "r/" + CurrentSelection.getName() + "/");
+				load(URLs.init + 'r/' + CurrentSelection.getName() + '/');
 			}
 		}, function () {
 			// if it's channel
@@ -1926,20 +1890,20 @@ var Posts = (function () {
 	};
 
 	var markSelected = function markSelected(id) {
-		$(".link.link-selected").removeClass("link-selected");
-		$(".link[data-id=\"" + id + "\"]").addClass("link-selected");
+		$('.link.link-selected').removeClass('link-selected');
+		$('.link[data-id="' + id + '"]').addClass('link-selected');
 	};
 
 	var clearSelected = function clearSelected() {
-		$(".link.link-selected").removeClass("link-selected");
+		$('.link.link-selected').removeClass('link-selected');
 	};
 
 	var triggerClick = function triggerClick(url) {
-		var a = document.createElement("a");
-		a.setAttribute("href", url);
-		a.setAttribute("target", "_blank");
+		var a = document.createElement('a');
+		a.setAttribute('href', url);
+		a.setAttribute('target', '_blank');
 
-		var clickEvent = new MouseEvent("click", {
+		var clickEvent = new MouseEvent('click', {
 			view: window,
 			bubbles: true,
 			cancelable: false
@@ -1950,51 +1914,51 @@ var Posts = (function () {
 
 	var initListeners = function initListeners() {
 
-		tappable(".js-link", {
+		tappable('.js-link', {
 			onTap: function onTap(e, target) {
 				if (!is.wideScreen) {
 					return;
 				}
-				var id = target.getAttribute("data-id");
+				var id = target.getAttribute('data-id');
 				Comments.updateHash(id);
 			},
 			allowClick: false,
 			activeClassDelay: 100,
 			inactiveClassDelay: 200,
-			activeClass: "link-active"
+			activeClass: 'link-active'
 		});
 
-		tappable(".js-post-title", {
+		tappable('.js-post-title', {
 			onTap: function onTap(e) {
-				var id = e.target.getAttribute("data-id"),
+				var id = e.target.getAttribute('data-id'),
 				    url = e.target.href;
 				open(url, id);
 			},
 			allowClick: false
 		});
 
-		tappable(".to-comments", {
+		tappable('.to-comments', {
 			onTap: function onTap(e, target) {
-				var id = target.getAttribute("data-id");
+				var id = target.getAttribute('data-id');
 				Comments.updateHash(id);
 			},
-			activeClass: "button-active",
+			activeClass: 'button-active',
 			activeClassDelay: 100
 		});
 
-		tappable("#btn-load-more-posts", {
+		tappable('#btn-load-more-posts', {
 			onTap: function onTap() {
 				CurrentSelection.execute(function () {
 					var url;
-					if (CurrentSelection.getName().toLowerCase() === "frontpage") {
-						url = URLs.init + "r/" + Subreddits.getAllSubsString() + "/";
+					if (CurrentSelection.getName().toLowerCase() === 'frontpage') {
+						url = URLs.init + 'r/' + Subreddits.getAllSubsString() + '/';
 					} else {
-						url = URLs.init + "r/" + CurrentSelection.getName() + "/";
+						url = URLs.init + 'r/' + CurrentSelection.getName() + '/';
 					}
-					load(url, "&after=" + idLast);
+					load(url, '&after=' + idLast);
 				}, function () {
 					var channel = Channels.getByName(CurrentSelection.getName());
-					load(URLs.init + Channels.getURL(channel) + "/", "&after=" + idLast);
+					load(URLs.init + Channels.getURL(channel) + '/', '&after=' + idLast);
 				});
 			}
 		});
@@ -2028,32 +1992,32 @@ var SortSwitch = (function () {
 	var isHot = true;
 
 	var classes = {
-		"new": "sort-switch--new"
+		'new': 'sort-switch--new'
 	};
 
-	var wrap = "";
+	var wrap = '';
 
 	var el = {
 		getWrap: function getWrap() {
 			if (!wrap) {
-				wrap = document.getElementsByClassName("sorter-wrap")[0];
+				wrap = document.getElementsByClassName('sorter-wrap')[0];
 			}
 			return wrap;
 		}
 	};
 
 	var initListeners = function initListeners() {
-		tappable(".js-sort-switch-main", {
+		tappable('.js-sort-switch-main', {
 			onTap: function onTap(ev, target) {
 				if (Posts.areLoading()) {
 					return;
 				}
 				isHot = !isHot;
-				Sorting.change(isHot ? "hot" : "new");
+				Sorting.change(isHot ? 'hot' : 'new');
 				if (isHot) {
-					target.classList.remove(classes["new"]);
+					target.classList.remove(classes['new']);
 				} else {
-					target.classList.add(classes["new"]);
+					target.classList.add(classes['new']);
 				}
 			}
 		});
@@ -2074,10 +2038,10 @@ var SortSwitch = (function () {
 
 var Sorting = (function () {
 
-	var current = "hot";
+	var current = 'hot';
 
 	var get = function get() {
-		return current !== "hot" ? current + "/" : "";
+		return current !== 'hot' ? current + '/' : '';
 	};
 
 	var change = function change(sorting) {
@@ -2142,11 +2106,11 @@ var Subreddits = (function () {
 		list: $("#subs")
 	};
 
-	var getList = function () {
+	var getList = function getList() {
 		return list;
 	};
 
-	var isEditing = function () {
+	var isEditing = function isEditing() {
 		return editing;
 	};
 
@@ -2497,7 +2461,7 @@ Backup.initListeners();
 Header.el.postTitle.remove();
 
 if (is.wideScreen) {
-	Footer.el.postTitle.text("");
+	Footer.el.postTitle.text('');
 }
 
 CurrentSelection.loadSaved();
@@ -2514,21 +2478,21 @@ CurrentSelection.execute(function () {
 	var currentSubName = CurrentSelection.getName();
 	Menu.markSelected({ name: currentSubName });
 	// Load links
-	if (currentSubName.toUpperCase() === "frontPage".toUpperCase()) {
-		CurrentSelection.setSubreddit("frontPage");
-		Posts.load(URLs.init + "r/" + Subreddits.getAllSubsString() + "/");
+	if (currentSubName.toUpperCase() === 'frontPage'.toUpperCase()) {
+		CurrentSelection.setSubreddit('frontPage');
+		Posts.load(URLs.init + 'r/' + Subreddits.getAllSubsString() + '/');
 	} else {
-		Posts.load(URLs.init + "r/" + currentSubName + "/");
+		Posts.load(URLs.init + 'r/' + currentSubName + '/');
 	}
 	UI.setSubTitle(currentSubName);
 }, function () {
 	// If it's a channel
 	var channel = Channels.getByName(CurrentSelection.getName());
-	Menu.markSelected({ type: "channel", name: channel.name });
+	Menu.markSelected({ type: 'channel', name: channel.name });
 	Channels.loadPosts(channel);
 });
 
-var loadMnml = Store.getItem("mnml"),
+var loadMnml = Store.getItem('mnml'),
     isMnml = loadMnml ? JSON.parse(loadMnml) : false;
 
 UI.switchMnml(false, isMnml);
@@ -2537,13 +2501,13 @@ if (is.mobile) {
 
 	UI.scrollTop();
 
-	var touch = "touchmove";
+	var touch = 'touchmove';
 
-	$$.id("edit-subs").addEventListener(touch, function (e) {
+	$$.id('edit-subs').addEventListener(touch, function (e) {
 		e.preventDefault();
 	}, false);
 
-	document.getElementsByTagName("header")[0].addEventListener(touch, function (e) {
+	document.getElementsByTagName('header')[0].addEventListener(touch, function (e) {
 		if (Menu.isShowing()) {
 			e.preventDefault();
 		}
@@ -2558,7 +2522,7 @@ if (is.mobile) {
 		if (!isMnml) {
 			UI.switchMnml(true, true);
 		}
-		document.body.classList.add("ios7");
+		document.body.classList.add('ios7');
 	}
 }
 
