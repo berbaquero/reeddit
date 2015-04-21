@@ -33,7 +33,9 @@ gulp.task('styles', function() {
 		.on('error', function (err) {
 			console.error('Error', err.message);
 		})
-		.pipe(prefix('> 2%'))
+		.pipe(prefix({
+            browsers: ['last 2 versions']
+		}))
 		.pipe(groupMQ())
 		.pipe(gulp.dest(paths.distribution))
 		.pipe(minifycss())
