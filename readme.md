@@ -1,4 +1,11 @@
-# Reeddit
+```
+.______       _______  _______  _______   _______   __  .___________.
+|   _  \     |   ____||   ____||       \ |       \ |  | |           |
+|  |_)  |    |  |__   |  |__   |  .--.  ||  .--.  ||  | `---|  |----`
+|      /     |   __|  |   __|  |  |  |  ||  |  |  ||  |     |  |
+|  |\  \----.|  |____ |  |____ |  '--'  ||  '--'  ||  |     |  |
+| _| `._____||_______||_______||_______/ |_______/ |__|     |__|  
+```
 
 A minimal, elastic [Reddit](http://reddit.com/) web app reader client, that lets you create "Channels" to group as many subreddits as you want into one stream.
 
