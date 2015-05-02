@@ -97,12 +97,6 @@
 	transform: translate3d(0, 0, 0);
 }
 
-#main-menu {
-	box-shadow: inset -3px 0 10px black;
-	height: calc(100% - #{$footer-height});
-}
-
-
 #main-overflow {
 	width: 100%;
 }

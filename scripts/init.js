@@ -15,7 +15,8 @@
  CurrentSelection,
  UI,
  Backup,
- URLs
+ URLs,
+ ThemeSwitcher
  */
 
 // Init all modules listeners
@@ -63,10 +64,7 @@ CurrentSelection.execute(
 		Channels.loadPosts(channel);
 	});
 
-var loadMnml = Store.getItem('mnml'),
-	isMnml = loadMnml ? JSON.parse(loadMnml) : false;
-
-UI.switchMnml(false, isMnml);
+ThemeSwitcher.init();
 
 if (is.mobile) {
 
@@ -90,9 +88,7 @@ if (is.mobile) {
 
 	if (is.iOS7) {
 		// apply iOS 7+ theme
-		if (!isMnml) {
-			UI.switchMnml(true, true);
-		}
+		ThemeSwitcher.updateTheme('light');
 		document.body.classList.add("ios7");
 	}
 }

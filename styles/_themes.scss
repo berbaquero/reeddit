@@ -1,0 +1,48 @@
+// Theme Conditionals
+// ==================
+
+// Based on the themes from _theme-switcher.js
+
+// light
+// =====
+
+$light-text-color:    #444;
+$light-active-item:   #4889ea;
+$light-main-bg-color: #e9e9ea;
+$light-sec-bg-color:  darken($light-main-bg-color, 10%);
+$light-bars-bg-color: $light-main-bg-color;
+$light-bar-color:     #f8f8f8;
+
+@mixin on-light-theme($type: null) {
+
+	@at-root {
+		@if ($type == null) {
+			.light & {
+				@content;
+			}
+		}
+
+		@if ($type == root) {
+			&.light {
+				@content;
+			}
+		}
+
+		@if ($type == iOS7) {
+			.light.ios7 & {
+				@content;
+			}
+		}
+	}
+}
+
+// dark
+// ====
+
+@mixin dark-theme {
+	@at-root {
+		.dark & {
+			@content;
+		}
+	}
+}

@@ -19,6 +19,10 @@ var Menu = (function() {
 		about: "<div class='new-form about-reeddit'><div class='close-form'>&times;</div><ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>"
 	};
 
+	const subSelectedClass = 'sub--selected',
+		channelSelectedClass = 'channel--selected';
+
+
 	var move = function(direction) {
 		if (is.iPhone && is.iOS7) {
 			UI.el.mainView.removeClass(UI.classes.swipe);
@@ -48,7 +52,7 @@ var Menu = (function() {
 		var isChannel = (type && type === 'channel');
 
 		if (el) {
-			el.classList.add(isChannel ? 'channel-active' : 'sub-active');
+			el.classList.add(isChannel ? channelSelectedClass : subSelectedClass);
 			return;
 		}
 
@@ -58,13 +62,13 @@ var Menu = (function() {
 			'.sub[data-name="' + name + '"]';
 
 			var activeSub = document.querySelector(selector);
-			activeSub.classList.add(isChannel ? 'channel-active' : 'sub-active');
+			activeSub.classList.add(isChannel ? channelSelectedClass : subSelectedClass);
 		}
 	};
 
 	var cleanSelected = function() {
-		$(".sub.sub-active").removeClass("sub-active");
-		$(".channel.channel-active").removeClass("channel-active");
+		$(".sub.sub--selected").removeClass(subSelectedClass);
+		$(".channel.channel--selected").removeClass(channelSelectedClass);
 	};
 
 	var initListeners = function() {
@@ -83,7 +87,7 @@ var Menu = (function() {
 				Channels.loadPosts(Channels.getByName(channelName));
 			},
 			activeClassDelay: 100,
-			activeClass: "link-active"
+			activeClass: "channel--active"
 		});
 
 		tappable(".sub", {
@@ -98,7 +102,7 @@ var Menu = (function() {
 			},
 			allowClick: false,
 			activeClassDelay: 100,
-			activeClass: 'link-active'
+			activeClass: 'sub--active'
 		});
 
 		tappable("#btn-new-sub", {

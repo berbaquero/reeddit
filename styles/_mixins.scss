@@ -39,6 +39,7 @@
 }
 
 // Media Query Break Points
+// ========================
 
 @mixin break-point-min($width) {
 
@@ -57,30 +58,5 @@
 	(min-resolution: 138dpi),
 	(min-resolution: 1.5dppx) {
 		@content;
-	}
-}
-
-// Theme Breakpoints
-
-@mixin mnml-theme($type: null) {
-
-	@at-root {
-		@if ($type == null) {
-			.mnml & {
-				@content;
-			}
-		}
-
-		@if ($type == root) {
-			&.mnml {
-				@content;
-			}
-		}
-
-		@if ($type == iOS7) {
-			.mnml.ios7 & {
-				@content;
-			}
-		}
 	}
 }

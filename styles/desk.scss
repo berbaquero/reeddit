@@ -1,5 +1,8 @@
+@import "themes";
+
 .btn-edit-sub,
 .sub,
+.channel,
 .channel > p,
 #summary-title,
 .option,
@@ -16,6 +19,10 @@
 .option:hover,
 #sorting p:hover {
 	text-shadow: 0 0 10px #CCC;
+
+	@include on-light-theme {
+		text-shadow: none;
+	}
 }
 
 .link,

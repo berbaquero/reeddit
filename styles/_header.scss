@@ -7,7 +7,7 @@ header {
 	z-index: 2;
 	border-bottom: 1px solid #777;
 	border-top: 1px solid white;
-	background-color: #eff0f3;
+	background-color: $light-bar-color;
 	background-image: url(../img/bg.png);
 	box-shadow: 0 -25px 24px -10px rgba(0, 0, 0, .3) inset;
 
@@ -15,16 +15,11 @@ header {
 		width: 70%;
 	}
 
-	@include mnml-theme {
+	@include on-light-theme {
 		border-bottom: 1px solid #bbb;
-		background-color: $mnml-bars-bg-color;
 		border-top: 0;
 		background-image: none;
 		box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
-	}
-
-	@include mnml-theme(iOS7) {
-		background-color: $ios7-bars-bg-color;
 	}
 
 	@include break-point-min($bp-small) {
@@ -69,12 +64,8 @@ header {
 	background-position: 50%;
 	margin: 0 auto;
 
-	@include mnml-theme {
-		opacity: .7;
-	}
-
-	@include mnml-theme(iOS7) {
-		opacity: .5;
+	@include on-light-theme {
+		opacity: .6;
 	}
 }
 
@@ -90,7 +81,7 @@ header {
 	text-overflow: ellipsis;
 	overflow: hidden;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		top: 0;
 	}
 }
@@ -106,7 +97,7 @@ header {
 		background-color: rgba(0, 0, 0, .3);
 	}
 
-	@include mnml-theme {
+	@include on-light-theme {
 		margin: 0;
 		padding: 0 10px;
 		line-height: $header-height;

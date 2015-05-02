@@ -1,3 +1,5 @@
+@import "themes";
+
 button {
 	-webkit-tap-highlight-color: transparent;
 }
@@ -56,12 +58,8 @@ $whitetish:  #eeeeee;
     background-size: 24px;
     margin: 0 auto;
 
-	@include mnml-theme {
-		opacity: .8;
-	}
-
-	@include mnml-theme(iOS7) {
-		opacity: .6;
+	@include on-light-theme {
+		opacity: .7;
 	}
 
     @include break-point-hdpi {
@@ -73,7 +71,7 @@ $whitetish:  #eeeeee;
 .button-active {
 	background-color: #ddd;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		background-color: #ccc;
 	}
 }
@@ -82,7 +80,7 @@ $whitetish:  #eeeeee;
     background-image: linear-gradient(#ccc 0%, #777 100%) !important;
     color: white !important;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		background-color: #ccc !important;
 		background-image: none !important;
 	}
@@ -101,7 +99,7 @@ $whitetish:  #eeeeee;
 	    width: 80%;
 	    margin: 0 auto;
 
-		@include mnml-theme {
+		@include on-light-theme {
 			background-color: transparent;
 		}
 	}
@@ -120,7 +118,7 @@ $whitetish:  #eeeeee;
 	    text-align: center;
 	    display: inline-block;
 
-		@include mnml-theme {
+		@include on-light-theme {
 			background-color: #ddd;
 			border: 1px solid #bbb;
 			box-shadow: 0 1px 0 #fff;
@@ -152,7 +150,7 @@ $whitetish:  #eeeeee;
                 rgba(255, 255, 255, .3) 0 25px 30px -12px inset,
                 rgba(0, 0, 0, .6) 0 1px 2px;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		background-color: #d5d5d8;
 		border: 1px solid #bbb;
 		background-image: none;
@@ -167,7 +165,7 @@ $whitetish:  #eeeeee;
     font-weight: 700;
     text-align: center;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		border-radius: 4px;
 	}
 }
@@ -178,7 +176,7 @@ $whitetish:  #eeeeee;
                 rgba(255, 255, 255, .4) 0 1px 0;
     color: #f5f5f5;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		background-color: #ccc;
 		background-image: none;
 		box-shadow: none;
@@ -228,12 +226,6 @@ $whitetish:  #eeeeee;
     line-height: 30px;
 }
 
-#btn-edit-subs {
-    right: 0;
-    font-size: 20px;
-    line-height: 34px;
-}
-
 .btn-corner {
 
     &:active {
@@ -263,7 +255,7 @@ $whitetish:  #eeeeee;
 		box-shadow: inset 0px 1px 0 $gray;
 	}
 
-	@include mnml-theme {
+	@include on-light-theme {
 		background-image: none;
 		background-color: $whitetish;
 		box-shadow: none;

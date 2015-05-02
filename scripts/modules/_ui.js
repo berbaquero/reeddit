@@ -48,8 +48,7 @@ var UI = (function() {
 		detailView: $('.detail-view')
 	};
 
-	var mnmlTheme = false,
-		currentView = View.MAIN;
+	var currentView = View.MAIN;
 
 	var getCurrentView = () => currentView;
 
@@ -67,26 +66,6 @@ var UI = (function() {
 		Header.el.subtitle.removeClass("invisible");
 		Header.el.centerSection.empty().append(Header.el.icon);
 		Anim.slideFromLeft();
-	};
-
-	var switchMnml = function(save, mode) { // save, mode: boolean
-		if (typeof mode === 'undefined') {
-			mnmlTheme = !mnmlTheme;
-		} else {
-			mnmlTheme = mode;
-		}
-		var buttonMnml = $("#mnml"),
-			docBody = document.body;
-		if (mnmlTheme) {
-			docBody.classList.add(classes.mnml);
-			buttonMnml.text("Theme: mnml");
-		} else {
-			docBody.classList.remove(classes.mnml);
-			buttonMnml.text("Theme: Classic");
-		}
-		if (save) {
-			Store.setItem("mnml", mnmlTheme);
-		}
 	};
 
 	var switchDisplay = function(el, visible) {
@@ -250,11 +229,6 @@ var UI = (function() {
 		}, false);
 
 		// Taps
-		tappable("#mnml", {
-			onTap: function() {
-				switchMnml(true);
-			}
-		});
 
 		tappable(".btn-refresh", {
 			onTap: function(e) {
@@ -337,7 +311,6 @@ var UI = (function() {
 		setCurrentView: setCurrentView,
 		getCurrentView: getCurrentView,
 		setSubTitle: setSubTitle,
-		switchMnml: switchMnml,
 		scrollTop: scrollTop,
 		iPadScrollFix: iPadScrollFix,
 		scrollFixComments: scrollFixComments,

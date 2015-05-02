@@ -1,3 +1,5 @@
+@import "themes";
+
 .link {
 	display: flex;
 	text-decoration: none;
@@ -16,7 +18,7 @@
 	border-bottom: 1px solid #ccc;
 	width: 100%;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		border-top: 0;
 	}
 
@@ -40,7 +42,7 @@
 		border-radius: 5px;
 		box-shadow: inset 0 1px 3px #333;
 
-		@include mnml-theme {
+		@include on-light-theme {
 			box-shadow: none;
 		}
 	}
@@ -68,12 +70,14 @@
 }
 
 .link-active,
-.link-selected,
-.option.tappable-active {
+.link-selected {
 	background-image: linear-gradient(#4286F5, #194FDB);
 
-	@include mnml-theme {
-		background-image: linear-gradient(#599ad2, #3d6fba);
+	@include on-light-theme {
+		background: {
+			image: none;
+			color: $light-active-item;
+		};
 	}
 }
 

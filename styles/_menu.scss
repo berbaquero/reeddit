@@ -1,3 +1,5 @@
+@import "themes";
+
 #subs,
 #channels {
   padding: 0;
@@ -13,31 +15,44 @@
     z-index: 1;
     height: $footer-height;
     border-top: 1px solid rgba(0, 0, 0, .5);
-    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
+    box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0 inset;
     text-align: center;
+    display: flex;
+    align-items: center;
 
-	@include mnml-theme {
-		box-shadow: none;
-		border-top: 0;
-		background-color: #21252b;
+	@include on-light-theme {
+        $border-color: #b3b3b3;
+        background-image: linear-gradient(#d5d5d5, #b3b3b3);
+        border-top: 1px solid $border-color;
+        border-right: 1px solid $border-color;
 	}
+
+    @include on-light-theme(iOS7) {
+        border: none;
+        background: {
+            color: $light-sec-bg-color;
+            image: none;
+        };
+    }
 }
 
 .btn-edit-sub {
     font-size: 25px;
     color: #777;
-    margin: 0;
     width: 50%;
-    position: absolute;
-    height: 100%;
+
+    @include on-light-theme {
+        color: #444;
+    }
 }
 
 #btn-add-subs {
-    left: 0;
     font-weight: 500;
 }
 
-#remove-sub { right: 0; }
+#btn-edit-subs {
+    font-size: 20px;
+}
 
 .sub {
     color: whiteSmoke;
@@ -49,68 +64,110 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-	@include break-point-min($bp-wide) {
+    @include on-light-theme {
+        color: $light-text-color;
+    }
 
-		@include mnml-theme {
-			font-weight: 500;
-		}
-	}
+    &--selected {
+        text-shadow: 0 0 10px #ccc;
+        border-left: 3px solid #4286f5;
+
+        @include on-light-theme {
+            border: 0;
+            text-shadow: none;
+            background-color: $light-active-item;
+            color: $white;
+        }
+    }
+
+    &--active {
+        background-image: linear-gradient(#4286F5, #194FDB);
+
+        @include on-light-theme {
+            background-image: linear-gradient(#599ad2, #3d6fba);
+        }
+
+        @include on-light-theme {
+            color: $white;
+            background: {
+                image: none;
+                color: $light-active-item;
+            };
+        }
+    }
 }
 
 .channel {
 	margin: 0;
 	font-size: 14px;
 	padding: 5px 10px;
+    color: whiteSmoke;
 
-    > p {
-        color: whiteSmoke;
-        margin: 0;
+    // Elements
+    $title: '> p';
+    $subs-container: '> div';
+    $subs-name: '> div p';
 
-		@include break-point-min($bp-wide) {
-
-			@include mnml-theme {
-				font-weight: 500;
-			}
-		}
+    @include on-light-theme {
+        color: $light-text-color;
     }
 
-    > div {
+    #{$title} {
+        margin: 0;
+    }
+
+    #{$subs-container} {
         padding-left: 10px;
     }
 
-    > div p {
+    #{$subs-name} {
         font-size: 13px;
-        color: #BBB;
+        color: #bbb;
         margin: 5px 0;
         text-transform: capitalize;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
 
-		@include break-point-min($bp-wide) {
+        @include on-light-theme {
+            color: lighten($light-text-color, 10%);
+        }
+    }
 
-			@include mnml-theme {
-				font-weight: 500;
+    &--active {
+		background-image: linear-gradient(#4286F5, #194FDB);
+
+		@include on-light-theme {
+            border-left: 3px solid #3d6fba;
+        }
+
+        @include on-light-theme {
+            border: 0;
+            color: $white;
+			background: {
+				color: $light-active-item;
+				image: none;
 			}
+        }
+
+        #{$title} {
+            text-shadow: 0 0 10px #ccc;
+        }
+
+        #{$subs-name} {
+            @include on-light-theme {
+                color: darken($white, 10%);
+            }
+        }
+    }
+
+	&--selected {
+		border-left: 3px solid #4286F5;
+
+		@include on-light-theme {
+			border-left: 4px solid $light-active-item;
 		}
-    }
-}
-
-.channel-active {
-	border-left: 3px solid #4286F5;
-
-	@include mnml-theme {
-		border-left: 3px solid #3d6fba;
 	}
-
-    > p {
-        text-shadow: 0 0 10px #ccc;
-    }
-}
-
-.sub-active {
-	text-shadow: 0 0 10px #ccc;
-	border-left: 3px solid #4286f5;
 }
 
 #menu-container {
@@ -123,9 +180,10 @@
     height: 100%;
     background-color: #363636;
 
-	@include mnml-theme {
-		background-color: #262b30;
-	}
+    @include on-light-theme {
+        border-right: 1px solid #d3d3d3;
+        background-color: $light-main-bg-color;
+    }
 }
 
 #menu-container,
@@ -148,12 +206,21 @@
     }
 }
 
+#main-menu {
+    box-shadow: inset -3px 0 10px black;
+    height: calc(100% - #{$footer-height});
+
+    @include on-light-theme {
+        box-shadow: none;
+    }
+}
+
 .menu-desc {
     color: rgba(255, 255, 255, 0.82);
     font-size: 12px;
     text-transform: uppercase;
-    text-shadow: rgba(0, 0, 0, 0.7) 0px 1px 0px;
-    margin: 0px;
+    text-shadow: rgba(0, 0, 0, 0.7) 0 1px 0;
+    margin: 0;
     width: 100%;
     padding-left: 10px;
     height: 35px;
@@ -161,33 +228,42 @@
     background: rgba(0, 0, 0, 0.20);
     border-top: 1px solid #111;
     border-bottom: 1px solid #111;
-    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
+    box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(255, 255, 255, 0.1) 0 1px 0 inset;
     cursor: default;
     position: relative;
 
-	@include break-point-min($bp-wide) {
-
-		@include mnml-theme {
-			font-weight: 500;
-		}
-	}
+    @include on-light-theme {
+        background-color: $light-sec-bg-color;
+        border: 0;
+        text-shadow: none;
+        font-weight: 600;
+        color: $white;
+    }
 }
 
 .option {
-
     color: whiteSmoke;
     padding: 10px;
     letter-spacing: 1px;
     font-size: 14px;
 
+    @include on-light-theme {
+        color: $light-text-color;
+    }
+
     &:last-child {
 		margin-bottom: 15px;
 	}
 
-	@include break-point-min($bp-wide) {
+    &.tappable-active {
+        background-image: linear-gradient(#4286F5, #194FDB);
 
-		@include mnml-theme {
-			font-weight: 500;
-		}
-	}
+        @include on-light-theme {
+            color: $white;
+            background: {
+                image: none;
+                color: $light-active-item;
+            };
+        }
+    }
 }

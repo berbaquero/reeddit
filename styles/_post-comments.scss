@@ -1,3 +1,5 @@
+@import "themes";
+
 #comments-container {
 
 	@include break-point-min($bp-wide-x) {
@@ -64,9 +66,6 @@
 	}
 }
 
-.comment-info {
-}
-
 .comment-info a {
 	color: #aaa;
 	font-weight: 500;
@@ -113,8 +112,8 @@
 		background-size: 25%;
 	}
 
-	@include mnml-theme {
-		background-color: #454d56;
+	@include on-light-theme {
+		background-color: $light-main-bg-color;
 	}
 
 	p {
@@ -129,15 +128,23 @@
 
 #summary-title {
 	font-size: 16px;
-	color: #fafafa;
+	color: white;
 	font-weight: 700;
 	padding-right: 10px;
 	padding-bottom: 2px;
+
+	@include on-light-theme {
+		color: $black;
+	}
 }
 
 #summary-time {
 	color: white;
 	text-align: center;
+
+	@include on-light-theme {
+		color: $light-text-color;
+	}
 }
 
 #summary-domain {
@@ -146,12 +153,8 @@
 	font-size: 13px;
 	display: inline;
 
-	@include mnml-theme {
-		color: #f85b5d;
-	}
-
-	@include mnml-theme(iOS7) {
-		color: #eb4d5c;
+	@include on-light-theme {
+		color: $red;
 	}
 }
 
@@ -159,6 +162,9 @@
 	color: #E2E2E0;
 	font-weight: 700;
 
+	@include on-light-theme {
+		color: $light-text-color;
+	}
 }
 
 #share-tw {
@@ -167,8 +173,12 @@
 }
 
 #summary-sub {
-	color: #FAFAFA;
+	color: white;
 	text-align: left;
+
+	@include on-light-theme {
+		color: $light-text-color;
+	}
 }
 
 $gray-dark: #333;
@@ -180,7 +190,7 @@ $gray-dark: #333;
 	padding-top: 2px;
 	border-bottom: 1px solid $gray-dark;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		border: 0;
 	}
 }
@@ -194,22 +204,25 @@ $gray-dark: #333;
 	width: 100%;
 	border-top: 1px solid #5d5d5d;
 
-	@include mnml-theme {
-		background-color: rgba(0, 0, 0, 0.4);
+	@include on-light-theme {
+		background-color: $light-sec-bg-color;
 		border: 0;
 	}
 }
 
 #summary-comment-num {
+	color: white;
 	text-align: right;
 	text-decoration: none;
 	display: block;
+
+	@include on-light-theme {
+		color: $light-text-color;
+	}
 }
 
 #summary-extra p,
 #summary-comment-num {
-	color: #FAFAFA;
-
 	margin: 0;
 	padding: 5px 0;
 	width: 33%;
@@ -223,10 +236,10 @@ $gray-dark: #333;
 	margin: 10px;
 	border-radius: 5px;
 	background-color: $silver;
-	box-shadow: inset 0 1px 1px #FFF, 0 0px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 1px 1px #FFF, 0 0 7px rgba(0, 0, 0, 0.3);
 	border: 1px solid $gray;
 
-	@include mnml-theme {
+	@include on-light-theme {
 		border: 0;
 		box-shadow: none;
 	}
