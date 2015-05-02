@@ -122,11 +122,9 @@
     z-index: 0;
     height: 100%;
     background-color: #363636;
-    background-image: url('../img/darkdenim3.png');
 
 	@include mnml-theme {
 		background-color: #262b30;
-		background-image: url("");
 	}
 }
 
