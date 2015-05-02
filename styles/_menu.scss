@@ -155,6 +155,8 @@
         }
 
         #{$subs-name} {
+			color: $col_active-link-subtext;
+
             @include on-light-theme {
                 color: darken($white, 10%);
             }

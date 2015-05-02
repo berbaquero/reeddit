@@ -79,22 +79,20 @@
 			color: $light-active-item;
 		};
 	}
-}
 
-.link-active,
-.link-selected {
 	.link-title {
 		color: white;
 		text-shadow: 0 1px 0 $black;
-	}
-}
 
-.link-active .link-domain,
-.link-active .link-sub,
-.link-selected .link-domain,
-.link-selected .link-sub,
-#channels .link-active div p {
-	color: #ADD0EB;
+		&:visited {
+			color: whiteSmoke;
+		}
+	}
+
+	.link-domain,
+	.link-sub {
+		color: $col_active-link-subtext;
+	}
 }
 
 $nsfw:     #d13;
@@ -132,11 +130,4 @@ $stickied: #71b0d3;
 
 .link-title:visited {
 	color: #888;
-}
-
-.link-active,
-.link-selected {
-	.link-title:visited {
-		color: whiteSmoke;
-	}
 }
