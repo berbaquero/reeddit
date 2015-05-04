@@ -300,7 +300,7 @@ var Subreddits = (function() {
 
 		tappable('#btn-more-subs', {
 			onTap: function(e, target) {
-				$(target).parent().remove();
+				$(target).remove();
 				var main = UI.el.mainWrap;
 				main.append(UI.template.loader);
 				$.ajax({
