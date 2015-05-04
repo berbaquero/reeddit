@@ -21,11 +21,11 @@ var Channels = (function() {
 	};
 
 	const template = {
-		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='channel-name'>{{name}}</p><div class='btn-edit-channel' data-title='{{name}}'></div><div class='btn-remove-channel' data-title='{{name}}'></div></div>",
+		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='sub-name channel-name'>{{name}}</p><div class='btn-edit-channel icon-pencil' data-title='{{name}}'></div><div class='btn-remove-channel icon-trashcan' data-title='{{name}}'></div></div>",
 		single: '<li class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>',
 		list: '{{#.}}<li class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>{{/.}}',
-		formAddNew: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="save">Add Channel</div></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
-		formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><div class="btn-general" id="btn-submit-channel" data-op="update">Update Channel</div></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>'
+		formAddNew: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn-simple" id="btn-submit-channel" data-op="save">Add Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
+		formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn-simple" id="btn-submit-channel" data-op="update">Update Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>'
 	};
 
 	var list = [],
@@ -38,13 +38,18 @@ var Channels = (function() {
 	var getList = () => list;
 
 	var getURL = function(channel) {
-		if (channel.subs.length === 1) { // Reddit API-related hack
-			// If there's one subreddit in a "Channel", and this subreddit name's invalid, reddit.com responds with a search-results HTML - not json data - and throws a hard-to-catch error...
-			return "r/" + channel.subs[0] + "+" + channel.subs[0]; // Repeating the one subreddit in the URL avoids this problem :)
+		if (channel.subs.length === 1) { // [1] Reddit API-related hack
+			return "r/" + channel.subs[0] + "+" + channel.subs[0];
 		} else {
 			return "r/" + channel.subs.join("+");
 		}
 	};
+	// [1] If there's one subreddit in a "Channel",
+	// and this subreddit name's invalid,
+	// reddit.com responds with a search-results HTML - not json data
+	// and throws a hard-to-catch error...
+	// Repeating the one subreddit in the URL avoids this problem :)
+
 
 	var insert = function(channel) {
 		list.push(channel);
@@ -208,29 +213,27 @@ var Channels = (function() {
 				$(".form-left-corner").append("<p class='channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</p>");
 
 				Anim.bounceOut($(".new-form"), Modal.remove);
-			},
-			activeClass: "btn-general-active"
+			}
 		});
 
 		tappable("#btn-add-channel", {
 			onTap: function() {
 				Modal.show(template.formAddNew);
-			},
-			activeClass: 'list-button-active'
+			}
 		});
 
 		tappable(".btn-remove-channel", {
 			onTap: function(e, target) {
 				remove($(target).data('title'));
 			},
-			activeClass: 'button-active'
+			activeClass: 'btn-list--active'
 		});
 
 		tappable(".btn-edit-channel", {
 			onTap: function(e, target) {
 				edit(target.getAttribute('data-title'));
 			},
-			activeClass: 'button-active'
+			activeClass: 'btn-list--active'
 		});
 	};
 

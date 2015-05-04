@@ -24,12 +24,12 @@ var LinkSummary = (function() {
 			</a>
 			<div id='summary-footer'>
 				<p id='summary-author'>by {{author}}</p>
-				<a class='btn-general' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>
+				<a class='btn-simple' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>
 			</div>
-			<div id='summary-extra'>
-				<p id='summary-sub'>{{subreddit}}</p>
-				<p id='summary-time'></p>
-				<a id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a>
+			<div class='ls-extra'>
+				<span class='ls-extra__label' id='summary-sub'>{{subreddit}}</span>
+				<span class='ls-extra__label' id='summary-time'></span>
+				<a class='ls-extra__label' id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a>
 			</div>
 		</section>`;
 

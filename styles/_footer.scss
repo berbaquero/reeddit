@@ -1,4 +1,7 @@
 @import "themes";
+@import "mixins";
+
+$size-button: 32px;
 
 .view-footer {
     display: none;
@@ -9,12 +12,13 @@
     border-top: 1px solid #aaa;
     box-shadow: inset 0 1px 1px #eee;
     background-image: linear-gradient(#d5d5d5, #b3b3b3);
+	color: #444;
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		box-shadow: 0 -1px 4px rgba(0, 0, 0, .2);
 	}
 
-	@include on-light-theme(iOS7) {
+	@include on-theme(light-iOS7) {
 		background: {
 			color: $light-bars-bg-color;
 			image: none;
@@ -22,14 +26,24 @@
 		border-top: 1px solid #bbb;
 	}
 
+	@include on-theme(dark) {
+		border: none;
+		box-shadow: none;
+		color: $dark-text-color-2;
+		background: {
+			image: none;
+			color: $dark-bg-color-3;
+		};
+	}
+
     @include break-point-min($bp-wide) {
-        display: block;
+		@include flex-center(vertical);
+		justify-content: space-between;
     }
 }
 
 .footer-sub-title,
 .footer-post-title {
-	line-height: ($footer-height - 1px);
 	margin: 0 auto;
 	text-align: center;
 	font-size: 14px;
@@ -38,28 +52,19 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	color: #444;
-}
-
-.btn-footer {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    @include size(36px, 30px);
-    top: 0;
 }
 
 .footer-refresh {
-	@extend %icon-refresh;
-    right: 0;
-    background-size: 15px;
+	@include flex-center(all);
+	@include size($size-button);
 }
 
 #detail-close {
-	left: 0;
+	@include size($size-button);
 	font-size: 26px;
 	font-weight: bold;
-	line-height: 1em;
+	line-height: 26px;
 	text-align: center;
-	color: #444;
 }
+
+// [1] hacked vertical position

@@ -111,11 +111,9 @@ var UI = (function() {
 		var containerHeight = document.body.offsetHeight,
 			headerHeight = $$.q('header').offsetHeight,
 			message = $$.q('.loader'),
-			messageHeight = message ? message.offsetHeight : 0,
-			listButton = $$.q('.list-button'),
-			listButtonHeight = listButton ? listButton.offsetHeight : 0;
+			messageHeight = message ? message.offsetHeight : 0;
 
-		var minHeight = containerHeight - headerHeight - messageHeight - listButtonHeight;
+		var minHeight = containerHeight - headerHeight - messageHeight;
 
 		if (totalHeight > minHeight) {
 			$("#main-overflow").css('min-height', '');
@@ -162,12 +160,11 @@ var UI = (function() {
 					delay = 301;
 				}
 				setTimeout(function() {
-					el.mainWrap.prepend("<div class='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
+					el.mainWrap.prepend("<button class='btn-simple btn-block' id='btn-update'>Reeddit updated. Press to reload</button>");
 					tappable('#btn-update', {
 						onTap: function() {
 							window.location.reload();
-						},
-						activeClass: 'list-button-active'
+						}
 					});
 				}, delay);
 			}, false);
@@ -254,7 +251,8 @@ var UI = (function() {
 							Posts.refreshStream();
 						}
 				}
-			}
+			},
+			activeClass: 'btn-header--active'
 		});
 
 		tappable(".close-form", Modal.remove);

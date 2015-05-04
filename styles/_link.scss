@@ -18,8 +18,12 @@
 	border-bottom: 1px solid #ccc;
 	width: 100%;
 
-	@include on-light-theme {
+	@include on-theme(light-n-dark) {
 		border-top: 0;
+	}
+
+	@include on-theme(dark) {
+		border-color: $dark-bg-color-1;
 	}
 
 	&:first-child {
@@ -42,8 +46,12 @@
 		border-radius: 5px;
 		box-shadow: inset 0 1px 3px #333;
 
-		@include on-light-theme {
+		@include on-theme(light-n-dark) {
 			box-shadow: none;
+		}
+
+		@include on-theme(dark) {
+			background-color: $dark-bg-color-1;
 		}
 	}
 }
@@ -56,28 +64,48 @@
 	text-decoration: none;
 	outline: 0;
 	display: block;
+
+	@include on-theme(dark) {
+		font-weight: 500;
+		color: $dark-text-color-1;
+	}
 }
 
 .link-domain {
 	margin: 0;
 	color: $red;
+
+	@include on-theme(dark) {
+		color: $dark-label-color-1;
+	}
 }
 
 .link-sub {
 	margin: 0;
 	color: #777;
 	display: inline;
+
+	@include on-theme(dark) {
+		color: $dark-text-color-2;
+	}
 }
 
 .link-active,
 .link-selected {
 	background-image: linear-gradient(#4286F5, #194FDB);
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		background: {
 			image: none;
 			color: $light-active-item;
 		};
+	}
+
+	@include on-theme(dark) {
+		background: {
+			image: none;
+			color: $dark-active-color-2;
+		}
 	}
 
 	.link-title {
@@ -86,6 +114,10 @@
 
 		&:visited {
 			color: whiteSmoke;
+		}
+
+		@include on-theme(dark) {
+			color: $dark-text-color-1;
 		}
 	}
 
@@ -130,4 +162,39 @@ $stickied: #71b0d3;
 
 .link-title:visited {
 	color: #888;
+}
+
+.to-comments {
+	display: flex;
+	align-items: center;
+	width: 15%;
+
+	@include break-point-min($bp-wide) {
+		display: none;
+	}
+}
+
+.comments-icon {
+	@include size(24px);
+	background-image: url('../img/comment_24.png');
+	background-repeat: no-repeat;
+	background-size: 24px;
+	margin: 0 auto;
+
+	@include on-theme(light) {
+		opacity: .7;
+	}
+
+	@include on-theme(dark) {
+		background-image: url('../img/comment-dark@1x.png');
+	}
+
+	@include break-point-hdpi {
+		background-image: url('../img/comment_48.png');
+		opacity: .7;
+
+		@include on-theme(dark) {
+			background-image: url('../img/comment-dark@2x.png');
+		}
+	}
 }

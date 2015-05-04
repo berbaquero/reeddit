@@ -14,14 +14,17 @@ body {
 	user-select: none;
     margin: 0;
     padding: 0;
-    background-color: white;
     word-wrap: break-word;
     text-size-adjust: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     position: relative;
 
-	@include on-light-theme(root) {
+	&.ios7 {
 		font-family: -apple-system-font, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
+
+	&.dark {
+		background-color: $dark-bg-color-2;
 	}
 }
 
@@ -38,36 +41,7 @@ a {
 @import 'post-comments';
 @import 'options-menu';
 @import 'sort-switch';
-
-/*--- Subreddits ---*/
-
-.subreddit {
-    display: flex;
-    padding-left: 10px;
-    border-bottom: 1px solid #CCC;
-    border-top: 1px solid white;
-    width: 100%;
-
-	@include on-light-theme {
-		border-top: 0;
-	}
-
-    > div:first-child {
-	    width: 85%;
-	    padding: 10px 5px 10px 0;
-	}
-}
-
-.subreddit-desc {
-	margin: 5px 0;
-}
-
-.subreddit-title {
-    font-weight: 700;
-    font-size: 15px;
-    margin: 5px 0;
-    color: $red;
-}
+@import 'subreddits-list';
 
 .new-form {
     width: 300px;
@@ -164,51 +138,12 @@ a {
     color: #777;
     background-color: rgba(220, 220, 220, 0.4);
     text-shadow: 0 1px 1px whiteSmoke;
-}
 
-.remove-list {
-	margin: 0;
-    padding: 0;
-}
-
-.item-to-edit {
-    display: flex;
-    border-bottom: 1px solid #DDD;
-    border-top: 1px solid white;
-    height: 60px;
-
-	@include on-light-theme {
-		border-top: 0;
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-1;
+		color: $dark-text-color-1;
+		text-shadow: none;
 	}
-
-    > p {
-	    width: 85%;
-	    text-transform: capitalize;
-	    font-size: 16px;
-	    font-weight: 700;
-	    padding-left: 10px;
-	}
-
-	> div {
-        @include size(15%, 100%);
-	    background-repeat: no-repeat;
-	    background-position: center;
-	}
-
-    .channel-name {
-        width: 70%;
-    }
-
-    .btn-remove-channel,
-    .btn-remove-subreddit {
-		@extend %icon-delete;
-        background-size: 22px;
-    }
-
-    .btn-edit-channel {
-		@extend %icon-edit;
-        background-size: 16px;
-    }
 }
 
 #modal {
@@ -240,7 +175,7 @@ a {
 
 .form-left-corner {
     position: absolute;
-    top: -30px;
+    top: -35px;
     z-index: 10001;
     left: 0;
 }
@@ -303,10 +238,6 @@ a {
 .move-data {
 
 	padding: 20px;
-
-	.btn-general {
-		line-height: 26px;
-	}
 
 	h3,
 	p {

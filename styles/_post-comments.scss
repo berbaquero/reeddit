@@ -15,6 +15,10 @@
 			padding: 10px 10px 0 10px;
 			margin: -10px -10px 0;
 			border-top: 1px solid #eee;
+
+			@include on-theme(dark) {
+				border-color: $dark-bg-color-1;
+			}
 		}
 	}
 }
@@ -24,6 +28,10 @@
 	padding: 10px 0 10px 10px;
 	border-bottom: 1px solid #eee;
 	border-left: 1px solid #eee;
+
+	@include on-theme(dark) {
+		border-color: $dark-bg-color-1;
+	}
 
 	@include break-point-min($bp-wide) {
 		font-size: 14px;
@@ -36,14 +44,21 @@
 	width: 100%;
 }
 
-.comment-author p {
+.comment-author,
+.comment-poster {
 	color: $red-comments;
 	font-weight: 500;
 	margin: 0;
+
+	@include on-theme(dark) {
+		font-weight: 400;
+		color: $dark-label-color-2;
+	}
 }
 
 .comment-poster {
 	position: relative;
+	padding-left: 28px;
 
 	&::before {
 		@include position(absolute, top-left);
@@ -56,20 +71,16 @@
 		font-size: 10px;
 		font-weight: 700;
 	}
-
-	p {
-		color: $red-comments;
-		font-weight: 500;
-		position: relative;
-		left: 28px;
-		margin: 0;
-	}
 }
 
-.comment-info a {
+.comment-info {
 	color: #aaa;
 	font-weight: 500;
 	text-decoration: none;
+
+	@include on-theme(dark) {
+		color: $dark-text-color-2;
+	}
 }
 
 .comment-body {
@@ -77,11 +88,16 @@
 
 	p {
 		margin: 10px 0;
-		color: $color-body-text;
 	}
 
-	ul {
+	ul,
+	ol,
+	p {
 		color: $color-body-text;
+
+		@include on-theme(dark) {
+			color: $dark-text-color-1;
+		}
 	}
 
 	a {
@@ -99,21 +115,12 @@
 	background-color: $gray-dark;
 	padding: 10px 0 0;
 
-	&::before {
-		@include size(100%, 300px);
-		content: '';
-		position: absolute;
-		background-color: inherit;
-		transform: translateY(-100%);
-		background-image: url('../img/alienHead.png');
-		background-repeat: no-repeat;
-		background-position-x: 50%;
-		background-position-y: 90%;
-		background-size: 25%;
+	@include on-theme(light) {
+		background-color: $light-bg-color-1;
 	}
 
-	@include on-light-theme {
-		background-color: $light-main-bg-color;
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-1;
 	}
 
 	p {
@@ -133,17 +140,12 @@
 	padding-right: 10px;
 	padding-bottom: 2px;
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		color: $black;
 	}
-}
 
-#summary-time {
-	color: white;
-	text-align: center;
-
-	@include on-light-theme {
-		color: $light-text-color;
+	@include on-theme(dark) {
+		color: $dark-text-color-1;
 	}
 }
 
@@ -153,8 +155,12 @@
 	font-size: 13px;
 	display: inline;
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		color: $red;
+	}
+
+	@include on-theme(dark) {
+		color: $dark-label-color-1;
 	}
 }
 
@@ -162,23 +168,18 @@
 	color: #E2E2E0;
 	font-weight: 700;
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		color: $light-text-color;
+	}
+
+	@include on-theme(dark) {
+		color: $dark-text-color-2;
 	}
 }
 
 #share-tw {
-	/* Share button position */
 	margin-right: 10px;
-}
-
-#summary-sub {
-	color: white;
-	text-align: left;
-
-	@include on-light-theme {
-		color: $light-text-color;
-	}
+	padding: 3px 6px;
 }
 
 $gray-dark: #333;
@@ -190,42 +191,51 @@ $gray-dark: #333;
 	padding-top: 2px;
 	border-bottom: 1px solid $gray-dark;
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		border: 0;
 	}
 }
 
-#summary-extra {
+.ls-extra {
 	display: flex;
 	justify-content: space-between;
 	background-color: $gray-dark;
 	font-weight: 700;
-	padding: 0 10px;
+	padding: 4px 10px;
 	width: 100%;
 	border-top: 1px solid #5d5d5d;
 
-	@include on-light-theme {
-		background-color: $light-sec-bg-color;
+	@include on-theme(light) {
+		background-color: $light-bg-color-2;
 		border: 0;
 	}
-}
 
-#summary-comment-num {
-	color: white;
-	text-align: right;
-	text-decoration: none;
-	display: block;
-
-	@include on-light-theme {
-		color: $light-text-color;
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-3;
+		border: 0;
 	}
-}
 
-#summary-extra p,
-#summary-comment-num {
-	margin: 0;
-	padding: 5px 0;
-	width: 33%;
+	&__label {
+		color: white;
+		width: 33%;
+		text-decoration: none;
+
+		&:nth-child(2) {
+			text-align: center;
+		}
+
+		&:nth-child(3) {
+			text-align: right;
+		}
+
+		@include on-theme(light) {
+			color: $light-text-color;
+		}
+
+		@include on-theme(dark) {
+			color: $dark-text-color-1;
+		}
+	}
 }
 
 #selftext {
@@ -239,9 +249,14 @@ $gray-dark: #333;
 	box-shadow: inset 0 1px 1px #FFF, 0 0 7px rgba(0, 0, 0, 0.3);
 	border: 1px solid $gray;
 
-	@include on-light-theme {
+	@include on-theme(light-n-dark) {
 		border: 0;
 		box-shadow: none;
+	}
+
+	@include on-theme(dark) {
+		color: $dark-text-color-1;
+		background-color: $dark-active-color-2;
 	}
 
 	p {

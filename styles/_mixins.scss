@@ -7,6 +7,23 @@
 	width: 100%;
 }
 
+@mixin flex-center($type: all) {
+	display: flex;
+
+	@if $type == all {
+		align-items: center;
+		justify-content: center;
+	}
+
+	@if $type == horizontal {
+		justify-content: center;
+	}
+
+	@if $type == vertical {
+		align-items: center;
+	}
+}
+
 @mixin position($position, $type, $margins: 0) {
 	position: $position;
 

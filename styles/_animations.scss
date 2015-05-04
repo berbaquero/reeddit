@@ -1,3 +1,5 @@
+@import "themes";
+
 @keyframes reveal {
       0% { opacity: 0; }
     100% { opacity: 1; }
@@ -24,6 +26,10 @@
     font-size: 15px;
     font-weight: 700;
     display: block;
+
+	@include on-theme(dark) {
+		background-color: $dark-text-color-2;
+	}
 }
 
 .loader-error {

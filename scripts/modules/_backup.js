@@ -185,13 +185,11 @@ var Backup = (function() {
 					success: Modal.remove
 				};
 				Dropbox.save(options);
-			},
-			activeClass: "btn-general-active"
+			}
 		});
 
 		tappable("#btn-dbx-imp", {
-			onTap: chooseFromDropbox,
-			activeClass: "btn-general-active"
+			onTap: chooseFromDropbox
 		});
 
 		if (!is.iOS) {

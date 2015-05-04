@@ -102,7 +102,7 @@ var Menu = (function() {
 			},
 			allowClick: false,
 			activeClassDelay: 100,
-			activeClass: 'sub--active'
+			activeClass: 'menu-active-item'
 		});
 
 		tappable("#btn-new-sub", {

@@ -30,11 +30,11 @@ var Subreddits = (function() {
 
 	var template = {
 		list: "{{#.}}<li data-name='{{.}}' class='sub'>{{.}}</li>{{/.}}",
-		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p>{{.}}</p><div class='btn-remove-subreddit' data-name='{{.}}'></div></div>{{/.}}</ul>",
-		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit-title'>{{data.display_name}}</p><p class='subreddit-desc'>{{data.public_description}}</p></div><div class='btn-add-sub'><div></div></div></div>{{/children}}",
+		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p class='sub-name'>{{.}}</p><div class='btn-remove-subreddit icon-trashcan' data-name='{{.}}'></div></div>{{/.}}</ul>",
+		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
 		loadMoreSubsButton: "<button class='btn-block btn-simple' id='btn-more-subs'>More</button>",
-		formInsert: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><div class="btn-general" id="btn-add-new-sub">Add Subreddit</div></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-		topButtonsForAdding: "<div class='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>"
+		formInsert: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><button class="btn-simple" id="btn-add-new-sub">Add Subreddit</button></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
+		topButtonsForAdding: "<div class='buttons-group'><button id='btn-sub-man' class='btn-simple'>Insert Manually</button><button id='btn-add-channel' class='btn-simple'>Create Channel</button></div>"
 	};
 
 	var el = {
@@ -287,15 +287,13 @@ var Subreddits = (function() {
 				var container = $("#subs-for-channel");
 				container.append("<input type='text' placeholder='Extra subreddit'/>");
 				container[0].scrollTop = container.height();
-			},
-			activeClass: "btn-general-active"
+			}
 		});
 
 		tappable("#btn-sub-man", {
 			onTap: function() {
 				Modal.show(template.formInsert);
-			},
-			activeClass: 'list-button-active'
+			}
 		});
 
 		tappable('#btn-more-subs', {
@@ -328,14 +326,14 @@ var Subreddits = (function() {
 				var newSub = subTitle.text();
 				add(newSub);
 			},
-			activeClass: 'button-active'
+			activeClass: 'btn-list--active'
 		});
 
 		tappable(".btn-remove-subreddit", {
 			onTap: function(e, target) {
 				remove($(target).data('name'));
 			},
-			activeClass: 'button-active'
+			activeClass: 'btn-list--active'
 		});
 	};
 

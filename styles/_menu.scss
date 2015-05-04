@@ -20,20 +20,24 @@
     display: flex;
     align-items: center;
 
-	@include on-light-theme {
+	@include on-theme(light) {
         $border-color: #b3b3b3;
         background-image: linear-gradient(#d5d5d5, #b3b3b3);
         border-top: 1px solid $border-color;
         border-right: 1px solid $border-color;
 	}
 
-    @include on-light-theme(iOS7) {
+    @include on-theme(light-iOS7) {
         border: none;
         background: {
-            color: $light-sec-bg-color;
+            color: $light-bg-color-2;
             image: none;
         };
     }
+
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-3;
+	}
 }
 
 .btn-edit-sub {
@@ -41,9 +45,13 @@
     color: #777;
     width: 50%;
 
-    @include on-light-theme {
+    @include on-theme(light) {
         color: #444;
     }
+
+	@include on-theme(dark) {
+		color: $dark-text-color-2;
+	}
 }
 
 #btn-add-subs {
@@ -64,36 +72,28 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @include on-light-theme {
+    @include on-theme(light) {
         color: $light-text-color;
     }
+
+	@include on-theme(dark) {
+		color: $dark-text-color-1;
+	}
 
     &--selected {
         text-shadow: 0 0 10px #ccc;
         border-left: 3px solid #4286f5;
 
-        @include on-light-theme {
+        @include on-theme(light) {
             border: 0;
             text-shadow: none;
             background-color: $light-active-item;
             color: $white;
         }
-    }
 
-    &--active {
-        background-image: linear-gradient(#4286F5, #194FDB);
-
-        @include on-light-theme {
-            background-image: linear-gradient(#599ad2, #3d6fba);
-        }
-
-        @include on-light-theme {
-            color: $white;
-            background: {
-                image: none;
-                color: $light-active-item;
-            };
-        }
+		@include on-theme(dark) {
+			border-color: $dark-active-color-1;
+		}
     }
 }
 
@@ -108,9 +108,13 @@
     $subs-container: '> div';
     $subs-name: '> div p';
 
-    @include on-light-theme {
+    @include on-theme(light) {
         color: $light-text-color;
     }
+
+	@include on-theme(dark) {
+		color: $dark-text-color-1;
+	}
 
     #{$title} {
         margin: 0;
@@ -129,26 +133,32 @@
         overflow: hidden;
         white-space: nowrap;
 
-        @include on-light-theme {
+        @include on-theme(light) {
             color: lighten($light-text-color, 10%);
         }
+
+		@include on-theme(dark) {
+			color: $dark-text-color-2;
+		}
     }
 
     &--active {
 		background-image: linear-gradient(#4286F5, #194FDB);
 
-		@include on-light-theme {
-            border-left: 3px solid #3d6fba;
+        @include on-theme(light-n-dark) {
+            color: $white;
+			background-image: none;
         }
 
-        @include on-light-theme {
-            border: 0;
-            color: $white;
-			background: {
-				color: $light-active-item;
-				image: none;
-			}
-        }
+		@include on-theme(light) {
+			border-color: $light-active-item;
+			background-color: $light-active-item;
+		}
+
+		@include on-theme(dark) {
+			border-color: $dark-active-color-1;
+			background-color: $dark-active-color-1;
+		}
 
         #{$title} {
             text-shadow: 0 0 10px #ccc;
@@ -157,7 +167,7 @@
         #{$subs-name} {
 			color: $col_active-link-subtext;
 
-            @include on-light-theme {
+            @include on-theme(light-n-dark) {
                 color: darken($white, 10%);
             }
         }
@@ -166,9 +176,26 @@
 	&--selected {
 		border-left: 3px solid #4286F5;
 
-		@include on-light-theme {
-			border-left: 4px solid $light-active-item;
+		@include on-theme(light) {
+			border-color: $light-active-item;
 		}
+
+		@include on-theme(dark) {
+			border-color: $dark-active-color-1;
+		}
+	}
+}
+
+.btn-side-menu-add {
+	position: absolute;
+	right: 0;
+	padding: 0 13px 7px 10px;
+	color: #777;
+	font-size: 24px;
+	line-height: 30px;
+
+	@include on-theme(dark) {
+		color: $dark-text-color-2;
 	}
 }
 
@@ -182,10 +209,15 @@
     height: 100%;
     background-color: #363636;
 
-    @include on-light-theme {
+    @include on-theme(light) {
         border-right: 1px solid #d3d3d3;
-        background-color: $light-main-bg-color;
+        background-color: $light-bg-color-1;
     }
+
+	@include on-theme(dark) {
+		border-right: 1px solid $dark-line-color-2;
+		background-color: $dark-bg-color-1;
+	}
 }
 
 #menu-container,
@@ -212,7 +244,7 @@
     box-shadow: inset -3px 0 10px black;
     height: calc(100% - #{$footer-height});
 
-    @include on-light-theme {
+    @include on-theme(light-n-dark) {
         box-shadow: none;
     }
 }
@@ -234,13 +266,17 @@
     cursor: default;
     position: relative;
 
-    @include on-light-theme {
-        background-color: $light-sec-bg-color;
+    @include on-theme(light) {
+        background-color: $light-bg-color-2;
         border: 0;
         text-shadow: none;
         font-weight: 600;
         color: $light-text-color;
     }
+
+	@include on-theme(dark) {
+		color: $dark-text-color-1;
+	}
 }
 
 .option {
@@ -249,23 +285,33 @@
     letter-spacing: 1px;
     font-size: 14px;
 
-    @include on-light-theme {
+    @include on-theme(light) {
         color: $light-text-color;
     }
+
+	@include on-theme(dark) {
+		color: $dark-text-color-1;
+	}
 
     &:last-child {
 		margin-bottom: 15px;
 	}
+}
 
-    &.tappable-active {
-        background-image: linear-gradient(#4286F5, #194FDB);
+.option.tappable-active,
+.menu-active-item {
+	background-image: linear-gradient(#4286F5, #194FDB);
 
-        @include on-light-theme {
-            color: $white;
-            background: {
-                image: none;
-                color: $light-active-item;
-            };
-        }
-    }
+	@include on-theme(light-n-dark) {
+		color: $white;
+		background-image: none;
+	}
+
+	@include on-theme(light) {
+		background-color: $light-active-item;
+	}
+
+	@include on-theme(dark) {
+		background-color: $dark-active-color-1;
+	}
 }

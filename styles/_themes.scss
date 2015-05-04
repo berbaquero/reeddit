@@ -1,34 +1,29 @@
 // Theme Conditionals
 // ==================
 
-// Based on the themes from _theme-switcher.js
-
-// light
-// =====
-
-$light-text-color:    #444;
-$light-active-item:   #4889ea;
-$light-main-bg-color: #e9e9ea;
-$light-sec-bg-color:  darken($light-main-bg-color, 10%);
-$light-bars-bg-color: $light-main-bg-color;
-$light-bar-color:     #f8f8f8;
-
-@mixin on-light-theme($type: null) {
-
+@mixin on-theme($theme) {
 	@at-root {
-		@if ($type == null) {
+
+		@if $theme == light {
 			.light & {
 				@content;
 			}
 		}
 
-		@if ($type == root) {
-			&.light {
+		@if $theme == dark {
+			.dark & {
 				@content;
 			}
 		}
 
-		@if ($type == iOS7) {
+		@if $theme == light-n-dark {
+			.light &,
+			.dark & {
+				@content;
+			}
+		}
+
+		@if $theme == light-iOS7 {
 			.light.ios7 & {
 				@content;
 			}
@@ -36,13 +31,32 @@ $light-bar-color:     #f8f8f8;
 	}
 }
 
+// Based on the themes from _theme-switcher.js
+
+// light
+// =====
+
+$light-text-color:    #444;
+$light-active-item:   #4889ea;
+$light-bg-color-1:    #e9e9ea;
+$light-bg-color-2:    darken($light-bg-color-1, 10%);
+$light-bars-bg-color: $light-bg-color-1;
+$light-bar-color:     #f8f8f8;
+
 // dark
 // ====
 
-@mixin dark-theme {
-	@at-root {
-		.dark & {
-			@content;
-		}
-	}
-}
+$dark-bg-color-1:     #22242b;
+$dark-bg-color-2:     #292c33;
+$dark-bg-color-3:     darken($dark-bg-color-1, 5%);
+$dark-line-color-1:   $dark-bg-color-1;
+$dark-line-color-2:   darken($dark-line-color-1, 5%);
+$dark-text-color-1:   #95a1bc;
+$dark-text-color-2:   #5e6b86;
+$dark-active-color-1: #0084ff;
+$dark-active-color-2: #404654;
+$dark-label-color-1:  #b37bcf;
+$dark-label-color-2:  #c16d7b;
+$dark-label-color-3:  #86b476;
+$dark-button-bg:      #3f4551;
+$dark-button-text:    #a4acba;

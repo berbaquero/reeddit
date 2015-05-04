@@ -82,7 +82,7 @@ var Comments = (function() {
 					"title": "See this comment on reddit.com"
 				};
 
-			var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<div/>").addClass(isPoster ? "comment-poster" : "comment-author").append($("<p/>").text(c.data.author))).append($("<div/>").addClass("comment-info").append($("<a/>").attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($("<div/>").addClass("comment-body").html(html)));
+			var comment = $("<div/>").addClass("comment-wrap").append($('<div/>').append($("<div/>").addClass("comment-data").append($("<span/>").addClass(isPoster ? "comment-poster" : "comment-author").text(c.data.author)).append($("<a/>").addClass("comment-info").attr(commentLink).text(timeSince(now, c.data.created_utc)))).append($("<div/>").addClass("comment-body").html(html)));
 
 			if (c.data.replies && c.data.replies.data.children[0].kind !== "more") {
 				comment.append($("<button/>").addClass("btn-simple btn-block--small comments-button js-reply-button").attr("data-comment-id", c.data.id).text("See replies"));

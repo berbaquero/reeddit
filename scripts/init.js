@@ -87,8 +87,6 @@ if (is.mobile) {
 	}
 
 	if (is.iOS7) {
-		// apply iOS 7+ theme
-		ThemeSwitcher.updateTheme('light');
 		document.body.classList.add("ios7");
 	}
 }

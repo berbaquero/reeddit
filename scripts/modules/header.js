@@ -23,7 +23,8 @@ var Header = (function() {
 		tappable(".btn-to-main", {
 			onTap: function() {
 				location.hash = "#";
-			}
+			},
+			activeClass: 'btn-header--active'
 		});
 
 		tappable("#sub-title", {

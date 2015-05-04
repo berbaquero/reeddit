@@ -1,3 +1,5 @@
+@import "themes";
+
 .view {
 	@include full-width;
 	transition-duration: 300ms;
@@ -19,7 +21,6 @@
 .detail-view {
 	perspective: 1000;
 	backface-visibility: hidden;
-	background-color: $white;
 }
 
 .main-view {
@@ -70,6 +71,10 @@
 		left: auto;
 		border-left: 1px solid #aaa;
 		transform: none;
+
+		@include on-theme(dark) {
+			border-left: 1px solid $dark-line-color-1;
+		}
 	}
 
 	@include break-point-min($bp-wide-x) {

@@ -272,7 +272,7 @@ var Posts = (function() {
 				var id = target.getAttribute('data-id');
 				Comments.updateHash(id);
 			},
-			activeClass: 'button-active',
+			activeClass: 'btn-list--active',
 			activeClassDelay: 100
 		});
 

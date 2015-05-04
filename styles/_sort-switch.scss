@@ -1,3 +1,5 @@
+@import "themes";
+
 // Widget
 $green: #7ab636;
 $red: #c6544f;
@@ -7,11 +9,7 @@ $width: 3.2em;
 $height: 1.6em;
 
 .sorter-wrap {
-	position: absolute;
-	margin: {
-		top: 5px;
-		left: $gutter;
-	}
+	margin-left: $gutter;
 }
 
 .sort-switch {
@@ -51,6 +49,10 @@ $height: 1.6em;
 			repeat: no-repeat;
 			position: 85% center;
 			size: 1em;
+		}
+
+		@include on-theme(dark) {
+			color: $dark-text-color-2;
 		}
 	}
 

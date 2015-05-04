@@ -1,4 +1,5 @@
 @import "themes";
+@import "mixins";
 
 button {
 	-webkit-tap-highlight-color: transparent;
@@ -9,178 +10,20 @@ $gray:       #888888;
 $gray-light: #bbbbbb;
 $whitetish:  #eeeeee;
 
-%btn-active {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-}
-
-.refresh-icon {
-	@extend %icon-refresh;
-    @include size(100%, $header-height);
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: 16px;
-    margin: 0 auto;
-}
-
-.back-arrow {
-
-    &-btn {
-        @include size(100%, $header-height);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    &-icon {
-        $arrow-size: 12px;
-        @include size(0);
-        // Icon Shape
-        border-bottom: ($arrow-size / 2) solid transparent;
-        border-right: $arrow-size solid $black;
-        border-top: ($arrow-size / 2) solid transparent;
-    }
-}
-
-.to-comments {
-    display: flex;
-    align-items: center;
-    width: 15%;
-
-    @include break-point-min($bp-wide) {
-        display: none;
-    }
-}
-
-.comments-icon {
-    @include size(24px);
-    background-image: url('../img/comment_24.png');
-    background-repeat: no-repeat;
-    background-size: 24px;
-    margin: 0 auto;
-
-	@include on-light-theme {
-		opacity: .7;
-	}
-
-    @include break-point-hdpi {
-        background-image: url('../img/comment_48.png');
-        opacity: .7;
-    }
-}
-
-.button-active {
+.btn-list--active {
 	background-color: #ddd;
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		background-color: #ccc;
 	}
-}
 
-.list-button-active {
-    background-image: linear-gradient(#ccc 0%, #777 100%) !important;
-    color: white !important;
-
-	@include on-light-theme {
-		background-color: #ccc !important;
-		background-image: none !important;
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-3;
 	}
 }
 
-.list-button {
-	padding: 20px;
-
-	> span {
-	    padding: 5px 10px;
-	    border-radius: 5px;
-	    font-size: 14px;
-	    font-weight: 700;
-	    text-align: center;
-	    display: block;
-	    width: 80%;
-	    margin: 0 auto;
-
-		@include on-light-theme {
-			background-color: transparent;
-		}
-	}
-}
-
-.top-buttons {
-
-    padding: 10px 20px;
-    border-bottom: 1px solid #CCC;
-
-    > div {
-	    padding: 3px 10px;
-	    font-size: 14px;
-	    font-weight: 700;
-	    width: 50%;
-	    text-align: center;
-	    display: inline-block;
-
-		@include on-light-theme {
-			background-color: #ddd;
-			border: 1px solid #bbb;
-			box-shadow: 0 1px 0 #fff;
-		}
-	}
-
-	div:first-child {
-	    border-top-left-radius: 4px;
-	    border-bottom-left-radius: 4px;
-	}
-
-	div:last-child {
-	    border-top-right-radius: 4px;
-	    border-bottom-right-radius: 4px;
-	}
-}
-
-#btn-update {
-    display: block;
-    width: 100%;
-}
-
-.top-buttons > div,
-.list-button > span,
-.btn-general {
-    color: #555;
-    background-image: linear-gradient(whiteSmoke 0%, #CCC 100%);
-    box-shadow: rgba(255, 255, 255, .4) 0 1px 0 inset,
-                rgba(255, 255, 255, .3) 0 25px 30px -12px inset,
-                rgba(0, 0, 0, .6) 0 1px 2px;
-
-	@include on-light-theme {
-		background-color: #d5d5d8;
-		border: 1px solid #bbb;
-		background-image: none;
-		box-shadow: none;
-	}
-}
-
-.btn-general {
-    background-color: #BBB;
-    padding: 3px 6px;
-    border-radius: 5px;
-    font-weight: 700;
-    text-align: center;
-
-	@include on-light-theme {
-		border-radius: 4px;
-	}
-}
-
-.btn-general-active {
-    background-image: linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
-    box-shadow: 0 2px 7px black inset,
-                rgba(255, 255, 255, .4) 0 1px 0;
-    color: #f5f5f5;
-
-	@include on-light-theme {
-		background-color: #ccc;
-		background-image: none;
-		box-shadow: none;
-	}
+.btn-header--active {
+	background-color: rgba(0, 0, 0, .5);
 }
 
 #btn-add-new-channel {
@@ -204,38 +47,10 @@ $whitetish:  #eeeeee;
     margin: 5px auto;
 }
 
-.btn-add-sub {
-    display: flex;
-    width: 15%;
-
-	> div {
-        @extend %full-width;
-		@extend %icon-add;
-	    background-repeat: no-repeat;
-	    background-size: 24px;
-        background-position: 50%;
-	}
-}
-
-.btn-side-menu-add {
-    position: absolute;
-    right: 0;
-    padding: 0 13px 7px 10px;
-    color: #777;
-    font-size: 24px;
-    line-height: 30px;
-}
-
-.btn-corner {
-
-    &:active {
-        background-color: rgba(0, 0, 0, .3);
-    }
-}
-
 .btn-simple {
 	text-decoration: none;
 	text-align: center;
+	font-weight: 600;
 	padding: .5em 1em;
 	border: 1px solid $gray-light;
 	color: $black;
@@ -255,7 +70,7 @@ $whitetish:  #eeeeee;
 		box-shadow: inset 0px 1px 0 $gray;
 	}
 
-	@include on-light-theme {
+	@include on-theme(light) {
 		background-image: none;
 		background-color: $whitetish;
 		box-shadow: none;
@@ -267,6 +82,23 @@ $whitetish:  #eeeeee;
 
 		&:active {
 			background-color: darken($whitetish, 15%);
+		}
+	}
+
+	@include on-theme(dark) {
+		background-image: none;
+		background-color: $dark-button-bg;
+		color: $dark-button-text;
+		border-color: $dark-bg-color-1;
+		box-shadow: none;
+
+		&:hover,
+		&:focus {
+			background-color: lighten($dark-button-bg, 3%);
+		}
+
+		&:active {
+			background-color: lighten($dark-button-bg, 7%);
 		}
 	}
 }
@@ -300,4 +132,21 @@ $whitetish:  #eeeeee;
 #btn-load-more-posts {
 	font-size: 14px;
 	width: 80%;
+}
+
+.buttons-group {
+	display: flex;
+	padding: 10px;
+	justify-content: center;
+
+	> button {
+
+		&:first-child {
+			border-radius: 4px 0 0 4px;
+		}
+
+		&:last-child {
+			border-radius: 0 4px 4px 0;
+		}
+	}
 }
