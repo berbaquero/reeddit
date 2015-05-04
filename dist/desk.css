@@ -1,7 +1,8 @@
-/* line 1, styles/desk.scss */
+/* line 3, styles/desk.scss */
 
 .btn-edit-sub,
 .sub,
+.channel,
 .channel > p,
 #summary-title,
 .option,
@@ -9,13 +10,13 @@
   transition-duration: 200ms;
 }
 
-/* line 10, styles/desk.scss */
+/* line 13, styles/desk.scss */
 
 .btn-edit-sub:hover {
   color: #4286F5;
 }
 
-/* line 14, styles/desk.scss */
+/* line 17, styles/desk.scss */
 
 .sub:hover,
 .channel:hover > p,
@@ -24,12 +25,30 @@
   text-shadow: 0 0 10px #CCC;
 }
 
-/* line 21, styles/desk.scss */
+/* line 20, styles/_themes.scss */
+
+.light .sub:hover,
+.dark .sub:hover,
+.light
+.channel:hover > p,
+.dark
+.channel:hover > p,
+.light
+.option:hover,
+.dark
+.option:hover,
+.light
+#sorting p:hover,
+.dark
+#sorting p:hover {
+  text-shadow: none;
+}
+
+/* line 28, styles/desk.scss */
 
 .link,
 .sub,
 .channel,
-.list-button > span,
 .top-buttons > div,
 .comments-button,
 .btn-edit-sub,
@@ -40,23 +59,18 @@
 #btn-add-new-channel,
 .option,
 #sorting p,
-.btn-general,
 .btn-side-menu-add {
   cursor: pointer;
 }
 
-/* line 40, styles/desk.scss */
+/* line 45, styles/desk.scss */
 
 #detail-close,
+.footer-refresh,
+.header-corner,
 .footer-sub-title,
 .footer-post-title {
   cursor: default;
-}
-
-/* line 46, styles/desk.scss */
-
-#link-summary a:hover #summary-title {
-  text-shadow: 0 1px 7px whiteSmoke;
 }
 
 /* Scrolling bars style */
@@ -104,27 +118,7 @@
   background-color: #444;
 }
 
-/* line 52, styles/desk.scss */
-
-.btn-general:active {
-  background-image: linear-gradient(#3f3f3f 50%, #4b4b4b 100%);
-  box-shadow: 0 2px 7px black inset, rgba(255, 255, 255, 0.4) 0 1px 0;
-}
-
-/* line 58, styles/desk.scss */
-
-.btn-general:hover,
-.btn-general:visited {
-  color: #555;
-}
-
-/* line 63, styles/desk.scss */
-
-.btn-general:active {
-  color: #f5f5f5;
-}
-
-/* line 67, styles/desk.scss */
+/* line 55, styles/desk.scss */
 
 .channel > div p {
   font-size: 11px;
@@ -147,11 +141,4 @@
 .mnml #main-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* line 15, styles/_desk-themes.scss */
-
-.mnml .btn-general:active {
-  background-image: none;
-  box-shadow: none;
 }

@@ -242,13 +242,11 @@ var Backup = (function () {
 					success: Modal.remove
 				};
 				Dropbox.save(options);
-			},
-			activeClass: "btn-general-active"
+			}
 		});
 
 		tappable("#btn-dbx-imp", {
-			onTap: chooseFromDropbox,
-			activeClass: "btn-general-active"
+			onTap: chooseFromDropbox
 		});
 
 		if (!is.iOS) {
@@ -324,6 +322,97 @@ var is = (function () {
 var Store = window.fluid ? allCookies : window.localStorage;
 
 /* global
+ Store,
+ tappable,
+ UI
+ */
+
+var ThemeSwitcher = (function () {
+
+	var themes = ['classic', 'light', 'dark'];
+
+	var currentThemeIndex = 0;
+
+	var el = {
+		switcherButton: $('#switch-theme')
+	};
+
+	var switchTheme = function switchTheme() {
+		var current = getCurrentTheme(),
+		    next = getNextTheme();
+
+		UI.el.body.removeClass(current);
+		setTheme(next);
+	};
+
+	var setTheme = function setTheme(theme) {
+		UI.el.body.addClass(theme);
+		setThemeLabel(theme);
+		saveTheme(theme);
+	};
+
+	var setThemeLabel = function setThemeLabel(name) {
+		el.switcherButton.text('Theme: ' + name);
+	};
+
+	var getCurrentTheme = function getCurrentTheme() {
+		return themes[currentThemeIndex];
+	};
+
+	var getNextTheme = function getNextTheme() {
+		currentThemeIndex++;
+
+		if (currentThemeIndex === themes.length) {
+			currentThemeIndex = 0;
+		}
+
+		return themes[currentThemeIndex];
+	};
+
+	var saveTheme = function saveTheme(theme) {
+		Store.setItem('theme', theme);
+	};
+
+	var loadTheme = function loadTheme() {
+		return Store.getItem('theme');
+	};
+
+	var loadInitialTheme = function loadInitialTheme() {
+		var initial = loadTheme();
+
+		if (initial) {
+			updateTheme(initial);
+		} else {
+			setTheme(themes[currentThemeIndex]);
+		}
+	};
+
+	var updateTheme = function updateTheme(theme) {
+		if (getCurrentTheme() === theme) {
+			return;
+		}
+		setTheme(theme);
+		currentThemeIndex = themes.indexOf(theme);
+	};
+
+	var init = function init() {
+
+		loadInitialTheme();
+
+		// Listeners
+
+		tappable('#switch-theme', {
+			onTap: switchTheme
+		});
+	};
+
+	// Exports
+	return {
+		init: init
+	};
+})();
+
+/* global
  $,
  $$,
  El,
@@ -373,8 +462,7 @@ var UI = (function () {
 		detailView: $(".detail-view")
 	};
 
-	var mnmlTheme = false,
-	    currentView = View.MAIN;
+	var currentView = View.MAIN;
 
 	var getCurrentView = function getCurrentView() {
 		return currentView;
@@ -394,27 +482,6 @@ var UI = (function () {
 		Header.el.subtitle.removeClass("invisible");
 		Header.el.centerSection.empty().append(Header.el.icon);
 		Anim.slideFromLeft();
-	};
-
-	var switchMnml = function switchMnml(save, mode) {
-		// save, mode: boolean
-		if (typeof mode === "undefined") {
-			mnmlTheme = !mnmlTheme;
-		} else {
-			mnmlTheme = mode;
-		}
-		var buttonMnml = $("#mnml"),
-		    docBody = document.body;
-		if (mnmlTheme) {
-			docBody.classList.add(classes.mnml);
-			buttonMnml.text("Theme: mnml");
-		} else {
-			docBody.classList.remove(classes.mnml);
-			buttonMnml.text("Theme: Classic");
-		}
-		if (save) {
-			Store.setItem("mnml", mnmlTheme);
-		}
 	};
 
 	var switchDisplay = function switchDisplay(el, visible) {
@@ -460,11 +527,9 @@ var UI = (function () {
 		var containerHeight = document.body.offsetHeight,
 		    headerHeight = $$.q("header").offsetHeight,
 		    message = $$.q(".loader"),
-		    messageHeight = message ? message.offsetHeight : 0,
-		    listButton = $$.q(".list-button"),
-		    listButtonHeight = listButton ? listButton.offsetHeight : 0;
+		    messageHeight = message ? message.offsetHeight : 0;
 
-		var minHeight = containerHeight - headerHeight - messageHeight - listButtonHeight;
+		var minHeight = containerHeight - headerHeight - messageHeight;
 
 		if (totalHeight > minHeight) {
 			$("#main-overflow").css("min-height", "");
@@ -511,12 +576,11 @@ var UI = (function () {
 					delay = 301;
 				}
 				setTimeout(function () {
-					el.mainWrap.prepend("<div class='top-buttons'><div id='btn-update'>Reeddit updated. Press to reload</div></div>");
+					el.mainWrap.prepend("<button class='btn-simple btn-block' id='btn-update'>Reeddit updated. Press to reload</button>");
 					tappable("#btn-update", {
 						onTap: function onTap() {
 							window.location.reload();
-						},
-						activeClass: "list-button-active"
+						}
 					});
 				}, delay);
 			}, false);
@@ -580,11 +644,6 @@ var UI = (function () {
 		}, false);
 
 		// Taps
-		tappable("#mnml", {
-			onTap: function onTap() {
-				switchMnml(true);
-			}
-		});
 
 		tappable(".btn-refresh", {
 			onTap: function onTap(e) {
@@ -610,7 +669,8 @@ var UI = (function () {
 							Posts.refreshStream();
 						}
 				}
-			}
+			},
+			activeClass: "btn-header--active"
 		});
 
 		tappable(".close-form", Modal.remove);
@@ -667,7 +727,6 @@ var UI = (function () {
 		setCurrentView: setCurrentView,
 		getCurrentView: getCurrentView,
 		setSubTitle: setSubTitle,
-		switchMnml: switchMnml,
 		scrollTop: scrollTop,
 		iPadScrollFix: iPadScrollFix,
 		scrollFixComments: scrollFixComments,
@@ -707,11 +766,11 @@ var Channels = (function () {
 	};
 
 	var template = {
-		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='channel-name'>{{name}}</p><div class='btn-edit-channel' data-title='{{name}}'></div><div class='btn-remove-channel' data-title='{{name}}'></div></div>",
+		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='sub-name channel-name'>{{name}}</p><div class='btn-edit-channel icon-pencil' data-title='{{name}}'></div><div class='btn-remove-channel icon-trashcan' data-title='{{name}}'></div></div>",
 		single: "<li class=\"channel\" data-title=\"{{name}}\"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>",
 		list: "{{#.}}<li class=\"channel\" data-title=\"{{name}}\"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>{{/.}}",
-		formAddNew: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><div class=\"btn-general\" id=\"btn-submit-channel\" data-op=\"save\">Add Channel</div></div><div class=\"close-form\">&times;</div><input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 1\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 2\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 3\" /></div><div id=\"btn-add-another-sub\">Add additional subreddit</div></div>",
-		formEditChannel: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><div class=\"btn-general\" id=\"btn-submit-channel\" data-op=\"update\">Update Channel</div></div><div class=\"close-form\">&times;</div><input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"></div><div id=\"btn-add-another-sub\">Add additional subreddit</div></div>"
+		formAddNew: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><button class=\"btn-simple\" id=\"btn-submit-channel\" data-op=\"save\">Add Channel</button></div><div class=\"close-form\">&times;</div><input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 1\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 2\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 3\" /></div><div id=\"btn-add-another-sub\">Add additional subreddit</div></div>",
+		formEditChannel: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><button class=\"btn-simple\" id=\"btn-submit-channel\" data-op=\"update\">Update Channel</button></div><div class=\"close-form\">&times;</div><input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"></div><div id=\"btn-add-another-sub\">Add additional subreddit</div></div>"
 	};
 
 	var list = [],
@@ -727,13 +786,17 @@ var Channels = (function () {
 
 	var getURL = function getURL(channel) {
 		if (channel.subs.length === 1) {
-			// Reddit API-related hack
-			// If there's one subreddit in a "Channel", and this subreddit name's invalid, reddit.com responds with a search-results HTML - not json data - and throws a hard-to-catch error...
-			return "r/" + channel.subs[0] + "+" + channel.subs[0]; // Repeating the one subreddit in the URL avoids this problem :)
+			// [1] Reddit API-related hack
+			return "r/" + channel.subs[0] + "+" + channel.subs[0];
 		} else {
 			return "r/" + channel.subs.join("+");
 		}
 	};
+	// [1] If there's one subreddit in a "Channel",
+	// and this subreddit name's invalid,
+	// reddit.com responds with a search-results HTML - not json data
+	// and throws a hard-to-catch error...
+	// Repeating the one subreddit in the URL avoids this problem :)
 
 	var insert = function insert(channel) {
 		list.push(channel);
@@ -899,29 +962,27 @@ var Channels = (function () {
 				$(".form-left-corner").append("<p class='channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</p>");
 
 				Anim.bounceOut($(".new-form"), Modal.remove);
-			},
-			activeClass: "btn-general-active"
+			}
 		});
 
 		tappable("#btn-add-channel", {
 			onTap: function onTap() {
 				Modal.show(template.formAddNew);
-			},
-			activeClass: "list-button-active"
+			}
 		});
 
 		tappable(".btn-remove-channel", {
 			onTap: function onTap(e, target) {
 				remove($(target).data("title"));
 			},
-			activeClass: "button-active"
+			activeClass: "btn-list--active"
 		});
 
 		tappable(".btn-edit-channel", {
 			onTap: function onTap(e, target) {
 				edit(target.getAttribute("data-title"));
 			},
-			activeClass: "button-active"
+			activeClass: "btn-list--active"
 		});
 	};
 
@@ -1025,7 +1086,7 @@ var Comments = (function () {
 				title: 'See this comment on reddit.com'
 			};
 
-			var comment = $('<div/>').addClass('comment-wrap').append($('<div/>').append($('<div/>').addClass('comment-data').append($('<div/>').addClass(isPoster ? 'comment-poster' : 'comment-author').append($('<p/>').text(c.data.author))).append($('<div/>').addClass('comment-info').append($('<a/>').attr(commentLink).text(timeSince(now, c.data.created_utc))))).append($('<div/>').addClass('comment-body').html(html)));
+			var comment = $('<div/>').addClass('comment-wrap').append($('<div/>').append($('<div/>').addClass('comment-data').append($('<span/>').addClass(isPoster ? 'comment-poster' : 'comment-author').text(c.data.author)).append($('<a/>').addClass('comment-info').attr(commentLink).text(timeSince(now, c.data.created_utc)))).append($('<div/>').addClass('comment-body').html(html)));
 
 			if (c.data.replies && c.data.replies.data.children[0].kind !== 'more') {
 				comment.append($('<button/>').addClass('btn-simple btn-block--small comments-button js-reply-button').attr('data-comment-id', c.data.id).text('See replies'));
@@ -1327,7 +1388,8 @@ var Header = (function () {
 		tappable('.btn-to-main', {
 			onTap: function onTap() {
 				location.hash = '#';
-			}
+			},
+			activeClass: 'btn-header--active'
 		});
 
 		tappable('#sub-title', {
@@ -1359,7 +1421,7 @@ var Header = (function () {
 
 var LinkSummary = (function () {
 
-	var template = "\n\t\t<section id='link-summary'>\n\t\t\t<a href='{{url}}' target='_blank'>\n\t\t\t\t<p id='summary-title'>{{title}}</p>\n\t\t\t\t<p id='summary-domain'>{{domain}}</p>\n\t\t\t\t{{#over_18}}\n\t\t\t\t<span class='link-label summary-label nsfw'>NSFW</span>\n\t\t\t\t{{/over_18}}\n\t\t\t\t{{#stickied}}\n\t\t\t\t<span class='link-label summary-label stickied'>Stickied</span>\n\t\t\t\t{{/stickied}}\n\t\t\t</a>\n\t\t\t<div id='summary-footer'>\n\t\t\t\t<p id='summary-author'>by {{author}}</p>\n\t\t\t\t<a class='btn-general' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>\n\t\t\t</div>\n\t\t\t<div id='summary-extra'>\n\t\t\t\t<p id='summary-sub'>{{subreddit}}</p>\n\t\t\t\t<p id='summary-time'></p>\n\t\t\t\t<a id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a>\n\t\t\t</div>\n\t\t</section>";
+	var template = "\n\t\t<section id='link-summary'>\n\t\t\t<a href='{{url}}' target='_blank'>\n\t\t\t\t<p id='summary-title'>{{title}}</p>\n\t\t\t\t<p id='summary-domain'>{{domain}}</p>\n\t\t\t\t{{#over_18}}\n\t\t\t\t<span class='link-label summary-label nsfw'>NSFW</span>\n\t\t\t\t{{/over_18}}\n\t\t\t\t{{#stickied}}\n\t\t\t\t<span class='link-label summary-label stickied'>Stickied</span>\n\t\t\t\t{{/stickied}}\n\t\t\t</a>\n\t\t\t<div id='summary-footer'>\n\t\t\t\t<p id='summary-author'>by {{author}}</p>\n\t\t\t\t<a class='btn-simple' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>\n\t\t\t</div>\n\t\t\t<div class='ls-extra'>\n\t\t\t\t<span class='ls-extra__label' id='summary-sub'>{{subreddit}}</span>\n\t\t\t\t<span class='ls-extra__label' id='summary-time'></span>\n\t\t\t\t<a class='ls-extra__label' id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a>\n\t\t\t</div>\n\t\t</section>";
 
 	var setPostSummary = function setPostSummary(data, postID) {
 		if (!data.link) {
@@ -1483,6 +1545,9 @@ var Menu = (function () {
 		about: '<div class=\'new-form about-reeddit\'><div class=\'close-form\'>&times;</div><ul><li><a href=\'/about/\' target=\'_blank\'>Reeddit Homepage</a></li><li><a href=\'https://github.com/berbaquero/reeddit\' target=\'_blank\'>GitHub Project</a></li></ul><p><a href=\'https://twitter.com/reedditapp\'>@ReedditApp</a></p><p>Built by <a href=\'http://berbaquero.com\' target=\'_blank\'>Bernardo Baquero Stand</a></p></div>'
 	};
 
+	var subSelectedClass = 'sub--selected',
+	    channelSelectedClass = 'channel--selected';
+
 	var move = function move(direction) {
 		if (is.iPhone && is.iOS7) {
 			UI.el.mainView.removeClass(UI.classes.swipe);
@@ -1515,7 +1580,7 @@ var Menu = (function () {
 		var isChannel = type && type === 'channel';
 
 		if (el) {
-			el.classList.add(isChannel ? 'channel-active' : 'sub-active');
+			el.classList.add(isChannel ? channelSelectedClass : subSelectedClass);
 			return;
 		}
 
@@ -1523,13 +1588,13 @@ var Menu = (function () {
 			var selector = isChannel ? '.channel[data-title="' + name + '"]' : '.sub[data-name="' + name + '"]';
 
 			var activeSub = document.querySelector(selector);
-			activeSub.classList.add(isChannel ? 'channel-active' : 'sub-active');
+			activeSub.classList.add(isChannel ? channelSelectedClass : subSelectedClass);
 		}
 	};
 
 	var cleanSelected = function cleanSelected() {
-		$('.sub.sub-active').removeClass('sub-active');
-		$('.channel.channel-active').removeClass('channel-active');
+		$('.sub.sub--selected').removeClass(subSelectedClass);
+		$('.channel.channel--selected').removeClass(channelSelectedClass);
 	};
 
 	var initListeners = function initListeners() {
@@ -1548,7 +1613,7 @@ var Menu = (function () {
 				Channels.loadPosts(Channels.getByName(channelName));
 			},
 			activeClassDelay: 100,
-			activeClass: 'link-active'
+			activeClass: 'channel--active'
 		});
 
 		tappable('.sub', {
@@ -1563,7 +1628,7 @@ var Menu = (function () {
 			},
 			allowClick: false,
 			activeClassDelay: 100,
-			activeClass: 'link-active'
+			activeClass: 'menu-active-item'
 		});
 
 		tappable('#btn-new-sub', {
@@ -1942,7 +2007,7 @@ var Posts = (function () {
 				var id = target.getAttribute('data-id');
 				Comments.updateHash(id);
 			},
-			activeClass: 'button-active',
+			activeClass: 'btn-list--active',
 			activeClassDelay: 100
 		});
 
@@ -2095,11 +2160,11 @@ var Subreddits = (function () {
 
 	var template = {
 		list: "{{#.}}<li data-name='{{.}}' class='sub'>{{.}}</li>{{/.}}",
-		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p>{{.}}</p><div class='btn-remove-subreddit' data-name='{{.}}'></div></div>{{/.}}</ul>",
-		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit-title'>{{data.display_name}}</p><p class='subreddit-desc'>{{data.public_description}}</p></div><div class='btn-add-sub'><div></div></div></div>{{/children}}",
+		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p class='sub-name'>{{.}}</p><div class='btn-remove-subreddit icon-trashcan' data-name='{{.}}'></div></div>{{/.}}</ul>",
+		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
 		loadMoreSubsButton: "<button class='btn-block btn-simple' id='btn-more-subs'>More</button>",
-		formInsert: "<div class=\"new-form\" id=\"form-new-sub\"><div class=\"form-left-corner\"><div class=\"btn-general\" id=\"btn-add-new-sub\">Add Subreddit</div></div><div class=\"close-form\">&times;</div><form><input type=\"text\" id=\"txt-new-sub\" placeholder=\"New subreddit name\" /></form></div>",
-		topButtonsForAdding: "<div class='top-buttons'><div id='btn-sub-man'>Insert Manually</div><div id='btn-add-channel'>Create Channel</div></div>"
+		formInsert: "<div class=\"new-form\" id=\"form-new-sub\"><div class=\"form-left-corner\"><button class=\"btn-simple\" id=\"btn-add-new-sub\">Add Subreddit</button></div><div class=\"close-form\">&times;</div><form><input type=\"text\" id=\"txt-new-sub\" placeholder=\"New subreddit name\" /></form></div>",
+		topButtonsForAdding: "<div class='buttons-group'><button id='btn-sub-man' class='btn-simple'>Insert Manually</button><button id='btn-add-channel' class='btn-simple'>Create Channel</button></div>"
 	};
 
 	var el = {
@@ -2357,20 +2422,18 @@ var Subreddits = (function () {
 				var container = $("#subs-for-channel");
 				container.append("<input type='text' placeholder='Extra subreddit'/>");
 				container[0].scrollTop = container.height();
-			},
-			activeClass: "btn-general-active"
+			}
 		});
 
 		tappable("#btn-sub-man", {
 			onTap: function onTap() {
 				Modal.show(template.formInsert);
-			},
-			activeClass: "list-button-active"
+			}
 		});
 
 		tappable("#btn-more-subs", {
 			onTap: function onTap(e, target) {
-				$(target).parent().remove();
+				$(target).remove();
 				var main = UI.el.mainWrap;
 				main.append(UI.template.loader);
 				$.ajax({
@@ -2398,14 +2461,14 @@ var Subreddits = (function () {
 				var newSub = subTitle.text();
 				add(newSub);
 			},
-			activeClass: "button-active"
+			activeClass: "btn-list--active"
 		});
 
 		tappable(".btn-remove-subreddit", {
 			onTap: function onTap(e, target) {
 				remove($(target).data("name"));
 			},
-			activeClass: "button-active"
+			activeClass: "btn-list--active"
 		});
 	};
 
@@ -2443,7 +2506,8 @@ var Subreddits = (function () {
  CurrentSelection,
  UI,
  Backup,
- URLs
+ URLs,
+ ThemeSwitcher
  */
 
 // Init all modules listeners
@@ -2492,10 +2556,7 @@ CurrentSelection.execute(function () {
 	Channels.loadPosts(channel);
 });
 
-var loadMnml = Store.getItem('mnml'),
-    isMnml = loadMnml ? JSON.parse(loadMnml) : false;
-
-UI.switchMnml(false, isMnml);
+ThemeSwitcher.init();
 
 if (is.mobile) {
 
@@ -2518,10 +2579,6 @@ if (is.mobile) {
 	}
 
 	if (is.iOS7) {
-		// apply iOS 7+ theme
-		if (!isMnml) {
-			UI.switchMnml(true, true);
-		}
 		document.body.classList.add('ios7');
 	}
 }
