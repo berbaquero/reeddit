@@ -151,30 +151,39 @@ a {
   perspective: 1000;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  background-color: white;
 }
 
-/* line 26, styles/_view.scss */
+/* line 14, styles/_themes.scss */
+
+.dark .main-view,
+.dark
+.detail-view {
+  background-color: #292c33;
+}
+
+/* line 31, styles/_view.scss */
 
 .main-view {
   -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
 
-/* line 29, styles/_view.scss */
+/* line 34, styles/_view.scss */
 
 .main-view.show-menu {
   -webkit-transform: translate3d(140px, 0px, 0px);
   transform: translate3d(140px, 0px, 0px);
 }
 
-/* line 55, styles/_view.scss */
+/* line 60, styles/_view.scss */
 
 .detail-view {
   -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 
-/* line 85, styles/_view.scss */
+/* line 90, styles/_view.scss */
 
 .wrapper {
   height: 100%;
@@ -184,20 +193,20 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 
-/* line 92, styles/_view.scss */
+/* line 97, styles/_view.scss */
 
 .wrapper--detail {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* line 101, styles/_view.scss */
+/* line 106, styles/_view.scss */
 
 .show-view {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-/* line 105, styles/_view.scss */
+/* line 110, styles/_view.scss */
 
 #main-overflow {
   width: 100%;
@@ -2555,7 +2564,7 @@ header {
 }
 
 @media only screen and (min-width: 490px) {
-  /* line 26, styles/_view.scss */
+  /* line 31, styles/_view.scss */
 
   .main-view {
     width: 72%;
@@ -2564,7 +2573,7 @@ header {
     transform: none !important;
   }
 
-  /* line 55, styles/_view.scss */
+  /* line 60, styles/_view.scss */
 
   .detail-view {
     width: 72%;
@@ -2610,14 +2619,14 @@ header {
 }
 
 @media only screen and (min-width: 760px) {
-  /* line 26, styles/_view.scss */
+  /* line 31, styles/_view.scss */
 
   .main-view {
     width: 78%;
     left: 22%;
   }
 
-  /* line 55, styles/_view.scss */
+  /* line 60, styles/_view.scss */
 
   .detail-view {
     width: 78%;
@@ -2639,14 +2648,14 @@ header {
     top: 0;
   }
 
-  /* line 26, styles/_view.scss */
+  /* line 31, styles/_view.scss */
 
   .main-view {
     width: 34%;
     left: 16%;
   }
 
-  /* line 55, styles/_view.scss */
+  /* line 60, styles/_view.scss */
 
   .detail-view {
     width: 50%;
@@ -2663,7 +2672,7 @@ header {
     border-left: 1px solid #22242b;
   }
 
-  /* line 85, styles/_view.scss */
+  /* line 90, styles/_view.scss */
 
   .wrapper {
     height: calc(100% - 32px) !important;
@@ -2722,14 +2731,14 @@ header {
 }
 
 @media only screen and (min-width: 1430px) {
-  /* line 26, styles/_view.scss */
+  /* line 31, styles/_view.scss */
 
   .main-view {
     width: 487px;
     left: 230px;
   }
 
-  /* line 55, styles/_view.scss */
+  /* line 60, styles/_view.scss */
 
   .detail-view {
     width: calc(100% - 717px);
