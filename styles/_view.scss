@@ -21,6 +21,11 @@
 .detail-view {
 	perspective: 1000;
 	backface-visibility: hidden;
+	background-color: white;
+
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-2;
+	}
 }
 
 .main-view {
