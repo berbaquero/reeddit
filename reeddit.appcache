@@ -10,7 +10,6 @@ dist/app.min.css
 # images
 /img/alienHead.png
 /img/comment_24.png
-/img/bg.png
 
 # javascript
 dist/libs.js

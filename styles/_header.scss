@@ -1,3 +1,5 @@
+@import "themes";
+
 header {
 	@include size(100%, 44px);
 	display: flex;
@@ -8,7 +10,6 @@ header {
 	border-bottom: 1px solid #777;
 	border-top: 1px solid white;
 	background-color: $light-bar-color;
-	background-image: url(../img/bg.png);
 	box-shadow: 0 -25px 24px -10px rgba(0, 0, 0, .3) inset;
 
 	> div {
@@ -18,16 +19,7 @@ header {
 	@include on-light-theme {
 		border-bottom: 1px solid #bbb;
 		border-top: 0;
-		background-image: none;
 		box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
-	}
-
-	@include break-point-min($bp-small) {
-		background-color: #e7e7e7;
-		border-bottom: 1px solid #333;
-		border-top: 0;
-		box-shadow: rgba(255, 255, 255, .5) 0 32px 20px -10px inset,
-					0 44px 0 rgba(0, 0, 0, .33) inset;
 	}
 
 	@include break-point-min($bp-wide) {
