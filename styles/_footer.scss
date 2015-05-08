@@ -1,7 +1,7 @@
 @import "themes";
 @import "mixins";
 
-$size-button: 32px;
+$width-button: 32px;
 
 .view-footer {
     display: none;
@@ -56,11 +56,11 @@ $size-button: 32px;
 
 .footer-refresh {
 	@include flex-center(all);
-	@include size($size-button);
+    @include size($width-button, 100%);
 }
 
 #detail-close {
-	@include size($size-button);
+	@include size($width-button, 100%);
 	font-size: 26px;
 	font-weight: bold;
 	line-height: 26px;
