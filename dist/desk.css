@@ -1,59 +1,43 @@
-/* line 3, styles/desk.scss */
-
 .btn-edit-sub,
 .sub,
 .channel,
-.channel > p,
+.channel>p,
 #summary-title,
 .option,
 #sorting p {
   transition-duration: 200ms;
 }
 
-/* line 13, styles/desk.scss */
-
 .btn-edit-sub:hover {
   color: #4286F5;
 }
 
-/* line 17, styles/desk.scss */
-
 .sub:hover,
-.channel:hover > p,
+.channel:hover>p,
 .option:hover,
 #sorting p:hover {
   text-shadow: 0 0 10px #CCC;
 }
 
-/* line 20, styles/_themes.scss */
-
 .light .sub:hover,
 .dark .sub:hover,
-.light
-.channel:hover > p,
-.dark
-.channel:hover > p,
-.light
-.option:hover,
-.dark
-.option:hover,
-.light
-#sorting p:hover,
-.dark
-#sorting p:hover {
+.light .channel:hover>p,
+.dark .channel:hover>p,
+.light .option:hover,
+.dark .option:hover,
+.light #sorting p:hover,
+.dark #sorting p:hover {
   text-shadow: none;
 }
-
-/* line 28, styles/desk.scss */
 
 .link,
 .sub,
 .channel,
-.top-buttons > div,
+.top-buttons>div,
 .comments-button,
 .btn-edit-sub,
 #remove-sub,
-.item-to-edit > div,
+.item-to-edit>div,
 .btn-add-sub,
 .close-form,
 #btn-add-new-channel,
@@ -63,8 +47,6 @@
   cursor: pointer;
 }
 
-/* line 45, styles/desk.scss */
-
 #detail-close,
 .footer-refresh,
 .header-corner,
@@ -73,72 +55,44 @@
   cursor: default;
 }
 
-/* Scrolling bars style */
-
-/* line 2, styles/_desk-webkit-bars.scss */
-
 ::-webkit-scrollbar,
 #main-menu::-webkit-scrollbar {
   width: 7px;
 }
-
-/* Track Principal */
-
-/* line 7, styles/_desk-webkit-bars.scss */
 
 ::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: whiteSmoke;
 }
 
-/* Handle Principal */
-
-/* line 13, styles/_desk-webkit-bars.scss */
-
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: #c8c8c8;
 }
-
-/* Track Menu */
-
-/* line 19, styles/_desk-webkit-bars.scss */
 
 #main-menu::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #333;
 }
 
-/* Handle Menu */
-
-/* line 25, styles/_desk-webkit-bars.scss */
-
 #main-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #444;
 }
 
-/* line 55, styles/desk.scss */
-
-.channel > div p {
+.channel>div p {
   font-size: 11px;
   letter-spacing: 1px;
   line-height: 15px;
   margin: 4px 0;
 }
 
-/* Mnml Theme */
-
-/* line 5, styles/_desk-themes.scss */
-
 .mnml #main-menu::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #262b30;
 }
 
-/* line 10, styles/_desk-themes.scss */
-
 .mnml #main-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0,0,0,0.4);
 }
