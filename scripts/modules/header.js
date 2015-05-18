@@ -4,7 +4,8 @@
  tappable,
  Menu,
  Posts,
- UI
+ UI,
+ ThemeSwitcher
  */
 
 var Header = (function() {
@@ -35,6 +36,8 @@ var Header = (function() {
 				Menu.move(Menu.isShowing() ? UI.Move.LEFT : UI.Move.RIGHT);
 			}
 		});
+
+		el.icon.on('dblclick', ThemeSwitcher.switchTheme);
 	};
 
 	// Exports

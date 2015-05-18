@@ -85,7 +85,8 @@ let ThemeSwitcher = (() => {
 
 	// Exports
 	return {
-		init: init
+		init: init,
+		switchTheme: switchTheme
 	};
 
 })();
