@@ -28,6 +28,7 @@
     "gulp-watch": "^4.2.4"
   },
   "scripts": {
-    "start": "gulp dev"
+    "start": "gulp dev",
+    "build": "gulp"
   }
 }
