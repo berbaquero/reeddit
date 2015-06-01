@@ -4,8 +4,8 @@
 .sub,
 .channel,
 .channel > p,
-#summary-title,
 .option,
+#summary-title,
 #sorting p {
 	transition-duration: 200ms;
 }
@@ -31,26 +31,24 @@
 .top-buttons > div,
 .comments-button,
 .btn-edit-sub,
-#remove-sub,
 .item-to-edit > div,
 .btn-add-sub,
 .close-form,
-#btn-add-new-channel,
 .option,
-#sorting p,
-.btn-side-menu-add {
+.btn-side-menu-add,
+#btn-add-new-channel,
+#remove-sub,
+#sorting p {
 	cursor: pointer;
 }
 
-#detail-close,
 .footer-refresh,
 .header-corner,
 .footer-sub-title,
-.footer-post-title {
+.footer-post-title,
+#detail-close {
 	cursor: default;
 }
-
-@import "desk-webkit-bars";
 
 .channel > div p {
 	font-size: 11px;
@@ -58,5 +56,3 @@
 	line-height: 15px;
 	margin: 4px 0;
 }
-
-@import "desk-themes";
