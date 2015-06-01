@@ -2,8 +2,8 @@
 .sub,
 .channel,
 .channel>p,
-#summary-title,
 .option,
+#summary-title,
 #sorting p {
   transition-duration: 200ms;
 }
@@ -36,48 +36,23 @@
 .top-buttons>div,
 .comments-button,
 .btn-edit-sub,
-#remove-sub,
 .item-to-edit>div,
 .btn-add-sub,
 .close-form,
-#btn-add-new-channel,
 .option,
-#sorting p,
-.btn-side-menu-add {
+.btn-side-menu-add,
+#btn-add-new-channel,
+#remove-sub,
+#sorting p {
   cursor: pointer;
 }
 
-#detail-close,
 .footer-refresh,
 .header-corner,
 .footer-sub-title,
-.footer-post-title {
+.footer-post-title,
+#detail-close {
   cursor: default;
-}
-
-::-webkit-scrollbar,
-#main-menu::-webkit-scrollbar {
-  width: 7px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: whiteSmoke;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: #c8c8c8;
-}
-
-#main-menu::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #333;
-}
-
-#main-menu::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #444;
 }
 
 .channel>div p {
@@ -85,14 +60,4 @@
   letter-spacing: 1px;
   line-height: 15px;
   margin: 4px 0;
-}
-
-.mnml #main-menu::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #262b30;
-}
-
-.mnml #main-menu::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: rgba(0,0,0,0.4);
 }
