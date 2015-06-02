@@ -408,8 +408,7 @@ var ThemeSwitcher = (function () {
 
 	// Exports
 	return {
-		init: init,
-		switchTheme: switchTheme
+		init: init
 	};
 })();
 
@@ -1370,8 +1369,7 @@ var Footer = (function () {
  tappable,
  Menu,
  Posts,
- UI,
- ThemeSwitcher
+ UI
  */
 
 var Header = (function () {
@@ -1402,8 +1400,6 @@ var Header = (function () {
 				Menu.move(Menu.isShowing() ? UI.Move.LEFT : UI.Move.RIGHT);
 			}
 		});
-
-		el.icon.on('dblclick', ThemeSwitcher.switchTheme);
 	};
 
 	// Exports
