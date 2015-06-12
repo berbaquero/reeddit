@@ -10,6 +10,21 @@ $gray:       #888888;
 $gray-light: #bbbbbb;
 $whitetish:  #eeeeee;
 
+.btn-basic {
+
+	&:active {
+		background-color: #ddd;
+
+		@include on-theme(light) {
+			background-color: #ccc;
+		}
+
+		@include on-theme(dark) {
+			background-color: $dark-bg-color-3;
+		}
+	}
+}
+
 .btn-list--active {
 	background-color: #ddd;
 
