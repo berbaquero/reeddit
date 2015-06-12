@@ -213,27 +213,23 @@ var Comments = (function() {
 	var initListeners = function() {
 
 		UI.el.detailWrap.on('click', '#comments-container a, #selftext a', function(ev) {
-			var imageURL = LinkSummary.checkImageLink(ev.target.href);
+			const imageURL = LinkSummary.checkImageLink(this.href);
 			if (imageURL) {
 				ev.preventDefault();
 				Modal.showImageViewer(imageURL);
 			}
 		});
 
-		tappable(".js-reply-button", {
-			onTap: function(e, target) {
-				var parent = $(target),
-					commentID = parent.attr('data-comment-id'),
-					comments = replies[commentID];
-				load(comments, parent.parent());
-				parent.remove();
-			}
+		UI.el.detailWrap.on('click', '.js-reply-button', function() {
+			const button = $(this),
+				commentID = button.attr('data-comment-id'),
+				comments = replies[commentID];
+			load(comments, button.parent());
+			button.remove();
 		});
 
-		tappable(".image-preview", {
-			onTap: function(e, target) {
-				Modal.showImageViewer(target.src);
-			}
+		UI.el.detailWrap.on('click', '.image-preview', function() {
+			Modal.showImageViewer(this.src);
 		});
 	};
 
