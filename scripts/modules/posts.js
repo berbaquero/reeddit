@@ -38,7 +38,7 @@ var Posts = (function() {
 						{{/data.stickied}}
 					</div>
 				</div>
-				<div class='to-comments' data-id='{{data.id}}'>
+				<div class='to-comments btn-basic' data-id='{{data.id}}'>
 					<div class='comments-icon'></div>
 				</div>
 			</article>
@@ -244,53 +244,42 @@ var Posts = (function() {
 
 	var initListeners = function() {
 
-		tappable(".js-link", {
-			onTap: function(e, target) {
-				if (!is.wideScreen) {
-					return;
-				}
-				var id = target.getAttribute('data-id');
-				Comments.updateHash(id);
-			},
-			allowClick: false,
-			activeClassDelay: 100,
-			inactiveClassDelay: 200,
-			activeClass: 'link-active'
-		});
+		UI.el.mainWrap.on('click', '.js-link', function(ev) {
+			ev.preventDefault();
 
-		tappable('.js-post-title', {
-			onTap: function(e) {
-				var id = e.target.getAttribute('data-id'),
-					url = e.target.href;
-				open(url, id);
-			},
-			allowClick: false
-		});
-
-		tappable(".to-comments", {
-			onTap: function(e, target) {
-				var id = target.getAttribute('data-id');
-				Comments.updateHash(id);
-			},
-			activeClass: 'btn-list--active',
-			activeClassDelay: 100
-		});
-
-		tappable('#btn-load-more-posts', {
-			onTap: function() {
-				CurrentSelection.execute(function() {
-					var url;
-					if (CurrentSelection.getName().toLowerCase() === 'frontpage') {
-						url = URLs.init + "r/" + Subreddits.getAllSubsString() + "/";
-					} else {
-						url = URLs.init + "r/" + CurrentSelection.getName() + "/";
-					}
-					load(url, '&after=' + idLast);
-				}, function() {
-					var channel = Channels.getByName(CurrentSelection.getName());
-					load(URLs.init + Channels.getURL(channel) + '/', '&after=' + idLast);
-				});
+			if (!is.wideScreen) {
+				return;
 			}
+
+			Comments.updateHash(this.dataset.id);
+		});
+
+		UI.el.mainWrap.on('click', '.js-post-title', function(ev) {
+			ev.preventDefault();
+
+			const id = ev.target.dataset.id,
+				url = ev.target.href;
+
+			open(url, id);
+		});
+
+		UI.el.mainWrap.on('click', '.to-comments', function() {
+			Comments.updateHash(this.dataset.id);
+		});
+
+		UI.el.mainWrap.on('click', '#btn-load-more-posts', function() {
+			CurrentSelection.execute(function() {
+				var url;
+				if (CurrentSelection.getName().toLowerCase() === 'frontpage') {
+					url = URLs.init + 'r/' + Subreddits.getAllSubsString() + '/';
+				} else {
+					url = URLs.init + 'r/' + CurrentSelection.getName() + '/';
+				}
+				load(url, '&after=' + idLast);
+			}, function() {
+				var channel = Channels.getByName(CurrentSelection.getName());
+				load(URLs.init + Channels.getURL(channel) + '/', '&after=' + idLast);
+			});
 		});
 	};
 
