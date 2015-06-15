@@ -225,37 +225,35 @@ var UI = (function() {
 			}
 		}, false);
 
-		// Taps
+		// Presses
 
-		tappable(".btn-refresh", {
-			onTap: function(e) {
-				var origin = e.target.getAttribute("data-origin");
-				switch(origin) {
-					case "footer-main":
-						Posts.refreshStream();
-						break;
-					case "footer-detail":
+		UI.el.body.on('click', '.btn-refresh', function() {
+			var origin = this.dataset.origin;
+			console.log('ORIGIN', origin);
+			switch(origin) {
+				case 'footer-main':
+					Posts.refreshStream();
+					break;
+				case 'footer-detail':
+					if (!Comments.getCurrentThread()) {
+						return;
+					}
+					Comments.show(Comments.getCurrentThread(), true);
+					break;
+				default:
+					if (currentView === View.COMMENTS) {
 						if (!Comments.getCurrentThread()) {
 							return;
 						}
 						Comments.show(Comments.getCurrentThread(), true);
-						break;
-					default:
-						if (currentView === View.COMMENTS) {
-							if (!Comments.getCurrentThread()) {
-								return;
-							}
-							Comments.show(Comments.getCurrentThread(), true);
-						}
-						if (currentView === View.MAIN) {
-							Posts.refreshStream();
-						}
-				}
-			},
-			activeClass: 'btn-header--active'
+					}
+					if (currentView === View.MAIN) {
+						Posts.refreshStream();
+					}
+			}
 		});
 
-		tappable(".close-form", Modal.remove);
+		UI.el.body.on('click', '.close-form', Modal.remove);
 
 		// Swipes
 		if (is.mobile) {
