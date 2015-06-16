@@ -19,21 +19,11 @@ var Header = (function() {
 	};
 
 	var initListeners = function() {
-
-		tappable(".btn-to-main", {
-			onTap: function() {
-				location.hash = "#";
-			},
-			activeClass: 'btn-header--active'
-		});
-
-		tappable("#sub-title", {
-			onTap: function() {
-				if (is.mobile && Posts.areLoading()) {
-					return;
-				}
-				Menu.move(Menu.isShowing() ? UI.Move.LEFT : UI.Move.RIGHT);
+		el.subtitleText.on('click', () => {
+			if (is.mobile && Posts.areLoading()) {
+				return;
 			}
+			Menu.move(Menu.isShowing() ? UI.Move.LEFT : UI.Move.RIGHT);
 		});
 	};
 

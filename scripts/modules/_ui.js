@@ -45,7 +45,8 @@ var UI = (function() {
 		mainWrap: $('#main-wrap'),
 		detailWrap: $('#detail-wrap'),
 		mainView: $('.main-view'),
-		detailView: $('.detail-view')
+		detailView: $('.detail-view'),
+		buttonToMainView: $('.btn-to-main')
 	};
 
 	var currentView = View.MAIN;
@@ -251,6 +252,10 @@ var UI = (function() {
 						Posts.refreshStream();
 					}
 			}
+		});
+
+		el.buttonToMainView.on('click', () => {
+			location.hash = "#";
 		});
 
 		UI.el.body.on('click', '.close-form', Modal.remove);
