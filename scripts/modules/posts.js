@@ -25,7 +25,10 @@ var Posts = (function() {
 						<div style='background-image: url({{data.thumbnail}})'></div>
 					</div>
 					<div class='link-info'>
-						<a href='{{data.url}}' data-id='{{data.id}}' target='_blank' class='link-title js-post-title'>
+						<a href='{{data.url}}'
+						   data-id='{{data.id}}'
+						   target='_blank'
+						   class='link-title js-post-title'>
 						{{data.title}}
 						</a>
 						<div class='link-domain'>{{data.domain}}</div>
