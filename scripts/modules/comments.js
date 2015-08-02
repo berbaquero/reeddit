@@ -85,6 +85,7 @@ var Comments = (function() {
 			var comment =
 				$("<div/>")
 					.addClass("comment-wrap")
+					.attr('tabindex', '0')
 					.append($('<div/>')
 						.append($("<div/>")
 							.addClass("comment-data")

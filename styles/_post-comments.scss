@@ -1,4 +1,6 @@
 @import "themes";
+@import "globals/variables";
+@import "base";
 
 #comments-container {
 
@@ -28,6 +30,11 @@
 	padding: 10px 0 10px 10px;
 	border-bottom: 1px solid #eee;
 	border-left: 1px solid #eee;
+	outline: none;
+
+	&:focus {
+		border-left: 3px solid $focus-item !important;
+	}
 
 	@include on-theme(dark) {
 		border-color: $dark-bg-color-1;
