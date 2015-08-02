@@ -32,7 +32,7 @@ var Posts = (function() {
 						{{data.title}}
 						</a>
 						<div class='link-domain'>{{data.domain}}</div>
-						<div class='link-sub'>{{data.subreddit}}</div>
+						<span class='link-sub'>{{data.subreddit}}</span>
 						{{#data.over_18}}
 						<span class='link-label nsfw'>NSFW</span>
 						{{/data.over_18}}

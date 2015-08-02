@@ -1,4 +1,5 @@
 @import "themes";
+@import "globals/variables";
 
 #subs,
 #channels {
@@ -62,14 +63,36 @@
     font-size: 20px;
 }
 
+.channel:focus > p,
+.option:focus {
+    background-color: $focus-item;
+}
+
+.channel:hover > p,
+.option:hover {
+
+    @include on-theme(light-n-dark) {
+        text-shadow: none;
+    }
+}
+
 .sub {
-    color: whiteSmoke;
-    margin: 0;
+    color: white;
     font-size: 14px;
     text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    outline: none;
+    -webkit-touch-callout: none;
+
+    &:focus {
+        background-color: rgba(black, .15);
+    }
+
+    &:hover {
+        text-shadow: 0 0 10px #CCC;
+    }
 
     @include on-theme(light) {
         color: $light-text-color;
@@ -297,7 +320,7 @@
 }
 
 .option.tappable-active,
-.menu-active-item {
+.sub:active {
 	background-image: linear-gradient(#4286F5, #194FDB);
 
 	@include on-theme(light-n-dark) {
