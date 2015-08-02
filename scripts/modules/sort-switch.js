@@ -21,22 +21,22 @@ var SortSwitch = (function() {
 				wrap = document.getElementsByClassName('sorter-wrap')[0];
 			}
 			return wrap;
-		}
+		},
+		mainSwitch: $('.js-sort-switch-main')
 	};
 
 	var initListeners = function() {
-		tappable('.js-sort-switch-main', {
-			onTap: function(ev, target) {
-				if (Posts.areLoading()) {
-					return;
-				}
-				isHot = !isHot;
-				Sorting.change(isHot ? 'hot' : 'new');
-				if (isHot) {
-					target.classList.remove(classes.new);
-				} else {
-					target.classList.add(classes.new);
-				}
+		el.mainSwitch.on('click', function() {
+			const target = this;
+			if (Posts.areLoading()) {
+				return;
+			}
+			isHot = !isHot;
+			Sorting.change(isHot ? 'hot' : 'new');
+			if (isHot) {
+				target.classList.remove(classes.new);
+			} else {
+				target.classList.add(classes.new);
 			}
 		});
 	};
