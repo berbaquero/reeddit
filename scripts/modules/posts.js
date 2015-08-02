@@ -28,8 +28,8 @@ var Posts = (function() {
 						<a href='{{data.url}}' data-id='{{data.id}}' target='_blank' class='link-title js-post-title'>
 						{{data.title}}
 						</a>
-						<p class='link-domain'>{{data.domain}}</p>
-						<p class='link-sub'>{{data.subreddit}}</p>
+						<div class='link-domain'>{{data.domain}}</div>
+						<div class='link-sub'>{{data.subreddit}}</div>
 						{{#data.over_18}}
 						<span class='link-label nsfw'>NSFW</span>
 						{{/data.over_18}}

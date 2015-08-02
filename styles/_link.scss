@@ -71,7 +71,6 @@
 }
 
 .link-domain {
-	margin: 0;
 	color: $red;
 
 	@include on-theme(dark) {
@@ -80,9 +79,7 @@
 }
 
 .link-sub {
-	margin: 0;
 	color: #777;
-	display: inline;
 
 	@include on-theme(dark) {
 		color: $dark-text-color-2;
