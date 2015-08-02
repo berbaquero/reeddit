@@ -36,7 +36,7 @@ var Subreddits = (function() {
 		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
 		loadMoreSubsButton: "<button class='btn-block btn-simple' id='btn-more-subs'>More</button>",
 		formInsert: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><button class="btn-simple" id="btn-add-new-sub">Add Subreddit</button></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-		topButtonsForAdding: "<div class='buttons-group'><button id='btn-sub-man' class='btn-simple'>Insert Manually</button><button id='btn-add-channel' class='btn-simple'>Create Channel</button></div>"
+		topButtonsForAdding: "<div class='buttons-group pad-x pad-y'><button id='btn-sub-man' class='btn-simple'>Insert Manually</button><button id='btn-add-channel' class='btn-simple'>Create Channel</button></div>"
 	};
 
 	var el = {
