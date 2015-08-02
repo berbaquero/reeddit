@@ -20,7 +20,7 @@ var Posts = (function() {
 	const template = `
 		{{#children}}
 			<article class='link-wrap'>
-				<div class='link js-link' data-id='{{data.id}}'>
+				<div class='link pad-y pad-x js-link' data-id='{{data.id}}'>
 					<div class='link-thumb'>
 						<div style='background-image: url({{data.thumbnail}})'></div>
 					</div>

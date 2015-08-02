@@ -28,8 +28,10 @@ var Subreddits = (function() {
 		editing = false,
 		loadedSubs;
 
+	const subredditClasses = 'sub pad-x pad-y';
+
 	var template = {
-		list: "{{#.}}<li data-name='{{.}}' class='sub'>{{.}}</li>{{/.}}",
+		list: "{{#.}}<li data-name='{{.}}' class='" + subredditClasses + "'>{{.}}</li>{{/.}}",
 		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p class='sub-name'>{{.}}</p><div class='btn-remove-subreddit icon-trashcan' data-name='{{.}}'></div></div>{{/.}}</ul>",
 		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
 		loadMoreSubsButton: "<button class='btn-block btn-simple' id='btn-more-subs'>More</button>",
@@ -62,7 +64,10 @@ var Subreddits = (function() {
 		if (subs instanceof Array) {
 			el.list.append(Mustache.to_html(template.list, subs));
 		} else {
-			el.list.append($("<li/>").attr("data-name", subs).addClass("sub").text(subs));
+			el.list.append($("<li/>")
+							.attr("data-name", subs)
+							.addClass(subredditClasses)
+							.text(subs));
 		}
 	};
 
