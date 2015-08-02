@@ -20,16 +20,19 @@ var Posts = (function() {
 	const template = `
 		{{#children}}
 			<article class='link-wrap'>
-				<div class='link js-link' data-id='{{data.id}}'>
+				<div class='link pad-y pad-x js-link' data-id='{{data.id}}'>
 					<div class='link-thumb'>
 						<div style='background-image: url({{data.thumbnail}})'></div>
 					</div>
 					<div class='link-info'>
-						<a href='{{data.url}}' data-id='{{data.id}}' target='_blank' class='link-title js-post-title'>
+						<a href='{{data.url}}'
+						   data-id='{{data.id}}'
+						   target='_blank'
+						   class='link-title js-post-title'>
 						{{data.title}}
 						</a>
-						<p class='link-domain'>{{data.domain}}</p>
-						<p class='link-sub'>{{data.subreddit}}</p>
+						<div class='link-domain'>{{data.domain}}</div>
+						<span class='link-sub'>{{data.subreddit}}</span>
 						{{#data.over_18}}
 						<span class='link-label nsfw'>NSFW</span>
 						{{/data.over_18}}

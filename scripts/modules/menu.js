@@ -11,6 +11,10 @@
 
 var Menu = (function() {
 
+	const el = {
+		mainMenu: $('#main-menu')
+	};
+
 	var showing = false;
 
 	var isShowing = () => showing;
@@ -90,19 +94,16 @@ var Menu = (function() {
 			activeClass: "channel--active"
 		});
 
-		tappable(".sub", {
-			onTap: function(e, target) {
-				var subredditName = $(target).first().text();
-				Menu.move(UI.Move.LEFT);
-				Subreddits.loadPosts(subredditName);
-				markSelected({el: target, update: true});
-				if (UI.getCurrentView() === UI.View.COMMENTS) {
-					UI.backToMainView();
-				}
-			},
-			allowClick: false,
-			activeClassDelay: 100,
-			activeClass: 'menu-active-item'
+		el.mainMenu.on('click', '.sub', function(ev) {
+			ev.preventDefault();
+			const target = ev.target;
+			var subredditName = $(target).first().text();
+			Menu.move(UI.Move.LEFT);
+			Subreddits.loadPosts(subredditName);
+			markSelected({el: target, update: true});
+			if (UI.getCurrentView() === UI.View.COMMENTS) {
+				UI.backToMainView();
+			}
 		});
 
 		tappable("#btn-new-sub", {

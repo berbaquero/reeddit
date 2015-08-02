@@ -1,4 +1,5 @@
 @import "themes";
+@import "globals/variables";
 
 .btn-edit-sub,
 .sub,
@@ -14,17 +15,6 @@
 	color: #4286F5;
 }
 
-.sub:hover,
-.channel:hover > p,
-.option:hover,
-#sorting p:hover {
-	text-shadow: 0 0 10px #CCC;
-
-	@include on-theme(light-n-dark) {
-		text-shadow: none;
-	}
-}
-
 .link,
 .sub,
 .channel,
@@ -37,8 +27,7 @@
 .option,
 .btn-side-menu-add,
 #btn-add-new-channel,
-#remove-sub,
-#sorting p {
+#remove-sub {
 	cursor: pointer;
 }
 

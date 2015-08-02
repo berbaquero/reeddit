@@ -50,7 +50,7 @@ var LinkSummary = (function() {
 				Posts.getList()[postID].selftext = selfText;
 				Posts.getList()[postID].selftextParsed = true;
 			}
-			summaryHTML += "<section id='selftext'>" + selfText + "</section>";
+			summaryHTML += "<section id='selftext' class='pad-y pad-x mrgn-x mrgn-y'>" + selfText + "</section>";
 		} else { // if it's an image
 			var linkURL = Posts.getList()[postID].url;
 			var imageLink = checkImageLink(linkURL);
