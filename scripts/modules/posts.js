@@ -46,7 +46,8 @@ var Posts = (function() {
 				</div>
 			</article>
 		{{/children}}
-		<button id='btn-load-more-posts' class='btn-block btn-simple'>More</button>
+		<button id='btn-load-more-posts'
+				class='btn blck mrgn-cntr-x'>More</button>
 		<div id='main-overflow'></div>`;
 
 	var loading = false,

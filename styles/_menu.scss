@@ -1,5 +1,6 @@
 @import "themes";
 @import "globals/variables";
+@import "base";
 
 #subs,
 #channels {
@@ -79,10 +80,6 @@
 .sub {
     color: white;
     font-size: 14px;
-    text-transform: capitalize;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     outline: none;
     -webkit-touch-callout: none;
 
@@ -96,6 +93,10 @@
 
     @include on-theme(light) {
         color: $light-text-color;
+
+        &:focus {
+            background-color: rgba(black, .05);
+        }
     }
 
 	@include on-theme(dark) {
@@ -120,51 +121,62 @@
 }
 
 .channel {
-	margin: 0;
+    $spacing-y: 5px;
 	font-size: 14px;
-	padding: 5px 10px;
-    color: whiteSmoke;
+	padding-top: $spacing-y;
+    padding-bottom: $spacing-y;
+    color: white;
+    outline: none;
+    -webkit-touch-callout: none;
 
-    // Elements
-    $title: '> p';
-    $subs-container: '> div';
-    $subs-name: '> div p';
+    &:focus {
+        background-color: rgba(black, .15);
+    }
 
     @include on-theme(light) {
         color: $light-text-color;
+
+        &:focus {
+            background-color: rgba(black, .05);
+        }
+
     }
 
 	@include on-theme(dark) {
 		color: $dark-text-color-1;
 	}
 
-    #{$title} {
-        margin: 0;
-    }
-
-    #{$subs-container} {
-        padding-left: 10px;
-    }
-
-    #{$subs-name} {
-        font-size: 13px;
+    &__sub {
+        font-size: 11px;
         color: #bbb;
-        margin: 5px 0;
-        text-transform: capitalize;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        margin-top: $spacing-y;
+        margin-bottom: $spacing-y;
+        letter-spacing: 1px;
 
-        @include on-theme(light) {
-            color: lighten($light-text-color, 10%);
-        }
+		@include on-theme(light) {
+			color: lighten($light-text-color, 10%);
+		}
 
 		@include on-theme(dark) {
 			color: $dark-text-color-2;
 		}
     }
 
-    &--active {
+	&:active
+	&__sub {
+		color: $col_active-link-subtext;
+
+		@include on-theme(light-n-dark) {
+			color: darken($white, 10%);
+		}
+	}
+
+	&:active
+	&__title {
+		text-shadow: 0 0 10px #ccc;
+	}
+
+    &:active {
 		background-image: linear-gradient(#4286F5, #194FDB);
 
         @include on-theme(light-n-dark) {
@@ -181,18 +193,6 @@
 			border-color: $dark-active-color-1;
 			background-color: $dark-active-color-1;
 		}
-
-        #{$title} {
-            text-shadow: 0 0 10px #ccc;
-        }
-
-        #{$subs-name} {
-			color: $col_active-link-subtext;
-
-            @include on-theme(light-n-dark) {
-                color: darken($white, 10%);
-            }
-        }
     }
 
 	&--selected {
@@ -272,15 +272,12 @@
 }
 
 .menu-desc {
+    $height: 35px;
     color: rgba(255, 255, 255, 0.82);
     font-size: 12px;
-    text-transform: uppercase;
     text-shadow: rgba(0, 0, 0, 0.7) 0 1px 0;
-    margin: 0;
-    width: 100%;
-    padding-left: 10px;
-    height: 35px;
-    line-height: 35px;
+    height: $height;
+    line-height: $height;
     background: rgba(0, 0, 0, 0.20);
     border-top: 1px solid #111;
     border-bottom: 1px solid #111;

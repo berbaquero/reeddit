@@ -55,7 +55,6 @@
 .comment-poster {
 	color: $red-comments;
 	font-weight: 500;
-	margin: 0;
 
 	@include on-theme(dark) {
 		font-weight: 400;
@@ -83,7 +82,6 @@
 .comment-info {
 	color: #aaa;
 	font-weight: 500;
-	text-decoration: none;
 
 	@include on-theme(dark) {
 		color: $dark-text-color-2;
@@ -129,22 +127,11 @@
 	@include on-theme(dark) {
 		background-color: $dark-bg-color-1;
 	}
-
-	p {
-		margin: 0;
-		padding-left: 10px;
-	}
-
-	a {
-		text-decoration: none;
-	}
 }
 
 #summary-title {
 	font-size: 16px;
 	color: white;
-	font-weight: 700;
-	padding-right: 10px;
 	padding-bottom: 2px;
 
 	@include on-theme(light) {
@@ -158,7 +145,6 @@
 
 #summary-domain {
 	color: #F75433;
-	font-weight: 700;
 	font-size: 13px;
 	display: inline;
 
@@ -173,7 +159,6 @@
 
 #summary-author {
 	color: #E2E2E0;
-	font-weight: 700;
 
 	@include on-theme(light) {
 		color: $light-text-color;
@@ -182,11 +167,6 @@
 	@include on-theme(dark) {
 		color: $dark-text-color-2;
 	}
-}
-
-#share-tw {
-	margin-right: 10px;
-	padding: 3px 6px;
 }
 
 $gray-dark: #333;
@@ -204,44 +184,23 @@ $gray-dark: #333;
 }
 
 .ls-extra {
-	display: flex;
-	justify-content: space-between;
 	background-color: $gray-dark;
-	font-weight: 700;
 	padding: 4px 10px;
 	width: 100%;
 	border-top: 1px solid #5d5d5d;
+	color: white;
+
 
 	@include on-theme(light) {
 		background-color: $light-bg-color-2;
 		border: 0;
+		color: $light-text-color;
 	}
 
 	@include on-theme(dark) {
 		background-color: $dark-bg-color-3;
 		border: 0;
-	}
-
-	&__label {
-		color: white;
-		width: 33%;
-		text-decoration: none;
-
-		&:nth-child(2) {
-			text-align: center;
-		}
-
-		&:nth-child(3) {
-			text-align: right;
-		}
-
-		@include on-theme(light) {
-			color: $light-text-color;
-		}
-
-		@include on-theme(dark) {
-			color: $dark-text-color-1;
-		}
+		color: $dark-text-color-1;
 	}
 }
 

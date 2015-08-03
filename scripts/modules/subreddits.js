@@ -28,15 +28,15 @@ var Subreddits = (function() {
 		editing = false,
 		loadedSubs;
 
-	const subredditClasses = 'sub pad-x pad-y blck no-ndrln';
+	const subredditClasses = 'sub pad-x pad-y blck no-ndrln txt-cap txt-ellps';
 
 	var template = {
 		list: "{{#.}}<a href='#' data-name='{{.}}' class='" + subredditClasses + "'>{{.}}</a>{{/.}}",
 		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p class='sub-name'>{{.}}</p><div class='btn-remove-subreddit icon-trashcan' data-name='{{.}}'></div></div>{{/.}}</ul>",
 		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
-		loadMoreSubsButton: "<button class='btn-block btn-simple' id='btn-more-subs'>More</button>",
-		formInsert: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><button class="btn-simple" id="btn-add-new-sub">Add Subreddit</button></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-		topButtonsForAdding: "<div class='buttons-group pad-x pad-y'><button id='btn-sub-man' class='btn-simple'>Insert Manually</button><button id='btn-add-channel' class='btn-simple'>Create Channel</button></div>"
+		loadMoreSubsButton: "<button class='btn blck w-50 mrgn-y mrgn-cntr-x' id='btn-more-subs'>More</button>",
+		formInsert: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><button class="btn" id="btn-add-new-sub">Add Subreddit</button></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
+		topButtonsForAdding: "<div class='buttons-group flx flx-cntr-x pad-x pad-y'><button id='btn-sub-man' class='btn'>Insert Manually</button><button id='btn-add-channel' class='btn'>Create Channel</button></div>"
 	};
 
 	var el = {

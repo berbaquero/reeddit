@@ -77,21 +77,19 @@ var Menu = (function() {
 
 	var initListeners = function() {
 
-		tappable('.channel', {
-			onTap: function(e, target) {
-				var channelName = target.getAttribute('data-title');
-				Menu.move(UI.Move.LEFT);
-				if (channelName === CurrentSelection.getName() && !Subreddits.isEditing()) {
-					return;
-				}
-				Menu.markSelected({type: 'channel', el: target, update: true});
-				if (UI.getCurrentView() === UI.View.COMMENTS) {
-					UI.backToMainView();
-				}
-				Channels.loadPosts(Channels.getByName(channelName));
-			},
-			activeClassDelay: 100,
-			activeClass: "channel--active"
+		el.mainMenu.on('click', '.channel', function(ev) {
+			ev.preventDefault();
+			const target = this;
+			const channelName = target.getAttribute('data-title');
+			Menu.move(UI.Move.LEFT);
+			if (channelName === CurrentSelection.getName() && !Subreddits.isEditing()) {
+				return;
+			}
+			Menu.markSelected({type: 'channel', el: target, update: true});
+			if (UI.getCurrentView() === UI.View.COMMENTS) {
+				UI.backToMainView();
+			}
+			Channels.loadPosts(Channels.getByName(channelName));
 		});
 
 		el.mainMenu.on('click', '.sub', function(ev) {

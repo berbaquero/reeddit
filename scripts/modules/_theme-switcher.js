@@ -73,14 +73,9 @@ let ThemeSwitcher = (() => {
 	};
 
 	const init = () => {
-
 		loadInitialTheme();
-
 		// Listeners
-
-		tappable("#switch-theme", {
-			onTap: switchTheme
-		});
+		el.switcherButton.on('click', switchTheme);
 	};
 
 	// Exports

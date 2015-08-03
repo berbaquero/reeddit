@@ -63,11 +63,3 @@ $detail-view-wide-x:  calc(100% - #{($menu-view-wide-x + $main-view-wide-x)});
 %full-width {
 	width: 100%;
 }
-
-.invisible {
-	opacity: 0;
-}
-
-.hide {
-    display: none !important;
-}

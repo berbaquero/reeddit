@@ -3,6 +3,7 @@
 
 button {
 	-webkit-tap-highlight-color: transparent;
+	font-family: inherit;
 }
 
 $black:      #444444;
@@ -10,74 +11,17 @@ $gray:       #888888;
 $gray-light: #bbbbbb;
 $whitetish:  #eeeeee;
 
-.btn-basic {
-
-	&:active {
-		background-color: #ddd;
-
-		@include on-theme(light) {
-			background-color: #ccc;
-		}
-
-		@include on-theme(dark) {
-			background-color: $dark-bg-color-3;
-		}
-	}
-}
-
-.btn-list--active {
-	background-color: #ddd;
-
-	@include on-theme(light) {
-		background-color: #ccc;
-	}
-
-	@include on-theme(dark) {
-		background-color: $dark-bg-color-3;
-	}
-}
-
-// TODO: better reusable classes
-.btn-refresh,
-.btn-to-main {
-
-	&:active {
-		background-color: rgba(0, 0, 0, .3);
-	}
-}
-
-#btn-add-new-channel {
-	padding: 5px 10px;
-}
-
-#btn-add-another-sub {
-    background-color: #CCC;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    padding: 8px 15px;
-    font-size: 15px;
-    color: #FFF;
-    border: 1px solid #aaa;
-    border-top: 0;
-}
-
-#btn-import-data {
-    width: 70%;
-    text-align: center;
-    margin: 5px auto;
-}
-
-.btn-simple {
-	text-decoration: none;
-	text-align: center;
-	font-weight: 600;
-	padding: .5em 1em;
-	border: 1px solid $gray-light;
+.btn {
 	color: $black;
 	background-image: linear-gradient(0deg, $gray-light, $whitetish);
+	border: 1px solid $gray-light;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 0 white,
 				inset 0px -1px 0 #aaa;
+	padding: 2px 4px;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 700;
 
 	&:hover,
 	&:focus {
@@ -87,7 +31,7 @@ $whitetish:  #eeeeee;
 	&:active {
 		background-color: $gray-light;
 		background-image: none;
-		box-shadow: inset 0px 1px 0 $gray;
+		box-shadow: inset 0 1px 0 $gray;
 	}
 
 	@include on-theme(light) {
@@ -123,25 +67,53 @@ $whitetish:  #eeeeee;
 	}
 }
 
-.btn-block,
-%btn-block {
-	margin: 20px auto;
-	display: block;
-	padding: 5px 10px;
-	font-weight: 700;
-	width: 50%; // [1]
+// TODO: Better abstraction
+.btn-basic {
 
-	&--small {
-		@extend %btn-block;
-		padding: 3px 10px;
-		margin: 0 auto;
+	&:active {
+		background-color: #ddd;
+
+		@include on-theme(light) {
+			background-color: #ccc;
+		}
+
+		@include on-theme(dark) {
+			background-color: $dark-bg-color-3;
+		}
+	}
+}
+
+// TODO: remove this
+.btn-list--active {
+	background-color: #ddd;
+
+	@include on-theme(light) {
+		background-color: #ccc;
 	}
 
-	&--full {
-		@extend %btn-block;
-		@include full-width;
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-3;
 	}
-	// [1] defaults
+}
+
+// TODO: better reusable classes
+.btn-refresh,
+.btn-to-main {
+
+	&:active {
+		background-color: rgba(0, 0, 0, .3);
+	}
+}
+
+#btn-add-another-sub {
+    background-color: #CCC;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 8px 15px;
+    font-size: 15px;
+    color: #FFF;
+    border: 1px solid #aaa;
+    border-top: 0;
 }
 
 .comments-button {
@@ -154,9 +126,15 @@ $whitetish:  #eeeeee;
 	width: 80%;
 }
 
+#btn-more-subs,
+#btn-load-more-posts {
+	margin: {
+		top: 20px;
+		bottom: 20px;
+	};
+}
+
 .buttons-group {
-	display: flex;
-	justify-content: center;
 
 	> button {
 

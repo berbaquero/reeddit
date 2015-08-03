@@ -20,12 +20,14 @@ var Channels = (function() {
 		subs: ["movies", "television", "music", "games", "books"]
 	};
 
+	const singleItemTemplate = '<a href="#" class="channel pad-x no-ndrln blck" data-title="{{name}}"><div class="channel__title">{{name}}</div><div class="pad-x">{{#subs}}<div class="channel__sub txt-cap txt-ellps">{{.}}</div>{{/subs}}</div></a>';
+
 	const template = {
 		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='sub-name channel-name'>{{name}}</p><div class='btn-edit-channel icon-pencil' data-title='{{name}}'></div><div class='btn-remove-channel icon-trashcan' data-title='{{name}}'></div></div>",
-		single: '<li class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>',
-		list: '{{#.}}<li class="channel" data-title="{{name}}"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>{{/.}}',
-		formAddNew: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn-simple" id="btn-submit-channel" data-op="save">Add Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
-		formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn-simple" id="btn-submit-channel" data-op="update">Update Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>'
+		single: singleItemTemplate,
+		list: '{{#.}}' + singleItemTemplate + '{{/.}}',
+		formAddNew: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn" id="btn-submit-channel" data-op="save">Add Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
+		formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn" id="btn-submit-channel" data-op="update">Update Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>'
 	};
 
 	var list = [],

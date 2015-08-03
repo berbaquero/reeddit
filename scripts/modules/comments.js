@@ -51,7 +51,7 @@ var Comments = (function() {
 		loading = false;
 		var error = 'Error loading comments. Refresh to try again.';
 		if (is.wideScreen) {
-			loader.addClass("loader-error").html(error + '<button class="btn-simple btn-block btn-refresh">Refresh</button>');
+			loader.addClass("loader-error").html(error + '<button class="btn mrgn-cntr-x mrgn-y blck w-33 btn-refresh">Refresh</button>');
 		}
 		else {
 			loader.addClass("loader-error").text(error);
@@ -92,7 +92,7 @@ var Comments = (function() {
 							.append($("<span/>")
 								.addClass(isPoster ? "comment-poster" : "comment-author")
 								.text(c.data.author)).append($("<a/>")
-								.addClass("comment-info")
+								.addClass("comment-info no-ndrln")
 								.attr(commentLink)
 								.text(timeSince(now, c.data.created_utc))))
 						.append($("<div/>")
@@ -103,7 +103,7 @@ var Comments = (function() {
 				c.data.replies.data.children[0].kind !== "more") {
 				comment.append(
 					$("<button/>")
-						.addClass("btn-simple btn-block--small comments-button js-reply-button")
+						.addClass("btn blck mrgn-cntr-x comments-button js-reply-button")
 						.attr("data-comment-id", c.data.id)
 						.text("See replies")
 				);

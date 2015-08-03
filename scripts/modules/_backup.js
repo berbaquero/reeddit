@@ -24,8 +24,11 @@ var Backup = (function() {
 			<div class='move-data-exp'>
 				<h3>Export Data</h3>
 				<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>
-				<button class='btn-simple btn-block--full hide' id='btn-save-dbx'>Save to Dropbox</button>
-				<a class="btn-simple btn-block--full hide" id="btn-download-data" download="reedditdata.json">Download Data</a>
+				<button class='btn w-100 mrgn-y hide'
+						id='btn-save-dbx'>Save to Dropbox</button>
+				<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y hide"
+				   id="btn-download-data"
+				   download="reedditdata.json">Download Data</a>
 			</div>
 		</div>`,
 		importData: `
@@ -35,9 +38,14 @@ var Backup = (function() {
 				<h3>Import Data</h3>
 				<p>Load the subscriptions from another Reeddit instance.</p>
 				<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>
-				<button class='btn-simple btn-block--full' id='btn-dbx-imp'>Import from Dropbox</button>
-				<button class='btn-simple btn-block--full hide' id='btn-trigger-file'>Choose Backup file</button>
-				<input id='file-chooser' type="file" accept="application/json" style="display: none"/>
+				<button class='btn w-100 mrgn-y'
+						id='btn-dbx-imp'>Import from Dropbox</button>
+				<button class='btn w-100 mrgn-y hide'
+						id='btn-trigger-file'>Choose Backup file</button>
+				<input id='file-chooser'
+					   type="file"
+					   accept="application/json"
+					   style="display: none"/>
 			</div>
 		</div>`
 	};

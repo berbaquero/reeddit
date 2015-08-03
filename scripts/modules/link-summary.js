@@ -12,9 +12,13 @@ var LinkSummary = (function() {
 
 	const template = `
 		<section id='link-summary'>
-			<a href='{{url}}' target='_blank'>
-				<p id='summary-title'>{{title}}</p>
-				<p id='summary-domain'>{{domain}}</p>
+			<a href='{{url}}'
+			   target='_blank'
+			   class='no-ndrln'>
+				<span id='summary-title'
+					  class='pad-x txt-bld blck'>{{title}}</span>
+				<span id='summary-domain'
+					  class='pad-x txt-bld'>{{domain}}</span>
 				{{#over_18}}
 				<span class='link-label summary-label nsfw'>NSFW</span>
 				{{/over_18}}
@@ -23,13 +27,23 @@ var LinkSummary = (function() {
 				{{/stickied}}
 			</a>
 			<div id='summary-footer'>
-				<p id='summary-author'>by {{author}}</p>
-				<a class='btn-simple' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>
+				<span id='summary-author'
+					  class='pad-x txt-bld'>by {{author}}</span>
+				<a class='btn mrgn-x no-ndrln'
+				   id='share-tw'
+				   target='_blank'
+				   href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>
 			</div>
-			<div class='ls-extra'>
-				<span class='ls-extra__label' id='summary-sub'>{{subreddit}}</span>
-				<span class='ls-extra__label' id='summary-time'></span>
-				<a class='ls-extra__label' id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a>
+			<div class='ls-extra flx flx-spc-btwn-x txt-bld'>
+				<span class='w-33'
+					  id='summary-sub'>{{subreddit}}</span>
+				<span class='w-33 txt-cntr'
+					  id='summary-time'></span>
+				<a class='w-33 no-ndrln txt-r clr-current'
+				   id='summary-comment-num'
+				   title='See comments on reddit.com'
+				   href='http://reddit.com{{link}}'
+				   target='_blank'>{{num_comments}} comments</a>
 			</div>
 		</section>`;
 

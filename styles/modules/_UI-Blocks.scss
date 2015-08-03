@@ -1,3 +1,8 @@
+// Color
+.clr-current {
+	color: currentColor;
+}
+
 // Display
 
 .blck {
@@ -8,6 +13,32 @@
 
 .no-ndrln {
 	text-decoration: none;
+}
+
+.txt-bld {
+	font-weight: 700;
+}
+
+.txt-cntr {
+	text-align: center;
+}
+
+.txt-r {
+	text-align: right;
+}
+
+.txt-uppr {
+	text-transform: uppercase;
+}
+
+.txt-cap {
+	text-transform: capitalize;
+}
+
+.txt-ellps {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 // Layout
@@ -30,4 +61,47 @@
 .mrgn-y {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.mrgn-cntr-x {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+// Flex
+
+.flx {
+	display: flex;
+}
+
+.flx-cntr-x {
+	justify-content: center;
+}
+
+.flx-spc-btwn-x {
+	justify-content: space-between;
+}
+
+// Width
+
+.w-33 {
+	width: 33.33%;
+}
+
+.w-50 {
+	width: 50%;
+}
+
+.w-100 {
+	width: 100%;
+}
+
+// Other
+
+.invisible {
+	opacity: 0;
+}
+
+.hide {
+	display: none !important;
 }

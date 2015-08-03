@@ -154,20 +154,16 @@ var UI = (function() {
 
 		// Show option to reload app after update
 		if (window.applicationCache) {
-			window.applicationCache.addEventListener("updateready", function(e) {
+			window.applicationCache.addEventListener("updateready", function() {
 				var delay = 1;
 				if (Menu.isShowing()) {
 					Menu.move(Move.LEFT);
 					delay = 301;
 				}
 				setTimeout(function() {
-					el.mainWrap.prepend("<button class='btn-simple btn-block' id='btn-update'>Reeddit updated. Press to reload</button>");
-					tappable('#btn-update', {
-						onTap: function() {
-							window.location.reload();
-						}
-					});
+					el.mainWrap.prepend("<button class='btn blck mrgn-cntr-x mrgn-y' id='btn-update' onclick='window.location.reload();'>Reeddit updated. Press to reload</button>");
 				}, delay);
+
 			}, false);
 		}
 
@@ -230,7 +226,6 @@ var UI = (function() {
 
 		UI.el.body.on('click', '.btn-refresh', function() {
 			var origin = this.dataset.origin;
-			console.log('ORIGIN', origin);
 			switch(origin) {
 				case 'footer-main':
 					Posts.refreshStream();
