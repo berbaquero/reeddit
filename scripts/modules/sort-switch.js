@@ -25,8 +25,9 @@ var SortSwitch = (function() {
 		mainSwitch: $('.js-sort-switch-main')
 	};
 
-	var initListeners = function() {
-		el.mainSwitch.on('click', function() {
+	const initListeners = function() {
+		el.mainSwitch.on('click', function(ev) {
+			ev.preventDefault();
 			const target = this;
 			if (Posts.areLoading()) {
 				return;
