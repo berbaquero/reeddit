@@ -246,10 +246,10 @@ $gray-dark: #333;
 }
 
 .preview-container {
-	padding: $gutter 0;
+	margin: $gutter 0;
 
 	@include break-point-min($bp-large) {
-		padding: $gutter;
+		margin: $gutter;
 	}
 }
 

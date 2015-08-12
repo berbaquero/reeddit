@@ -71,18 +71,16 @@ var LinkSummary = (function() {
 			var imageLink = checkImageLink(linkURL);
 			if (imageLink) { // If it's an image link
 				summaryHTML +=
-					'<section class="preview-container">' +
-					'<a href="#" class="no-ndrln blck js-img-preview" data-img="' + imageLink + '">' +
+					'<a href="#" class="preview-container blck js-img-preview" data-img="' + imageLink + '">' +
 					'<img class="image-preview" src="' + imageLink + '" />' +
-					'</a></section>';
+					'</a>';
 			} else { // if it's a YouTube video
 				var youTubeID = getYouTubeVideoIDfromURL(linkURL);
 				if (youTubeID) {
 					summaryHTML +=
-						'<section class="preview-container">' +
-						'<a href="' + linkURL + '" target="_blank">' +
+						'<a class="preview-container blck" href="' + linkURL + '" target="_blank">' +
 						'<img class="video-preview" src="http://img.youtube.com/vi/' + youTubeID + '/hqdefault.jpg" />' +
-						'</a></section>';
+						'</a>';
 				}
 			}
 		}
