@@ -247,10 +247,6 @@ var Comments = (function() {
 			load(comments, button.parent());
 			button.remove();
 		});
-
-		UI.el.detailWrap.on('click', '.image-preview', function() {
-			Modal.showImageViewer(this.src);
-		});
 	};
 
 	// Exports

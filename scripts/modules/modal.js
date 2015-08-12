@@ -1,7 +1,6 @@
 /* global
  Menu,
  Anim,
- El,
  is,
  tappable,
  UI
@@ -33,6 +32,7 @@ var Modal = (function() {
 			}
 			modal.append(template);
 			UI.el.body.append(modal);
+			switchKeyListener(true);
 			isShown = true;
 			setTimeout(function() {
 				modal.css('opacity', 1);
@@ -52,6 +52,7 @@ var Modal = (function() {
 		isShown = false;
 		setTimeout(function() {
 			modal.remove();
+			switchKeyListener(false);
 		}, 301);
 	};
 
@@ -64,9 +65,22 @@ var Modal = (function() {
 		Modal.show(imageViewer, false, config);
 	};
 
-	var initListeners = function() {
+	const handleKeyPress = (ev) => {
+		if (ev.which === 27) {
+			remove();
+		}
+	};
 
-		tappable('.modal--closable', Modal.remove);
+	const switchKeyListener = (flag) => {
+		if (flag) {
+			UI.el.body.on('keydown', handleKeyPress);
+		} else {
+			UI.el.body.off('keydown', handleKeyPress);
+		}
+	};
+
+	var initListeners = function() {
+		UI.el.body.on('click', '.modal--closable', Modal.remove);
 	};
 
 	// Exports

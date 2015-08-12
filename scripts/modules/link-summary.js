@@ -5,7 +5,8 @@
  Footer,
  timeSince,
  Markdown,
- UI
+ UI,
+ Modal
  */
 
 var LinkSummary = (function() {
@@ -69,16 +70,19 @@ var LinkSummary = (function() {
 			var linkURL = Posts.getList()[postID].url;
 			var imageLink = checkImageLink(linkURL);
 			if (imageLink) { // If it's an image link
-				summaryHTML += '<section class="preview-container">' +
-				'<img class="image-preview" src="' + imageLink + '" />' +
-				'</section>';
+				summaryHTML +=
+					'<section class="preview-container">' +
+					'<a href="#" class="no-ndrln blck js-img-preview" data-img="' + imageLink + '">' +
+					'<img class="image-preview" src="' + imageLink + '" />' +
+					'</a></section>';
 			} else { // if it's a YouTube video
 				var youTubeID = getYouTubeVideoIDfromURL(linkURL);
 				if (youTubeID) {
-					summaryHTML += '<section class="preview-container">' +
-					'<a href="' + linkURL + '" target="_blank">' +
-					'<img class="video-preview" src="http://img.youtube.com/vi/' + youTubeID + '/hqdefault.jpg" />' +
-					'</a></section>';
+					summaryHTML +=
+						'<section class="preview-container">' +
+						'<a href="' + linkURL + '" target="_blank">' +
+						'<img class="video-preview" src="http://img.youtube.com/vi/' + youTubeID + '/hqdefault.jpg" />' +
+						'</a></section>';
 				}
 			}
 		}
@@ -138,11 +142,19 @@ var LinkSummary = (function() {
 		}
 	};
 
+	const initListeners = () => {
+		UI.el.detailWrap.on('click', '.js-img-preview', function(ev) {
+			ev.preventDefault();
+			Modal.showImageViewer(this.dataset.img);
+		});
+	};
+
 	// Exports
 	return {
 		setPostSummary: setPostSummary,
 		updatePostSummary: updatePostSummary,
-		checkImageLink: checkImageLink
+		checkImageLink: checkImageLink,
+		initListeners: initListeners
 	};
 
 })();

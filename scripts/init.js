@@ -16,7 +16,8 @@
  UI,
  Backup,
  URLs,
- ThemeSwitcher
+ ThemeSwitcher,
+ LinkSummary
  */
 
 // Init all modules listeners
@@ -30,6 +31,7 @@ Header.initListeners();
 Modal.initListeners();
 SortSwitch.initListeners();
 Backup.initListeners();
+LinkSummary.initListeners();
 
 Header.el.postTitle.remove();
 
