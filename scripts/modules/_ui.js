@@ -46,7 +46,7 @@ var UI = (function() {
 		detailWrap: $('#detail-wrap'),
 		mainView: $('.main-view'),
 		detailView: $('.detail-view'),
-		buttonToMainView: $('.btn-to-main')
+		buttonToMainView: $('.js-btn-to-main')
 	};
 
 	var currentView = View.MAIN;
@@ -224,7 +224,8 @@ var UI = (function() {
 
 		// Presses
 
-		UI.el.body.on('click', '.btn-refresh', function() {
+		UI.el.body.on('click', '.js-btn-refresh', function(ev) {
+			ev.preventDefault();
 			var origin = this.dataset.origin;
 			switch(origin) {
 				case 'footer-main':
