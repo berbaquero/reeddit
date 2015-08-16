@@ -29,7 +29,7 @@ var Anim = (function() {
 			}, 700);
 		} else {
 			setTimeout(function() {
-				el.removeClass("invisible").addClass(reveal);
+				el.removeClass(UI.classes.invisible).addClass(reveal);
 			}, 0);
 		}
 	};

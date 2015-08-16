@@ -143,7 +143,7 @@ var Comments = (function() {
 					Posts.setList(result[0].data);
 					LinkSummary.setPostSummary(result[0].data.children[0].data, id);
 
-					Header.el.btnNavBack.removeClass("invisible"); // Show
+					Header.el.btnNavBack.removeClass(UI.classes.invisible); // Show
 
 					setRest(id, refresh);
 
@@ -170,7 +170,7 @@ var Comments = (function() {
 				loading = true;
 				currentThread = id;
 
-				Header.el.btnNavBack.removeClass("invisible"); // Show
+				Header.el.btnNavBack.removeClass(UI.classes.invisible); // Show
 
 				var detail = UI.el.detailWrap;
 				detail.empty();
@@ -227,7 +227,7 @@ var Comments = (function() {
 
 		Header.el.centerSection.empty().append(Header.el.postTitle);
 		Header.el.postTitle.text(postTitle);
-		Header.el.subtitle.addClass('invisible');
+		Header.el.subtitle.addClass(UI.classes.invisible);
 	};
 
 	var initListeners = function() {

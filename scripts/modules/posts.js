@@ -127,7 +127,10 @@ var Posts = (function() {
 			if (is.desktop) {
 				main.empty();
 			} else {
-				main.empty().removeClass("anim-reveal").addClass("invisible");
+				main
+					.empty()
+					.removeClass("anim-reveal")
+					.addClass(UI.classes.invisible);
 			}
 		}
 

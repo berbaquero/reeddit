@@ -33,7 +33,8 @@ var UI = (function() {
 		showMenu: "show-menu",
 		mnml: "mnml",
 		hide: "hide",
-		swipe: 'from-swipe'
+		swipe: 'from-swipe',
+		invisible: 'invisible'
 	};
 
 	const template = {
@@ -63,8 +64,8 @@ var UI = (function() {
 	};
 
 	var backToMainView = function() {
-		Header.el.btnNavBack.addClass("invisible");
-		Header.el.subtitle.removeClass("invisible");
+		Header.el.btnNavBack.addClass(classes.invisible);
+		Header.el.subtitle.removeClass(classes.invisible);
 		Header.el.centerSection.empty().append(Header.el.icon);
 		Anim.slideFromLeft();
 	};
