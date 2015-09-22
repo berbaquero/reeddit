@@ -3,7 +3,6 @@
  El,
  Posts,
  Markdown,
- tappable,
  UI,
  LinkSummary,
  Footer,
@@ -51,7 +50,7 @@ var Comments = (function() {
 		loading = false;
 		var error = 'Error loading comments. Refresh to try again.';
 		if (is.wideScreen) {
-			loader.addClass("loader-error").html(error + '<button class="btn mrgn-cntr-x mrgn-y blck w-33 btn-refresh">Refresh</button>');
+			loader.addClass("loader-error").html(error + '<button class="btn mrgn-cntr-x mrgn-y blck w-33 js-btn-refresh">Refresh</button>');
 		}
 		else {
 			loader.addClass("loader-error").text(error);
@@ -77,9 +76,10 @@ var Comments = (function() {
 				isPoster = Posts.getList()[currentThread].author === c.data.author,
 				permalink = "http://reddit.com" + Posts.getList()[currentThread].link + c.data.id,
 				commentLink = {
-					"href": permalink,
-					"target": "_blank",
-					"title": "See this comment on reddit.com"
+					href: permalink,
+					target: "_blank",
+					title: "See this comment on reddit.com",
+					tabindex: "-1"
 				};
 
 			var comment =
@@ -91,7 +91,8 @@ var Comments = (function() {
 							.addClass("comment-data")
 							.append($("<span/>")
 								.addClass(isPoster ? "comment-poster" : "comment-author")
-								.text(c.data.author)).append($("<a/>")
+								.text(c.data.author))
+							.append($("<a/>")
 								.addClass("comment-info no-ndrln")
 								.attr(commentLink)
 								.text(timeSince(now, c.data.created_utc))))

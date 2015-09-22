@@ -3,7 +3,6 @@
  Subreddits,
  Anim,
  UI,
- tappable,
  Modal,
  is,
  Store,
@@ -20,14 +19,16 @@ var Channels = (function() {
 		subs: ["movies", "television", "music", "games", "books"]
 	};
 
-	const singleItemTemplate = '<a href="#" class="channel pad-x no-ndrln blck" data-title="{{name}}"><div class="channel__title">{{name}}</div><div class="pad-x">{{#subs}}<div class="channel__sub txt-cap txt-ellps">{{.}}</div>{{/subs}}</div></a>';
+	const singleItemTemplate = '<a href="#{{name}}" class="channel pad-x no-ndrln blck" data-title="{{name}}"><div class="channel__title">{{name}}</div><div class="pad-x">{{#subs}}<div class="channel__sub txt-cap txt-ellps">{{.}}</div>{{/subs}}</div></a>';
+
+	const tmpltButtonAddAnotherSub = '<button class="w-100" id="btn-add-another-sub">Add additional subreddit</button>';
 
 	const template = {
-		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='sub-name channel-name'>{{name}}</p><div class='btn-edit-channel icon-pencil' data-title='{{name}}'></div><div class='btn-remove-channel icon-trashcan' data-title='{{name}}'></div></div>",
+		singleEditItem: "<div class='item-to-edit flx channel-to-remove' data-title='{{name}}'><p class='sub-name w-85 txt-cap txt-bld channel-name'>{{name}}</p><a href='#edit' class='flx flx-cntr-x flx-cntr-y w-15 no-ndrln clr-current btn-edit-channel icon-pencil' data-title='{{name}}'></a><a href='#remove' class='flx flx-cntr-x flx-cntr-y w-15 no-ndrln clr-current btn-remove-channel icon-trashcan' data-title='{{name}}'></a></div>",
 		single: singleItemTemplate,
-		list: '{{#.}}' + singleItemTemplate + '{{/.}}',
-		formAddNew: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn" id="btn-submit-channel" data-op="save">Add Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div><div id="btn-add-another-sub">Add additional subreddit</div></div>',
-		formEditChannel: '<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn" id="btn-submit-channel" data-op="update">Update Channel</button></div><div class="close-form">&times;</div><input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div><div id="btn-add-another-sub">Add additional subreddit</div></div>'
+		list: `{{#.}}${singleItemTemplate}{{/.}}`,
+		formAddNew: `<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn" id="btn-submit-channel" data-op="save">Add Channel</button></div>${UI.template.closeModalButton}<input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"><input class="field-edit-sub" type="text" placeholder="Subreddit 1" /><input class="field-edit-sub" type="text" placeholder="Subreddit 2" /><input class="field-edit-sub" type="text" placeholder="Subreddit 3" /></div>${tmpltButtonAddAnotherSub}</div>`,
+		formEditChannel: `<div class="new-form" id="form-new-channel"><div class="form-left-corner"><button class="btn" id="btn-submit-channel" data-op="update">Update Channel</button></div>${UI.template.closeModalButton}<input type="text" id="txt-channel" placeholder="Channel name" /><div id="subs-for-channel"></div>${tmpltButtonAddAnotherSub}</div>`
 	};
 
 	var list = [],
@@ -150,92 +151,83 @@ var Channels = (function() {
 			editingNow = channelToEdit.name;
 			var $inputsContainer = $("#subs-for-channel");
 
-			for(var i = 0, l = channelToEdit.subs.length; i < l; i++) {
-
-				var inputTemplate = "<input class='field-edit-sub with-clear' type='text' value='{{subName}}'>";
-
-				$inputsContainer.append(inputTemplate.replace("{{subName}}", channelToEdit.subs[i]));
-			}
+			channelToEdit.subs.map((sub) => {
+				const inputTemplate = `<input class='field-edit-sub with-clear' type='text' value='${sub}'>`;
+				$inputsContainer.append(inputTemplate);
+			});
 		});
 	};
 
 	var initListeners = function() {
 
-		tappable("#btn-submit-channel", {
-			onTap: function(e, target) {
-				var txtChannelName = $("#txt-channel"),
-					operation = target.getAttribute("data-op"),
-					channelName = txtChannelName.val();
+		UI.el.body.on('click', "#btn-submit-channel", (ev) => {
+			const target = ev.target;
+			var txtChannelName = $("#txt-channel"),
+				operation = target.getAttribute("data-op"),
+				channelName = txtChannelName.val();
 
-				if (!channelName) {
-					txtChannelName.attr("placeholder", "Enter a Channel name!");
-					Anim.shakeForm();
-					return;
+			if (!channelName) {
+				txtChannelName.attr("placeholder", "Enter a Channel name!");
+				Anim.shakeForm();
+				return;
+			}
+
+			var subreddits = [],
+				subs = $("#subs-for-channel input");
+
+			for(var i = 0; i < subs.length; i++) {
+				var sub = $(subs[i]).val();
+				if (!sub) {
+					continue;
 				}
+				subreddits.push(sub);
+			}
 
-				var subreddits = [],
-					subs = $("#subs-for-channel input");
+			if (subreddits.length === 0) {
+				subs[0].placeholder = "Enter at least one subreddit!";
+				Anim.shakeForm();
+				return;
+			}
 
-				for(var i = 0; i < subs.length; i++) {
-					var sub = $(subs[i]).val();
-					if (!sub) {
-						continue;
+			switch(operation) {
+				case "save":
+					// Look for Channel name in the saved ones
+					var savedChannel = getByName(channelName);
+					if (savedChannel) { // If it's already saved
+						txtChannelName.val("");
+						txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
+						Anim.shakeForm();
+						return;
 					}
-					subreddits.push(sub);
-				}
+					add(channelName, subreddits);
+					break;
 
-				if (subreddits.length === 0) {
-					subs[0].placeholder = "Enter at least one subreddit!";
-					Anim.shakeForm();
-					return;
-				}
-
-				switch(operation) {
-					case "save":
-						// Look for Channel name in the saved ones
-						var savedChannel = getByName(channelName);
-						if (savedChannel) { // If it's already saved
-							txtChannelName.val("");
-							txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
-							Anim.shakeForm();
-							return;
-						}
-						add(channelName, subreddits);
-						break;
-
-					case "update":
-						// Remove current and add new
-						remove(editingNow);
-						add(channelName, subreddits);
-						break;
-				}
-
-				// confirmation feedback
-				$(target).remove();
-				$(".form-left-corner").append("<p class='channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</p>");
-
-				Anim.bounceOut($(".new-form"), Modal.remove);
+				case "update":
+					// Remove current and add new
+					remove(editingNow);
+					add(channelName, subreddits);
+					break;
 			}
+
+			// confirmation feedback
+			$(target).remove();
+			$(".form-left-corner").append("<div class='clr-white txt-bld channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</div>");
+
+			Anim.bounceOut($(".new-form"), Modal.remove);
 		});
 
-		tappable("#btn-add-channel", {
-			onTap: function() {
+		UI.el.mainWrap.on('click', '#btn-add-channel', () => {
 				Modal.show(template.formAddNew);
-			}
 		});
 
-		tappable(".btn-remove-channel", {
-			onTap: function(e, target) {
-				remove($(target).data('title'));
-			},
-			activeClass: 'btn-list--active'
+		UI.el.mainWrap.on('click', '.btn-remove-channel', function(ev) {
+			ev.preventDefault();
+			remove(this.dataset.title);
 		});
 
-		tappable(".btn-edit-channel", {
-			onTap: function(e, target) {
-				edit(target.getAttribute('data-title'));
-			},
-			activeClass: 'btn-list--active'
+		UI.el.mainWrap.on('click', '.btn-edit-channel', function(ev) {
+			ev.preventDefault();
+			edit(this.dataset.title);
 		});
 	};
 

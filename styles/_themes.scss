@@ -28,6 +28,12 @@
 				@content;
 			}
 		}
+
+		@if $theme == not-iOS7 {
+			:not(.ios7) & {
+				@content;
+			}
+		}
 	}
 }
 

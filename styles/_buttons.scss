@@ -2,7 +2,6 @@
 @import "mixins";
 
 button {
-	-webkit-tap-highlight-color: transparent;
 	font-family: inherit;
 }
 
@@ -23,10 +22,9 @@ $whitetish:  #eeeeee;
 	font-size: 13px;
 	font-weight: 700;
 
-	&:hover,
-	&:focus {
-		background-image: linear-gradient(0deg, lighten($gray-light, 2%), lighten($whitetish, 2%));
-	}
+  &:focus {
+    background-image: linear-gradient(0deg, darken($gray-light, 10%), darken($whitetish, 10%)); 
+  }
 
 	&:active {
 		background-color: $gray-light;
@@ -39,9 +37,8 @@ $whitetish:  #eeeeee;
 		background-color: $whitetish;
 		box-shadow: none;
 
-		&:hover,
 		&:focus {
-			background-color: darken($whitetish, 5%);
+			background-color: darken($whitetish, 9%);
 		}
 
 		&:active {
@@ -56,19 +53,17 @@ $whitetish:  #eeeeee;
 		border-color: $dark-bg-color-1;
 		box-shadow: none;
 
-		&:hover,
 		&:focus {
-			background-color: lighten($dark-button-bg, 3%);
+			background-color: lighten($dark-button-bg, 7%);
 		}
 
 		&:active {
-			background-color: lighten($dark-button-bg, 7%);
+			background-color: lighten($dark-button-bg, 9%);
 		}
 	}
 }
 
-// TODO: Better abstraction
-.btn-basic {
+.btn-basic { // TODO: Better abstraction
 
 	&:active {
 		background-color: #ddd;
@@ -80,28 +75,6 @@ $whitetish:  #eeeeee;
 		@include on-theme(dark) {
 			background-color: $dark-bg-color-3;
 		}
-	}
-}
-
-// TODO: remove this
-.btn-list--active {
-	background-color: #ddd;
-
-	@include on-theme(light) {
-		background-color: #ccc;
-	}
-
-	@include on-theme(dark) {
-		background-color: $dark-bg-color-3;
-	}
-}
-
-// TODO: better reusable classes
-.btn-refresh,
-.btn-to-main {
-
-	&:active {
-		background-color: rgba(0, 0, 0, .3);
 	}
 }
 
@@ -134,16 +107,12 @@ $whitetish:  #eeeeee;
 	};
 }
 
-.buttons-group {
+.group-btn {
+	&:first-child {
+		border-radius: 4px 0 0 4px;
+	}
 
-	> button {
-
-		&:first-child {
-			border-radius: 4px 0 0 4px;
-		}
-
-		&:last-child {
-			border-radius: 0 4px 4px 0;
-		}
+	&:last-child {
+		border-radius: 0 4px 4px 0;
 	}
 }

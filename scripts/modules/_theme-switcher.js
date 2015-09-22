@@ -1,6 +1,5 @@
 /* global
  Store,
- tappable,
  UI
  */
 
@@ -75,7 +74,10 @@ let ThemeSwitcher = (() => {
 	const init = () => {
 		loadInitialTheme();
 		// Listeners
-		el.switcherButton.on('click', switchTheme);
+		el.switcherButton.on('click', (ev) => {
+			ev.preventDefault();
+			switchTheme();
+		});
 	};
 
 	// Exports

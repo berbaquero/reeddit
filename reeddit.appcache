@@ -1,9 +1,8 @@
 CACHE MANIFEST
-
+###
 # v2.1.4 02-06-2015
 
 # stylesheets
-dist/desk.min.css
 dist/app.min.css
 
 # images

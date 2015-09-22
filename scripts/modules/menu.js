@@ -1,6 +1,5 @@
 /* global
  El,
- tappable,
  Channels,
  Subreddits,
  Modal,
@@ -12,7 +11,12 @@
 var Menu = (function() {
 
 	const el = {
-		mainMenu: $('#main-menu')
+		mainMenu: $('#main-menu'),
+		buttonNewSubreddit: $('#btn-new-sub'),
+		buttonNewChannel: $('#btn-new-channel'),
+		buttonAddSubreddits: $('#btn-add-subs'),
+		buttonEditSubreddits: $('#btn-edit-subs'),
+		buttonAbout: $('#about')
 	};
 
 	var showing = false;
@@ -20,7 +24,7 @@ var Menu = (function() {
 	var isShowing = () => showing;
 
 	const template = {
-		about: "<div class='new-form about-reeddit'><div class='close-form'>&times;</div><ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>"
+		about: `<div class='new-form about-reeddit'>${UI.template.closeModalButton}<ul><li><a href='/about/' target='_blank'>Reeddit Homepage</a></li><li><a href='https://github.com/berbaquero/reeddit' target='_blank'>GitHub Project</a></li></ul><p><a href='https://twitter.com/reedditapp'>@ReedditApp</a></p><p>Built by <a href='http://berbaquero.com' target='_blank'>Bernardo Baquero Stand</a></p></div>`
 	};
 
 	const subSelectedClass = 'sub--selected',
@@ -36,13 +40,13 @@ var Menu = (function() {
 			UI.el.mainView.removeClass(UI.classes.showMenu);
 			setTimeout(function() {
 				showing = false;
-			});
+			}, 1);
 		}
 		if (direction === UI.Move.RIGHT) {
 			UI.el.mainView.addClass(UI.classes.showMenu);
 			setTimeout(function() {
 				showing = true;
-			});
+			}, 1);
 		}
 	};
 
@@ -85,50 +89,47 @@ var Menu = (function() {
 			if (channelName === CurrentSelection.getName() && !Subreddits.isEditing()) {
 				return;
 			}
-			Menu.markSelected({type: 'channel', el: target, update: true});
+			Menu.markSelected({ type: 'channel', el: target, update: true });
 			if (UI.getCurrentView() === UI.View.COMMENTS) {
 				UI.backToMainView();
 			}
 			Channels.loadPosts(Channels.getByName(channelName));
 		});
 
-		el.mainMenu.on('click', '.sub', function(ev) {
+		el.mainMenu.on('click', '.sub', (ev) => {
 			ev.preventDefault();
 			const target = ev.target;
-			var subredditName = $(target).first().text();
 			Menu.move(UI.Move.LEFT);
-			Subreddits.loadPosts(subredditName);
-			markSelected({el: target, update: true});
+			Subreddits.loadPosts(target.dataset.name);
+			markSelected({ el: target, update: true });
 			if (UI.getCurrentView() === UI.View.COMMENTS) {
 				UI.backToMainView();
 			}
 		});
 
-		tappable("#btn-new-sub", {
-			onTap: function() {
-				Modal.show(Subreddits.template.formInsert);
-			}
+		el.buttonNewSubreddit.on('click', (ev) => {
+			ev.preventDefault();
+			Modal.show(Subreddits.template.formInsert);
 		});
 
-		tappable("#btn-new-channel", {
-			onTap: function() {
-				Modal.show(Channels.template.formAddNew);
-			}
+		el.buttonNewChannel.on('click', (ev) => {
+			ev.preventDefault();
+			Modal.show(Channels.template.formAddNew);
 		});
 
-		tappable("#btn-add-subs", {
-			onTap: Subreddits.loadForAdding
+		el.buttonAddSubreddits.on('click', (ev) => {
+			ev.preventDefault();
+			Subreddits.loadForAdding();
 		});
 
-		tappable("#btn-edit-subs", {
-			onTap: Subreddits.loadForEditing
+		el.buttonEditSubreddits.on('click', (ev) => {
+			ev.preventDefault();
+			Subreddits.loadForEditing();
 		});
 
-		tappable("#about", {
-			onTap: function() {
-				Modal.show(template.about);
-			},
-			activeClassDelay: 100
+		el.buttonAbout.on('click', (ev) => {
+			ev.preventDefault();
+			Modal.show(template.about);
 		});
 	};
 
@@ -138,7 +139,8 @@ var Menu = (function() {
 		initListeners: initListeners,
 		move: move,
 		markSelected: markSelected,
-		cleanSelected: cleanSelected
+		cleanSelected: cleanSelected,
+		el: el
 	};
 
 })();

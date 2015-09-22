@@ -7,7 +7,6 @@
  Header,
  Store,
  Menu,
- tappable,
  Modal,
  Posts,
  Comments,
@@ -37,17 +36,23 @@ var UI = (function() {
 		invisible: 'invisible'
 	};
 
-	const template = {
-		loader: "<div class='loader'></div>"
+	const keyCode = {
+		MENU: 49, // 1
+		MAIN: 50, // 2
+		DETAIL: 51 // 3
 	};
 
-	let el = {
+	const template = {
+		loader: "<div class='loader'></div>",
+		closeModalButton: "<a href='#close' class='close-form no-ndrln txt-cntr txt-bld'>&times;</a>"
+	};
+
+	const el = {
 		body: $('body'),
 		mainWrap: $('#main-wrap'),
 		detailWrap: $('#detail-wrap'),
 		mainView: $('.main-view'),
-		detailView: $('.detail-view'),
-		buttonToMainView: $('.js-btn-to-main')
+		detailView: $('.detail-view')
 	};
 
 	var currentView = View.MAIN;
@@ -251,11 +256,10 @@ var UI = (function() {
 			}
 		});
 
-		el.buttonToMainView.on('click', () => {
-			location.hash = "#";
+		el.body.on('click', '.close-form', (ev) => {
+			ev.preventDefault();
+			Modal.remove();
 		});
-
-		UI.el.body.on('click', '.close-form', Modal.remove);
 
 		// Swipes
 		if (is.mobile) {
@@ -296,6 +300,29 @@ var UI = (function() {
 				}
 			});
 		}
+
+		// Keys
+
+		el.body.on('keydown', (ev) => {
+
+			if (Modal.isShowing()) {
+				return;
+			}
+
+			switch(ev.which) {
+				case keyCode.MENU:
+					// TODO: focus on actual active sub
+					Menu.el.mainMenu.focus();
+					break;
+				case keyCode.MAIN:
+					// TODO: focus on actual active post
+					el.mainWrap.focus();
+					break;
+				case keyCode.DETAIL:
+					el.detailWrap.focus();
+					break;
+			}
+		});
 	};
 
 	// Exports

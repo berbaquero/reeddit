@@ -1,23 +1,23 @@
-nav#menu-container
+nav(id='menu-container')
 
 	div.view
-		div#edit-subs
-			span#btn-add-subs.btn-edit-sub +
-			span#btn-edit-subs.btn-edit-sub •••
-
-		div#main-menu.wrapper
+		div(id='main-menu' class='wrapper', tabindex='0')
 			div.menu-desc.txt-uppr.pad-x Subreddits
-				span#btn-new-sub.btn-side-menu-add +
+				a(href='#new-sub', id='btn-new-sub', class='btn-side-menu-add txt-cntr no-ndrln') +
 
 			ul#subs
 
 			div.menu-desc.txt-uppr.pad-x Channels
-				span#btn-new-channel.btn-side-menu-add +
+				a(href='#new-channel', id='btn-new-channel', class='btn-side-menu-add txt-cntr no-ndrln') +
 
 			ul#channels
 
 			div.menu-desc.txt-uppr.pad-x Options
-			div.option.pad-x.pad-y#about About
-			div.option.pad-x.pad-y#exp-data Export Data
-			div.option.pad-x.pad-y#imp-data Import Data
-			div.option.pad-x.pad-y#switch-theme Theme
+			a(href='#about', id='about', class='option pad-x pad-y no-ndrln blck') About
+			a(href='#exp-data', id='exp-data', class='option pad-x pad-y no-ndrln blck') Export Data
+			a(href='#imp-data', id='imp-data', class='option pad-x pad-y no-ndrln blck') Import Data
+			a(href='#switch-theme', id='switch-theme', class='option pad-x pad-y no-ndrln blck') Theme
+
+		div#edit-subs
+			a(href='#add-subs', id='btn-add-subs', class='btn-edit-sub w-50 no-ndrln txt-bld') +
+			a(href='#edit-subs', id='btn-edit-subs', class='btn-edit-sub w-50 no-ndrln') •••

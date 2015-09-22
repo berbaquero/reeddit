@@ -11,7 +11,6 @@
  Footer,
  SortSwitch,
  is,
- tappable,
  Modal,
  Posts,
  Channels,
@@ -31,12 +30,12 @@ var Subreddits = (function() {
 	const subredditClasses = 'sub pad-x pad-y blck no-ndrln txt-cap txt-ellps';
 
 	var template = {
-		list: "{{#.}}<a href='#' data-name='{{.}}' class='" + subredditClasses + "'>{{.}}</a>{{/.}}",
-		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p class='sub-name'>{{.}}</p><div class='btn-remove-subreddit icon-trashcan' data-name='{{.}}'></div></div>{{/.}}</ul>",
-		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
+		list: "{{#.}}<a href='#{{.}}' data-name='{{.}}' class='" + subredditClasses + "'>{{.}}</a>{{/.}}",
+		toEditList: "<div class='edit-subs-title pad-x pad-y txt-bld txt-cntr'>Subreddits</div><ul class='no-mrgn no-pad'>{{#.}}<div class='item-to-edit flx sub-to-remove' data-name='{{.}}'><p class='sub-name w-85 txt-cap txt-bld'>{{.}}</p><a href='#remove' class='no-ndrln clr-current flx flx-cntr-x flx-cntr-y w-15 btn-remove-sub icon-trashcan' data-name='{{.}}'></a></div>{{/.}}</ul>",
+		toAddList: "{{#children}}<div class='sub-to-add flx w-100'><div class='w-85'><p class='sub-to-add__title js-sub-title txt-bld'>{{data.display_name}}</p><p class='sub-to-add__description'>{{data.public_description}}</p></div><a href='#add' class='btn-add-sub no-ndrln flx flx-cntr-x flx-cntr-y w-15 icon-plus-circle'></a></div>{{/children}}",
 		loadMoreSubsButton: "<button class='btn blck w-50 mrgn-y mrgn-cntr-x' id='btn-more-subs'>More</button>",
-		formInsert: '<div class="new-form" id="form-new-sub"><div class="form-left-corner"><button class="btn" id="btn-add-new-sub">Add Subreddit</button></div><div class="close-form">&times;</div><form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>',
-		topButtonsForAdding: "<div class='buttons-group flx flx-cntr-x pad-x pad-y'><button id='btn-sub-man' class='btn'>Insert Manually</button><button id='btn-add-channel' class='btn'>Create Channel</button></div>"
+		formInsert: `<div class="new-form" id="form-new-sub"><div class="form-left-corner"><button class="btn" id="btn-add-new-sub">Add Subreddit</button></div>${UI.template.closeModalButton}<form><input type="text" id="txt-new-sub" placeholder="New subreddit name" /></form></div>`,
+		topButtonsForAdding: "<div class='flx flx-cntr-x pad-x pad-y'><button id='btn-sub-man' class='btn group-btn'>Insert Manually</button><button id='btn-add-channel' class='btn group-btn'>Create Channel</button></div>"
 	};
 
 	var el = {
@@ -65,9 +64,9 @@ var Subreddits = (function() {
 			el.list.append(Mustache.to_html(template.list, subs));
 		} else {
 			el.list.append($("<a/>")
-							.attr({'data-name': subs, 'href': '#'})
-							.addClass(subredditClasses)
-							.text(subs));
+				.attr({ 'data-name': subs, 'href': '#' })
+				.addClass(subredditClasses)
+				.text(subs));
 		}
 	};
 
@@ -258,10 +257,10 @@ var Subreddits = (function() {
 				channelsList = Channels.getList();
 
 			if (channelsList && channelsList.length > 0) {
-				htmlChannels = Mustache.to_html("<p class='edit-subs-title'>Channels</p><ul class='remove-list channel-edit-list'>{{#.}} " + Channels.template.singleEditItem + "{{/.}}</ul>", channelsList);
+				htmlChannels = Mustache.to_html("<div class='edit-subs-title pad-x pad-y txt-bld txt-cntr'>Channels</div><ul class='no-mrgn no-pad channel-edit-list'>{{#.}} " + Channels.template.singleEditItem + "{{/.}}</ul>", channelsList);
 			}
 
-			var html = '<div id="remove-wrap">' + htmlChannels + htmlSubs + "</div>";
+			var html = '<div class="h-100">' + htmlChannels + htmlSubs + "</div>";
 			setTimeout(function() { // Intentional delay / fix for iOS
 				UI.el.mainWrap.html(html);
 			}, 10);
@@ -283,62 +282,51 @@ var Subreddits = (function() {
 			addFromNewForm();
 		});
 
-		tappable("#btn-add-new-sub", {
-			onTap: addFromNewForm
+		UI.el.body.on('click', "#btn-add-new-sub", addFromNewForm);
+
+		UI.el.body.on('click', "#btn-add-another-sub", function() {
+			var container = $("#subs-for-channel");
+			container.append("<input type='text' placeholder='Extra subreddit'/>");
+			container[0].scrollTop = container.height();
 		});
 
-		tappable("#btn-add-another-sub", {
-			onTap: function() {
-				var container = $("#subs-for-channel");
-				container.append("<input type='text' placeholder='Extra subreddit'/>");
-				container[0].scrollTop = container.height();
-			}
+		UI.el.mainWrap.on('click', '#btn-sub-man', () => {
+			Modal.show(template.formInsert);
 		});
 
-		tappable("#btn-sub-man", {
-			onTap: function() {
-				Modal.show(template.formInsert);
-			}
+		UI.el.mainWrap.on('click', '#btn-more-subs', (ev) => {
+			const target = ev.target;
+			$(target).remove();
+			var main = UI.el.mainWrap;
+			main.append(UI.template.loader);
+			$.ajax({
+				url: URLs.init + 'reddits/' + URLs.end + '&after=' + idLast,
+				dataType: 'jsonp',
+				success: function(list) {
+					var newSubs = Mustache.to_html(template.toAddList, list.data);
+					idLast = list.data.after;
+					$('.loader', main).remove();
+					main.append(newSubs).append(template.loadMoreSubsButton);
+					loadedSubs = loadedSubs + newSubs;
+				},
+				error: function() {
+					$('.loader').addClass('loader-error').text('Error loading more subreddits.');
+				}
+			});
 		});
 
-		tappable('#btn-more-subs', {
-			onTap: function(e, target) {
-				$(target).remove();
-				var main = UI.el.mainWrap;
-				main.append(UI.template.loader);
-				$.ajax({
-					url: URLs.init + 'reddits/' + URLs.end + '&after=' + idLast,
-					dataType: 'jsonp',
-					success: function(list) {
-						var newSubs = Mustache.to_html(template.toAddList, list.data);
-						idLast = list.data.after;
-						$('.loader', main).remove();
-						main.append(newSubs).append(template.loadMoreSubsButton);
-						loadedSubs = loadedSubs + newSubs;
-					},
-					error: function() {
-						$('.loader').addClass('loader-error').text('Error loading more subreddits.');
-					}
-				});
-			}
+		UI.el.mainWrap.on('click', '.btn-add-sub', function(ev) {
+			ev.preventDefault();
+			const parent = $(this).parent(),
+				subTitle = $(".js-sub-title", parent);
+			subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
+			const newSub = subTitle.text();
+			add(newSub);
 		});
 
-		tappable('.btn-add-sub', {
-			onTap: function(e, target) {
-				var parent = $(target).parent(),
-					subTitle = $(".subreddit-title", parent);
-				subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
-				var newSub = subTitle.text();
-				add(newSub);
-			},
-			activeClass: 'btn-list--active'
-		});
-
-		tappable(".btn-remove-subreddit", {
-			onTap: function(e, target) {
-				remove($(target).data('name'));
-			},
-			activeClass: 'btn-list--active'
+		UI.el.mainWrap.on('click', '.btn-remove-sub', function(ev) {
+			ev.preventDefault();
+			remove(this.dataset.name);
 		});
 	};
 

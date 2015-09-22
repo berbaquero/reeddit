@@ -34,8 +34,6 @@ header {
 }
 
 .header-corner {
-	@include flex-center;
-	width: 15%;
 	transition-duration: 300ms;
 }
 
@@ -44,14 +42,11 @@ header {
 }
 
 #title {
-	text-align: center;
 	font-size: 20px;
 	line-height: $header-height;
-	margin: 0;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	font-weight: 700;
 	cursor: default;
 }
 
@@ -78,7 +73,6 @@ header {
 	width: 40%;
 	font-size: 15px;
 	top: 12px;
-	font-weight: 700;
 	cursor: default;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -111,23 +105,19 @@ header {
 	}
 }
 
-.back-arrow {
+.back-arrow-btn {
+	@include size(100%, $header-height);
+}
 
-	&-btn {
-		@include flex-center(all);
-		@include size(100%, $header-height);
-	}
+.back-arrow-icon {
+	$arrow-size: 12px;
+	@include size(0);
+	// Icon Shape
+	border-bottom: ($arrow-size / 2) solid transparent;
+	border-right: $arrow-size solid $black;
+	border-top: ($arrow-size / 2) solid transparent;
 
-	&-icon {
-		$arrow-size: 12px;
-		@include size(0);
-		// Icon Shape
-		border-bottom: ($arrow-size / 2) solid transparent;
-		border-right: $arrow-size solid $black;
-		border-top: ($arrow-size / 2) solid transparent;
-
-		@include on-theme(dark) {
-			border-right-color: $dark-text-color-2;
-		}
+	@include on-theme(dark) {
+		border-right-color: $dark-text-color-2;
 	}
 }

@@ -1,5 +1,6 @@
 @import "themes";
 @import "globals/variables";
+@import "globals/helpers";
 @import "base";
 
 #comments-container {
@@ -33,7 +34,7 @@
 	outline: none;
 
 	&:focus {
-		box-shadow: inset 2px 0 0 $focus-item;
+		box-shadow: inset 2px 0 0 $active-bg;
 	}
 
 	@include on-theme(dark) {
@@ -127,12 +128,17 @@
 	@include on-theme(dark) {
 		background-color: $dark-bg-color-1;
 	}
+
+	> a { // Title/Main Link
+		@include activeState($active-bg);
+	}
 }
 
 #summary-title {
 	font-size: 16px;
 	color: white;
 	padding-bottom: 2px;
+	background-color: inherit;
 
 	@include on-theme(light) {
 		color: $black;
@@ -247,6 +253,15 @@ $gray-dark: #333;
 
 .preview-container {
 	margin: $gutter 0;
+	outline: none;
+
+	&:focus {
+
+		.image-preview,
+		.video-preview {
+			outline: 3px solid $active-bg;
+		}
+	}
 
 	@include break-point-min($bp-large) {
 		margin: $gutter;
@@ -270,7 +285,7 @@ $gray-dark: #333;
 }
 
 .image-viewer {
-	@extend %completely-center--translate;
+	//@extend %completely-center--translate;
 	max-width: 100%;
 	max-height: 100%;
 	padding: $gutter 0;

@@ -1,0 +1,14 @@
+@import "../base";
+
+.modal {
+	@include size(100%);
+	@include position(absolute, top-left);
+	transition-duration: 300ms;
+	background-color: rgba(0, 0, 0, .7);
+	opacity: 0;
+	z-index: 9999;
+
+	&--closable {
+		cursor: zoom-out;
+	}
+}

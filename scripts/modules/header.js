@@ -1,7 +1,6 @@
 /* global
  $,
  is,
- tappable,
  Menu,
  Posts,
  UI

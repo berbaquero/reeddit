@@ -31,7 +31,7 @@ var Anim = (function () {
 			}, 700);
 		} else {
 			setTimeout(function () {
-				el.removeClass("invisible").addClass(reveal);
+				el.removeClass(UI.classes.invisible).addClass(reveal);
 			}, 0);
 		}
 	};
@@ -73,198 +73,6 @@ var Anim = (function () {
 		shakeForm: shakeForm,
 		bounceOut: bounceOut,
 		bounceInDown: bounceInDown
-	};
-})();
-
-/* global
- $,
- $$,
- is,
- UI,
- Modal,
- Dropbox,
- tappable,
- Store
- */
-
-var Backup = (function () {
-
-	var update = 1,
-	    gists = {
-		url: "https://api.github.com/gists",
-		fileURL: ""
-	};
-
-	var template = {
-		exportData: "\n\t\t<div class='new-form move-data'>\n\t\t\t<div class='close-form'>&times;</div>\n\t\t\t<div class='move-data-exp'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<button class='btn-simple btn-block--full hide' id='btn-save-dbx'>Save to Dropbox</button>\n\t\t\t\t<a class=\"btn-simple btn-block--full hide\" id=\"btn-download-data\" download=\"reedditdata.json\">Download Data</a>\n\t\t\t</div>\n\t\t</div>",
-		importData: "\n\t\t<div class='new-form move-data'>\n\t\t\t<div class='close-form'>&times;</div>\n\t\t\t<div class='move-data-imp'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class='btn-simple btn-block--full' id='btn-dbx-imp'>Import from Dropbox</button>\n\t\t\t\t<button class='btn-simple btn-block--full hide' id='btn-trigger-file'>Choose Backup file</button>\n\t\t\t\t<input id='file-chooser' type=\"file\" accept=\"application/json\" style=\"display: none\"/>\n\t\t\t</div>\n\t\t</div>"
-	};
-
-	var shouldUpdate = function shouldUpdate() {
-		update = 1;
-	};
-
-	var getBackupData = function getBackupData() {
-		return "{\"channels\": " + Store.getItem("channels") + ", \"subreddits\": " + Store.getItem("subreeddits") + "}";
-	};
-
-	var prepareDownloadButton = function prepareDownloadButton(data) {
-		var buttonDownload = $$.id("btn-download-data");
-		buttonDownload.href = "data:text/json;charset=utf-8," + encodeURIComponent(data);
-		UI.switchDisplay(buttonDownload, false);
-	};
-
-	var createBackup = function createBackup() {
-		if (update) {
-			Modal.show(template.exportData, function () {
-				var files = {},
-				    content = getBackupData();
-
-				files["reedditdata.json"] = {
-					content: content
-				};
-
-				if (is.linkDownloadable) {
-					prepareDownloadButton(content);
-				}
-
-				$.ajax({
-					url: gists.url,
-					type: "POST",
-					data: JSON.stringify({
-						description: "Reeddit User Data",
-						"public": true,
-						files: files
-					}),
-					headers: {
-						"Content-Type": "application/json; charset=UTF-8"
-					},
-					success: function success(response) {
-						var resp = JSON.parse(response);
-						UI.switchDisplay($$.id("btn-save-dbx"), false);
-						gists.fileURL = resp.files["reedditdata.json"].raw_url;
-						update = 0;
-					},
-					error: function error() {
-						$("#btn-save-dbx").remove();
-						$(".move-data-exp").append("<p class='msg-error'>Oh oh. Error creating your backup file. Retry later.</p>");
-						Modal.remove();
-					}
-				});
-			});
-		} else if (gists.fileURL) {
-			Modal.show(template.exportData, function () {
-				UI.switchDisplay($$.id("btn-save-dbx"), false);
-
-				if (is.linkDownloadable) {
-					prepareDownloadButton(getBackupData());
-				}
-			});
-		}
-	};
-
-	var chooseFromDropbox = function chooseFromDropbox() {
-		Dropbox.choose({
-			success: function success(file) {
-				$.ajax({
-					url: file[0].link,
-					success: function success(data) {
-						try {
-							loadData(data);
-						} catch (e) {
-							alert("Oops! Wrong file, maybe? - Try choosing another one.");
-						}
-					}
-				});
-			},
-			linkType: "direct",
-			extensions: [".json"]
-		});
-	};
-
-	var loadData = function loadData(data) {
-		var refresh = false;
-
-		if (typeof data === "string") {
-			data = JSON.parse(data);
-		}
-
-		if (data.subreddits) {
-			refresh = true;
-			Store.setItem("subreeddits", JSON.stringify(data.subreddits));
-		}
-		if (data.channels) {
-			refresh = true;
-			Store.setItem("channels", JSON.stringify(data.channels));
-		}
-		if (refresh) {
-			window.location.reload();
-		}
-	};
-
-	var readFile = function readFile(file) {
-		var reader = new FileReader();
-		reader.onload = function () {
-			loadData(reader.result);
-		};
-		reader.readAsText(file);
-	};
-
-	var initListeners = function initListeners() {
-
-		// On Menu
-		tappable("#exp-data", {
-			onTap: createBackup
-		});
-
-		tappable("#imp-data", {
-			onTap: function onTap() {
-				Modal.show(template.importData, function () {
-					if (!is.iOS) {
-						UI.switchDisplay($$.id("btn-trigger-file"), false);
-					}
-				});
-			}
-		});
-
-		// Forms
-		tappable("#btn-save-dbx", {
-			onTap: function onTap() {
-				if (!gists.fileURL) {
-					alert("Err. There's no backup file created...");
-					return;
-				}
-				var options = {
-					files: [{
-						url: gists.fileURL,
-						filename: "reedditdata.json"
-					}],
-					success: Modal.remove
-				};
-				Dropbox.save(options);
-			}
-		});
-
-		tappable("#btn-dbx-imp", {
-			onTap: chooseFromDropbox
-		});
-
-		if (!is.iOS) {
-			UI.el.body.on("change", "#file-chooser", function () {
-				var file = this.files[0];
-				readFile(file);
-			});
-
-			UI.el.body.on("click", "#btn-trigger-file", function () {
-				$$.id("file-chooser").click();
-			});
-		}
-	};
-
-	// Exports
-	return {
-		initListeners: initListeners,
-		shouldUpdate: shouldUpdate
 	};
 })();
 
@@ -323,7 +131,6 @@ var Store = window.fluid ? allCookies : window.localStorage;
 
 /* global
  Store,
- tappable,
  UI
  */
 
@@ -396,13 +203,11 @@ var ThemeSwitcher = (function () {
 	};
 
 	var init = function init() {
-
 		loadInitialTheme();
-
 		// Listeners
-
-		tappable('#switch-theme', {
-			onTap: switchTheme
+		el.switcherButton.on('click', function (ev) {
+			ev.preventDefault();
+			switchTheme();
 		});
 	};
 
@@ -421,7 +226,6 @@ var ThemeSwitcher = (function () {
  Header,
  Store,
  Menu,
- tappable,
  Modal,
  Posts,
  Comments,
@@ -447,11 +251,19 @@ var UI = (function () {
 		showMenu: "show-menu",
 		mnml: "mnml",
 		hide: "hide",
-		swipe: "from-swipe"
+		swipe: "from-swipe",
+		invisible: "invisible"
+	};
+
+	var keyCode = {
+		MENU: 49, // 1
+		MAIN: 50, // 2
+		DETAIL: 51 // 3
 	};
 
 	var template = {
-		loader: "<div class='loader'></div>"
+		loader: "<div class='loader'></div>",
+		closeModalButton: "<a href='#close' class='close-form no-ndrln txt-cntr txt-bld'>&times;</a>"
 	};
 
 	var el = {
@@ -478,8 +290,8 @@ var UI = (function () {
 	};
 
 	var backToMainView = function backToMainView() {
-		Header.el.btnNavBack.addClass("invisible");
-		Header.el.subtitle.removeClass("invisible");
+		Header.el.btnNavBack.addClass(classes.invisible);
+		Header.el.subtitle.removeClass(classes.invisible);
 		Header.el.centerSection.empty().append(Header.el.icon);
 		Anim.slideFromLeft();
 	};
@@ -569,19 +381,14 @@ var UI = (function () {
 
 		// Show option to reload app after update
 		if (window.applicationCache) {
-			window.applicationCache.addEventListener("updateready", function (e) {
+			window.applicationCache.addEventListener("updateready", function () {
 				var delay = 1;
 				if (Menu.isShowing()) {
 					Menu.move(Move.LEFT);
 					delay = 301;
 				}
 				setTimeout(function () {
-					el.mainWrap.prepend("<button class='btn-simple btn-block' id='btn-update'>Reeddit updated. Press to reload</button>");
-					tappable("#btn-update", {
-						onTap: function onTap() {
-							window.location.reload();
-						}
-					});
+					el.mainWrap.prepend("<button class='btn blck mrgn-cntr-x mrgn-y' id='btn-update' onclick='window.location.reload();'>Reeddit updated. Press to reload</button>");
 				}, delay);
 			}, false);
 		}
@@ -643,37 +450,38 @@ var UI = (function () {
 			}
 		}, false);
 
-		// Taps
+		// Presses
 
-		tappable(".btn-refresh", {
-			onTap: function onTap(e) {
-				var origin = e.target.getAttribute("data-origin");
-				switch (origin) {
-					case "footer-main":
-						Posts.refreshStream();
-						break;
-					case "footer-detail":
+		UI.el.body.on("click", ".js-btn-refresh", function (ev) {
+			ev.preventDefault();
+			var origin = this.dataset.origin;
+			switch (origin) {
+				case "footer-main":
+					Posts.refreshStream();
+					break;
+				case "footer-detail":
+					if (!Comments.getCurrentThread()) {
+						return;
+					}
+					Comments.show(Comments.getCurrentThread(), true);
+					break;
+				default:
+					if (currentView === View.COMMENTS) {
 						if (!Comments.getCurrentThread()) {
 							return;
 						}
 						Comments.show(Comments.getCurrentThread(), true);
-						break;
-					default:
-						if (currentView === View.COMMENTS) {
-							if (!Comments.getCurrentThread()) {
-								return;
-							}
-							Comments.show(Comments.getCurrentThread(), true);
-						}
-						if (currentView === View.MAIN) {
-							Posts.refreshStream();
-						}
-				}
-			},
-			activeClass: "btn-header--active"
+					}
+					if (currentView === View.MAIN) {
+						Posts.refreshStream();
+					}
+			}
 		});
 
-		tappable(".close-form", Modal.remove);
+		el.body.on("click", ".close-form", function (ev) {
+			ev.preventDefault();
+			Modal.remove();
+		});
 
 		// Swipes
 		if (is.mobile) {
@@ -714,6 +522,29 @@ var UI = (function () {
 				}
 			});
 		}
+
+		// Keys
+
+		el.body.on("keydown", function (ev) {
+
+			if (Modal.isShowing()) {
+				return;
+			}
+
+			switch (ev.which) {
+				case keyCode.MENU:
+					// TODO: focus on actual active sub
+					Menu.el.mainMenu.focus();
+					break;
+				case keyCode.MAIN:
+					// TODO: focus on actual active post
+					el.mainWrap.focus();
+					break;
+				case keyCode.DETAIL:
+					el.detailWrap.focus();
+					break;
+			}
+		});
 	};
 
 	// Exports
@@ -744,11 +575,202 @@ var URLs = {
 };
 
 /* global
+ $,
+ $$,
+ is,
+ UI,
+ Modal,
+ Dropbox,
+ Store
+ */
+
+var Backup = (function () {
+
+	var update = 1,
+	    gists = {
+		url: 'https://api.github.com/gists',
+		fileURL: ''
+	};
+
+	var el = {
+		buttonExportData: $('#exp-data'),
+		buttonImportData: $('#imp-data')
+	};
+
+	var template = {
+		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y hide\'\n\t\t\t\t\t\tid=\'btn-save-dbx\'>Save to Dropbox</button>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y hide"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
+		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y\'\n\t\t\t\t\t\tid=\'btn-dbx-imp\'>Import from Dropbox</button>\n\t\t\t\t<button class=\'btn w-100 mrgn-y hide\'\n\t\t\t\t\t\tid=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t   type="file"\n\t\t\t\t\t   accept="application/json"\n\t\t\t\t\t   style="display: none"/>\n\t\t\t</div>\n\t\t</div>'
+	};
+
+	var shouldUpdate = function shouldUpdate() {
+		update = 1;
+	};
+
+	var getBackupData = function getBackupData() {
+		return '{"channels": ' + Store.getItem('channels') + ', "subreddits": ' + Store.getItem('subreeddits') + '}';
+	};
+
+	var prepareDownloadButton = function prepareDownloadButton(data) {
+		var buttonDownload = $$.id('btn-download-data');
+		buttonDownload.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(data);
+		UI.switchDisplay(buttonDownload, false);
+	};
+
+	var createBackup = function createBackup() {
+		if (update) {
+			Modal.show(template.exportData, function () {
+				var files = {},
+				    content = getBackupData();
+
+				files['reedditdata.json'] = {
+					content: content
+				};
+
+				if (is.linkDownloadable) {
+					prepareDownloadButton(content);
+				}
+
+				$.ajax({
+					url: gists.url,
+					type: 'POST',
+					data: JSON.stringify({
+						description: 'Reeddit User Data',
+						'public': true,
+						files: files
+					}),
+					headers: {
+						'Content-Type': 'application/json; charset=UTF-8'
+					},
+					success: function success(response) {
+						var resp = JSON.parse(response);
+						UI.switchDisplay($$.id('btn-save-dbx'), false);
+						gists.fileURL = resp.files['reedditdata.json'].raw_url;
+						update = 0;
+					},
+					error: function error() {
+						$('#btn-save-dbx').remove();
+						$('.move-data-exp').append('<p class=\'msg-error txt-bld\'>Oh oh. Error creating your backup file. Retry later.</p>');
+						Modal.remove();
+					}
+				});
+			});
+		} else if (gists.fileURL) {
+			Modal.show(template.exportData, function () {
+				UI.switchDisplay($$.id('btn-save-dbx'), false);
+
+				if (is.linkDownloadable) {
+					prepareDownloadButton(getBackupData());
+				}
+			});
+		}
+	};
+
+	var chooseFromDropbox = function chooseFromDropbox() {
+		Dropbox.choose({
+			success: function success(file) {
+				$.ajax({
+					url: file[0].link,
+					success: function success(data) {
+						try {
+							loadData(data);
+						} catch (e) {
+							alert('Oops! Wrong file, maybe? - Try choosing another one.');
+						}
+					}
+				});
+			},
+			linkType: 'direct',
+			extensions: ['.json']
+		});
+	};
+
+	var loadData = function loadData(data) {
+		var refresh = false;
+
+		if (typeof data === 'string') {
+			data = JSON.parse(data);
+		}
+
+		if (data.subreddits) {
+			refresh = true;
+			Store.setItem('subreeddits', JSON.stringify(data.subreddits));
+		}
+		if (data.channels) {
+			refresh = true;
+			Store.setItem('channels', JSON.stringify(data.channels));
+		}
+		if (refresh) {
+			window.location.reload();
+		}
+	};
+
+	var readFile = function readFile(file) {
+		var reader = new FileReader();
+		reader.onload = function () {
+			loadData(reader.result);
+		};
+		reader.readAsText(file);
+	};
+
+	var initListeners = function initListeners() {
+
+		// On Menu
+		el.buttonExportData.on('click', function (ev) {
+			ev.preventDefault();
+			createBackup();
+		});
+
+		el.buttonImportData.on('click', function (ev) {
+			ev.preventDefault();
+			Modal.show(template.importData, function () {
+				if (!is.iOS) {
+					UI.switchDisplay($$.id('btn-trigger-file'), false);
+				}
+			});
+		});
+
+		// Forms
+		UI.el.body.on('click', '#btn-save-dbx', function () {
+			if (!gists.fileURL) {
+				alert('Err. There\'s no backup file created...');
+				return;
+			}
+			var options = {
+				files: [{
+					url: gists.fileURL,
+					filename: 'reedditdata.json'
+				}],
+				success: Modal.remove
+			};
+			Dropbox.save(options);
+		});
+
+		UI.el.body.on('click', '#btn-dbx-imp', chooseFromDropbox);
+
+		if (!is.iOS) {
+			UI.el.body.on('change', '#file-chooser', function () {
+				var file = this.files[0];
+				readFile(file);
+			});
+
+			UI.el.body.on('click', '#btn-trigger-file', function () {
+				$$.id('file-chooser').click();
+			});
+		}
+	};
+
+	// Exports
+	return {
+		initListeners: initListeners,
+		shouldUpdate: shouldUpdate
+	};
+})();
+
+/* global
  Posts,
  Subreddits,
  Anim,
  UI,
- tappable,
  Modal,
  is,
  Store,
@@ -765,12 +787,16 @@ var Channels = (function () {
 		subs: ["movies", "television", "music", "games", "books"]
 	};
 
+	var singleItemTemplate = "<a href=\"#{{name}}\" class=\"channel pad-x no-ndrln blck\" data-title=\"{{name}}\"><div class=\"channel__title\">{{name}}</div><div class=\"pad-x\">{{#subs}}<div class=\"channel__sub txt-cap txt-ellps\">{{.}}</div>{{/subs}}</div></a>";
+
+	var tmpltButtonAddAnotherSub = "<button class=\"w-100\" id=\"btn-add-another-sub\">Add additional subreddit</button>";
+
 	var template = {
-		singleEditItem: "<div class='item-to-edit channel-to-remove' data-title='{{name}}'><p class='sub-name channel-name'>{{name}}</p><div class='btn-edit-channel icon-pencil' data-title='{{name}}'></div><div class='btn-remove-channel icon-trashcan' data-title='{{name}}'></div></div>",
-		single: "<li class=\"channel\" data-title=\"{{name}}\"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>",
-		list: "{{#.}}<li class=\"channel\" data-title=\"{{name}}\"><p>{{name}}</p><div>{{#subs}}<p>{{.}}</p>{{/subs}}</div></li>{{/.}}",
-		formAddNew: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><button class=\"btn-simple\" id=\"btn-submit-channel\" data-op=\"save\">Add Channel</button></div><div class=\"close-form\">&times;</div><input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 1\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 2\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 3\" /></div><div id=\"btn-add-another-sub\">Add additional subreddit</div></div>",
-		formEditChannel: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><button class=\"btn-simple\" id=\"btn-submit-channel\" data-op=\"update\">Update Channel</button></div><div class=\"close-form\">&times;</div><input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"></div><div id=\"btn-add-another-sub\">Add additional subreddit</div></div>"
+		singleEditItem: "<div class='item-to-edit flx channel-to-remove' data-title='{{name}}'><p class='sub-name w-85 txt-cap txt-bld channel-name'>{{name}}</p><a href='#edit' class='flx flx-cntr-x flx-cntr-y w-15 no-ndrln clr-current btn-edit-channel icon-pencil' data-title='{{name}}'></a><a href='#remove' class='flx flx-cntr-x flx-cntr-y w-15 no-ndrln clr-current btn-remove-channel icon-trashcan' data-title='{{name}}'></a></div>",
+		single: singleItemTemplate,
+		list: "{{#.}}" + singleItemTemplate + "{{/.}}",
+		formAddNew: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><button class=\"btn\" id=\"btn-submit-channel\" data-op=\"save\">Add Channel</button></div>" + UI.template.closeModalButton + "<input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 1\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 2\" /><input class=\"field-edit-sub\" type=\"text\" placeholder=\"Subreddit 3\" /></div>" + tmpltButtonAddAnotherSub + "</div>",
+		formEditChannel: "<div class=\"new-form\" id=\"form-new-channel\"><div class=\"form-left-corner\"><button class=\"btn\" id=\"btn-submit-channel\" data-op=\"update\">Update Channel</button></div>" + UI.template.closeModalButton + "<input type=\"text\" id=\"txt-channel\" placeholder=\"Channel name\" /><div id=\"subs-for-channel\"></div>" + tmpltButtonAddAnotherSub + "</div>"
 	};
 
 	var list = [],
@@ -896,93 +922,84 @@ var Channels = (function () {
 			editingNow = channelToEdit.name;
 			var $inputsContainer = $("#subs-for-channel");
 
-			for (var i = 0, l = channelToEdit.subs.length; i < l; i++) {
-
-				var inputTemplate = "<input class='field-edit-sub with-clear' type='text' value='{{subName}}'>";
-
-				$inputsContainer.append(inputTemplate.replace("{{subName}}", channelToEdit.subs[i]));
-			}
+			channelToEdit.subs.map(function (sub) {
+				var inputTemplate = "<input class='field-edit-sub with-clear' type='text' value='" + sub + "'>";
+				$inputsContainer.append(inputTemplate);
+			});
 		});
 	};
 
 	var initListeners = function initListeners() {
 
-		tappable("#btn-submit-channel", {
-			onTap: function onTap(e, target) {
-				var txtChannelName = $("#txt-channel"),
-				    operation = target.getAttribute("data-op"),
-				    channelName = txtChannelName.val();
+		UI.el.body.on("click", "#btn-submit-channel", function (ev) {
+			var target = ev.target;
+			var txtChannelName = $("#txt-channel"),
+			    operation = target.getAttribute("data-op"),
+			    channelName = txtChannelName.val();
 
-				if (!channelName) {
-					txtChannelName.attr("placeholder", "Enter a Channel name!");
-					Anim.shakeForm();
-					return;
+			if (!channelName) {
+				txtChannelName.attr("placeholder", "Enter a Channel name!");
+				Anim.shakeForm();
+				return;
+			}
+
+			var subreddits = [],
+			    subs = $("#subs-for-channel input");
+
+			for (var i = 0; i < subs.length; i++) {
+				var sub = $(subs[i]).val();
+				if (!sub) {
+					continue;
 				}
+				subreddits.push(sub);
+			}
 
-				var subreddits = [],
-				    subs = $("#subs-for-channel input");
+			if (subreddits.length === 0) {
+				subs[0].placeholder = "Enter at least one subreddit!";
+				Anim.shakeForm();
+				return;
+			}
 
-				for (var i = 0; i < subs.length; i++) {
-					var sub = $(subs[i]).val();
-					if (!sub) {
-						continue;
+			switch (operation) {
+				case "save":
+					// Look for Channel name in the saved ones
+					var savedChannel = getByName(channelName);
+					if (savedChannel) {
+						// If it's already saved
+						txtChannelName.val("");
+						txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
+						Anim.shakeForm();
+						return;
 					}
-					subreddits.push(sub);
-				}
+					add(channelName, subreddits);
+					break;
 
-				if (subreddits.length === 0) {
-					subs[0].placeholder = "Enter at least one subreddit!";
-					Anim.shakeForm();
-					return;
-				}
-
-				switch (operation) {
-					case "save":
-						// Look for Channel name in the saved ones
-						var savedChannel = getByName(channelName);
-						if (savedChannel) {
-							// If it's already saved
-							txtChannelName.val("");
-							txtChannelName.attr("placeholder", "'" + channelName + "' already exists.");
-							Anim.shakeForm();
-							return;
-						}
-						add(channelName, subreddits);
-						break;
-
-					case "update":
-						// Remove current and add new
-						remove(editingNow);
-						add(channelName, subreddits);
-						break;
-				}
-
-				// confirmation feedback
-				$(target).remove();
-				$(".form-left-corner").append("<p class='channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</p>");
-
-				Anim.bounceOut($(".new-form"), Modal.remove);
+				case "update":
+					// Remove current and add new
+					remove(editingNow);
+					add(channelName, subreddits);
+					break;
 			}
+
+			// confirmation feedback
+			$(target).remove();
+			$(".form-left-corner").append("<div class='clr-white txt-bld channel-added-msg'>'" + channelName + "' " + operation + "d. Cool!</div>");
+
+			Anim.bounceOut($(".new-form"), Modal.remove);
 		});
 
-		tappable("#btn-add-channel", {
-			onTap: function onTap() {
-				Modal.show(template.formAddNew);
-			}
+		UI.el.mainWrap.on("click", "#btn-add-channel", function () {
+			Modal.show(template.formAddNew);
 		});
 
-		tappable(".btn-remove-channel", {
-			onTap: function onTap(e, target) {
-				remove($(target).data("title"));
-			},
-			activeClass: "btn-list--active"
+		UI.el.mainWrap.on("click", ".btn-remove-channel", function (ev) {
+			ev.preventDefault();
+			remove(this.dataset.title);
 		});
 
-		tappable(".btn-edit-channel", {
-			onTap: function onTap(e, target) {
-				edit(target.getAttribute("data-title"));
-			},
-			activeClass: "btn-list--active"
+		UI.el.mainWrap.on("click", ".btn-edit-channel", function (ev) {
+			ev.preventDefault();
+			edit(this.dataset.title);
 		});
 	};
 
@@ -1006,7 +1023,6 @@ var Channels = (function () {
  El,
  Posts,
  Markdown,
- tappable,
  UI,
  LinkSummary,
  Footer,
@@ -1056,7 +1072,7 @@ var Comments = (function () {
 		loading = false;
 		var error = 'Error loading comments. Refresh to try again.';
 		if (is.wideScreen) {
-			loader.addClass('loader-error').html(error + '<button class="btn-simple btn-block btn-refresh">Refresh</button>');
+			loader.addClass('loader-error').html(error + '<button class="btn mrgn-cntr-x mrgn-y blck w-33 js-btn-refresh">Refresh</button>');
 		} else {
 			loader.addClass('loader-error').text(error);
 		}
@@ -1083,13 +1099,14 @@ var Comments = (function () {
 			    commentLink = {
 				href: permalink,
 				target: '_blank',
-				title: 'See this comment on reddit.com'
+				title: 'See this comment on reddit.com',
+				tabindex: '-1'
 			};
 
-			var comment = $('<div/>').addClass('comment-wrap').append($('<div/>').append($('<div/>').addClass('comment-data').append($('<span/>').addClass(isPoster ? 'comment-poster' : 'comment-author').text(c.data.author)).append($('<a/>').addClass('comment-info').attr(commentLink).text(timeSince(now, c.data.created_utc)))).append($('<div/>').addClass('comment-body').html(html)));
+			var comment = $('<div/>').addClass('comment-wrap').attr('tabindex', '0').append($('<div/>').append($('<div/>').addClass('comment-data').append($('<span/>').addClass(isPoster ? 'comment-poster' : 'comment-author').text(c.data.author)).append($('<a/>').addClass('comment-info no-ndrln').attr(commentLink).text(timeSince(now, c.data.created_utc)))).append($('<div/>').addClass('comment-body').html(html)));
 
 			if (c.data.replies && c.data.replies.data.children[0].kind !== 'more') {
-				comment.append($('<button/>').addClass('btn-simple btn-block--small comments-button js-reply-button').attr('data-comment-id', c.data.id).text('See replies'));
+				comment.append($('<button/>').addClass('btn blck mrgn-cntr-x comments-button js-reply-button').attr('data-comment-id', c.data.id).text('See replies'));
 				replies[c.data.id] = c.data.replies.data.children;
 			}
 
@@ -1103,7 +1120,6 @@ var Comments = (function () {
 		}
 
 		UI.el.detailWrap.find('a').attr('target', '_blank');
-		//$("#detail-wrap a").attr("target", "_blank");
 
 		if (!is.desktop) {
 			UI.scrollFixComments();
@@ -1127,7 +1143,7 @@ var Comments = (function () {
 					Posts.setList(result[0].data);
 					LinkSummary.setPostSummary(result[0].data.children[0].data, id);
 
-					Header.el.btnNavBack.removeClass('invisible'); // Show
+					Header.el.btnNavBack.removeClass(UI.classes.invisible); // Show
 
 					setRest(id, refresh);
 
@@ -1152,7 +1168,7 @@ var Comments = (function () {
 				loading = true;
 				currentThread = id;
 
-				Header.el.btnNavBack.removeClass('invisible'); // Show
+				Header.el.btnNavBack.removeClass(UI.classes.invisible); // Show
 
 				var detail = UI.el.detailWrap;
 				detail.empty();
@@ -1208,33 +1224,25 @@ var Comments = (function () {
 
 		Header.el.centerSection.empty().append(Header.el.postTitle);
 		Header.el.postTitle.text(postTitle);
-		Header.el.subtitle.addClass('invisible');
+		Header.el.subtitle.addClass(UI.classes.invisible);
 	};
 
 	var initListeners = function initListeners() {
 
 		UI.el.detailWrap.on('click', '#comments-container a, #selftext a', function (ev) {
-			var imageURL = LinkSummary.checkImageLink(ev.target.href);
+			var imageURL = LinkSummary.checkImageLink(this.href);
 			if (imageURL) {
 				ev.preventDefault();
 				Modal.showImageViewer(imageURL);
 			}
 		});
 
-		tappable('.js-reply-button', {
-			onTap: function onTap(e, target) {
-				var parent = $(target),
-				    commentID = parent.attr('data-comment-id'),
-				    comments = replies[commentID];
-				load(comments, parent.parent());
-				parent.remove();
-			}
-		});
-
-		tappable('.image-preview', {
-			onTap: function onTap(e, target) {
-				Modal.showImageViewer(target.src);
-			}
+		UI.el.detailWrap.on('click', '.js-reply-button', function () {
+			var button = $(this),
+			    commentID = button.attr('data-comment-id'),
+			    comments = replies[commentID];
+			load(comments, button.parent());
+			button.remove();
 		});
 	};
 
@@ -1366,7 +1374,6 @@ var Footer = (function () {
 /* global
  $,
  is,
- tappable,
  Menu,
  Posts,
  UI
@@ -1384,21 +1391,11 @@ var Header = (function () {
 	};
 
 	var initListeners = function initListeners() {
-
-		tappable('.btn-to-main', {
-			onTap: function onTap() {
-				location.hash = '#';
-			},
-			activeClass: 'btn-header--active'
-		});
-
-		tappable('#sub-title', {
-			onTap: function onTap() {
-				if (is.mobile && Posts.areLoading()) {
-					return;
-				}
-				Menu.move(Menu.isShowing() ? UI.Move.LEFT : UI.Move.RIGHT);
+		el.subtitleText.on('click', function () {
+			if (is.mobile && Posts.areLoading()) {
+				return;
 			}
+			Menu.move(Menu.isShowing() ? UI.Move.LEFT : UI.Move.RIGHT);
 		});
 	};
 
@@ -1416,12 +1413,13 @@ var Header = (function () {
  Footer,
  timeSince,
  Markdown,
- UI
+ UI,
+ Modal
  */
 
 var LinkSummary = (function () {
 
-	var template = "\n\t\t<section id='link-summary'>\n\t\t\t<a href='{{url}}' target='_blank'>\n\t\t\t\t<p id='summary-title'>{{title}}</p>\n\t\t\t\t<p id='summary-domain'>{{domain}}</p>\n\t\t\t\t{{#over_18}}\n\t\t\t\t<span class='link-label summary-label nsfw'>NSFW</span>\n\t\t\t\t{{/over_18}}\n\t\t\t\t{{#stickied}}\n\t\t\t\t<span class='link-label summary-label stickied'>Stickied</span>\n\t\t\t\t{{/stickied}}\n\t\t\t</a>\n\t\t\t<div id='summary-footer'>\n\t\t\t\t<p id='summary-author'>by {{author}}</p>\n\t\t\t\t<a class='btn-simple' id='share-tw' target='_blank' href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>\n\t\t\t</div>\n\t\t\t<div class='ls-extra'>\n\t\t\t\t<span class='ls-extra__label' id='summary-sub'>{{subreddit}}</span>\n\t\t\t\t<span class='ls-extra__label' id='summary-time'></span>\n\t\t\t\t<a class='ls-extra__label' id='summary-comment-num' title='See comments on reddit.com' href='http://reddit.com{{link}}' target='_blank'>{{num_comments}} comments</a>\n\t\t\t</div>\n\t\t</section>";
+	var template = "\n\t\t<section id='link-summary'>\n\t\t\t<a href='{{url}}'\n\t\t\t   target='_blank'\n\t\t\t   class='no-ndrln'>\n\t\t\t\t<span id='summary-title'\n\t\t\t\t\t  class='pad-x txt-bld blck'>{{title}}</span>\n\t\t\t\t<span id='summary-domain'\n\t\t\t\t\t  class='pad-x txt-bld'>{{domain}}</span>\n\t\t\t\t{{#over_18}}\n\t\t\t\t<span class='link-label txt-bld summary-label nsfw'>NSFW</span>\n\t\t\t\t{{/over_18}}\n\t\t\t\t{{#stickied}}\n\t\t\t\t<span class='link-label txt-bld summary-label stickied'>Stickied</span>\n\t\t\t\t{{/stickied}}\n\t\t\t</a>\n\t\t\t<div id='summary-footer'>\n\t\t\t\t<span id='summary-author'\n\t\t\t\t\t  class='pad-x txt-bld'>by {{author}}</span>\n\t\t\t\t<a class='btn mrgn-x no-ndrln'\n\t\t\t\t   id='share-tw'\n\t\t\t\t   target='_blank'\n\t\t\t\t   href='https://twitter.com/intent/tweet?text=\"{{encodedTitle}}\" —&url={{url}}&via=ReedditApp&related=ReedditApp'>Tweet</a>\n\t\t\t</div>\n\t\t\t<div class='ls-extra flx flx-spc-btwn-x txt-bld'>\n\t\t\t\t<span class='w-33'\n\t\t\t\t\t  id='summary-sub'>{{subreddit}}</span>\n\t\t\t\t<span class='w-33 txt-cntr'\n\t\t\t\t\t  id='summary-time'></span>\n\t\t\t\t<a class='w-33 no-ndrln txt-r clr-current'\n\t\t\t\t   id='summary-comment-num'\n\t\t\t\t   title='See comments on reddit.com'\n\t\t\t\t   href='http://reddit.com{{link}}'\n\t\t\t\t   target='_blank'>{{num_comments}} comments</a>\n\t\t\t</div>\n\t\t</section>";
 
 	var setPostSummary = function setPostSummary(data, postID) {
 		if (!data.link) {
@@ -1441,19 +1439,19 @@ var LinkSummary = (function () {
 				Posts.getList()[postID].selftext = selfText;
 				Posts.getList()[postID].selftextParsed = true;
 			}
-			summaryHTML += "<section id='selftext'>" + selfText + "</section>";
+			summaryHTML += "<section id='selftext' class='pad-y pad-x mrgn-x mrgn-y'>" + selfText + "</section>";
 		} else {
 			// if it's an image
 			var linkURL = Posts.getList()[postID].url;
 			var imageLink = checkImageLink(linkURL);
 			if (imageLink) {
 				// If it's an image link
-				summaryHTML += "<section class=\"preview-container\">" + "<img class=\"image-preview\" src=\"" + imageLink + "\" />" + "</section>";
+				summaryHTML += "<a href=\"#preview\" class=\"preview-container blck js-img-preview\" data-img=\"" + imageLink + "\">" + "<img class=\"image-preview\" src=\"" + imageLink + "\" />" + "</a>";
 			} else {
 				// if it's a YouTube video
 				var youTubeID = getYouTubeVideoIDfromURL(linkURL);
 				if (youTubeID) {
-					summaryHTML += "<section class=\"preview-container\">" + "<a href=\"" + linkURL + "\" target=\"_blank\">" + "<img class=\"video-preview\" src=\"http://img.youtube.com/vi/" + youTubeID + "/hqdefault.jpg\" />" + "</a></section>";
+					summaryHTML += "<a class=\"preview-container blck\" href=\"" + linkURL + "\" target=\"_blank\">" + "<img class=\"video-preview\" src=\"http://img.youtube.com/vi/" + youTubeID + "/hqdefault.jpg\" />" + "</a>";
 				}
 			}
 		}
@@ -1514,17 +1512,24 @@ var LinkSummary = (function () {
 		}
 	};
 
+	var initListeners = function initListeners() {
+		UI.el.detailWrap.on("click", ".js-img-preview", function (ev) {
+			ev.preventDefault();
+			Modal.showImageViewer(this.dataset.img);
+		});
+	};
+
 	// Exports
 	return {
 		setPostSummary: setPostSummary,
 		updatePostSummary: updatePostSummary,
-		checkImageLink: checkImageLink
+		checkImageLink: checkImageLink,
+		initListeners: initListeners
 	};
 })();
 
 /* global
  El,
- tappable,
  Channels,
  Subreddits,
  Modal,
@@ -1535,6 +1540,15 @@ var LinkSummary = (function () {
 
 var Menu = (function () {
 
+	var el = {
+		mainMenu: $('#main-menu'),
+		buttonNewSubreddit: $('#btn-new-sub'),
+		buttonNewChannel: $('#btn-new-channel'),
+		buttonAddSubreddits: $('#btn-add-subs'),
+		buttonEditSubreddits: $('#btn-edit-subs'),
+		buttonAbout: $('#about')
+	};
+
 	var showing = false;
 
 	var isShowing = function isShowing() {
@@ -1542,7 +1556,7 @@ var Menu = (function () {
 	};
 
 	var template = {
-		about: '<div class=\'new-form about-reeddit\'><div class=\'close-form\'>&times;</div><ul><li><a href=\'/about/\' target=\'_blank\'>Reeddit Homepage</a></li><li><a href=\'https://github.com/berbaquero/reeddit\' target=\'_blank\'>GitHub Project</a></li></ul><p><a href=\'https://twitter.com/reedditapp\'>@ReedditApp</a></p><p>Built by <a href=\'http://berbaquero.com\' target=\'_blank\'>Bernardo Baquero Stand</a></p></div>'
+		about: '<div class=\'new-form about-reeddit\'>' + UI.template.closeModalButton + '<ul><li><a href=\'/about/\' target=\'_blank\'>Reeddit Homepage</a></li><li><a href=\'https://github.com/berbaquero/reeddit\' target=\'_blank\'>GitHub Project</a></li></ul><p><a href=\'https://twitter.com/reedditapp\'>@ReedditApp</a></p><p>Built by <a href=\'http://berbaquero.com\' target=\'_blank\'>Bernardo Baquero Stand</a></p></div>'
 	};
 
 	var subSelectedClass = 'sub--selected',
@@ -1557,13 +1571,13 @@ var Menu = (function () {
 			UI.el.mainView.removeClass(UI.classes.showMenu);
 			setTimeout(function () {
 				showing = false;
-			});
+			}, 1);
 		}
 		if (direction === UI.Move.RIGHT) {
 			UI.el.mainView.addClass(UI.classes.showMenu);
 			setTimeout(function () {
 				showing = true;
-			});
+			}, 1);
 		}
 	};
 
@@ -1599,63 +1613,55 @@ var Menu = (function () {
 
 	var initListeners = function initListeners() {
 
-		tappable('.channel', {
-			onTap: function onTap(e, target) {
-				var channelName = target.getAttribute('data-title');
-				Menu.move(UI.Move.LEFT);
-				if (channelName === CurrentSelection.getName() && !Subreddits.isEditing()) {
-					return;
-				}
-				Menu.markSelected({ type: 'channel', el: target, update: true });
-				if (UI.getCurrentView() === UI.View.COMMENTS) {
-					UI.backToMainView();
-				}
-				Channels.loadPosts(Channels.getByName(channelName));
-			},
-			activeClassDelay: 100,
-			activeClass: 'channel--active'
+		el.mainMenu.on('click', '.channel', function (ev) {
+			ev.preventDefault();
+			var target = this;
+			var channelName = target.getAttribute('data-title');
+			Menu.move(UI.Move.LEFT);
+			if (channelName === CurrentSelection.getName() && !Subreddits.isEditing()) {
+				return;
+			}
+			Menu.markSelected({ type: 'channel', el: target, update: true });
+			if (UI.getCurrentView() === UI.View.COMMENTS) {
+				UI.backToMainView();
+			}
+			Channels.loadPosts(Channels.getByName(channelName));
 		});
 
-		tappable('.sub', {
-			onTap: function onTap(e, target) {
-				var subredditName = $(target).first().text();
-				Menu.move(UI.Move.LEFT);
-				Subreddits.loadPosts(subredditName);
-				markSelected({ el: target, update: true });
-				if (UI.getCurrentView() === UI.View.COMMENTS) {
-					UI.backToMainView();
-				}
-			},
-			allowClick: false,
-			activeClassDelay: 100,
-			activeClass: 'menu-active-item'
-		});
-
-		tappable('#btn-new-sub', {
-			onTap: function onTap() {
-				Modal.show(Subreddits.template.formInsert);
+		el.mainMenu.on('click', '.sub', function (ev) {
+			ev.preventDefault();
+			var target = ev.target;
+			Menu.move(UI.Move.LEFT);
+			Subreddits.loadPosts(target.dataset.name);
+			markSelected({ el: target, update: true });
+			if (UI.getCurrentView() === UI.View.COMMENTS) {
+				UI.backToMainView();
 			}
 		});
 
-		tappable('#btn-new-channel', {
-			onTap: function onTap() {
-				Modal.show(Channels.template.formAddNew);
-			}
+		el.buttonNewSubreddit.on('click', function (ev) {
+			ev.preventDefault();
+			Modal.show(Subreddits.template.formInsert);
 		});
 
-		tappable('#btn-add-subs', {
-			onTap: Subreddits.loadForAdding
+		el.buttonNewChannel.on('click', function (ev) {
+			ev.preventDefault();
+			Modal.show(Channels.template.formAddNew);
 		});
 
-		tappable('#btn-edit-subs', {
-			onTap: Subreddits.loadForEditing
+		el.buttonAddSubreddits.on('click', function (ev) {
+			ev.preventDefault();
+			Subreddits.loadForAdding();
 		});
 
-		tappable('#about', {
-			onTap: function onTap() {
-				Modal.show(template.about);
-			},
-			activeClassDelay: 100
+		el.buttonEditSubreddits.on('click', function (ev) {
+			ev.preventDefault();
+			Subreddits.loadForEditing();
+		});
+
+		el.buttonAbout.on('click', function (ev) {
+			ev.preventDefault();
+			Modal.show(template.about);
 		});
 	};
 
@@ -1665,22 +1671,29 @@ var Menu = (function () {
 		initListeners: initListeners,
 		move: move,
 		markSelected: markSelected,
-		cleanSelected: cleanSelected
+		cleanSelected: cleanSelected,
+		el: el
 	};
 })();
 
 /* global
  Menu,
  Anim,
- El,
  is,
- tappable,
  UI
  */
 
 var Modal = (function () {
 
-	var isShown = false;
+	var showing = false;
+
+	var setShowing = function setShowing(shown) {
+		showing = shown;
+	};
+
+	var isShowing = function isShowing() {
+		return showing;
+	};
 
 	var show = function show(template, callback, config) {
 		var delay = 1;
@@ -1689,10 +1702,10 @@ var Modal = (function () {
 			delay = 301;
 		}
 		setTimeout(function () {
-			if (isShown) {
+			if (isShowing()) {
 				return;
 			}
-			var modal = $('<div/>').attr('id', 'modal'),
+			var modal = $('<div/>').attr({ id: 'modal', tabindex: '0', 'class': 'modal' }),
 			    bounce = true;
 			if (config) {
 				if (config.modalClass) {
@@ -1704,7 +1717,9 @@ var Modal = (function () {
 			}
 			modal.append(template);
 			UI.el.body.append(modal);
-			isShown = true;
+			modal.focus();
+			switchKeyListener(true);
+			setShowing(true);
 			setTimeout(function () {
 				modal.css('opacity', 1);
 				if (bounce) {
@@ -1720,14 +1735,15 @@ var Modal = (function () {
 	var remove = function remove() {
 		var modal = $('#modal');
 		modal.css('opacity', '');
-		isShown = false;
+		setShowing(false);
 		setTimeout(function () {
 			modal.remove();
+			switchKeyListener(false);
 		}, 301);
 	};
 
 	var showImageViewer = function showImageViewer(imageURL) {
-		var imageViewer = '<img class="image-viewer" src="' + imageURL + '">',
+		var imageViewer = '<img class="image-viewer centered-transform" src="' + imageURL + '">',
 		    config = {
 			modalClass: 'modal--closable',
 			noBounce: true
@@ -1735,9 +1751,22 @@ var Modal = (function () {
 		Modal.show(imageViewer, false, config);
 	};
 
-	var initListeners = function initListeners() {
+	var handleKeyPress = function handleKeyPress(ev) {
+		if (ev.which === 27) {
+			remove();
+		}
+	};
 
-		tappable('.modal--closable', Modal.remove);
+	var switchKeyListener = function switchKeyListener(flag) {
+		if (flag) {
+			UI.el.body.on('keydown', handleKeyPress);
+		} else {
+			UI.el.body.off('keydown', handleKeyPress);
+		}
+	};
+
+	var initListeners = function initListeners() {
+		UI.el.body.on('click', '.modal--closable', Modal.remove);
 	};
 
 	// Exports
@@ -1745,13 +1774,13 @@ var Modal = (function () {
 		show: show,
 		remove: remove,
 		showImageViewer: showImageViewer,
-		initListeners: initListeners
+		initListeners: initListeners,
+		isShowing: isShowing
 	};
 })();
 
 /* global
  $,
- tappable,
  is,
  El,
  UI,
@@ -1768,7 +1797,7 @@ var Modal = (function () {
 
 var Posts = (function () {
 
-	var template = '\n\t\t{{#children}}\n\t\t\t<article class=\'link-wrap\'>\n\t\t\t\t<div class=\'link js-link\' data-id=\'{{data.id}}\'>\n\t\t\t\t\t<div class=\'link-thumb\'>\n\t\t\t\t\t\t<div style=\'background-image: url({{data.thumbnail}})\'></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\'link-info\'>\n\t\t\t\t\t\t<a href=\'{{data.url}}\' data-id=\'{{data.id}}\' target=\'_blank\' class=\'link-title js-post-title\'>\n\t\t\t\t\t\t{{data.title}}\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<p class=\'link-domain\'>{{data.domain}}</p>\n\t\t\t\t\t\t<p class=\'link-sub\'>{{data.subreddit}}</p>\n\t\t\t\t\t\t{{#data.over_18}}\n\t\t\t\t\t\t<span class=\'link-label nsfw\'>NSFW</span>\n\t\t\t\t\t\t{{/data.over_18}}\n\t\t\t\t\t\t{{#data.stickied}}\n\t\t\t\t\t\t<span class=\'link-label stickied\'>Stickied</span>\n\t\t\t\t\t\t{{/data.stickied}}\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\'to-comments\' data-id=\'{{data.id}}\'>\n\t\t\t\t\t<div class=\'comments-icon\'></div>\n\t\t\t\t</div>\n\t\t\t</article>\n\t\t{{/children}}\n\t\t<button id=\'btn-load-more-posts\' class=\'btn-block btn-simple\'>More</button>\n\t\t<div id=\'main-overflow\'></div>';
+	var template = '\n\t\t{{#children}}\n\t\t\t<article class=\'link-wrap flx w-100\'>\n\t\t\t\t<div class=\'link flx no-ndrln pad-y pad-x js-link\' data-id=\'{{data.id}}\'>\n\t\t\t\t\t<div class=\'link-thumb\'>\n\t\t\t\t\t\t<div style=\'background-image: url({{data.thumbnail}})\'></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\'link-info\'>\n\t\t\t\t\t\t<a href=\'{{data.url}}\'\n\t\t\t\t\t\t   data-id=\'{{data.id}}\'\n\t\t\t\t\t\t   target=\'_blank\'\n\t\t\t\t\t\t   class=\'link-title no-ndrln blck js-post-title\'>\n\t\t\t\t\t\t{{data.title}}\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<div class=\'link-domain\'>{{data.domain}}</div>\n\t\t\t\t\t\t<span class=\'link-sub\'>{{data.subreddit}}</span>\n\t\t\t\t\t\t{{#data.over_18}}\n\t\t\t\t\t\t<span class=\'link-label txt-bld nsfw\'>NSFW</span>\n\t\t\t\t\t\t{{/data.over_18}}\n\t\t\t\t\t\t{{#data.stickied}}\n\t\t\t\t\t\t<span class=\'link-label txt-bld stickied\'>Stickied</span>\n\t\t\t\t\t\t{{/data.stickied}}\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<a href=\'#comments:{{data.id}}\' class=\'to-comments w-15 flx flx-cntr-y btn-basic\'>\n\t\t\t\t\t<div class=\'comments-icon\'></div>\n\t\t\t\t</a>\n\t\t\t</article>\n\t\t{{/children}}\n\t\t<button id=\'btn-load-more-posts\'\n\t\t\t\tclass=\'btn blck mrgn-cntr-x\'>More</button>\n\t\t<div id=\'main-overflow\'></div>';
 
 	var loading = false,
 	    list = {},
@@ -1854,15 +1883,14 @@ var Posts = (function () {
 			if (is.desktop) {
 				main.empty();
 			} else {
-				main.empty().removeClass('anim-reveal').addClass('invisible');
+				main.empty().removeClass('anim-reveal').addClass(UI.classes.invisible);
 			}
 		}
 
 		if (linksCount === 0) {
 			var message = $('.loader');
 			if (message) {
-				message.text('No Links available.');
-				message.addClass('loader-error');
+				message.text('No Links available.').addClass('loader-error');
 				main.append('<div id="#main-overflow"></div>');
 			} else {
 				main.prepend('<div class="loader loader-error">No Links available.</div><div id="main-overflow"></div>');
@@ -1979,53 +2007,38 @@ var Posts = (function () {
 
 	var initListeners = function initListeners() {
 
-		tappable('.js-link', {
-			onTap: function onTap(e, target) {
-				if (!is.wideScreen) {
-					return;
-				}
-				var id = target.getAttribute('data-id');
-				Comments.updateHash(id);
-			},
-			allowClick: false,
-			activeClassDelay: 100,
-			inactiveClassDelay: 200,
-			activeClass: 'link-active'
-		});
+		UI.el.mainWrap.on('click', '.js-link', function (ev) {
+			ev.preventDefault();
 
-		tappable('.js-post-title', {
-			onTap: function onTap(e) {
-				var id = e.target.getAttribute('data-id'),
-				    url = e.target.href;
-				open(url, id);
-			},
-			allowClick: false
-		});
-
-		tappable('.to-comments', {
-			onTap: function onTap(e, target) {
-				var id = target.getAttribute('data-id');
-				Comments.updateHash(id);
-			},
-			activeClass: 'btn-list--active',
-			activeClassDelay: 100
-		});
-
-		tappable('#btn-load-more-posts', {
-			onTap: function onTap() {
-				CurrentSelection.execute(function () {
-					var url;
-					if (CurrentSelection.getName().toLowerCase() === 'frontpage') {
-						url = URLs.init + 'r/' + Subreddits.getAllSubsString() + '/';
-					} else {
-						url = URLs.init + 'r/' + CurrentSelection.getName() + '/';
-					}
-					load(url, '&after=' + idLast);
-				}, function () {
-					var channel = Channels.getByName(CurrentSelection.getName());
-					load(URLs.init + Channels.getURL(channel) + '/', '&after=' + idLast);
-				});
+			if (!is.wideScreen) {
+				return;
 			}
+
+			Comments.updateHash(this.dataset.id);
+		});
+
+		UI.el.mainWrap.on('click', '.js-post-title', function (ev) {
+			ev.preventDefault();
+
+			var id = ev.target.dataset.id,
+			    url = ev.target.href;
+
+			open(url, id);
+		});
+
+		UI.el.mainWrap.on('click', '#btn-load-more-posts', function () {
+			CurrentSelection.execute(function () {
+				var url;
+				if (CurrentSelection.getName().toLowerCase() === 'frontpage') {
+					url = URLs.init + 'r/' + Subreddits.getAllSubsString() + '/';
+				} else {
+					url = URLs.init + 'r/' + CurrentSelection.getName() + '/';
+				}
+				load(url, '&after=' + idLast);
+			}, function () {
+				var channel = Channels.getByName(CurrentSelection.getName());
+				load(URLs.init + Channels.getURL(channel) + '/', '&after=' + idLast);
+			});
 		});
 	};
 
@@ -2048,7 +2061,6 @@ var Posts = (function () {
 /* global
  Sorting,
  Posts,
- tappable
  */
 
 var SortSwitch = (function () {
@@ -2068,22 +2080,23 @@ var SortSwitch = (function () {
 				wrap = document.getElementsByClassName('sorter-wrap')[0];
 			}
 			return wrap;
-		}
+		},
+		mainSwitch: $('.js-sort-switch-main')
 	};
 
 	var initListeners = function initListeners() {
-		tappable('.js-sort-switch-main', {
-			onTap: function onTap(ev, target) {
-				if (Posts.areLoading()) {
-					return;
-				}
-				isHot = !isHot;
-				Sorting.change(isHot ? 'hot' : 'new');
-				if (isHot) {
-					target.classList.remove(classes['new']);
-				} else {
-					target.classList.add(classes['new']);
-				}
+		el.mainSwitch.on('click', function (ev) {
+			ev.preventDefault();
+			var target = this;
+			if (Posts.areLoading()) {
+				return;
+			}
+			isHot = !isHot;
+			Sorting.change(isHot ? 'hot' : 'new');
+			if (isHot) {
+				target.classList.remove(classes['new']);
+			} else {
+				target.classList.add(classes['new']);
 			}
 		});
 	};
@@ -2141,7 +2154,6 @@ var Sorting = (function () {
  Footer,
  SortSwitch,
  is,
- tappable,
  Modal,
  Posts,
  Channels,
@@ -2158,13 +2170,15 @@ var Subreddits = (function () {
 	    editing = false,
 	    loadedSubs;
 
+	var subredditClasses = "sub pad-x pad-y blck no-ndrln txt-cap txt-ellps";
+
 	var template = {
-		list: "{{#.}}<li data-name='{{.}}' class='sub'>{{.}}</li>{{/.}}",
-		toEditList: "<p class='edit-subs-title'>Subreddits</p><ul class='remove-list'>{{#.}}<div class='item-to-edit sub-to-remove' data-name='{{.}}'><p class='sub-name'>{{.}}</p><div class='btn-remove-subreddit icon-trashcan' data-name='{{.}}'></div></div>{{/.}}</ul>",
-		toAddList: "{{#children}}<div class='subreddit'><div><p class='subreddit__title'>{{data.display_name}}</p><p class='subreddit__description'>{{data.public_description}}</p></div><div class='btn-add-sub icon-plus-circle'></div></div>{{/children}}",
-		loadMoreSubsButton: "<button class='btn-block btn-simple' id='btn-more-subs'>More</button>",
-		formInsert: "<div class=\"new-form\" id=\"form-new-sub\"><div class=\"form-left-corner\"><button class=\"btn-simple\" id=\"btn-add-new-sub\">Add Subreddit</button></div><div class=\"close-form\">&times;</div><form><input type=\"text\" id=\"txt-new-sub\" placeholder=\"New subreddit name\" /></form></div>",
-		topButtonsForAdding: "<div class='buttons-group'><button id='btn-sub-man' class='btn-simple'>Insert Manually</button><button id='btn-add-channel' class='btn-simple'>Create Channel</button></div>"
+		list: "{{#.}}<a href='#{{.}}' data-name='{{.}}' class='" + subredditClasses + "'>{{.}}</a>{{/.}}",
+		toEditList: "<div class='edit-subs-title pad-x pad-y txt-bld txt-cntr'>Subreddits</div><ul class='no-mrgn no-pad'>{{#.}}<div class='item-to-edit flx sub-to-remove' data-name='{{.}}'><p class='sub-name w-85 txt-cap txt-bld'>{{.}}</p><a href='#' class='no-ndrln clr-current flx flx-cntr-x flx-cntr-y w-15 btn-remove-sub icon-trashcan' data-name='{{.}}'></a></div>{{/.}}</ul>",
+		toAddList: "{{#children}}<div class='sub-to-add flx w-100'><div class='w-85'><p class='sub-to-add__title js-sub-title txt-bld'>{{data.display_name}}</p><p class='sub-to-add__description'>{{data.public_description}}</p></div><a href='#add' class='btn-add-sub no-ndrln flx flx-cntr-x flx-cntr-y w-15 icon-plus-circle'></a></div>{{/children}}",
+		loadMoreSubsButton: "<button class='btn blck w-50 mrgn-y mrgn-cntr-x' id='btn-more-subs'>More</button>",
+		formInsert: "<div class=\"new-form\" id=\"form-new-sub\"><div class=\"form-left-corner\"><button class=\"btn\" id=\"btn-add-new-sub\">Add Subreddit</button></div>" + UI.template.closeModalButton + "<form><input type=\"text\" id=\"txt-new-sub\" placeholder=\"New subreddit name\" /></form></div>",
+		topButtonsForAdding: "<div class='flx flx-cntr-x pad-x pad-y'><button id='btn-sub-man' class='btn group-btn'>Insert Manually</button><button id='btn-add-channel' class='btn group-btn'>Create Channel</button></div>"
 	};
 
 	var el = {
@@ -2196,7 +2210,7 @@ var Subreddits = (function () {
 		if (subs instanceof Array) {
 			el.list.append(Mustache.to_html(template.list, subs));
 		} else {
-			el.list.append($("<li/>").attr("data-name", subs).addClass("sub").text(subs));
+			el.list.append($("<a/>").attr({ "data-name": subs, href: "#" }).addClass(subredditClasses).text(subs));
 		}
 	};
 
@@ -2388,10 +2402,10 @@ var Subreddits = (function () {
 			    channelsList = Channels.getList();
 
 			if (channelsList && channelsList.length > 0) {
-				htmlChannels = Mustache.to_html("<p class='edit-subs-title'>Channels</p><ul class='remove-list channel-edit-list'>{{#.}} " + Channels.template.singleEditItem + "{{/.}}</ul>", channelsList);
+				htmlChannels = Mustache.to_html("<div class='edit-subs-title pad-x pad-y txt-bld txt-cntr'>Channels</div><ul class='no-mrgn no-pad channel-edit-list'>{{#.}} " + Channels.template.singleEditItem + "{{/.}}</ul>", channelsList);
 			}
 
-			var html = "<div id=\"remove-wrap\">" + htmlChannels + htmlSubs + "</div>";
+			var html = "<div class=\"h-100\">" + htmlChannels + htmlSubs + "</div>";
 			setTimeout(function () {
 				// Intentional delay / fix for iOS
 				UI.el.mainWrap.html(html);
@@ -2413,62 +2427,51 @@ var Subreddits = (function () {
 			addFromNewForm();
 		});
 
-		tappable("#btn-add-new-sub", {
-			onTap: addFromNewForm
+		UI.el.body.on("click", "#btn-add-new-sub", addFromNewForm);
+
+		UI.el.body.on("click", "#btn-add-another-sub", function () {
+			var container = $("#subs-for-channel");
+			container.append("<input type='text' placeholder='Extra subreddit'/>");
+			container[0].scrollTop = container.height();
 		});
 
-		tappable("#btn-add-another-sub", {
-			onTap: function onTap() {
-				var container = $("#subs-for-channel");
-				container.append("<input type='text' placeholder='Extra subreddit'/>");
-				container[0].scrollTop = container.height();
-			}
+		UI.el.mainWrap.on("click", "#btn-sub-man", function () {
+			Modal.show(template.formInsert);
 		});
 
-		tappable("#btn-sub-man", {
-			onTap: function onTap() {
-				Modal.show(template.formInsert);
-			}
+		UI.el.mainWrap.on("click", "#btn-more-subs", function (ev) {
+			var target = ev.target;
+			$(target).remove();
+			var main = UI.el.mainWrap;
+			main.append(UI.template.loader);
+			$.ajax({
+				url: URLs.init + "reddits/" + URLs.end + "&after=" + idLast,
+				dataType: "jsonp",
+				success: function success(list) {
+					var newSubs = Mustache.to_html(template.toAddList, list.data);
+					idLast = list.data.after;
+					$(".loader", main).remove();
+					main.append(newSubs).append(template.loadMoreSubsButton);
+					loadedSubs = loadedSubs + newSubs;
+				},
+				error: function error() {
+					$(".loader").addClass("loader-error").text("Error loading more subreddits.");
+				}
+			});
 		});
 
-		tappable("#btn-more-subs", {
-			onTap: function onTap(e, target) {
-				$(target).remove();
-				var main = UI.el.mainWrap;
-				main.append(UI.template.loader);
-				$.ajax({
-					url: URLs.init + "reddits/" + URLs.end + "&after=" + idLast,
-					dataType: "jsonp",
-					success: function success(list) {
-						var newSubs = Mustache.to_html(template.toAddList, list.data);
-						idLast = list.data.after;
-						$(".loader", main).remove();
-						main.append(newSubs).append(template.loadMoreSubsButton);
-						loadedSubs = loadedSubs + newSubs;
-					},
-					error: function error() {
-						$(".loader").addClass("loader-error").text("Error loading more subreddits.");
-					}
-				});
-			}
+		UI.el.mainWrap.on("click", ".btn-add-sub", function (ev) {
+			ev.preventDefault();
+			var parent = $(this).parent(),
+			    subTitle = $(".js-sub-title", parent);
+			subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
+			var newSub = subTitle.text();
+			add(newSub);
 		});
 
-		tappable(".btn-add-sub", {
-			onTap: function onTap(e, target) {
-				var parent = $(target).parent(),
-				    subTitle = $(".subreddit-title", parent);
-				subTitle.css("color", "#2b9900"); // 'adding sub' little UI feedback
-				var newSub = subTitle.text();
-				add(newSub);
-			},
-			activeClass: "btn-list--active"
-		});
-
-		tappable(".btn-remove-subreddit", {
-			onTap: function onTap(e, target) {
-				remove($(target).data("name"));
-			},
-			activeClass: "btn-list--active"
+		UI.el.mainWrap.on("click", ".btn-remove-sub", function (ev) {
+			ev.preventDefault();
+			remove(this.dataset.name);
 		});
 	};
 
@@ -2507,7 +2510,8 @@ var Subreddits = (function () {
  UI,
  Backup,
  URLs,
- ThemeSwitcher
+ ThemeSwitcher,
+ LinkSummary
  */
 
 // Init all modules listeners
@@ -2521,6 +2525,7 @@ Header.initListeners();
 Modal.initListeners();
 SortSwitch.initListeners();
 Backup.initListeners();
+LinkSummary.initListeners();
 
 Header.el.postTitle.remove();
 

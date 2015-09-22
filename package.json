@@ -29,6 +29,8 @@
   },
   "scripts": {
     "start": "gulp dev",
-    "build": "gulp"
+    "build": "gulp",
+    "deploy": "git push",
+    "deploy-beta": "surge . reeddit.surge.sh"
   }
 }

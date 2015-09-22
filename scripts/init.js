@@ -18,7 +18,7 @@
  URLs,
  ThemeSwitcher,
  LinkSummary
- */
+*/
 
 // Init all modules listeners
 UI.initListeners();

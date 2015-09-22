@@ -35,19 +35,14 @@ $width-button: 32px;
 			color: $dark-bg-color-3;
 		};
 	}
-
-    @include break-point-min($bp-wide) {
-		@include flex-center(vertical);
-		justify-content: space-between;
-    }
 }
 
 .footer-sub-title,
 .footer-post-title {
-	margin: 0 auto;
-	text-align: center;
+	//margin: 0 auto;
+	//text-align: center;
 	font-size: 14px;
-	font-weight: bold;
+	//font-weight: bold;
 	width: 70%;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -55,7 +50,6 @@ $width-button: 32px;
 }
 
 .footer-refresh {
-	@include flex-center(all);
     @include size($width-button, 100%);
 }
 

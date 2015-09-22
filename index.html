@@ -9,74 +9,45 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/icon144.png">
-    <link rel="stylesheet" href="dist/libs.css">
-    <link rel="stylesheet" href="dist/app.min.css">
+    <link rel="stylesheet" href="dist/app.css">
     <script>var loc=location.hostname;if(loc==="berbaquero.github.io"||loc==="berbaquero.github.com"||loc==="reedditapp.com"||loc==="berbaquero.com"){var _gaq=[["_setAccount","UA-36097133-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"))}</script>
   </head>
   <body>
     <header>
-      <div id="main-title">
-        <p id="sub-title" class="sub-title"></p>
-      </div>
-      <div id="nav-back" class="header-corner invisible">
-        <div class="btn-to-main back-arrow-btn"><span class="back-arrow-icon"></span></div>
-      </div>
+      <div id="main-title" class="txt-bld"><a href="#" id="sub-title" class="sub-title no-ndrln clr-current"></a></div><a href="#" id="nav-back" class="w-15 flx flx-cntr-x flx-cntr-y no-ndrln header-corner trnsprnt invisible"><span class="back-arrow-icon"></span></a>
       <div id="title-head">
         <div id="header-icon"></div>
-        <p id="title"></p>
-      </div>
-      <div class="header-corner btn-refresh icon-refresh"></div>
+        <div id="title" class="txt-bld txt-cntr"></div>
+      </div><a href="#" class="w-15 clr-current flx flx-cntr-x flx-cntr-y no-ndrln header-corner icon-refresh js-btn-refresh"></a>
     </header>
     <nav id="menu-container">
       <div class="view">
-        <div id="edit-subs"><span id="btn-add-subs" class="btn-edit-sub">+</span><span id="btn-edit-subs" class="btn-edit-sub">•••</span></div>
-        <div id="main-menu" class="wrapper">
-          <div class="menu-desc">Subreddits<span id="btn-new-sub" class="btn-side-menu-add">+</span></div>
+        <div id="main-menu" tabindex="0" class="wrapper">
+          <div class="menu-desc txt-uppr pad-x">Subreddits<a href="#new-sub" id="btn-new-sub" class="btn-side-menu-add txt-cntr no-ndrln">+</a></div>
           <ul id="subs"></ul>
-          <div class="menu-desc">Channels<span id="btn-new-channel" class="btn-side-menu-add">+</span></div>
+          <div class="menu-desc txt-uppr pad-x">Channels<a href="#new-channel" id="btn-new-channel" class="btn-side-menu-add txt-cntr no-ndrln">+</a></div>
           <ul id="channels"></ul>
-          <div class="menu-desc">Options</div>
-          <div id="about" class="option">About</div>
-          <div id="exp-data" class="option">Export Data</div>
-          <div id="imp-data" class="option">Import Data</div>
-          <div id="switch-theme" class="option">Theme</div>
+          <div class="menu-desc txt-uppr pad-x">Options</div><a href="#about" id="about" class="option pad-x pad-y no-ndrln blck">About</a><a href="#exp-data" id="exp-data" class="option pad-x pad-y no-ndrln blck">Export Data</a><a href="#imp-data" id="imp-data" class="option pad-x pad-y no-ndrln blck">Import Data</a><a href="#switch-theme" id="switch-theme" class="option pad-x pad-y no-ndrln blck">Theme</a>
         </div>
+        <div id="edit-subs"><a href="#add-subs" id="btn-add-subs" class="btn-edit-sub w-50 no-ndrln txt-bld">+</a><a href="#edit-subs" id="btn-edit-subs" class="btn-edit-sub w-50 no-ndrln">•••</a></div>
       </div>
     </nav>
     <section class="view main-view show-view">
-      <section id="main-wrap" class="wrapper"></section>
-      <div id="main-footer" class="view-footer">
-        <div class="sorter-wrap">
-          <div class="sort-switch js-sort-switch-main">
+      <section id="main-wrap" tabindex="0" class="wrapper"></section>
+      <div id="main-footer" class="view-footer flx@wide flx-cntr-y flx-spc-btwn-x">
+        <div class="sorter-wrap"><a href="#" class="sort-switch js-sort-switch-main no-ndrln blck">
             <div class="sort-switch__overlay">
               <div class="sort-switch__wrap js-sort-switch-wrap"><span class="sort-switch__label sort-switch__label--hot">hot<span class="sort-switch__icon sort-switch__icon--hot">&#9679;</span></span><span class="sort-switch__label sort-switch__label--new">new<span class="sort-switch__icon sort-switch__icon--new">&#9679;</span></span></div>
-            </div>
-          </div>
-        </div>
-        <p id="footer-sub" class="footer-sub-title"></p>
-        <div data-origin="footer-main" class="btn-footer footer-refresh btn-refresh icon-refresh"></div>
+            </div></a></div>
+        <p id="footer-sub" class="footer-sub-title blck mrgn-cntr-x txt-cntr txt-bld"></p><a href="#" data-origin="footer-main" class="btn-footer no-ndrln clr-current flx flx-cntr-x flx-cntr-y footer-refresh icon-refresh js-btn-refresh"></a>
       </div>
     </section>
     <section class="view detail-view">
-      <section id="detail-wrap" class="wrapper wrapper--detail"></section>
-      <div id="detail-footer" class="view-footer">
-        <div id="detail-close" class="btn-footer btn-to-main hide">&times;</div>
-        <p id="footer-post" class="footer-post-title"></p>
-        <div data-origin="footer-detail" class="btn-footer footer-refresh btn-refresh icon-refresh hide"></div>
-      </div>
+      <section id="detail-wrap" tabindex="0" class="wrapper"></section>
+      <div id="detail-footer" class="view-footer flx@wide flx-cntr-y flx-spc-btwn-x"><a href="#" id="detail-close" class="no-ndrln clr-current btn-footer hide">&times;</a><span id="footer-post" class="footer-post-title blck mrgn-cntr-x txt-cntr txt-bld"></span><a href="#rfrsh" data-origin="footer-detail" class="btn-footer clr-current no-ndrln flx flx-cntr-x flx-cntr-y footer-refresh icon-refresh js-btn-refresh hide"></a></div>
     </section>
-    <script>
-      var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(navigator.userAgent);
-      if (isDesktop) {
-      	var deskLink = document.createElement("link");
-      	deskLink.rel = "stylesheet";
-      	deskLink.href = "dist/desk.css";
-      	document.head.appendChild(deskLink);
-      }
-      
-    </script>
     <script src="dist/libs.js"></script>
-    <script src="dist/app.min.js"></script>
+    <script src="dist/app.js"></script>
     <script src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="yiu8cok9mknii0n"></script>
   </body>
 </html>

@@ -48,18 +48,3 @@ $detail-view-wide-x:  calc(100% - #{($menu-view-wide-x + $main-view-wide-x)});
 
 @import "mixins";
 
-// Intentions
-%completely-center--translate {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translateY(-50%) translateX(-50%);
-}
-
-%block-spacing {
-	padding: $gutter;
-}
-
-%full-width {
-	width: 100%;
-}

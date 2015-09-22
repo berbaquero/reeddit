@@ -1,12 +1,11 @@
 @import "themes";
 @import "mixins";
 
-.subreddit {
-	display: flex;
-	padding-left: 10px;
+.sub-to-add {
+	$spacing: 10px;
 	border-bottom: 1px solid #CCC;
 	border-top: 1px solid white;
-	width: 100%;
+	padding: $spacing 0 $spacing $spacing;
 
 	@include on-theme(light) {
 		border-top: 0;
@@ -17,13 +16,7 @@
 		border-bottom-color: $dark-line-color-1;
 	}
 
-	> div:first-child {
-		width: 85%;
-		padding: 10px 5px 10px 0;
-	}
-
 	&__title {
-		font-weight: 700;
 		font-size: 15px;
 		margin: 5px 0;
 		color: $red;
@@ -42,13 +35,7 @@
 	}
 }
 
-.remove-list {
-	margin: 0;
-	padding: 0;
-}
-
 .item-to-edit {
-	display: flex;
 	border-bottom: 1px solid #DDD;
 	border-top: 1px solid white;
 	height: 60px;
@@ -64,10 +51,7 @@
 	}
 
 	.sub-name {
-		width: 85%;
-		text-transform: capitalize;
 		font-size: 16px;
-		font-weight: 700;
 		padding-left: 10px;
 
 		@include on-theme(dark) {
@@ -75,28 +59,20 @@
 		}
 	}
 
-	> div {
-		@include flex-center(all);
-		width: 15%;
-	}
-
 	.channel-name {
 		width: 70%;
 	}
 }
 
-.btn-add-sub {
-	@include flex-center(all);
-	width: 15%;
-}
+.edit-subs-title {
+	font-size: 19px;
+	color: #777;
+	background-color: rgba(220, 220, 220, 0.4);
+	text-shadow: 0 1px 1px whiteSmoke;
 
-.icon-add {
-	color: white;
-	border-radius: 50%;
-	background-color: $dark-label-color-3;
-	width: 36px;
-	height: 36px;
-	text-align: center;
-	font-size: 25px;
-	font-weight: 500;
+	@include on-theme(dark) {
+		background-color: $dark-bg-color-1;
+		color: $dark-text-color-1;
+		text-shadow: none;
+	}
 }

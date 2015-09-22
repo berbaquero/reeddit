@@ -1,5 +1,6 @@
 @import "themes";
 @import "globals/variables";
+@import "globals/helpers";
 @import "base";
 
 #subs,
@@ -45,7 +46,10 @@
 .btn-edit-sub {
     font-size: 25px;
     color: #777;
-    width: 50%;
+
+    &:hover {
+        color: #4286F5;
+    }
 
     @include on-theme(light) {
         color: #444;
@@ -56,36 +60,14 @@
 	}
 }
 
-#btn-add-subs {
-    font-weight: 500;
-}
-
 #btn-edit-subs {
     font-size: 20px;
-}
-
-.channel:focus > p,
-.option:focus {
-    background-color: $focus-item;
-}
-
-.channel:hover > p,
-.option:hover {
-
-    @include on-theme(light-n-dark) {
-        text-shadow: none;
-    }
 }
 
 .sub {
     color: white;
     font-size: 14px;
-    outline: none;
     -webkit-touch-callout: none;
-
-    &:focus {
-        background-color: rgba(black, .15);
-    }
 
     &:hover {
         text-shadow: 0 0 10px #CCC;
@@ -93,10 +75,6 @@
 
     @include on-theme(light) {
         color: $light-text-color;
-
-        &:focus {
-            background-color: rgba(black, .05);
-        }
     }
 
 	@include on-theme(dark) {
@@ -126,20 +104,10 @@
 	padding-top: $spacing-y;
     padding-bottom: $spacing-y;
     color: white;
-    outline: none;
     -webkit-touch-callout: none;
-
-    &:focus {
-        background-color: rgba(black, .15);
-    }
 
     @include on-theme(light) {
         color: $light-text-color;
-
-        &:focus {
-            background-color: rgba(black, .05);
-        }
-
     }
 
 	@include on-theme(dark) {
@@ -162,39 +130,6 @@
 		}
     }
 
-	&:active
-	&__sub {
-		color: $col_active-link-subtext;
-
-		@include on-theme(light-n-dark) {
-			color: darken($white, 10%);
-		}
-	}
-
-	&:active
-	&__title {
-		text-shadow: 0 0 10px #ccc;
-	}
-
-    &:active {
-		background-image: linear-gradient(#4286F5, #194FDB);
-
-        @include on-theme(light-n-dark) {
-            color: $white;
-			background-image: none;
-        }
-
-		@include on-theme(light) {
-			border-color: $light-active-item;
-			background-color: $light-active-item;
-		}
-
-		@include on-theme(dark) {
-			border-color: $dark-active-color-1;
-			background-color: $dark-active-color-1;
-		}
-    }
-
 	&--selected {
 		border-left: 3px solid #4286F5;
 
@@ -211,10 +146,11 @@
 .btn-side-menu-add {
 	position: absolute;
 	right: 0;
-	padding: 0 13px 7px 10px;
 	color: #777;
 	font-size: 24px;
 	line-height: 30px;
+	width: 40px;
+	height: 100%;
 
 	@include on-theme(dark) {
 		color: $dark-text-color-2;
@@ -316,20 +252,9 @@
 	}
 }
 
-.option.tappable-active,
-.sub:active {
-	background-image: linear-gradient(#4286F5, #194FDB);
-
-	@include on-theme(light-n-dark) {
-		color: $white;
-		background-image: none;
-	}
-
-	@include on-theme(light) {
-		background-color: $light-active-item;
-	}
-
-	@include on-theme(dark) {
-		background-color: $dark-active-color-1;
-	}
+.sub,
+.channel,
+.option {
+    @include activeState($active-bg);
+    transition-duration: 200ms;
 }

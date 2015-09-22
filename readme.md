@@ -39,7 +39,6 @@ You can also install the especially built [Reeddit for Mac](http://mac.reedditap
 
 To build Reeddit, I used these awesome resources:
 
-*	[Tappable](https://github.com/cheeaun/tappable) -- Great 'tap' events handler.
 *	[pagedown](http://code.google.com/p/pagedown/) -- for Markdown parsing.
 *	[Mustache.js](https://github.com/janl/mustache.js/) -- Lightweight client-side templating.
 *	[reziseend.js](https://github.com/porada/resizeend) -- Better 'resize' handler.

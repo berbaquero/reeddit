@@ -1,6 +1,5 @@
 /* global
  $,
- tappable,
  is,
  El,
  UI,
@@ -19,8 +18,8 @@ var Posts = (function() {
 
 	const template = `
 		{{#children}}
-			<article class='link-wrap'>
-				<div class='link pad-y pad-x js-link' data-id='{{data.id}}'>
+			<article class='link-wrap flx w-100'>
+				<div class='link flx no-ndrln pad-y pad-x js-link' data-id='{{data.id}}'>
 					<div class='link-thumb'>
 						<div style='background-image: url({{data.thumbnail}})'></div>
 					</div>
@@ -28,22 +27,22 @@ var Posts = (function() {
 						<a href='{{data.url}}'
 						   data-id='{{data.id}}'
 						   target='_blank'
-						   class='link-title js-post-title'>
+						   class='link-title no-ndrln blck js-post-title'>
 						{{data.title}}
 						</a>
 						<div class='link-domain'>{{data.domain}}</div>
 						<span class='link-sub'>{{data.subreddit}}</span>
 						{{#data.over_18}}
-						<span class='link-label nsfw'>NSFW</span>
+						<span class='link-label txt-bld nsfw'>NSFW</span>
 						{{/data.over_18}}
 						{{#data.stickied}}
-						<span class='link-label stickied'>Stickied</span>
+						<span class='link-label txt-bld stickied'>Stickied</span>
 						{{/data.stickied}}
 					</div>
 				</div>
-				<div class='to-comments btn-basic' data-id='{{data.id}}'>
+				<a href='#comments:{{data.id}}' class='to-comments w-15 flx flx-cntr-y btn-basic'>
 					<div class='comments-icon'></div>
-				</div>
+				</a>
 			</article>
 		{{/children}}
 		<button id='btn-load-more-posts'
@@ -137,8 +136,9 @@ var Posts = (function() {
 		if (linksCount === 0) {
 			var message = $('.loader');
 			if (message) {
-				message.text('No Links available.');
-				message.addClass('loader-error');
+				message
+					.text('No Links available.')
+					.addClass('loader-error');
 				main.append('<div id="#main-overflow"></div>');
 			} else {
 				main.prepend('<div class="loader loader-error">No Links available.</div><div id="main-overflow"></div>');
@@ -268,10 +268,6 @@ var Posts = (function() {
 				url = ev.target.href;
 
 			open(url, id);
-		});
-
-		UI.el.mainWrap.on('click', '.to-comments', function() {
-			Comments.updateHash(this.dataset.id);
 		});
 
 		UI.el.mainWrap.on('click', '#btn-load-more-posts', function() {

@@ -2,13 +2,18 @@
  Menu,
  Anim,
  is,
- tappable,
  UI
  */
 
 var Modal = (function() {
 
-	var isShown = false;
+	let showing = false;
+
+	const setShowing = (shown) => {
+		showing = shown;
+	};
+
+	const isShowing = () => showing;
 
 	var show = function(template, callback, config) {
 		var delay = 1;
@@ -17,10 +22,10 @@ var Modal = (function() {
 			delay = 301;
 		}
 		setTimeout(function() {
-			if (isShown) {
+			if (isShowing()) {
 				return;
 			}
-			var modal = $('<div/>').attr('id', 'modal'),
+			var modal = $('<div/>').attr({id: 'modal', tabindex: '0', class: 'modal'}),
 				bounce = true;
 			if (config) {
 				if (config.modalClass) {
@@ -32,8 +37,9 @@ var Modal = (function() {
 			}
 			modal.append(template);
 			UI.el.body.append(modal);
+			modal.focus();
 			switchKeyListener(true);
-			isShown = true;
+			setShowing(true);
 			setTimeout(function() {
 				modal.css('opacity', 1);
 				if (bounce) {
@@ -49,7 +55,7 @@ var Modal = (function() {
 	var remove = function() {
 		var modal = $('#modal');
 		modal.css('opacity', '');
-		isShown = false;
+		setShowing(false);
 		setTimeout(function() {
 			modal.remove();
 			switchKeyListener(false);
@@ -57,7 +63,7 @@ var Modal = (function() {
 	};
 
 	var showImageViewer = function(imageURL) {
-		var imageViewer = '<img class="image-viewer" src="' + imageURL + '">',
+		var imageViewer = '<img class="image-viewer centered-transform" src="' + imageURL + '">',
 			config = {
 				modalClass: 'modal--closable',
 				noBounce: true
@@ -88,7 +94,8 @@ var Modal = (function() {
 		show: show,
 		remove: remove,
 		showImageViewer: showImageViewer,
-		initListeners: initListeners
+		initListeners: initListeners,
+		isShowing: isShowing
 	};
 
 })();

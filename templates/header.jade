@@ -1,14 +1,13 @@
 header
 
-	div#main-title
-		p#sub-title.sub-title
+	div(id='main-title' class='txt-bld')
+		a(href='#', id='sub-title', class='sub-title no-ndrln clr-current')
 
-	div#nav-back.header-corner.invisible
-		div.btn-to-main.back-arrow-btn
-			span.back-arrow-icon
+	a(href='#', id='nav-back', class='w-15 flx flx-cntr-x flx-cntr-y no-ndrln header-corner trnsprnt invisible')
+		span(class='back-arrow-icon')
 
-	div#title-head
-		div#header-icon
-		p#title
+	div(id='title-head')
+		div(id='header-icon')
+		div(id='title', class='txt-bld txt-cntr')
 
-	div.header-corner.btn-refresh.icon-refresh
+	a(href='#', class='w-15 clr-current flx flx-cntr-x flx-cntr-y no-ndrln header-corner icon-refresh js-btn-refresh')

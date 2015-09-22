@@ -21,10 +21,10 @@ var LinkSummary = (function() {
 				<span id='summary-domain'
 					  class='pad-x txt-bld'>{{domain}}</span>
 				{{#over_18}}
-				<span class='link-label summary-label nsfw'>NSFW</span>
+				<span class='link-label txt-bld summary-label nsfw'>NSFW</span>
 				{{/over_18}}
 				{{#stickied}}
-				<span class='link-label summary-label stickied'>Stickied</span>
+				<span class='link-label txt-bld summary-label stickied'>Stickied</span>
 				{{/stickied}}
 			</a>
 			<div id='summary-footer'>
@@ -71,7 +71,7 @@ var LinkSummary = (function() {
 			var imageLink = checkImageLink(linkURL);
 			if (imageLink) { // If it's an image link
 				summaryHTML +=
-					'<a href="#" class="preview-container blck js-img-preview" data-img="' + imageLink + '">' +
+					'<a href="#preview" class="preview-container blck js-img-preview" data-img="' + imageLink + '">' +
 					'<img class="image-preview" src="' + imageLink + '" />' +
 					'</a>';
 			} else { // if it's a YouTube video

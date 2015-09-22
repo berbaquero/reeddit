@@ -1,22 +1,18 @@
 @import "themes";
 @import "globals/variables";
+@import "globals/helpers";
 
 .link {
-	display: flex;
-	text-decoration: none;
 	width: 85%;
-	cursor: none;
-	-webkit-tap-highlight-color: transparent;
 
 	@include break-point-min($bp-wide) {
 		@include full-width;
+		cursor: pointer;
 	}
 }
 
 .link-wrap {
-	display: flex;
 	border-bottom: 1px solid #ccc;
-	width: 100%;
 
 	@include on-theme(light-n-dark) {
 		border-top: 0;
@@ -57,13 +53,12 @@
 }
 
 .link-title {
+	$link-active-bg: $focus-item;
+	@include activeState($link-active-bg);
 	font-weight: 600;
 	font-size: 15px;
-	margin: 0;
 	color: $black-blueish;
-	text-decoration: none;
 	outline: 0;
-	display: block;
 
 	@include on-theme(dark) {
 		font-weight: 500;
@@ -71,9 +66,13 @@
 	}
 
 	&:focus {
-		background-color: $focus-item;
-		box-shadow: 3px 0 0 $focus-item, -3px 0 0 $focus-item;
+		box-shadow: 3px 0 0 $link-active-bg, -3px 0 0 $link-active-bg;
 		border-radius: 3px;
+
+		@include on-theme(dark) {
+			background-color: $active-bg;
+			box-shadow: 3px 0 0 $active-bg, -3px 0 0 $active-bg;
+		}
 	}
 }
 
@@ -93,7 +92,6 @@
 	}
 }
 
-.link:active,
 .link-selected {
 	background-image: linear-gradient(#4286F5, #194FDB);
 
@@ -107,7 +105,7 @@
 	@include on-theme(dark) {
 		background: {
 			image: none;
-			color: $dark-active-color-2;
+			color: $active-bg;
 		}
 	}
 
@@ -141,7 +139,6 @@ $stickied: #71b0d3;
 .link-label {
 	font-size: 11px;
 	margin-left: 5px;
-	font-weight: 700;
 
 	&.nsfw {
 		color: $nsfw;
@@ -173,9 +170,6 @@ $stickied: #71b0d3;
 }
 
 .to-comments {
-	display: flex;
-	align-items: center;
-	width: 15%;
 
 	@include break-point-min($bp-wide) {
 		display: none;

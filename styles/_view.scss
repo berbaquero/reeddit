@@ -94,10 +94,6 @@
 	position: relative;
 	-webkit-overflow-scrolling: touch;
 
-	&--detail {
-		-webkit-tap-highlight-color: transparent;
-	}
-
 	@include break-point-min($bp-wide) {
 		height: calc(100% - #{$footer-height}) !important;
 	}

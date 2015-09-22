@@ -1,0 +1,8 @@
+@mixin activeState($color) {
+	-webkit-tap-highlight-color: $color;
+	outline: none;
+
+	&:focus {
+		background-color: $color;
+	}
+}

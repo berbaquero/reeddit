@@ -1,0 +1,50 @@
+.about-reeddit {
+	top: 80px;
+
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	li {
+		font-size: 18px;
+		text-align: center;
+
+		a {
+			text-decoration: none;
+			letter-spacing: 1px;
+			font-weight: 700;
+			text-shadow: 0 1px 1px white;
+			padding: 12px;
+			display: block;
+			border-top: 1px solid white;
+			border-bottom: 1px solid #999;
+			color: #777;
+		}
+
+		a:hover {
+			color: inherit;
+		}
+
+		&:first-child a {
+			border-top: 0;
+		}
+
+		&:last-child a {
+			border-bottom: 0;
+		}
+	}
+
+	p {
+		color: #777;
+		text-shadow: 0 1px 1px white;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	p a {
+		text-decoration: none;
+		color: #777;
+	}
+
+}

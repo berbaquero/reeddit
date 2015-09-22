@@ -5,7 +5,6 @@
  UI,
  Modal,
  Dropbox,
- tappable,
  Store
  */
 
@@ -17,10 +16,15 @@ var Backup = (function() {
 			fileURL: ''
 		};
 
+	const el = {
+		buttonExportData: $('#exp-data'),
+		buttonImportData: $('#imp-data')
+	};
+
 	const template = {
 		exportData: `
 		<div class='new-form move-data'>
-			<div class='close-form'>&times;</div>
+			${UI.template.closeModalButton}
 			<div class='move-data-exp'>
 				<h3>Export Data</h3>
 				<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>
@@ -33,7 +37,7 @@ var Backup = (function() {
 		</div>`,
 		importData: `
 		<div class='new-form move-data'>
-			<div class='close-form'>&times;</div>
+			${UI.template.closeModalButton}
 			<div class='move-data-imp'>
 				<h3>Import Data</h3>
 				<p>Load the subscriptions from another Reeddit instance.</p>
@@ -97,7 +101,7 @@ var Backup = (function() {
 					},
 					error: function() {
 						$("#btn-save-dbx").remove();
-						$(".move-data-exp").append("<p class='msg-error'>Oh oh. Error creating your backup file. Retry later.</p>");
+						$(".move-data-exp").append("<p class='msg-error txt-bld'>Oh oh. Error creating your backup file. Retry later.</p>");
 						Modal.remove();
 					}
 				});
@@ -164,41 +168,37 @@ var Backup = (function() {
 	var initListeners = function() {
 
 		// On Menu
-		tappable("#exp-data", {
-			onTap: createBackup
+		el.buttonExportData.on('click', (ev) => {
+			ev.preventDefault();
+			createBackup();
 		});
 
-		tappable("#imp-data", {
-			onTap: function() {
-				Modal.show(template.importData, () => {
-					if (!is.iOS) {
-						UI.switchDisplay($$.id('btn-trigger-file'), false);
-					}
-				});
-			}
+		el.buttonImportData.on('click', (ev) => {
+			ev.preventDefault();
+			Modal.show(template.importData, () => {
+				if (!is.iOS) {
+					UI.switchDisplay($$.id('btn-trigger-file'), false);
+				}
+			});
 		});
 
 		// Forms
-		tappable("#btn-save-dbx", {
-			onTap: function() {
-				if (!gists.fileURL) {
-					alert("Err. There's no backup file created...");
-					return;
-				}
-				var options = {
-					files: [{
-						url: gists.fileURL,
-						filename: "reedditdata.json"
-					}],
-					success: Modal.remove
-				};
-				Dropbox.save(options);
+		UI.el.body.on('click', '#btn-save-dbx', () => {
+			if (!gists.fileURL) {
+				alert("Err. There's no backup file created...");
+				return;
 			}
+			var options = {
+				files: [{
+					url: gists.fileURL,
+					filename: "reedditdata.json"
+				}],
+				success: Modal.remove
+			};
+			Dropbox.save(options);
 		});
 
-		tappable("#btn-dbx-imp", {
-			onTap: chooseFromDropbox
-		});
+		UI.el.body.on('click', '#btn-dbx-imp', chooseFromDropbox);
 
 		if (!is.iOS) {
 			UI.el.body.on('change', '#file-chooser', function() {

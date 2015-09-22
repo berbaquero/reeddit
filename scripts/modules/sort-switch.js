@@ -1,7 +1,6 @@
 /* global
  Sorting,
  Posts,
- tappable
  */
 
 var SortSwitch = (function() {
