@@ -38,9 +38,9 @@ body.dark {
 }
 
 @font-face {
-  font-family: 'icons';
-  src: url("fonts/icons.eot?-7se0v4");
-  src: url("fonts/icons.eot?#iefix-7se0v4") format("embedded-opentype"), url("fonts/icons.woff?-7se0v4") format("woff"), url("fonts/icons.ttf?-7se0v4") format("truetype"), url("fonts/icons.svg?-7se0v4#icons") format("svg");
+  font-family: 'reeddit-icons';
+  src: url("fonts/reeddit-icons.eot?y7xyo8");
+  src: url("fonts/reeddit-icons.eot?y7xyo8#iefix") format("embedded-opentype"), url("fonts/reeddit-icons.ttf?y7xyo8") format("truetype"), url("fonts/reeddit-icons.woff?y7xyo8") format("woff"), url("fonts/reeddit-icons.svg?y7xyo8#reeddit-icons") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -49,7 +49,7 @@ body.dark {
 
 [class^="icon-"],
 [class*=" icon-"] {
-  font-family: 'icons';
+  font-family: 'reeddit-icons';
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -61,31 +61,10 @@ body.dark {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 28, styles/_icons.scss */
-
-.icon-pencil:before {
-  content: "\e600";
-  font-size: 18px;
-}
-
-/* line 33, styles/_icons.scss */
-
-.icon-refresh:before {
-  content: "\e601";
-  font-size: 16px;
-}
-
-/* line 38, styles/_icons.scss */
-
-.icon-trashcan:before {
-  content: "\e602";
-  font-size: 24px;
-}
-
-/* line 43, styles/_icons.scss */
+/* line 29, styles/_icons.scss */
 
 .icon-plus-circle:before {
-  content: "\e603";
+  content: "\e902";
   font-size: 24px;
   color: #62a54a;
 }
@@ -94,6 +73,39 @@ body.dark {
 
 .dark .icon-plus-circle:before {
   color: #86b476;
+}
+
+/* line 39, styles/_icons.scss */
+
+.icon-trashcan:before {
+  content: "\e903";
+  font-size: 24px;
+}
+
+/* line 44, styles/_icons.scss */
+
+.icon-refresh:before {
+  content: "\e904";
+  font-size: 16px;
+}
+
+/* line 49, styles/_icons.scss */
+
+.icon-pencil:before {
+  content: "\e905";
+  font-size: 18px;
+}
+
+/* line 54, styles/_icons.scss */
+
+.icon-image:before {
+  content: "\e900";
+}
+
+/* line 58, styles/_icons.scss */
+
+.icon-play:before {
+  content: "\e901";
 }
 
 /* line 3, styles/_view.scss */
@@ -371,9 +383,10 @@ button {
 .btn-edit-sub {
   font-size: 25px;
   color: #777;
+  -webkit-touch-callout: none;
 }
 
-/* line 50, styles/_menu.scss */
+/* line 51, styles/_menu.scss */
 
 .btn-edit-sub:hover {
   color: #4286F5;
@@ -391,13 +404,13 @@ button {
   color: #5e6b86;
 }
 
-/* line 63, styles/_menu.scss */
+/* line 64, styles/_menu.scss */
 
 #btn-edit-subs {
   font-size: 20px;
 }
 
-/* line 67, styles/_menu.scss */
+/* line 68, styles/_menu.scss */
 
 .sub {
   color: white;
@@ -405,7 +418,7 @@ button {
   -webkit-touch-callout: none;
 }
 
-/* line 72, styles/_menu.scss */
+/* line 73, styles/_menu.scss */
 
 .sub:hover {
   text-shadow: 0 0 10px #CCC;
@@ -423,7 +436,7 @@ button {
   color: #95a1bc;
 }
 
-/* line 84, styles/_menu.scss */
+/* line 85, styles/_menu.scss */
 
 .sub--selected {
   text-shadow: 0 0 10px #ccc;
@@ -445,7 +458,7 @@ button {
   border-color: #0084ff;
 }
 
-/* line 101, styles/_menu.scss */
+/* line 102, styles/_menu.scss */
 
 .channel {
   font-size: 14px;
@@ -467,7 +480,7 @@ button {
   color: #95a1bc;
 }
 
-/* line 117, styles/_menu.scss */
+/* line 118, styles/_menu.scss */
 
 .channel__sub {
   font-size: 11px;
@@ -489,7 +502,7 @@ button {
   color: #5e6b86;
 }
 
-/* line 133, styles/_menu.scss */
+/* line 134, styles/_menu.scss */
 
 .channel--selected {
   border-left: 3px solid #4286F5;
@@ -507,7 +520,7 @@ button {
   border-color: #0084ff;
 }
 
-/* line 146, styles/_menu.scss */
+/* line 147, styles/_menu.scss */
 
 .btn-side-menu-add {
   position: absolute;
@@ -517,6 +530,7 @@ button {
   line-height: 30px;
   width: 40px;
   height: 100%;
+  -webkit-touch-callout: none;
 }
 
 /* line 14, styles/_themes.scss */
@@ -525,7 +539,7 @@ button {
   color: #5e6b86;
 }
 
-/* line 160, styles/_menu.scss */
+/* line 162, styles/_menu.scss */
 
 #menu-container {
   overflow-y: auto;
@@ -552,7 +566,7 @@ button {
   background-color: #22242b;
 }
 
-/* line 201, styles/_menu.scss */
+/* line 203, styles/_menu.scss */
 
 #main-menu {
   box-shadow: inset -3px 0 10px black;
@@ -566,7 +580,7 @@ button {
   box-shadow: none;
 }
 
-/* line 210, styles/_menu.scss */
+/* line 212, styles/_menu.scss */
 
 .menu-desc {
   color: rgba(255, 255, 255, 0.82);
@@ -598,12 +612,13 @@ button {
   color: #95a1bc;
 }
 
-/* line 237, styles/_menu.scss */
+/* line 239, styles/_menu.scss */
 
 .option {
   color: whiteSmoke;
   letter-spacing: 1px;
   font-size: 14px;
+  -webkit-touch-callout: none;
 }
 
 /* line 8, styles/_themes.scss */
@@ -618,13 +633,13 @@ button {
   color: #95a1bc;
 }
 
-/* line 250, styles/_menu.scss */
+/* line 253, styles/_menu.scss */
 
 .option:last-child {
   margin-bottom: 15px;
 }
 
-/* line 255, styles/_menu.scss */
+/* line 258, styles/_menu.scss */
 
 .sub,
 .channel,
@@ -1067,7 +1082,52 @@ header {
   border-color: #22242b;
 }
 
-/* line 29, styles/_post-comments.scss */
+/* line 35, styles/_post-comments.scss */
+
+#comments-container a[href$=".jpg"]:before,
+#comments-container a[href$=".jpeg"]:before,
+#comments-container a[href$=".png"]:before,
+#comments-container a[href$=".gif"]:before,
+#comments-container a[href$=".gifv"]:before {
+  font-family: 'reeddit-icons';
+  content: "\e900";
+  margin-right: 3px;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 61, styles/_post-comments.scss */
+
+#comments-container a[href^="https://youtube.com"]:before,
+#comments-container a[href^="http://youtube.com"]:before,
+#comments-container a[href^="https://m.youtube.com"]:before,
+#comments-container a[href^="http://m.youtube.com"]:before,
+#comments-container a[href^="https://www.youtube.com"]:before,
+#comments-container a[href^="http://www.youtube.com"]:before,
+#comments-container a[href^="https://youtu.be"]:before,
+#comments-container a[href^="http://youtu.be"]:before,
+#comments-container a[href^="https://vimeo.com"]:before,
+#comments-container a[href^="http://vimeo.com"]:before {
+  font-family: 'reeddit-icons';
+  content: "\e901";
+  margin-right: 3px;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 77, styles/_post-comments.scss */
 
 .comment-wrap {
   -webkit-user-select: text;
@@ -1080,7 +1140,7 @@ header {
   outline: none;
 }
 
-/* line 36, styles/_post-comments.scss */
+/* line 84, styles/_post-comments.scss */
 
 .comment-wrap:focus {
   box-shadow: inset 2px 0 0 rgba(66, 134, 245, 0.5);
@@ -1092,7 +1152,13 @@ header {
   border-color: #22242b;
 }
 
-/* line 49, styles/_post-comments.scss */
+/* line 97, styles/_post-comments.scss */
+
+.comment-active {
+  box-shadow: inset 2px 0 0 rgba(66, 134, 245, 0.5);
+}
+
+/* line 101, styles/_post-comments.scss */
 
 .comment-data {
   display: -webkit-flex;
@@ -1104,7 +1170,7 @@ header {
   width: 100%;
 }
 
-/* line 55, styles/_post-comments.scss */
+/* line 107, styles/_post-comments.scss */
 
 .comment-author,
 .comment-poster {
@@ -1121,14 +1187,14 @@ header {
   color: #c16d7b;
 }
 
-/* line 66, styles/_post-comments.scss */
+/* line 118, styles/_post-comments.scss */
 
 .comment-poster {
   position: relative;
   padding-left: 28px;
 }
 
-/* line 70, styles/_post-comments.scss */
+/* line 122, styles/_post-comments.scss */
 
 .comment-poster::before {
   position: absolute;
@@ -1144,7 +1210,7 @@ header {
   font-weight: 700;
 }
 
-/* line 83, styles/_post-comments.scss */
+/* line 135, styles/_post-comments.scss */
 
 .comment-info {
   color: #aaa;
@@ -1157,13 +1223,19 @@ header {
   color: #5e6b86;
 }
 
-/* line 95, styles/_post-comments.scss */
+/* line 144, styles/_post-comments.scss */
+
+.comment-body {
+  font-size: 14px;
+}
+
+/* line 148, styles/_post-comments.scss */
 
 .comment-body p {
   margin: 10px 0;
 }
 
-/* line 99, styles/_post-comments.scss */
+/* line 152, styles/_post-comments.scss */
 
 .comment-body ul,
 .comment-body ol,
@@ -1181,20 +1253,20 @@ header {
   color: #95a1bc;
 }
 
-/* line 109, styles/_post-comments.scss */
+/* line 162, styles/_post-comments.scss */
 
 .comment-body a {
   color: #7a9abd;
   -webkit-tap-highlight-color: rgba(69, 103, 140, 0.5);
 }
 
-/* line 113, styles/_post-comments.scss */
+/* line 166, styles/_post-comments.scss */
 
 .comment-body a:visited {
   color: #a3adce;
 }
 
-/* line 119, styles/_post-comments.scss */
+/* line 172, styles/_post-comments.scss */
 
 #link-summary {
   background-color: #4d4d4d;
@@ -1213,7 +1285,7 @@ header {
   background-color: #22242b;
 }
 
-/* line 132, styles/_post-comments.scss */
+/* line 185, styles/_post-comments.scss */
 
 #link-summary > a {
   -webkit-tap-highlight-color: rgba(66, 134, 245, 0.5);
@@ -1226,7 +1298,7 @@ header {
   background-color: rgba(66, 134, 245, 0.5);
 }
 
-/* line 137, styles/_post-comments.scss */
+/* line 190, styles/_post-comments.scss */
 
 #summary-title {
   font-size: 16px;
@@ -1247,7 +1319,7 @@ header {
   color: #95a1bc;
 }
 
-/* line 152, styles/_post-comments.scss */
+/* line 205, styles/_post-comments.scss */
 
 #summary-domain {
   color: #F75433;
@@ -1267,7 +1339,7 @@ header {
   color: #b37bcf;
 }
 
-/* line 166, styles/_post-comments.scss */
+/* line 219, styles/_post-comments.scss */
 
 #summary-author {
   color: #E2E2E0;
@@ -1285,7 +1357,7 @@ header {
   color: #5e6b86;
 }
 
-/* line 180, styles/_post-comments.scss */
+/* line 233, styles/_post-comments.scss */
 
 #summary-footer {
   display: -webkit-flex;
@@ -1305,7 +1377,7 @@ header {
   border: 0;
 }
 
-/* line 192, styles/_post-comments.scss */
+/* line 245, styles/_post-comments.scss */
 
 .ls-extra {
   background-color: #333;
@@ -1331,7 +1403,7 @@ header {
   color: #95a1bc;
 }
 
-/* line 213, styles/_post-comments.scss */
+/* line 265, styles/_post-comments.scss */
 
 #selftext {
   -webkit-user-select: text;
@@ -1342,6 +1414,7 @@ header {
   background-color: #e6e6e6;
   box-shadow: inset 0 1px 1px #FFF, 0 0 7px rgba(0, 0, 0, 0.3);
   border: 1px solid #b9b9b9;
+  font-size: 14px;
 }
 
 /* line 20, styles/_themes.scss */
@@ -1359,46 +1432,46 @@ header {
   background-color: #404654;
 }
 
-/* line 232, styles/_post-comments.scss */
+/* line 285, styles/_post-comments.scss */
 
 #selftext p {
   margin-top: 5px;
 }
 
-/* line 235, styles/_post-comments.scss */
+/* line 288, styles/_post-comments.scss */
 
 #selftext p:last-child {
   margin-bottom: 5px;
 }
 
-/* line 244, styles/_post-comments.scss */
+/* line 297, styles/_post-comments.scss */
 
 #selftext a {
   color: #7a9abd;
   -webkit-tap-highlight-color: rgba(69, 103, 140, 0.5);
 }
 
-/* line 248, styles/_post-comments.scss */
+/* line 301, styles/_post-comments.scss */
 
 #selftext a:visited {
   color: #a3adce;
 }
 
-/* line 254, styles/_post-comments.scss */
+/* line 307, styles/_post-comments.scss */
 
 .preview-container {
   margin: 10px 0;
   outline: none;
 }
 
-/* line 260, styles/_post-comments.scss */
+/* line 313, styles/_post-comments.scss */
 
 .preview-container:focus .image-preview,
 .preview-container:focus .video-preview {
   outline: 3px solid rgba(66, 134, 245, 0.5);
 }
 
-/* line 271, styles/_post-comments.scss */
+/* line 324, styles/_post-comments.scss */
 
 .image-preview,
 .video-preview {
@@ -1408,14 +1481,14 @@ header {
   box-shadow: 0 1px 3px #333;
 }
 
-/* line 279, styles/_post-comments.scss */
+/* line 332, styles/_post-comments.scss */
 
 .image-preview {
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
 
-/* line 287, styles/_post-comments.scss */
+/* line 340, styles/_post-comments.scss */
 
 .image-viewer {
   max-width: 100%;
@@ -1825,9 +1898,10 @@ header {
   color: #F5F5F5;
   font-size: 30px;
   line-height: 28px;
+  -webkit-touch-callout: none;
 }
 
-/* line 89, styles/components/_forms.scss */
+/* line 90, styles/components/_forms.scss */
 
 .form-left-corner {
   position: absolute;
@@ -1836,35 +1910,35 @@ header {
   left: 0;
 }
 
-/* line 96, styles/components/_forms.scss */
+/* line 97, styles/components/_forms.scss */
 
 .move-data {
   top: 80px;
   padding: 20px;
 }
 
-/* line 100, styles/components/_forms.scss */
+/* line 101, styles/components/_forms.scss */
 
 .move-data h3,
 .move-data p {
   text-shadow: 0 1px 0 #fff;
 }
 
-/* line 105, styles/components/_forms.scss */
+/* line 106, styles/components/_forms.scss */
 
 .move-data h3 {
   text-align: center;
   margin: 5px 0;
 }
 
-/* line 110, styles/components/_forms.scss */
+/* line 111, styles/components/_forms.scss */
 
 .move-data p {
   text-align: left;
   margin: 10px 0;
 }
 
-/* line 116, styles/components/_forms.scss */
+/* line 117, styles/components/_forms.scss */
 
 .msg-error {
   background-color: #bbb;
@@ -2404,6 +2478,12 @@ header {
   transform: translateY(-50%) translateX(-50%);
 }
 
+/* line 153, styles/modules/_UI-Blocks.scss */
+
+.no-tch-cllt {
+  -webkit-touch-callout: none;
+}
+
 @media only screen and (min-width: 350px) {
   /* line 27, styles/components/_forms.scss */
 
@@ -2429,7 +2509,7 @@ header {
     left: 28%;
   }
 
-  /* line 181, styles/_menu.scss */
+  /* line 183, styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
@@ -2442,19 +2522,19 @@ header {
     pointer-events: none;
   }
 
-  /* line 254, styles/_post-comments.scss */
+  /* line 307, styles/_post-comments.scss */
 
   .preview-container {
     margin: 10px;
   }
 
-  /* line 279, styles/_post-comments.scss */
+  /* line 332, styles/_post-comments.scss */
 
   .image-preview {
     border-radius: 3px;
   }
 
-  /* line 287, styles/_post-comments.scss */
+  /* line 340, styles/_post-comments.scss */
 
   .image-viewer {
     padding: 10px;
@@ -2482,7 +2562,7 @@ header {
     left: 22%;
   }
 
-  /* line 181, styles/_menu.scss */
+  /* line 183, styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
@@ -2527,7 +2607,7 @@ header {
     height: calc(100% - 32px) !important;
   }
 
-  /* line 181, styles/_menu.scss */
+  /* line 183, styles/_menu.scss */
 
   #menu-container,
   #edit-subs {
@@ -2553,13 +2633,13 @@ header {
     display: none;
   }
 
-  /* line 29, styles/_post-comments.scss */
+  /* line 77, styles/_post-comments.scss */
 
   .comment-wrap {
     font-size: 14px;
   }
 
-  /* line 232, styles/_post-comments.scss */
+  /* line 285, styles/_post-comments.scss */
 
   #selftext p {
     font-size: 14px;
@@ -2590,7 +2670,7 @@ header {
     width: calc(100% - 717px);
   }
 
-  /* line 181, styles/_menu.scss */
+  /* line 183, styles/_menu.scss */
 
   #menu-container,
   #edit-subs {

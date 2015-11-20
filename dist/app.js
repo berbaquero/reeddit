@@ -104,6 +104,13 @@ var is = (function () {
 		return link.download !== undefined;
 	})();
 
+	var iOSversion = (function () {
+		if (!isiOS) {
+			return 0;
+		}
+		return parseInt(UA.match(/ OS (\d+)_/i)[1], 10);
+	})();
+
 	return {
 
 		wideScreen: wideScreenBP.matches,
@@ -120,7 +127,7 @@ var is = (function () {
 
 		iOS: isiOS,
 
-		iOS7: isiOS && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7,
+		iOS7: isiOS && iOSversion >= 7,
 
 		linkDownloadable: isLinkDownloadable
 	};
@@ -131,7 +138,8 @@ var Store = window.fluid ? allCookies : window.localStorage;
 
 /* global
  Store,
- UI
+ UI,
+ is
  */
 
 var ThemeSwitcher = (function () {
@@ -189,6 +197,8 @@ var ThemeSwitcher = (function () {
 
 		if (initial) {
 			updateTheme(initial);
+		} else if (is.iOS7) {
+			setTheme(themes[1]);
 		} else {
 			setTheme(themes[currentThemeIndex]);
 		}
@@ -308,23 +318,6 @@ var UI = (function () {
 		var loader = $("<div/>").addClass("loader");
 		elem.append(loader);
 		return loader;
-	};
-
-	var scrollFixComments = function scrollFixComments() {
-		// Make comments section always scrollable
-		var detailWrap = $$.q("#detail-wrap"),
-		    detailWrapHeight = detailWrap.offsetHeight,
-		    linkSummary = detailWrap.querySelector("section:first-child"),
-		    linkSummaryHeight = linkSummary.offsetHeight,
-		    selfText = detailWrap.querySelector("#selftext"),
-		    selfTextHeight = selfText ? selfText.offsetHeight : 0,
-		    imagePreview = detailWrap.querySelector(".image-preview"),
-		    imagePreviewHeight = imagePreview ? imagePreview.offsetHeight : 0,
-		    loader = detailWrap.querySelector(".loader"),
-		    loaderHeight = loader ? loader.offsetHeight : 0;
-
-		var minHeight = detailWrapHeight - linkSummaryHeight - selfTextHeight - imagePreviewHeight - loaderHeight + 1;
-		$("#detail-wrap > section + " + (selfTextHeight > 0 ? "#selftext +" : "") + (imagePreviewHeight > 0 ? ".image-preview +" : "") + (loaderHeight > 0 ? ".loader +" : "") + " section").css("min-height", minHeight);
 	};
 
 	var scrollFixLinks = function scrollFixLinks() {
@@ -533,14 +526,31 @@ var UI = (function () {
 
 			switch (ev.which) {
 				case keyCode.MENU:
-					// TODO: focus on actual active sub
+					if (!is.largeScreen) {
+						// Mobile
+						if (getCurrentView() === View.MAIN) {
+							Menu.move(Move.RIGHT);
+						} else {
+							return;
+						}
+					}
 					Menu.el.mainMenu.focus();
 					break;
 				case keyCode.MAIN:
-					// TODO: focus on actual active post
+					if (!is.largeScreen) {
+						// Mobile
+						if (getCurrentView() === View.MAIN) {
+							Menu.move(Move.LEFT);
+						} else {
+							window.location.hash = "";
+						}
+					}
 					el.mainWrap.focus();
 					break;
 				case keyCode.DETAIL:
+					if (!is.largeScreen && getCurrentView() === View.MAIN) {
+						return;
+					}
 					el.detailWrap.focus();
 					break;
 			}
@@ -560,7 +570,6 @@ var UI = (function () {
 		setSubTitle: setSubTitle,
 		scrollTop: scrollTop,
 		iPadScrollFix: iPadScrollFix,
-		scrollFixComments: scrollFixComments,
 		scrollFixLinks: scrollFixLinks,
 		addLoader: addLoader,
 		backToMainView: backToMainView,
@@ -1078,7 +1087,6 @@ var Comments = (function () {
 		}
 		if (!is.desktop) {
 			UI.el.detailWrap.append($('<section/>'));
-			UI.scrollFixComments();
 		}
 	};
 
@@ -1120,10 +1128,6 @@ var Comments = (function () {
 		}
 
 		UI.el.detailWrap.find('a').attr('target', '_blank');
-
-		if (!is.desktop) {
-			UI.scrollFixComments();
-		}
 	};
 
 	var show = function show(id, refresh) {
@@ -1242,6 +1246,10 @@ var Comments = (function () {
 			    commentID = button.attr('data-comment-id'),
 			    comments = replies[commentID];
 			load(comments, button.parent());
+			if (is.iOS) {
+				$('.comment-active').removeClass('comment-active');
+				button.parent().addClass('comment-active');
+			}
 			button.remove();
 		});
 	};
@@ -2174,7 +2182,7 @@ var Subreddits = (function () {
 
 	var template = {
 		list: "{{#.}}<a href='#{{.}}' data-name='{{.}}' class='" + subredditClasses + "'>{{.}}</a>{{/.}}",
-		toEditList: "<div class='edit-subs-title pad-x pad-y txt-bld txt-cntr'>Subreddits</div><ul class='no-mrgn no-pad'>{{#.}}<div class='item-to-edit flx sub-to-remove' data-name='{{.}}'><p class='sub-name w-85 txt-cap txt-bld'>{{.}}</p><a href='#' class='no-ndrln clr-current flx flx-cntr-x flx-cntr-y w-15 btn-remove-sub icon-trashcan' data-name='{{.}}'></a></div>{{/.}}</ul>",
+		toEditList: "<div class='edit-subs-title pad-x pad-y txt-bld txt-cntr'>Subreddits</div><ul class='no-mrgn no-pad'>{{#.}}<div class='item-to-edit flx sub-to-remove' data-name='{{.}}'><p class='sub-name w-85 txt-cap txt-bld'>{{.}}</p><a href='#remove' class='no-ndrln clr-current flx flx-cntr-x flx-cntr-y w-15 btn-remove-sub icon-trashcan' data-name='{{.}}'></a></div>{{/.}}</ul>",
 		toAddList: "{{#children}}<div class='sub-to-add flx w-100'><div class='w-85'><p class='sub-to-add__title js-sub-title txt-bld'>{{data.display_name}}</p><p class='sub-to-add__description'>{{data.public_description}}</p></div><a href='#add' class='btn-add-sub no-ndrln flx flx-cntr-x flx-cntr-y w-15 icon-plus-circle'></a></div>{{/children}}",
 		loadMoreSubsButton: "<button class='btn blck w-50 mrgn-y mrgn-cntr-x' id='btn-more-subs'>More</button>",
 		formInsert: "<div class=\"new-form\" id=\"form-new-sub\"><div class=\"form-left-corner\"><button class=\"btn\" id=\"btn-add-new-sub\">Add Subreddit</button></div>" + UI.template.closeModalButton + "<form><input type=\"text\" id=\"txt-new-sub\" placeholder=\"New subreddit name\" /></form></div>",
@@ -2511,8 +2519,9 @@ var Subreddits = (function () {
  Backup,
  URLs,
  ThemeSwitcher,
- LinkSummary
- */
+ LinkSummary,
+ FastClick
+*/
 
 // Init all modules listeners
 UI.initListeners();
@@ -2587,5 +2596,7 @@ if (is.mobile) {
 		document.body.classList.add('ios7');
 	}
 }
+
+FastClick.attach(document.body);
 
 })();
