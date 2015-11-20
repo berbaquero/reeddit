@@ -1,18 +1,19 @@
 @import "themes";
 
 @font-face {
-	font-family: 'icons';
-	src:url('fonts/icons.eot?-7se0v4');
-	src:url('fonts/icons.eot?#iefix-7se0v4') format('embedded-opentype'),
-	url('fonts/icons.woff?-7se0v4') format('woff'),
-	url('fonts/icons.ttf?-7se0v4') format('truetype'),
-	url('fonts/icons.svg?-7se0v4#icons') format('svg');
+	font-family: 'reeddit-icons';
+	src: url('fonts/reeddit-icons.eot?y7xyo8');
+	src: url('fonts/reeddit-icons.eot?y7xyo8#iefix') format('embedded-opentype'),
+		 url('fonts/reeddit-icons.ttf?y7xyo8') format('truetype'),
+		 url('fonts/reeddit-icons.woff?y7xyo8') format('woff'),
+		 url('fonts/reeddit-icons.svg?y7xyo8#reeddit-icons') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-	font-family: 'icons';
+[class^="icon-"],
+[class*=" icon-"] {
+	font-family: 'reeddit-icons';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -25,27 +26,35 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-pencil:before {
-	content: "\e600";
-	font-size: 18px;
-}
-
-.icon-refresh:before {
-	content: "\e601";
-	font-size: 16px;
-}
-
-.icon-trashcan:before {
-	content: "\e602";
-	font-size: 24px;
-}
-
 .icon-plus-circle:before {
-	content: "\e603";
+	content: "\e902";
 	font-size: 24px;
 	color: #62a54a;
 
 	@include on-theme(dark) {
 		color: $dark-label-color-3;
 	}
+}
+
+.icon-trashcan:before {
+	content: "\e903";
+	font-size: 24px;
+}
+
+.icon-refresh:before {
+	content: "\e904";
+	font-size: 16px;
+}
+
+.icon-pencil:before {
+	content: "\e905";
+	font-size: 18px;
+}
+
+.icon-image:before {
+	content: "\e900";
+}
+
+.icon-play:before {
+	content: "\e901";
 }

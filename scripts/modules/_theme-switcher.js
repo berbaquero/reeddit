@@ -1,6 +1,7 @@
 /* global
  Store,
- UI
+ UI,
+ is
  */
 
 let ThemeSwitcher = (() => {
@@ -58,6 +59,8 @@ let ThemeSwitcher = (() => {
 
 		if (initial) {
 			updateTheme(initial);
+		} else if (is.iOS7) {
+			setTheme(themes[1]);
 		} else {
 			setTheme(themes[currentThemeIndex]);
 		}

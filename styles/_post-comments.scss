@@ -24,6 +24,54 @@
 			}
 		}
 	}
+
+	// Links
+	a[href$=".jpg"],
+	a[href$=".jpeg"],
+	a[href$=".png"],
+	a[href$=".gif"],
+	a[href$=".gifv"] {
+
+		&:before {
+			font-family: 'reeddit-icons';
+			content: "\e900";
+			margin-right: 3px;
+			speak: none;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	}
+
+	a[href^="https://youtube.com"],
+	a[href^="http://youtube.com"],
+	a[href^="https://m.youtube.com"],
+	a[href^="http://m.youtube.com"],
+	a[href^="https://www.youtube.com"],
+	a[href^="http://www.youtube.com"],
+	a[href^="https://youtu.be"],
+	a[href^="http://youtu.be"],
+	a[href^="https://vimeo.com"],
+	a[href^="http://vimeo.com"] {
+
+		&:before {
+			font-family: 'reeddit-icons';
+			content: "\e901";
+			margin-right: 3px;
+			speak: none;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	}
 }
 
 .comment-wrap {
@@ -44,6 +92,10 @@
 	@include break-point-min($bp-wide) {
 		font-size: 14px;
 	}
+}
+
+.comment-active {
+	box-shadow: inset 2px 0 0 $active-bg;
 }
 
 .comment-data {
@@ -91,6 +143,7 @@
 
 .comment-body {
 	$color-body-text: $black-blueish;
+	font-size: 14px;
 
 	p {
 		margin: 10px 0;
@@ -196,7 +249,6 @@ $gray-dark: #333;
 	border-top: 1px solid #5d5d5d;
 	color: white;
 
-
 	@include on-theme(light) {
 		background-color: $light-bg-color-2;
 		border: 0;
@@ -218,6 +270,7 @@ $gray-dark: #333;
 	background-color: $silver;
 	box-shadow: inset 0 1px 1px #FFF, 0 0 7px rgba(0, 0, 0, 0.3);
 	border: 1px solid $gray;
+	font-size: 14px;
 
 	@include on-theme(light-n-dark) {
 		border: 0;
@@ -285,7 +338,6 @@ $gray-dark: #333;
 }
 
 .image-viewer {
-	//@extend %completely-center--translate;
 	max-width: 100%;
 	max-height: 100%;
 	padding: $gutter 0;

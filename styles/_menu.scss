@@ -46,6 +46,7 @@
 .btn-edit-sub {
     font-size: 25px;
     color: #777;
+    -webkit-touch-callout: none;
 
     &:hover {
         color: #4286F5;
@@ -151,6 +152,7 @@
 	line-height: 30px;
 	width: 40px;
 	height: 100%;
+    -webkit-touch-callout: none;
 
 	@include on-theme(dark) {
 		color: $dark-text-color-2;
@@ -238,6 +240,7 @@
     color: whiteSmoke;
     letter-spacing: 1px;
     font-size: 14px;
+    -webkit-touch-callout: none;
 
     @include on-theme(light) {
         color: $light-text-color;

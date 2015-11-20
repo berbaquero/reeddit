@@ -42,7 +42,6 @@ To build Reeddit, I used these awesome resources:
 *	[pagedown](http://code.google.com/p/pagedown/) -- for Markdown parsing.
 *	[Mustache.js](https://github.com/janl/mustache.js/) -- Lightweight client-side templating.
 *	[reziseend.js](https://github.com/porada/resizeend) -- Better 'resize' handler.
-*	[Iconmonstr](http://iconmonstr.com/) -- Awesome icons.
 
 ### License
 

@@ -15,6 +15,13 @@ var is = (function() {
 		return link.download !== undefined;
 	})();
 
+	const iOSversion = (() => {
+			if (!isiOS) {
+				return 0;
+			}
+			return parseInt(UA.match(/ OS (\d+)_/i)[1], 10);
+		})();
+
 	return {
 
 		wideScreen: wideScreenBP.matches,
@@ -31,7 +38,7 @@ var is = (function() {
 
 		iOS: isiOS,
 
-		iOS7: (isiOS && parseInt(UA.match(/ OS (\d+)_/i)[1], 10) >= 7),
+		iOS7: (isiOS && iOSversion >= 7),
 
 		linkDownloadable: isLinkDownloadable
 	};

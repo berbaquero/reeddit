@@ -17,7 +17,8 @@
  Backup,
  URLs,
  ThemeSwitcher,
- LinkSummary
+ LinkSummary,
+ FastClick
 */
 
 // Init all modules listeners
@@ -92,3 +93,5 @@ if (is.mobile) {
 		document.body.classList.add("ios7");
 	}
 }
+
+FastClick.attach(document.body);

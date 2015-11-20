@@ -57,7 +57,6 @@ var Comments = (function() {
 		}
 		if (!is.desktop) {
 			UI.el.detailWrap.append($("<section/>"));
-			UI.scrollFixComments();
 		}
 	};
 
@@ -120,11 +119,8 @@ var Comments = (function() {
 			Posts.getLoaded()[idParent] = com;
 		}
 
-		UI.el.detailWrap.find('a').attr('target', '_blank');
-
-		if (!is.desktop) {
-			UI.scrollFixComments();
-		}
+		UI.el.detailWrap.find('a')
+			.attr('target', '_blank');
 	};
 
 	var show = function(id, refresh) {
@@ -246,6 +242,10 @@ var Comments = (function() {
 				commentID = button.attr('data-comment-id'),
 				comments = replies[commentID];
 			load(comments, button.parent());
+			if (is.iOS) {
+				$('.comment-active').removeClass('comment-active');
+				button.parent().addClass('comment-active');
+			}
 			button.remove();
 		});
 	};
