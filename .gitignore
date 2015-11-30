@@ -5,4 +5,3 @@ node_modules
 .sass-cache
 
 scripts/modules.js
-dist
