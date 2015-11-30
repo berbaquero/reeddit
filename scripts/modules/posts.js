@@ -179,6 +179,10 @@ var Posts = (function() {
 		if (!paging) {
 			Anim.reveal(main);
 		}
+
+		if (!is.largeScreen) {
+			UI.el.mainWrap.focus();
+		}
 	};
 
 	var show = function(result, paging) {
