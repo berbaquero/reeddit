@@ -544,6 +544,8 @@ var UI = (function () {
 						} else {
 							window.location.hash = "";
 						}
+					} else if (!is.wideScreen && getCurrentView() === View.COMMENTS) {
+						window.location.hash = "";
 					}
 					el.mainWrap.focus();
 					break;
@@ -1847,10 +1849,14 @@ var Posts = (function () {
 		if (loading) {
 			return;
 		}
+
 		loading = true;
+
 		Comments.setLoading(false);
 		Subreddits.setEditing(false);
+
 		var main = UI.el.mainWrap;
+
 		if (paging) {
 			el.moreButton().remove(); // remove current button
 			main.append(UI.template.loader);
@@ -1861,6 +1867,7 @@ var Posts = (function () {
 			}, Menu.isShowing() ? 301 : 1);
 			paging = ''; // empty string, to avoid pagination
 		}
+
 		$.ajax({
 			dataType: 'jsonp',
 			url: baseUrl + Sorting.get() + URLs.limitEnd + paging,
@@ -1910,6 +1917,7 @@ var Posts = (function () {
 			// Remove thumbnail space for those links with invalid backgrounds.
 			var thumbs = $('.link-thumb > div'),
 			    bgImg = 'background-image: ';
+
 			for (var i = 0; i < thumbs.length; i++) {
 				var thumb = $(thumbs[i]),
 				    bg = thumb.attr('style');
@@ -1918,13 +1926,16 @@ var Posts = (function () {
 				}
 			}
 		}
+
 		if (linksCount < 30) {
 			// Remove 'More links' button if there are less than 30 links
 			el.moreButton().remove();
 		}
+
 		if (!is.desktop) {
 			UI.scrollFixLinks();
 		}
+
 		if (!paging) {
 			Anim.reveal(main);
 		}
@@ -1937,6 +1948,7 @@ var Posts = (function () {
 
 		render(posts, paging);
 		setList(posts);
+
 		if (is.wideScreen) {
 			var id = Comments.getIdFromHash();
 			if (id) {
