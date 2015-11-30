@@ -83,27 +83,32 @@ var Posts = (function() {
 		if (loading) {
 			return;
 		}
+
 		loading = true;
+
 		Comments.setLoading(false);
 		Subreddits.setEditing(false);
+
 		var main = UI.el.mainWrap;
+
 		if (paging) {
 			el.moreButton().remove(); // remove current button
 			main.append(UI.template.loader);
 		} else {
 			UI.el.mainWrap[0].scrollTop = 0; // to container top
-			setTimeout(function() {
+			setTimeout(() => {
 				main.prepend(UI.template.loader);
 			}, Menu.isShowing() ? 301 : 1);
 			paging = ''; // empty string, to avoid pagination
 		}
+
 		$.ajax({
 			dataType: 'jsonp',
 			url: baseUrl + Sorting.get() + URLs.limitEnd + paging,
-			success: function(result) {
+			success: (result) => {
 				show(result, paging);
 			},
-			error: function() {
+			error: () => {
 				loading = false;
 				$('.loader').addClass("loader-error").text('Error loading links. Refresh to try again.');
 			}
@@ -134,7 +139,7 @@ var Posts = (function() {
 		}
 
 		if (linksCount === 0) {
-			var message = $('.loader');
+			const message = $('.loader');
 			if (message) {
 				message
 					.text('No Links available.')
@@ -148,35 +153,42 @@ var Posts = (function() {
 			main.append(Mustache.to_html(template, links));
 
 			// Remove thumbnail space for those links with invalid backgrounds.
-			var thumbs = $('.link-thumb > div'),
+			const thumbs = $('.link-thumb > div'),
 				bgImg = 'background-image: ';
+
 			for(var i = 0; i < thumbs.length; i++) {
-				var thumb = $(thumbs[i]),
+				const thumb = $(thumbs[i]),
 					bg = thumb.attr('style');
-				if (bg === bgImg + 'url()' || bg === bgImg + 'url(default)' || bg === bgImg + 'url(nsfw)' || bg === bgImg + 'url(self)') {
+				if (bg === bgImg + 'url()' ||
+					bg === bgImg + 'url(default)' ||
+					bg === bgImg + 'url(nsfw)' ||
+					bg === bgImg + 'url(self)') {
 					thumb.parent().remove();
 				}
 			}
 		}
-		if (linksCount < 30) {
-			// Remove 'More links' button if there are less than 30 links
+
+		if (linksCount < 30) { // Remove 'More links' button if there are less than 30 links
 			el.moreButton().remove();
 		}
+
 		if (!is.desktop) {
 			UI.scrollFixLinks();
 		}
+
 		if (!paging) {
 			Anim.reveal(main);
 		}
 	};
 
 	var show = function(result, paging) {
-		var posts = result.data;
+		const posts = result.data;
 		loading = false;
 		idLast = posts.after;
 
 		render(posts, paging);
 		setList(posts);
+
 		if (is.wideScreen) {
 			var id = Comments.getIdFromHash();
 			if (id) {
