@@ -314,6 +314,8 @@ var UI = (function() {
 						} else {
 							window.location.hash = '';
 						}
+					} else if (!is.wideScreen && getCurrentView() === View.COMMENTS) {
+						window.location.hash = '';
 					}
 					el.mainWrap.focus();
 					break;
