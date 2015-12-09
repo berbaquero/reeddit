@@ -15,7 +15,7 @@
  URLs
  */
 
-var Comments = (function() {
+const Comments = (function() {
 
 	var loading = false,
 		replies = {},
@@ -212,7 +212,8 @@ var Comments = (function() {
 	};
 
 	var setRest = function(id, refresh) {
-		var postTitle = Posts.getList()[id].title;
+		const postTitle = Posts.getList()[id].title;
+		let delay = 0;
 
 		if (!refresh) {
 			Footer.setPostTitle(postTitle);
@@ -220,11 +221,18 @@ var Comments = (function() {
 
 		if (!refresh && UI.getCurrentView() !== UI.View.COMMENTS) {
 			Anim.slideFromRight();
+			delay = 301;
 		}
 
 		Header.el.centerSection.empty().append(Header.el.postTitle);
 		Header.el.postTitle.text(postTitle);
 		Header.el.subtitle.addClass(UI.classes.invisible);
+
+		if (!is.wideScreen) {
+			setTimeout(() => {
+				UI.el.detailWrap.focus();
+			}, delay);
+		}
 	};
 
 	var initListeners = function() {
