@@ -36,6 +36,10 @@
     width: 100%;
     animation: none;
     background-color: transparent;
+
+    @include on-theme(dark) {
+        background-color: transparent;
+    }
 }
 
 @keyframes loading {
