@@ -2020,6 +2020,12 @@ header {
   background-color: transparent;
 }
 
+/* line 14, styles/_themes.scss */
+
+.dark .loader-error {
+  background-color: transparent;
+}
+
 @-webkit-keyframes loading {
   0% {
     opacity: 1;
@@ -2092,7 +2098,7 @@ header {
   }
 }
 
-/* line 59, styles/_animations.scss */
+/* line 63, styles/_animations.scss */
 
 .anim-shake {
   -webkit-animation: shake 350ms ease-in-out;
@@ -2147,7 +2153,7 @@ header {
   }
 }
 
-/* line 83, styles/_animations.scss */
+/* line 87, styles/_animations.scss */
 
 .anim-bounce-out {
   -webkit-animation: bounceOut 1s ease-in-out both;
@@ -2204,7 +2210,7 @@ header {
   }
 }
 
-/* line 108, styles/_animations.scss */
+/* line 112, styles/_animations.scss */
 
 .anim-bounceInDown {
   -webkit-animation: bounceInDown 500ms ease-in-out both;

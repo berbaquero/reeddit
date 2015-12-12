@@ -1219,6 +1219,7 @@ var Comments = (function () {
 
 	var setRest = function setRest(id, refresh) {
 		var postTitle = Posts.getList()[id].title;
+		var delay = 0;
 
 		if (!refresh) {
 			Footer.setPostTitle(postTitle);
@@ -1226,11 +1227,18 @@ var Comments = (function () {
 
 		if (!refresh && UI.getCurrentView() !== UI.View.COMMENTS) {
 			Anim.slideFromRight();
+			delay = 301;
 		}
 
 		Header.el.centerSection.empty().append(Header.el.postTitle);
 		Header.el.postTitle.text(postTitle);
 		Header.el.subtitle.addClass(UI.classes.invisible);
+
+		if (!is.wideScreen) {
+			setTimeout(function () {
+				UI.el.detailWrap.focus();
+			}, delay);
+		}
 	};
 
 	var initListeners = function initListeners() {
