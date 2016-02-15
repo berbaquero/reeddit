@@ -295,7 +295,7 @@ var UI = (function () {
 	};
 
 	var setSubTitle = function setSubTitle(title) {
-		Header.el.subtitleText.text(title);
+		Header.el.subtitleText.text("☰ " + title);
 		Footer.el.subTitle.text(title);
 	};
 
