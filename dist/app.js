@@ -87,50 +87,35 @@ var $$ = {
 	}
 };
 
-var wideScreenBP = window.matchMedia("(min-width: 1000px)"),
-    largeScreenBP = window.matchMedia("(min-width: 490px)"),
-    UA = window.navigator.userAgent;
+var wideScreenBP = window.matchMedia("(min-width: 1000px)");
+var largeScreenBP = window.matchMedia("(min-width: 490px)");
+var UA = window.navigator.userAgent;
 
 var is = (function () {
 
-	// Do detection
-	var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(UA),
-	    isiPad = /iPad/.test(UA),
-	    isiPhone = /iP(hone|od)/.test(UA),
-	    isiOS = isiPhone || isiPad;
+  // Do detection
+  var isDesktop = !/iPhone|iPod|iPad|Android|Mobile/.test(UA);
+  var isiPad = /iPad/.test(UA);
+  var isiPhone = /iP(hone|od)/.test(UA);
+  var isiOS = isiPhone || isiPad;
 
-	var isLinkDownloadable = (function () {
-		var link = document.createElement('a');
-		return link.download !== undefined;
-	})();
+  var iOSversion = (function () {
+    if (!isiOS) {
+      return 0;
+    }
+    return parseInt(UA.match(/ OS (\d+)_/i)[1], 10);
+  })();
 
-	var iOSversion = (function () {
-		if (!isiOS) {
-			return 0;
-		}
-		return parseInt(UA.match(/ OS (\d+)_/i)[1], 10);
-	})();
-
-	return {
-
-		wideScreen: wideScreenBP.matches,
-
-		largeScreen: largeScreenBP.matches,
-
-		desktop: isDesktop,
-
-		mobile: !isDesktop,
-
-		iPhone: isiPhone,
-
-		iPad: isiPad,
-
-		iOS: isiOS,
-
-		iOS7: isiOS && iOSversion >= 7,
-
-		linkDownloadable: isLinkDownloadable
-	};
+  return {
+    wideScreen: wideScreenBP.matches,
+    largeScreen: largeScreenBP.matches,
+    desktop: isDesktop,
+    mobile: !isDesktop,
+    iPhone: isiPhone,
+    iPad: isiPad,
+    iOS: isiOS,
+    iOS7: isiOS && iOSversion >= 7
+  };
 })();
 
 /* global allCookies */
@@ -604,8 +589,8 @@ var Backup = (function () {
 	};
 
 	var template = {
-		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y hide"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
-		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y hide\'\n\t\t\t\t\t\tid=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t   type="file"\n\t\t\t\t\t   accept="application/json"\n\t\t\t\t\t   style="display: none"/>\n\t\t\t</div>\n\t\t</div>'
+		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
+		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y\'\n\t\t\t\t\t\tid=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t\t\t class="hide"\n\t\t\t\t\t     type="file"\n\t\t\t\t\t     accept="application/json"/>\n\t\t\t</div>\n\t\t</div>'
 	};
 
 	var shouldUpdate = function shouldUpdate() {
@@ -619,7 +604,6 @@ var Backup = (function () {
 	var prepareDownloadButton = function prepareDownloadButton(data) {
 		var buttonDownload = $$.id('btn-download-data');
 		buttonDownload.href = "data:text/json;charset=utf-8," + encodeURIComponent(data);
-		UI.switchDisplay(buttonDownload, false);
 	};
 
 	var createBackup = function createBackup() {
@@ -671,24 +655,22 @@ var Backup = (function () {
 		el.buttonImportData.on('click', function (ev) {
 			ev.preventDefault();
 			Modal.show(template.importData, function () {
-				if (!is.iOS) {
-					UI.switchDisplay($$.id('btn-trigger-file'), false);
+				if (is.iOS) {
+					UI.switchDisplay($$.id('btn-trigger-file'), true);
+					UI.switchDisplay($$.id('file-chooser'), false);
 				}
 			});
 		});
 
 		// Forms
+		UI.el.body.on('change', '#file-chooser', function () {
+			var file = this.files[0];
+			readFile(file);
+		});
 
-		if (!is.iOS) {
-			UI.el.body.on('change', '#file-chooser', function () {
-				var file = this.files[0];
-				readFile(file);
-			});
-
-			UI.el.body.on('click', '#btn-trigger-file', function () {
-				$$.id('file-chooser').click();
-			});
-		}
+		UI.el.body.on('click', '#btn-trigger-file', function () {
+			$$.id('file-chooser').click();
+		});
 	};
 
 	// Exports
