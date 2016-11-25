@@ -34,7 +34,7 @@ gulp.task('styles', function() {
 			console.error('Error', err.message);
 		})
 		.pipe(prefix({
-            browsers: ['last 2 versions']
+            browsers: ['last 2 versions', 'Safari >= 7']
 		}))
 		.pipe(groupMQ())
 		.pipe(gulp.dest(paths.distribution))
