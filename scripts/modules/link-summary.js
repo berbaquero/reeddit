@@ -104,7 +104,7 @@ var LinkSummary = (function() {
 	};
 
 	var checkImageLink = function(url) {
-		var matching = url.match(/\.(svg|jpe?g|png|gifv?)(?:[?#].*)?$|(?:imgur\.com|livememe\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
+		var matching = url.match(/\.(svg|jpe?g|png|gifv?)(?:[?#].*)?$|(?:imgur\.com|livememe\.com|reddituploads\.com)\/([^?#\/.]*)(?:[?#].*)?(?:\/)?$/);
 		if (!matching) {
 			return '';
 		}
@@ -118,7 +118,9 @@ var LinkSummary = (function() {
 				return 'http://imgur.com/' + matching[2] + '.jpg';
 			} else if (matching[0].indexOf("livememe.") >= 0) {
 				return 'http://i.lvme.me/' + matching[2] + '.jpg';
-			} else {
+			} else if (matching[0].indexOf("reddituploads.") >= 0) {
+        return matching.input;
+      } else {
 				return null;
 			}
 		} else {
