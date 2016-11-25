@@ -591,17 +591,12 @@ var URLs = {
  is,
  UI,
  Modal,
- Dropbox,
  Store
  */
 
 var Backup = (function () {
 
-	var update = 1,
-	    gists = {
-		url: "https://api.github.com/gists",
-		fileURL: ''
-	};
+	var update = 1;
 
 	var el = {
 		buttonExportData: $('#exp-data'),
@@ -609,8 +604,8 @@ var Backup = (function () {
 	};
 
 	var template = {
-		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y hide\'\n\t\t\t\t\t\tid=\'btn-save-dbx\'>Save to Dropbox</button>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y hide"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
-		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y\'\n\t\t\t\t\t\tid=\'btn-dbx-imp\'>Import from Dropbox</button>\n\t\t\t\t<button class=\'btn w-100 mrgn-y hide\'\n\t\t\t\t\t\tid=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t   type="file"\n\t\t\t\t\t   accept="application/json"\n\t\t\t\t\t   style="display: none"/>\n\t\t\t</div>\n\t\t</div>'
+		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y hide"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
+		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y hide\'\n\t\t\t\t\t\tid=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t   type="file"\n\t\t\t\t\t   accept="application/json"\n\t\t\t\t\t   style="display: none"/>\n\t\t\t</div>\n\t\t</div>'
 	};
 
 	var shouldUpdate = function shouldUpdate() {
@@ -628,70 +623,12 @@ var Backup = (function () {
 	};
 
 	var createBackup = function createBackup() {
-		if (update) {
-			Modal.show(template.exportData, function () {
-				var files = {},
-				    content = getBackupData();
-
-				files["reedditdata.json"] = {
-					"content": content
-				};
-
-				if (is.linkDownloadable) {
-					prepareDownloadButton(content);
-				}
-
-				$.ajax({
-					url: gists.url,
-					type: "POST",
-					data: JSON.stringify({
-						"description": "Reeddit User Data",
-						"public": true,
-						"files": files
-					}),
-					headers: {
-						'Content-Type': 'application/json; charset=UTF-8'
-					},
-					success: function success(response) {
-						var resp = JSON.parse(response);
-						UI.switchDisplay($$.id("btn-save-dbx"), false);
-						gists.fileURL = resp.files["reedditdata.json"].raw_url;
-						update = 0;
-					},
-					error: function error() {
-						$("#btn-save-dbx").remove();
-						$(".move-data-exp").append("<p class='msg-error txt-bld'>Oh oh. Error creating your backup file. Retry later.</p>");
-						Modal.remove();
-					}
-				});
-			});
-		} else if (gists.fileURL) {
-			Modal.show(template.exportData, function () {
-				UI.switchDisplay($$.id("btn-save-dbx"), false);
-
-				if (is.linkDownloadable) {
-					prepareDownloadButton(getBackupData());
-				}
-			});
+		if (!update) {
+			return;
 		}
-	};
 
-	var chooseFromDropbox = function chooseFromDropbox() {
-		Dropbox.choose({
-			success: function success(file) {
-				$.ajax({
-					url: file[0].link,
-					success: function success(data) {
-						try {
-							loadData(data);
-						} catch (e) {
-							alert("Oops! Wrong file, maybe? - Try choosing another one.");
-						}
-					}
-				});
-			},
-			linkType: "direct",
-			extensions: [".json"]
+		Modal.show(template.exportData, function () {
+			prepareDownloadButton(getBackupData());
 		});
 	};
 
@@ -741,22 +678,6 @@ var Backup = (function () {
 		});
 
 		// Forms
-		UI.el.body.on('click', '#btn-save-dbx', function () {
-			if (!gists.fileURL) {
-				alert("Err. There's no backup file created...");
-				return;
-			}
-			var options = {
-				files: [{
-					url: gists.fileURL,
-					filename: "reedditdata.json"
-				}],
-				success: Modal.remove
-			};
-			Dropbox.save(options);
-		});
-
-		UI.el.body.on('click', '#btn-dbx-imp', chooseFromDropbox);
 
 		if (!is.iOS) {
 			UI.el.body.on('change', '#file-chooser', function () {
