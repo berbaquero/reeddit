@@ -23,7 +23,7 @@ var Backup = (function() {
 			<div class='move-data-exp'>
 				<h3>Export Data</h3>
 				<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>
-				<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y hide"
+				<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y"
 				   id="btn-download-data"
 				   download="reedditdata.json">Download Data</a>
 			</div>
@@ -35,12 +35,12 @@ var Backup = (function() {
 				<h3>Import Data</h3>
 				<p>Load the subscriptions from another Reeddit instance.</p>
 				<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>
-				<button class='btn w-100 mrgn-y hide'
+				<button class='btn w-100 mrgn-y'
 						id='btn-trigger-file'>Choose Backup file</button>
 				<input id='file-chooser'
-					   type="file"
-					   accept="application/json"
-					   style="display: none"/>
+							 class="hide"
+					     type="file"
+					     accept="application/json"/>
 			</div>
 		</div>`
 	};
@@ -56,7 +56,6 @@ var Backup = (function() {
 	var prepareDownloadButton = (data) => {
 		let buttonDownload = $$.id('btn-download-data');
 		buttonDownload.href = "data:text/json;charset=utf-8," + encodeURIComponent(data);
-		UI.switchDisplay(buttonDownload, false);
 	};
 
   var createBackup = function() {
@@ -108,24 +107,22 @@ var Backup = (function() {
 		el.buttonImportData.on('click', (ev) => {
 			ev.preventDefault();
 			Modal.show(template.importData, () => {
-				if (!is.iOS) {
-					UI.switchDisplay($$.id('btn-trigger-file'), false);
+				if (is.iOS) {
+					UI.switchDisplay($$.id('btn-trigger-file'), true);
+					UI.switchDisplay($$.id('file-chooser'), false);
 				}
 			});
 		});
 
 		// Forms
+    UI.el.body.on('change', '#file-chooser', function() {
+      let file = this.files[0];
+      readFile(file);
+    });
 
-		if (!is.iOS) {
-			UI.el.body.on('change', '#file-chooser', function() {
-				let file = this.files[0];
-				readFile(file);
-			});
-
-			UI.el.body.on('click', '#btn-trigger-file', () => {
-				$$.id('file-chooser').click();
-			});
-		}
+    UI.el.body.on('click', '#btn-trigger-file', () => {
+      $$.id('file-chooser').click();
+    });
 	};
 
 	// Exports
