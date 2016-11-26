@@ -73,7 +73,7 @@ const Comments = (function() {
 
 			var html = converter.makeHtml(c.data.body),
 				isPoster = Posts.getList()[currentThread].author === c.data.author,
-				permalink = "http://reddit.com" + Posts.getList()[currentThread].link + c.data.id,
+				permalink = URLs.init + Posts.getList()[currentThread].link + c.data.id,
 				commentLink = {
 					href: permalink,
 					target: "_blank",
@@ -181,7 +181,7 @@ const Comments = (function() {
 					loading = false;
 				} else {
 					LinkSummary.setPostSummary(Posts.getList()[id], id);
-					var url = "http://www.reddit.com" + Posts.getList()[id].link + URLs.end;
+					var url = URLs.init + Posts.getList()[id].link + URLs.end;
 
 					var loader = UI.addLoader(detail);
 
