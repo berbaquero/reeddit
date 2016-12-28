@@ -1,7 +1,4 @@
 .DS_Store
 .idea
-node_modules
-
 .sass-cache
-
-scripts/modules.js
+node_modules
