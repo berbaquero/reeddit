@@ -78,9 +78,12 @@ var LinkSummary = (function() {
 				var youTubeID = getYouTubeVideoIDfromURL(linkURL);
 				if (youTubeID) {
 					summaryHTML +=
-						'<a class="preview-container blck" href="' + linkURL + '" target="_blank">' +
-						'<img class="video-preview" src="http://img.youtube.com/vi/' + youTubeID + '/hqdefault.jpg" />' +
-						'</a>';
+						`<a class="preview-container blck" 
+								href="${linkURL}" 
+								target="_blank">
+						 <img class="video-preview" 
+						      src="//img.youtube.com/vi/${youTubeID}/hqdefault.jpg"/>
+						 </a>`;
 				}
 			}
 		}
