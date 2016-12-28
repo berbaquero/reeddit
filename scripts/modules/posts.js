@@ -151,9 +151,9 @@ var Posts = (function() {
 		} else {
 			// Add new links to the list
 			const compiledHTML = Mustache.to_html(template, links);
-			// http -> https in post thumbnails
+			// http -> relative in post thumbnails
 			// searches and replaces 'url(http' to make sure it's only the thumbnail urls
-			const httpsHTML = compiledHTML.replace(/url\(http\:/g, 'url(https:');
+			const httpsHTML = compiledHTML.replace(/url\(http\:/g, 'url(');
 			main.append(httpsHTML);
 
 			// Remove thumbnail space for those links with invalid backgrounds.
