@@ -47,16 +47,9 @@
 		}
 	}
 
-	a[href^="https://youtube.com"],
-	a[href^="http://youtube.com"],
-	a[href^="https://m.youtube.com"],
-	a[href^="http://m.youtube.com"],
-	a[href^="https://www.youtube.com"],
-	a[href^="http://www.youtube.com"],
-	a[href^="https://youtu.be"],
-	a[href^="http://youtu.be"],
-	a[href^="https://vimeo.com"],
-	a[href^="http://vimeo.com"] {
+	a[href*="youtube.com"],
+	a[href*="youtu.be"],
+	a[href*="vimeo.com"] {
 
 		&:before {
 			font-family: 'reeddit-icons';
