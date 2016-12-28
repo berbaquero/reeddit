@@ -115,16 +115,16 @@ var LinkSummary = (function() {
 			if (url.indexOf('.gifv') > 0) {
 				url = url.replace('.gifv', '.gif');
 			}
-			if (url.indexOf('imgur.com') > 0) {
+			if (url.indexOf('imgur.com') >= 0) {
 				url = url.replace(/^htt(p|ps):/, '');
 			}
 			return url;
-		} else if (matching[2]) { // imgur or livememe link
-			if (matching[0].slice(0, 5) === "imgur") {
-				return 'http://imgur.com/' + matching[2] + '.jpg';
-			} else if (matching[0].indexOf("livememe.") >= 0) {
-				return 'http://i.lvme.me/' + matching[2] + '.jpg';
-			} else if (matching[0].indexOf("reddituploads.") >= 0) {
+		} else if (matching[2]) {
+			if (matching[0].slice(0, 5) === "imgur") { // imgur
+				return `//imgur.com/${matching[2]}.jpg`;
+			} else if (matching[0].indexOf("livememe.") >= 0) { // livememe
+				return `http://i.lvme.me/${matching[2]}.jpg`;
+			} else if (matching[0].indexOf("reddituploads.") >= 0) { // reddit media
         return matching.input;
       } else {
 				return null;
