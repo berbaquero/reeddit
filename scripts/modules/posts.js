@@ -157,17 +157,21 @@ var Posts = (function() {
 			main.append(httpsHTML);
 
 			// Remove thumbnail space for those links with invalid backgrounds.
-			const thumbs = $('.link-thumb > div'),
-				bgImg = 'background-image: ';
+			const thumbnails = $('.link-thumb > div');
 
-			for(var i = 0; i < thumbs.length; i++) {
-				const thumb = $(thumbs[i]),
-					bg = thumb.attr('style');
-				if (bg === bgImg + 'url()' ||
-					bg === bgImg + 'url(default)' ||
-					bg === bgImg + 'url(nsfw)' ||
-					bg === bgImg + 'url(self)') {
-					thumb.parent().remove();
+			// Remove the thumbnail space if post has no thumbnail
+      // TODO: parse API json data to make this DOM manipulation not needed
+      for(let i = 0; i < thumbnails.length; i++) {
+				const thumbnail = $(thumbnails[i]);
+        const backgroundImageStyle = thumbnail.attr('style').replace("background-image: ", "");
+
+				if (backgroundImageStyle === 'url()' ||
+					backgroundImageStyle === 'url(default)' ||
+					backgroundImageStyle === 'url(nsfw)' ||
+					backgroundImageStyle === 'url(image)' ||
+					backgroundImageStyle === 'url(spoiler)' ||
+					backgroundImageStyle === 'url(self)') {
+					thumbnail.parent().remove();
 				}
 			}
 		}
