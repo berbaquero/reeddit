@@ -115,6 +115,9 @@ var LinkSummary = (function() {
 			if (url.indexOf('.gifv') > 0) {
 				url = url.replace('.gifv', '.gif');
 			}
+			if (url.indexOf('imgur.com') > 0) {
+				url = url.replace(/^htt(p|ps):/, '');
+			}
 			return url;
 		} else if (matching[2]) { // imgur or livememe link
 			if (matching[0].slice(0, 5) === "imgur") {
