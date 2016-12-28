@@ -565,9 +565,9 @@ var UI = (function () {
 })();
 
 var URLs = {
-	init: 'http://www.reddit.com/',
-	end: '.json?jsonp=?',
-	limitEnd: '.json?limit=30&jsonp=?'
+  init: window.location.protocol + '//www.reddit.com/',
+  end: '.json?jsonp=?',
+  limitEnd: '.json?limit=30&jsonp=?'
 };
 
 /* global
@@ -589,8 +589,8 @@ var Backup = (function () {
 	};
 
 	var template = {
-		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
-		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y\'\n\t\t\t\t\t\tid=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t\t\t class="hide"\n\t\t\t\t\t     type="file"\n\t\t\t\t\t     accept="application/json"/>\n\t\t\t</div>\n\t\t</div>'
+		exportData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-exp\'>\n\t\t\t\t<h3>Export Data</h3>\n\t\t\t\t<p>You can back-up your local subscriptions and then import them to any other Reeddit instance, or just restore them.</p>\n\t\t\t\t<a class="btn no-ndrln txt-cntr blck w-100 mrgn-y pad-y"\n\t\t\t\t   id="btn-download-data"\n\t\t\t\t   download="reedditdata.json">Download Data</a>\n\t\t\t</div>\n\t\t</div>',
+		importData: '\n\t\t<div class=\'new-form move-data\'>\n\t\t\t' + UI.template.closeModalButton + '\n\t\t\t<div class=\'move-data-imp\'>\n\t\t\t\t<h3>Import Data</h3>\n\t\t\t\t<p>Load the subscriptions from another Reeddit instance.</p>\n\t\t\t\t<p>Once you choose the reeddit data file, Reeddit will refresh with the imported data.</p>\n\t\t\t\t<button class=\'btn w-100 mrgn-y pad-y\'\n\t\t\t\t\t\t    id=\'btn-trigger-file\'>Choose Backup file</button>\n\t\t\t\t<input id=\'file-chooser\'\n\t\t\t\t\t\t\t class="hide"\n\t\t\t\t\t     type="file"\n\t\t\t\t\t     accept="application/json"/>\n\t\t\t</div>\n\t\t</div>'
 	};
 
 	var shouldUpdate = function shouldUpdate() {
@@ -1008,7 +1008,7 @@ var Comments = (function () {
 
 			var html = converter.makeHtml(c.data.body),
 			    isPoster = Posts.getList()[currentThread].author === c.data.author,
-			    permalink = "http://reddit.com" + Posts.getList()[currentThread].link + c.data.id,
+			    permalink = URLs.init + Posts.getList()[currentThread].link + c.data.id,
 			    commentLink = {
 				href: permalink,
 				target: "_blank",
@@ -1091,7 +1091,7 @@ var Comments = (function () {
 					loading = false;
 				} else {
 					LinkSummary.setPostSummary(Posts.getList()[id], id);
-					var url = "http://www.reddit.com" + Posts.getList()[id].link + URLs.end;
+					var url = URLs.init + Posts.getList()[id].link + URLs.end;
 
 					var loader = UI.addLoader(detail);
 
@@ -1360,7 +1360,7 @@ var LinkSummary = (function () {
 				Posts.getList()[postID].selftext = selfText;
 				Posts.getList()[postID].selftextParsed = true;
 			}
-			summaryHTML += "<section id='selftext' class='pad-y pad-x mrgn-x mrgn-y'>" + selfText + "</section>";
+			summaryHTML += "<section id='selftext' class='pad-x mrgn-x mrgn-y'>" + selfText + "</section>";
 		} else {
 			// if it's an image
 			var linkURL = Posts.getList()[postID].url;
@@ -1372,7 +1372,7 @@ var LinkSummary = (function () {
 				// if it's a YouTube video
 				var youTubeID = getYouTubeVideoIDfromURL(linkURL);
 				if (youTubeID) {
-					summaryHTML += '<a class="preview-container blck" href="' + linkURL + '" target="_blank">' + '<img class="video-preview" src="http://img.youtube.com/vi/' + youTubeID + '/hqdefault.jpg" />' + '</a>';
+					summaryHTML += "<a class=\"preview-container blck\" \n\t\t\t\t\t\t\t\thref=\"" + linkURL + "\" \n\t\t\t\t\t\t\t\ttarget=\"_blank\">\n\t\t\t\t\t\t <img class=\"video-preview\" \n\t\t\t\t\t\t      src=\"//img.youtube.com/vi/" + youTubeID + "/hqdefault.jpg\"/>\n\t\t\t\t\t\t </a>";
 				}
 			}
 		}
@@ -1405,14 +1405,19 @@ var LinkSummary = (function () {
 			if (url.indexOf('.gifv') > 0) {
 				url = url.replace('.gifv', '.gif');
 			}
+			if (url.indexOf('imgur.com') >= 0) {
+				url = url.replace(/^htt(p|ps):/, '');
+			}
 			return url;
 		} else if (matching[2]) {
-			// imgur or livememe link
 			if (matching[0].slice(0, 5) === "imgur") {
-				return 'http://imgur.com/' + matching[2] + '.jpg';
+				// imgur
+				return "//imgur.com/" + matching[2] + ".jpg";
 			} else if (matching[0].indexOf("livememe.") >= 0) {
-				return 'http://i.lvme.me/' + matching[2] + '.jpg';
+				// livememe
+				return "http://i.lvme.me/" + matching[2] + ".jpg";
 			} else if (matching[0].indexOf("reddituploads.") >= 0) {
+				// reddit media
 				return matching.input;
 			} else {
 				return null;
@@ -1825,7 +1830,11 @@ var Posts = (function () {
 			}
 		} else {
 			// Add new links to the list
-			main.append(Mustache.to_html(template, links));
+			var compiledHTML = Mustache.to_html(template, links);
+			// http -> relative in post thumbnails
+			// searches and replaces 'url(http' to make sure it's only the thumbnail urls
+			var httpsHTML = compiledHTML.replace(/url\(http\:/g, 'url(');
+			main.append(httpsHTML);
 
 			// Remove thumbnail space for those links with invalid backgrounds.
 			var thumbs = $('.link-thumb > div'),

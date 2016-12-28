@@ -1102,18 +1102,11 @@ header {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 61, styles/_post-comments.scss */
+/* line 54, styles/_post-comments.scss */
 
-#comments-container a[href^="https://youtube.com"]:before,
-#comments-container a[href^="http://youtube.com"]:before,
-#comments-container a[href^="https://m.youtube.com"]:before,
-#comments-container a[href^="http://m.youtube.com"]:before,
-#comments-container a[href^="https://www.youtube.com"]:before,
-#comments-container a[href^="http://www.youtube.com"]:before,
-#comments-container a[href^="https://youtu.be"]:before,
-#comments-container a[href^="http://youtu.be"]:before,
-#comments-container a[href^="https://vimeo.com"]:before,
-#comments-container a[href^="http://vimeo.com"]:before {
+#comments-container a[href*="youtube.com"]:before,
+#comments-container a[href*="youtu.be"]:before,
+#comments-container a[href*="vimeo.com"]:before {
   font-family: 'reeddit-icons';
   content: "\e901";
   margin-right: 3px;
@@ -1127,7 +1120,7 @@ header {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 77, styles/_post-comments.scss */
+/* line 70, styles/_post-comments.scss */
 
 .comment-wrap {
   -webkit-user-select: text;
@@ -1140,7 +1133,7 @@ header {
   outline: none;
 }
 
-/* line 84, styles/_post-comments.scss */
+/* line 77, styles/_post-comments.scss */
 
 .comment-wrap:focus {
   box-shadow: inset 2px 0 0 rgba(66, 134, 245, 0.5);
@@ -1152,13 +1145,13 @@ header {
   border-color: #22242b;
 }
 
-/* line 97, styles/_post-comments.scss */
+/* line 90, styles/_post-comments.scss */
 
 .comment-active {
   box-shadow: inset 2px 0 0 rgba(66, 134, 245, 0.5);
 }
 
-/* line 101, styles/_post-comments.scss */
+/* line 94, styles/_post-comments.scss */
 
 .comment-data {
   display: -webkit-flex;
@@ -1170,7 +1163,7 @@ header {
   width: 100%;
 }
 
-/* line 107, styles/_post-comments.scss */
+/* line 100, styles/_post-comments.scss */
 
 .comment-author,
 .comment-poster {
@@ -1187,14 +1180,14 @@ header {
   color: #c16d7b;
 }
 
-/* line 118, styles/_post-comments.scss */
+/* line 111, styles/_post-comments.scss */
 
 .comment-poster {
   position: relative;
   padding-left: 28px;
 }
 
-/* line 122, styles/_post-comments.scss */
+/* line 115, styles/_post-comments.scss */
 
 .comment-poster::before {
   position: absolute;
@@ -1210,7 +1203,7 @@ header {
   font-weight: 700;
 }
 
-/* line 135, styles/_post-comments.scss */
+/* line 128, styles/_post-comments.scss */
 
 .comment-info {
   color: #aaa;
@@ -1223,19 +1216,19 @@ header {
   color: #5e6b86;
 }
 
-/* line 144, styles/_post-comments.scss */
+/* line 137, styles/_post-comments.scss */
 
 .comment-body {
   font-size: 14px;
 }
 
-/* line 148, styles/_post-comments.scss */
+/* line 141, styles/_post-comments.scss */
 
 .comment-body p {
-  margin: 10px 0;
+  line-height: 1.3;
 }
 
-/* line 152, styles/_post-comments.scss */
+/* line 145, styles/_post-comments.scss */
 
 .comment-body ul,
 .comment-body ol,
@@ -1253,20 +1246,20 @@ header {
   color: #95a1bc;
 }
 
-/* line 162, styles/_post-comments.scss */
+/* line 155, styles/_post-comments.scss */
 
 .comment-body a {
   color: #7a9abd;
   -webkit-tap-highlight-color: rgba(69, 103, 140, 0.5);
 }
 
-/* line 166, styles/_post-comments.scss */
+/* line 159, styles/_post-comments.scss */
 
 .comment-body a:visited {
   color: #a3adce;
 }
 
-/* line 172, styles/_post-comments.scss */
+/* line 165, styles/_post-comments.scss */
 
 #link-summary {
   background-color: #4d4d4d;
@@ -1285,7 +1278,7 @@ header {
   background-color: #22242b;
 }
 
-/* line 185, styles/_post-comments.scss */
+/* line 178, styles/_post-comments.scss */
 
 #link-summary > a {
   -webkit-tap-highlight-color: rgba(66, 134, 245, 0.5);
@@ -1298,7 +1291,7 @@ header {
   background-color: rgba(66, 134, 245, 0.5);
 }
 
-/* line 190, styles/_post-comments.scss */
+/* line 183, styles/_post-comments.scss */
 
 #summary-title {
   font-size: 16px;
@@ -1319,7 +1312,7 @@ header {
   color: #95a1bc;
 }
 
-/* line 205, styles/_post-comments.scss */
+/* line 198, styles/_post-comments.scss */
 
 #summary-domain {
   color: #F75433;
@@ -1339,7 +1332,7 @@ header {
   color: #b37bcf;
 }
 
-/* line 219, styles/_post-comments.scss */
+/* line 212, styles/_post-comments.scss */
 
 #summary-author {
   color: #E2E2E0;
@@ -1357,7 +1350,7 @@ header {
   color: #5e6b86;
 }
 
-/* line 233, styles/_post-comments.scss */
+/* line 226, styles/_post-comments.scss */
 
 #summary-footer {
   display: -webkit-flex;
@@ -1377,7 +1370,7 @@ header {
   border: 0;
 }
 
-/* line 245, styles/_post-comments.scss */
+/* line 238, styles/_post-comments.scss */
 
 .ls-extra {
   background-color: #333;
@@ -1403,7 +1396,7 @@ header {
   color: #95a1bc;
 }
 
-/* line 265, styles/_post-comments.scss */
+/* line 258, styles/_post-comments.scss */
 
 #selftext {
   -webkit-user-select: text;
@@ -1421,7 +1414,7 @@ header {
 
 .light #selftext,
 .dark #selftext {
-  border: 0;
+  border-color: transparent;
   box-shadow: none;
 }
 
@@ -1432,46 +1425,40 @@ header {
   background-color: #404654;
 }
 
-/* line 285, styles/_post-comments.scss */
+/* line 278, styles/_post-comments.scss */
 
 #selftext p {
-  margin-top: 5px;
+  line-height: 1.3;
 }
 
-/* line 288, styles/_post-comments.scss */
-
-#selftext p:last-child {
-  margin-bottom: 5px;
-}
-
-/* line 297, styles/_post-comments.scss */
+/* line 286, styles/_post-comments.scss */
 
 #selftext a {
   color: #7a9abd;
   -webkit-tap-highlight-color: rgba(69, 103, 140, 0.5);
 }
 
-/* line 301, styles/_post-comments.scss */
+/* line 290, styles/_post-comments.scss */
 
 #selftext a:visited {
   color: #a3adce;
 }
 
-/* line 307, styles/_post-comments.scss */
+/* line 296, styles/_post-comments.scss */
 
 .preview-container {
   margin: 10px 0;
   outline: none;
 }
 
-/* line 313, styles/_post-comments.scss */
+/* line 302, styles/_post-comments.scss */
 
 .preview-container:focus .image-preview,
 .preview-container:focus .video-preview {
   outline: 3px solid rgba(66, 134, 245, 0.5);
 }
 
-/* line 324, styles/_post-comments.scss */
+/* line 313, styles/_post-comments.scss */
 
 .image-preview,
 .video-preview {
@@ -1481,14 +1468,14 @@ header {
   box-shadow: 0 1px 3px #333;
 }
 
-/* line 332, styles/_post-comments.scss */
+/* line 321, styles/_post-comments.scss */
 
 .image-preview {
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
 
-/* line 340, styles/_post-comments.scss */
+/* line 329, styles/_post-comments.scss */
 
 .image-viewer {
   max-width: 100%;
@@ -2284,61 +2271,61 @@ header {
   text-align: center;
 }
 
-/* line 2, styles/modules/_UI-Blocks.scss */
+/* line 2, styles/globals/_UI-Blocks.scss */
 
 .clr-current {
   color: currentColor;
 }
 
-/* line 6, styles/modules/_UI-Blocks.scss */
+/* line 6, styles/globals/_UI-Blocks.scss */
 
 .clr-white {
   color: white;
 }
 
-/* line 12, styles/modules/_UI-Blocks.scss */
+/* line 12, styles/globals/_UI-Blocks.scss */
 
 .blck {
   display: block;
 }
 
-/* line 18, styles/modules/_UI-Blocks.scss */
+/* line 18, styles/globals/_UI-Blocks.scss */
 
 .no-ndrln {
   text-decoration: none;
 }
 
-/* line 22, styles/modules/_UI-Blocks.scss */
+/* line 22, styles/globals/_UI-Blocks.scss */
 
 .txt-bld {
   font-weight: 700;
 }
 
-/* line 26, styles/modules/_UI-Blocks.scss */
+/* line 26, styles/globals/_UI-Blocks.scss */
 
 .txt-cntr {
   text-align: center;
 }
 
-/* line 30, styles/modules/_UI-Blocks.scss */
+/* line 30, styles/globals/_UI-Blocks.scss */
 
 .txt-r {
   text-align: right;
 }
 
-/* line 34, styles/modules/_UI-Blocks.scss */
+/* line 34, styles/globals/_UI-Blocks.scss */
 
 .txt-uppr {
   text-transform: uppercase;
 }
 
-/* line 38, styles/modules/_UI-Blocks.scss */
+/* line 38, styles/globals/_UI-Blocks.scss */
 
 .txt-cap {
   text-transform: capitalize;
 }
 
-/* line 42, styles/modules/_UI-Blocks.scss */
+/* line 42, styles/globals/_UI-Blocks.scss */
 
 .txt-ellps {
   text-overflow: ellipsis;
@@ -2346,54 +2333,54 @@ header {
   white-space: nowrap;
 }
 
-/* line 50, styles/modules/_UI-Blocks.scss */
+/* line 50, styles/globals/_UI-Blocks.scss */
 
 .pad-x {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-/* line 55, styles/modules/_UI-Blocks.scss */
+/* line 55, styles/globals/_UI-Blocks.scss */
 
 .pad-y {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-/* line 60, styles/modules/_UI-Blocks.scss */
+/* line 60, styles/globals/_UI-Blocks.scss */
 
 .mrgn-x {
   margin-left: 10px;
   margin-right: 10px;
 }
 
-/* line 65, styles/modules/_UI-Blocks.scss */
+/* line 65, styles/globals/_UI-Blocks.scss */
 
 .mrgn-y {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-/* line 70, styles/modules/_UI-Blocks.scss */
+/* line 70, styles/globals/_UI-Blocks.scss */
 
 .mrgn-cntr-x {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 75, styles/modules/_UI-Blocks.scss */
+/* line 75, styles/globals/_UI-Blocks.scss */
 
 .no-mrgn {
   margin: 0;
 }
 
-/* line 79, styles/modules/_UI-Blocks.scss */
+/* line 79, styles/globals/_UI-Blocks.scss */
 
 .no-pad {
   padding: 0;
 }
 
-/* line 85, styles/modules/_UI-Blocks.scss */
+/* line 85, styles/globals/_UI-Blocks.scss */
 
 .flx {
   display: -webkit-flex;
@@ -2401,7 +2388,7 @@ header {
   display: flex;
 }
 
-/* line 95, styles/modules/_UI-Blocks.scss */
+/* line 95, styles/globals/_UI-Blocks.scss */
 
 .flx-cntr-x {
   -webkit-justify-content: center;
@@ -2409,7 +2396,7 @@ header {
   justify-content: center;
 }
 
-/* line 99, styles/modules/_UI-Blocks.scss */
+/* line 99, styles/globals/_UI-Blocks.scss */
 
 .flx-cntr-y {
   -webkit-align-items: center;
@@ -2417,7 +2404,7 @@ header {
   align-items: center;
 }
 
-/* line 103, styles/modules/_UI-Blocks.scss */
+/* line 103, styles/globals/_UI-Blocks.scss */
 
 .flx-spc-btwn-x {
   -webkit-justify-content: space-between;
@@ -2425,56 +2412,56 @@ header {
   justify-content: space-between;
 }
 
-/* line 109, styles/modules/_UI-Blocks.scss */
+/* line 109, styles/globals/_UI-Blocks.scss */
 
 .w-15 {
   width: 15%;
 }
 
-/* line 113, styles/modules/_UI-Blocks.scss */
+/* line 113, styles/globals/_UI-Blocks.scss */
 
 .w-33 {
   width: 33.33%;
 }
 
-/* line 117, styles/modules/_UI-Blocks.scss */
+/* line 117, styles/globals/_UI-Blocks.scss */
 
 .w-50 {
   width: 50%;
 }
 
-/* line 121, styles/modules/_UI-Blocks.scss */
+/* line 121, styles/globals/_UI-Blocks.scss */
 
 .w-85 {
   width: 85%;
 }
 
-/* line 125, styles/modules/_UI-Blocks.scss */
+/* line 125, styles/globals/_UI-Blocks.scss */
 
 .w-100 {
   width: 100%;
 }
 
-/* line 131, styles/modules/_UI-Blocks.scss */
+/* line 131, styles/globals/_UI-Blocks.scss */
 
 .h-100 {
   height: 100%;
 }
 
-/* line 137, styles/modules/_UI-Blocks.scss */
+/* line 137, styles/globals/_UI-Blocks.scss */
 
 .invisible {
   opacity: 0;
   visibility: hidden;
 }
 
-/* line 142, styles/modules/_UI-Blocks.scss */
+/* line 142, styles/globals/_UI-Blocks.scss */
 
 .hide {
   display: none !important;
 }
 
-/* line 146, styles/modules/_UI-Blocks.scss */
+/* line 146, styles/globals/_UI-Blocks.scss */
 
 .centered-transform {
   position: absolute;
@@ -2484,7 +2471,7 @@ header {
   transform: translateY(-50%) translateX(-50%);
 }
 
-/* line 153, styles/modules/_UI-Blocks.scss */
+/* line 153, styles/globals/_UI-Blocks.scss */
 
 .no-tch-cllt {
   -webkit-touch-callout: none;
@@ -2528,19 +2515,19 @@ header {
     pointer-events: none;
   }
 
-  /* line 307, styles/_post-comments.scss */
+  /* line 296, styles/_post-comments.scss */
 
   .preview-container {
     margin: 10px;
   }
 
-  /* line 332, styles/_post-comments.scss */
+  /* line 321, styles/_post-comments.scss */
 
   .image-preview {
     border-radius: 3px;
   }
 
-  /* line 340, styles/_post-comments.scss */
+  /* line 329, styles/_post-comments.scss */
 
   .image-viewer {
     padding: 10px;
@@ -2639,13 +2626,13 @@ header {
     display: none;
   }
 
-  /* line 77, styles/_post-comments.scss */
+  /* line 70, styles/_post-comments.scss */
 
   .comment-wrap {
     font-size: 14px;
   }
 
-  /* line 285, styles/_post-comments.scss */
+  /* line 278, styles/_post-comments.scss */
 
   #selftext p {
     font-size: 14px;
@@ -2653,7 +2640,7 @@ header {
 }
 
 @media (min-width: 1000px) {
-  /* line 90, styles/modules/_UI-Blocks.scss */
+  /* line 90, styles/globals/_UI-Blocks.scss */
 
   .flx\@wide {
     display: -webkit-flex;
