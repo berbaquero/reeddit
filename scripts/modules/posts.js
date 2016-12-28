@@ -150,7 +150,11 @@ var Posts = (function() {
 			}
 		} else {
 			// Add new links to the list
-			main.append(Mustache.to_html(template, links));
+			const compiledHTML = Mustache.to_html(template, links);
+			// http -> https in post thumbnails
+			// searches and replaces 'url(http' to make sure it's only the thumbnail urls
+			const httpsHTML = compiledHTML.replace(/url\(http\:/g, 'url(https:');
+			main.append(httpsHTML);
 
 			// Remove thumbnail space for those links with invalid backgrounds.
 			const thumbs = $('.link-thumb > div'),
