@@ -84,6 +84,14 @@ var LinkSummary = (function() {
 						 <img class="video-preview" 
 						      src="//img.youtube.com/vi/${youTubeID}/hqdefault.jpg"/>
 						 </a>`;
+				} else { // if it's a Gfycat link
+					var gfycatID = getGfycatIDfromURL(linkURL);
+					if (gfycatID) {
+						summaryHTML +=
+							"<div style='position:relative; padding-bottom:56.69%'>" +
+							"<iframe src='https://gfycat.com/ifr/" + gfycatID + "' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe>" +
+							"</div>";
+					}
 				}
 			}
 		}
@@ -141,6 +149,19 @@ var LinkSummary = (function() {
 		}
 		else {
 			if (matching[2].length === 11) {
+				return matching[2];
+			} else {
+				return null;
+			}
+		}
+	};
+
+	var getGfycatIDfromURL = function getGfycatIDfromURL(url) {
+		var matching = url.match(/gfycat.com\/(gifs\/detail\/)?(\w+)/i);
+		if (!matching) {
+			return '';
+		} else {
+			if (matching && matching.length > 2) {
 				return matching[2];
 			} else {
 				return null;
