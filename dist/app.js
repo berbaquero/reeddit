@@ -1463,9 +1463,7 @@ var LinkSummary = (function () {
 	};
 
 	var getRedGifsIDfromURL = function getRedGifsIDfromURL(url) {
-		console.log(url);
 		var matching = url.match(/redgifs.com\/(?:(?:ifr|watch)\/)(\w+)/i);
-		console.log(matching);
 		if (!matching) {
 			return '';
 		} else {
