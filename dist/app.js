@@ -1374,10 +1374,13 @@ var LinkSummary = (function () {
 				if (youTubeID) {
 					summaryHTML += "<a class=\"preview-container blck\" \n\t\t\t\t\t\t\t\thref=\"" + linkURL + "\" \n\t\t\t\t\t\t\t\ttarget=\"_blank\">\n\t\t\t\t\t\t <img class=\"video-preview\" \n\t\t\t\t\t\t      src=\"//img.youtube.com/vi/" + youTubeID + "/hqdefault.jpg\"/>\n\t\t\t\t\t\t </a>";
 				} else {
-					// if it's a Gfycat link
+					// if it's a Gfycat or RedGifs link
 					var gfycatID = getGfycatIDfromURL(linkURL);
+					var redGifsID = getRedGifsIDfromURL(linkURL);
 					if (gfycatID) {
 						summaryHTML += "<div style='position:relative; padding-bottom:56.69%'>" + "<iframe src='https://gfycat.com/ifr/" + gfycatID + "' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe>" + "</div>";
+					} else if (redGifsID) {
+						summaryHTML += "<div style='position:relative; padding-bottom:56.69%'>" + "<iframe src='https://redgifs.com/ifr/" + redGifsID + "' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe>" + "</div>";
 					}
 				}
 			}
@@ -1453,6 +1456,22 @@ var LinkSummary = (function () {
 		} else {
 			if (matching && matching.length > 2) {
 				return matching[2];
+			} else {
+				return null;
+			}
+		}
+	};
+
+	var getRedGifsIDfromURL = function getRedGifsIDfromURL(url) {
+		console.log(url);
+		var matching = url.match(/redgifs.com\/(?:(?:ifr|watch)\/)(\w+)/i);
+		console.log(matching);
+		if (!matching) {
+			return '';
+		} else {
+			if (matching && matching.length > 1) {
+				console.log(matching[1]);
+				return matching[1];
 			} else {
 				return null;
 			}
