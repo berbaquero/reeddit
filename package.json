@@ -30,8 +30,9 @@
   },
   "scripts": {
     "start": "gulp dev",
+    "prebuild": "rm -rf site",
     "build": "gulp",
-    "postbuild": "cp index.html dist/index.html && cp -a img/. dist/img",
+    "postbuild": "cp index.html site/index.html && cp -a img/. site/img && cp -a about/. site/about && cp -a fonts/. site/dist/fonts && cp libs.js site/dist",
     "deploy": "git push",
     "deploy-beta": "surge . reeddit.surge.sh"
   },

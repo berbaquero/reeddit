@@ -24,14 +24,14 @@ var paths = {
     templates: 'templates/**/*.jade',
   },
   root: './',
-  distribution: 'dist/',
+  distribution: 'site/dist/',
 };
 
-gulp.task('styles', function() {
+gulp.task('styles', function () {
   return gulp
     .src(paths.styles)
     .pipe(
-      sass().on('error', function(err) {
+      sass().on('error', function (err) {
         console.error('Error', err.message);
       })
     )
@@ -44,14 +44,14 @@ gulp.task('styles', function() {
     .pipe(gulp.dest(paths.distribution))
     .pipe(minifycss())
     .pipe(
-      rename(function(path) {
+      rename(function (path) {
         path.basename += '.min';
       })
     )
     .pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts', function () {
   return gulp
     .src(paths.scripts)
     .pipe(jshint())
@@ -59,7 +59,7 @@ gulp.task('scripts', function() {
     .pipe(babel())
     .pipe(
       concat('app.js', {
-        process: function(src) {
+        process: function (src) {
           return (src.trim() + '\n').replace(
             /(^|\n)[ \t]*('use strict'|"use strict");?\s*/g,
             '$1'
@@ -80,7 +80,7 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest(paths.distribution));
 });
 
-gulp.task('templates', function() {
+gulp.task('templates', function () {
   return gulp
     .src(paths.templates.root)
     .pipe(
@@ -93,7 +93,7 @@ gulp.task('templates', function() {
 
 gulp.task('default', ['styles', 'scripts', 'templates']);
 
-gulp.task('dev', function() {
+gulp.task('dev', function () {
   gulp.watch(paths.watch.styles, ['styles']);
   gulp.watch(paths.watch.scripts, ['scripts']);
   gulp.watch(paths.watch.templates, ['templates']);
